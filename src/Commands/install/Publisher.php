@@ -64,7 +64,7 @@ class Publisher
         $replace = [
             $namespace                           => 'Config',
             'BaseConfig'                         => 'Btw\Core' . $rawClassName,
-            'use CodeIgniter\Config\BaseConfig;' => "use {$className} as Btw\Core{$rawClassName};",
+            'use CodeIgniter\Config\BaseConfig;' => "use {$className} as BtwCore{$rawClassName};",
         ];
 
         if ($className === 'Btw\Core\Assets\Config\Assets') {
