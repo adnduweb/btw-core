@@ -1,5 +1,5 @@
 {
-	"name": "adnduweb/btw",
+	"name": "adnduweb/btw-core",
 	"type": "project",
 	"description": "Drop-in admin panel form CodeIgniter 4",
 	"keywords": [
@@ -7,7 +7,7 @@
 		"codeigniter4",
 		"btw"
 	],
-	"homepage": "https://github.com/adnduweb/btw-refactor",
+	"homepage": "https://github.com/adnduweb/btw-core",
 	"license": "MIT",
 	"require": {
 		"php": "^7.4 || ^8.0",
@@ -34,7 +34,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Btw\\": "src"
+			"Btw\\Core\\": "src"
 		},
 		"exclude-from-classmap": [
 			"**/Database/Migrations/**"
@@ -65,6 +65,6 @@
 	},
 	"support": {
 		"forum": "https://forum.codeigniter.com/",
-		"source": "https://github.com/adnduweb/btw2-internals"
+		"source": "https://github.com/adnduweb/btw-core-internals"
 	}
 }
