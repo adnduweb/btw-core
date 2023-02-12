@@ -65,9 +65,9 @@ class Install extends BaseCommand
 
     private array $configFiles = [
        // 'Btw\Core\Assets\Config\Assets',
-        'Btw\Core\Auth\Config\Auth',
-        'Btw\Core\Auth\Config\AuthGroups',
-        'Btw\Core\Config\BtwCore',
+        'Btw\Core\Config\Auth',
+        'Btw\Core\Config\AuthGroups',
+        'Btw\Core\Config\Btw',
         //'Btw\Core\Config\Site',
         'Btw\Core\Config\Themes',
         //'Btw\Core\Consent\Config\Consent',
