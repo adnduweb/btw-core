@@ -86,15 +86,21 @@ class Registrar
 
         $namespaces = [];
 
-        foreach ($map as $row) {
-            if (substr($row, -1) !== DIRECTORY_SEPARATOR || in_array(trim($row, '/ '), self::$nonModuleFolders, true)) {
-                continue;
-            }
+        // echo realpath(__DIR__ . "/../"); 
 
-            $name = trim($row, DIRECTORY_SEPARATOR);
+        $namespaces["Btw\\Core}"] = [realpath(__DIR__ . "/../")];
 
-            $namespaces["Btw\\{{$name}}"] = [realpath(__DIR__ . "/../{$name}")];
-        }
+        // foreach ($map as $row) {
+        //     if (substr($row, -1) !== DIRECTORY_SEPARATOR || in_array(trim($row, '/ '), self::$nonModuleFolders, true)) {
+        //         continue;
+        //     }
+
+        //     $name = trim($row, DIRECTORY_SEPARATOR);
+
+        //     $namespaces["Btw\\Core\\{{$name}}"] = [realpath(__DIR__ . "/../{$name}")];
+        // }
+
+        // print_r($namespaces); exit;
 
         // Insert the namespaces into the psr4 array in the autoloader
         // to ensure that Btw's files get loader prior to vendor files
@@ -116,4 +122,3 @@ class Registrar
 // Bonfire namespaces have been registered
 // with the system and are found automatically.
 Registrar::registerNamespaces();
-echo 'fgfdgqsdfg'; exit;

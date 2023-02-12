@@ -2,7 +2,7 @@
 
 namespace Btw\Core\Filters;
 
-use Btw\Core\Btw;
+use Btw\Core\BtwCore;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -28,7 +28,7 @@ class Admin implements FilterInterface
         helper(['auth', 'setting']);
 
         // Boot Bonfire
-        (new Btw())->boot();
+        (new BtwCore())->boot();
 
         if (! auth('session')->user()->can('admin.access')) {
             return redirect()->to('/')->with('error', lang('Bonfire.notAuthorized'));

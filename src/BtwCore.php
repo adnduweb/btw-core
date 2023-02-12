@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Btw;
+namespace Btw\Core;
 
 use Btw\Core\Menus\MenuItem;
 
@@ -22,7 +22,7 @@ include_once __DIR__ . '/Common.php';
  * Provides basic utility functions used throughout the
  * lifecycle of a request in the admin area.
  */
-class Btw
+class BtwCore
 {
     /**
      * Holds cached instances of all Module classes
@@ -168,7 +168,7 @@ class Btw
             cache()->save('bf-modules-search', $modules);
         }
 
-        // print_r($modules); exit;
+         print_r($modules); exit;
 
         // save instances of our module configs
         foreach ($modules as $namespace => $dir) {
