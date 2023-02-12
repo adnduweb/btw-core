@@ -21,7 +21,8 @@ class Themes
      * @var array
      */
     public $collections = [
-        __DIR__ . '/../../../../../resources/Views/',
+        __DIR__ . '/../../resources/Views/',
+        // __DIR__ . '/../../../../../resources/Views/',
     ];
 
     /**

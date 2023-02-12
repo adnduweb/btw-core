@@ -20,7 +20,7 @@ class Auth extends ShieldAuth
      * ////////////////////////////////////////////////////////////////////
      */
     public array $views = [
-        'login'                       => '\Btw\Views\login',
+        'login'                       => '\Btw\Core\Views\login',
         'register'                    => '\CodeIgniter\Shield\Views\register',
         'layout'                      => 'master',
         'action_email_2fa'            => '\CodeIgniter\Shield\Views\email_2fa_show',
