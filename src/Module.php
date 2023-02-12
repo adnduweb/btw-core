@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Btw\Core\Users;
+namespace Btw\Core;
 
 use Btw\Core\Controllers\BaseModuleController;
 use Btw\Core\Menus\MenuItem;
@@ -39,7 +39,5 @@ class Module extends BaseModuleController
             'permission'      => 'users.settings',
         ]);
         $sidebar->menu('sidebar')->collection('settings')->addItem($item);
-
-        print_r($sidebar);exit;
     }
 }

@@ -87,8 +87,8 @@ class BtwCore
         ]);
         $sidebar->menu('sidebar')->collection('settings')->addItem($item);
 
-        print_r($sidebar);
-        exit;
+        // print_r($sidebar);
+        // exit;
     }
 
     /**
@@ -138,13 +138,15 @@ class BtwCore
      * into routes as a new namespace so that discover
      * features will automatically work for core modules.
      */
-    private function discoverCoreModules()
+    public function discoverCoreModules()
     {
-        if (!$modules = cache('bf-modules-search')) {
+        // if (!$modules = cache('btw-modules-search')) {
             $modules  = [];
             $excluded = ['Config', 'Language', 'Views'];
 
-            $map = directory_map(__DIR__, 1);
+            $map = directory_map(VENDORPATH . 'adnduweb', 1);
+
+        //    print_r($map); exit;
 
             foreach ($map as $row) {
                 if (substr($row, -1) !== DIRECTORY_SEPARATOR) {
@@ -156,19 +158,21 @@ class BtwCore
                     continue;
                 }
 
+                // echo $name; exit;
+
                 // $modules["Btw\\{$name}"] = __DIR__ . "/{$name}";
                 $key = str_replace('btw-', '' , $name);
                 if($key == 'core')
-                    $modules["btw\Core"] = APPPATH . "Modules/{$name}/src";
+                    $modules["btw\Core"] = VENDORPATH . "adnduweb/{$name}/src";
                 else
                     $modules["btw\\" . ucfirst($key)] = APPPATH . "Modules/{$name}/src";
 
             }
 
-            cache()->save('bf-modules-search', $modules);
-        }
+            cache()->save('btw-modules-search', $modules);
+        // }
 
-         print_r($modules); exit;
+        //  print_r($modules); exit;
 
         // save instances of our module configs
         foreach ($modules as $namespace => $dir) {

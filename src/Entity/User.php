@@ -43,7 +43,7 @@ class User extends ShieldUser
 
         $colors = setting('Users.avatarPalette');
 
-        return view('\Btw\Views\_avatar', [
+        return view('\Btw\Core\Views\_avatar', [
             'user'       => $this,
             'size'       => $size,
             'fontSize'   => 20 * ($size / 52),

@@ -26,6 +26,6 @@ class DashboardController extends AdminController
      */
     public function index()
     {
-        echo $this->render('Btw\Views\dashboard');
+        echo $this->render('Btw\Core\Views\dashboard');
     }
 }
