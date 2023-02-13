@@ -46,4 +46,13 @@ class Themes
     public $componentsLookupPaths = [
         APPPATH . 'Views/Components/',
     ];
+
+
+    /**
+     * --------------------------------------------------------------------------
+     * List media in Framework
+     * --------------------------------------------------------------------------
+     *
+     */
+    public $collectionsMedias =  __DIR__ . '/../../resources/medias/';
 }

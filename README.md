@@ -19,6 +19,9 @@ composer require adnduweb/btw-core:dev-develop
     npx tailwindcss init -p
     npm install flowbite && npm install tw-elements && npm install -D @tailwindcss/typography && npm install vite-plugin-live-reload 
 
+# Installation Alpine js
+    npm i alpinejs
+
 # Modification du Chargement des fichiers
 import liveReload from 'vite-plugin-live-reload'
 liveReload([__dirname + '/**/*.php', __dirname + '/app/Modules/**/*.php'])

@@ -70,6 +70,12 @@ class AuthGroups extends ShieldAuthGroups
         'users.edit'          => 'Can edit existing non-admin users',
         'users.delete'        => 'Can delete existing non-admin users',
         'beta.access'         => 'Can access beta-level features',
+        'users.list'          => 'Can view a list of users in the system',
+        'users.manage-admins' => 'Can manage other admins',
+        'users.view'          => 'Can view user details',
+        'users.create'        => 'Can create new non-admin users',
+        'users.edit'          => 'Can edit existing non-admin users',
+        'users.delete'        => 'Can delete existing non-admin users',
     ];
 
     /**
@@ -81,8 +87,14 @@ class AuthGroups extends ShieldAuthGroups
     public array $matrix = [
         'superadmin' => [
             'admin.*',
+            'groups.*',
             'users.*',
             'beta.*',
+            'widgets.*',
+            'consent.*',
+            'recycler.*',
+            'site.*',
+            'logs.*',
         ],
         'admin' => [
             'admin.access',

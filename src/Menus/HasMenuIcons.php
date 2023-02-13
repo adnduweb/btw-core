@@ -20,6 +20,14 @@ trait HasMenuIcons
      */
     protected $faIcon;
 
+     /**
+     * Link Svg
+     *
+     * @var string|null
+     */
+    protected $svgIcon;
+    
+
     /**
      * URL to icon, if an image.
      *
@@ -37,10 +45,26 @@ trait HasMenuIcons
      */
     public function setFontAwesomeIcon(string $icon)
     {
+       
         $this->faIcon = $icon;
 
         return $this;
     }
+
+     /**
+     * Sets the Svg icon name, like:
+     *
+     * - icon link media
+     *
+     * @return $this
+     */
+    public function setFontIconSvg(string $icon)
+    { 
+        $this->svgIcon = $icon;
+
+        return $this;
+    }
+
 
     /**
      * Sets the URL to the icon, if it's an image.
@@ -65,6 +89,10 @@ trait HasMenuIcons
         }
         if (! empty($this->iconUrl)) {
             return $this->buildImageIconTag($class);
+        }
+
+        if (! empty($this->svgIcon)) {
+            return $this->svgIcon;
         }
 
         return '';

@@ -38,6 +38,11 @@ class Registrar
                 'chain'   => ChainAuth::class,
                 'admin'   => Admin::class,
             ],
+            'globals' => [
+                'after' => array_merge($props['globals']['after'], [
+                    'alerts'
+                ]),
+            ],
             'filters' => [
                 'session' => [
                     'before' => [ADMIN_AREA . '*'],

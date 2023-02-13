@@ -4,6 +4,7 @@ namespace Btw\Core\Config;
 
 use Btw\Core\Btw;
 use Btw\Core\Menus\Manager as MenuManager;
+use Btw\Core\View\Theme as Theme;
 use Btw\Core\View\Metadata;
 use CodeIgniter\Config\BaseService;
 
@@ -65,4 +66,20 @@ class Services extends BaseService
         return new Metadata();
     }
 
+    /**
+     * Return List AdminTheme.
+     *
+     * @param Theme|null $config
+     * @param bool      $getShared
+     *
+
+     */
+    public static function theme(bool $getShared = true)
+    {
+        if ($getShared) {
+            return self::getSharedInstance('theme');
+        }
+
+        return new Theme();
+    }
 }

@@ -26,7 +26,7 @@ class Module extends BaseModuleController
         $item    = new MenuItem([
             'title'           => 'Users',
             'namedRoute'      => 'user-list',
-            'fontAwesomeIcon' => 'fas fa-users',
+            'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
             'permission'      => 'users.view',
         ]);
         $sidebar->menu('sidebar')->collection('content')->addItem($item);
@@ -35,9 +35,11 @@ class Module extends BaseModuleController
         $item = new MenuItem([
             'title'           => 'Users',
             'namedRoute'      => 'user-settings',
-            'fontAwesomeIcon' => 'fas fa-user-cog',
+            'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'users.settings',
         ]);
         $sidebar->menu('sidebar')->collection('settings')->addItem($item);
+
+        // print_r($sidebar);exit;
     }
 }

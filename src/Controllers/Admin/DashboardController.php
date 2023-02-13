@@ -21,11 +21,14 @@ use Bonfire\Dashboard\CellManager;
  */
 class DashboardController extends AdminController
 {
+
+    protected $viewPrefix = 'Btw\Core\Views\admin\\';
+
     /**
      * Displays the site's initial page.
      */
     public function index()
     {
-        echo $this->render('Btw\Core\Views\dashboard');
+        echo $this->render($this->viewPrefix . 'dashboard');
     }
 }
