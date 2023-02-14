@@ -130,16 +130,15 @@
 
                     <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-50 my-2 w-48 rounded-md shadow-lg origin-top-right right-0 top-full" style="display: none;" @click="open = false">
                         <div class="rounded-md ring-1 ring-black ring-opacity-5 dark:ring-slate-600 py-1 bg-white dark:bg-slate-800">
-                            <a class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700" href="https://demo.ticksify.com/agent/profile">Account Profile</a>
+                            <a class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700" href="/<?= ADMIN_AREA ?>/users/<?= auth()->id() ?>">Account Profile</a>
                             <a class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700" href="https://demo.ticksify.com/agent/canned-responses">Canned Response</a>
-                            <div class="relative block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out cursor-pointer dark:text-slate-300 dark:hover:bg-slate-600">
+                            <a class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700" href="<?= route_to('logout') ?>">Sign out</a>
+                            <!-- <div class="relative block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out cursor-pointer dark:text-slate-300 dark:hover:bg-slate-600">
                                 <div wire:id="mEkeNyTrikhGrddOMc9u">
                                     <div wire:click="logout" class="absolute inset-0"></div>
                                     <span>Sign out</span>
                                 </div>
-
-                                <!-- Livewire Component wire-end:mEkeNyTrikhGrddOMc9u -->
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

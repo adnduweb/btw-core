@@ -3,6 +3,7 @@
 namespace Btw\Core\Config;
 
 use Btw\Core\Filters\Admin;
+use Btw\Core\Filters\Protect;
 use Btw\Core\View\Decorator;
 use Btw\Core\Validation\UserRules;
 use CodeIgniter\Shield\Authentication\Passwords\ValidationRules as PasswordRules;
@@ -37,6 +38,7 @@ class Registrar
                 'tokens'  => TokenAuth::class,
                 'chain'   => ChainAuth::class,
                 'admin'   => Admin::class,
+                'protect'   => Protect::class
             ],
             'globals' => [
                 'after' => array_merge($props['globals']['after'], [
@@ -44,6 +46,9 @@ class Registrar
                 ]),
             ],
             'filters' => [
+                'protect' => [
+                    'before' => ['*'],
+                ],
                 'session' => [
                     'before' => [ADMIN_AREA . '*'],
                 ],

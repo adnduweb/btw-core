@@ -142,7 +142,7 @@
             </div>
             <div class="flex-1 flex flex-col overflow-y-auto bg-slate-800">
                 <nav class="flex-1 px-2 py-4">
-                    <a href="<?= route_to('dashbord'); ?>" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md <?= (in_array((string)$currentUrl, [route_to('dashbord')])) ? "bg-slate-900" : "" ; ?>  text-white">
+                    <a href="<?= route_to('dashboard'); ?>" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md <?= (in_array((string)$currentUrl, [route_to('dashboard')])) ? "bg-slate-900" : "" ; ?>  text-white">
                         <?= theme()->getSVG('duotune/graphs/gra008.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true); ?>
                         <?= lang('Admin.Dashboard'); ?>
                     </a>
@@ -169,7 +169,7 @@
 
                                         <?php foreach ($collection->items() as $item) : ?>
                                             <?php if ($item->userCanSee()) : ?>
-                                                <a class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-300 hover:bg-slate-700 hover:text-white <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
+                                                <a class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-300 hover:bg-slate-700 hover:text-white <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-slate-900" : "" ; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
                                                     <?= $item->icon ?>
                                                     <span><?= $item->title ?></span>
                                                 </a>

@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Btw\Core\Filters;
 
-use Btw\Core\BtwCore;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Shield\Authentication\Authenticators\Session;
 
-class Admin implements FilterInterface
+/**
+ * Session Authentication Filter.
+ *
+ * Email/Password-based authentication for web applications.
+ */
+class Protect implements FilterInterface
 {
+
     /**
      * Do whatever processing this filter needs to do.
      * By default it should not return anything during
@@ -29,24 +36,25 @@ class Admin implements FilterInterface
     {
         helper(['auth', 'setting']);
 
-        // Boot Bonfire
-        (new BtwCore())->boot();
         $current = (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token');
 
-      
+        /** @var Session $authenticator */
+        $authenticator = auth('session')->getAuthenticator();
 
-        if (! auth('session')->user()->can('admin.access')) {
-            return redirect()->to('/')->with('error', lang('Bonfire.notAuthorized'));
+        if ($authenticator->loggedIn()) {
+            // echo 'fgsdfgsdfg'; exit;
+            if (in_array((string)$current, [route_to('login')])) {
+                return redirect()->route('dashboard');
+            }
         }
+
     }
 
     /**
-     * Allows After filters to inspect and modify the response
-     * object as needed. This method does not allow any way
-     * to stop execution of other after filters, short of
-     * throwing an Exception or Error.
+     * We don't have anything to do here.
      *
-     * @param array|null $arguments
+     * @param Response|ResponseInterface $response
+     * @param array|null                 $arguments
      *
      * @return mixed
      */
