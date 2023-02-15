@@ -41,6 +41,9 @@ class Registrar
                 'protect'   => Protect::class
             ],
             'globals' => [
+                'before' => [
+                    'csrf' => ['except' => ['api/record/[0-9]+']],
+                ],
                 'after' => array_merge($props['globals']['after'], [
                     'alerts'
                 ]),

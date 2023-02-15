@@ -4,14 +4,13 @@
 <head>
 
     <?= $viewMeta->render('meta') ?>
-
     <?= $viewMeta->render('title') ?>
-
+    <?= csrf_meta() ?>
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
 </head>
 
-<body x-data class="h-full antialiased font-sans bg-slate-100">
+<body hx-ext="ajax-header" x-data class="h-full antialiased font-sans bg-slate-100">
 
     <aside id="alerts-wrapper">
         {alerts}
@@ -45,6 +44,8 @@
             </div>
         </div>
     </div>
+
+    <x-message />
 
     <?= $this->renderSection('scripts') ?>
     <?= $viewMeta->render('script') ?>

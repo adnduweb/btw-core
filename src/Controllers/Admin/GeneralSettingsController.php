@@ -12,6 +12,8 @@
 namespace Btw\Core\Controllers\Admin;
 
 use Btw\Core\Controllers\AdminController;
+use CodeIgniter\API\ResponseTrait;
+use Btw\Core\Adapters\RawJsonResponse;
 use DateTimeZone;
 
 /**
@@ -19,6 +21,9 @@ use DateTimeZone;
  */
 class GeneralSettingsController extends AdminController
 {
+
+    use ResponseTrait;
+
     /**
      * The theme to use.
      *
@@ -33,7 +38,7 @@ class GeneralSettingsController extends AdminController
      */
     public function general()
     {
-        if (! auth()->user()->can('admin.settings')) {
+        if (!auth()->user()->can('admin.settings')) {
             return redirect()->to(ADMIN_AREA)->with('error', lang('Btw.notAuthorized'));
         }
 
@@ -47,7 +52,7 @@ class GeneralSettingsController extends AdminController
             }
 
             [$area, $zone] = explode('/', $timezone);
-            if (! in_array($area, $timezoneAreas, true)) {
+            if (!in_array($area, $timezoneAreas, true)) {
                 $timezoneAreas[] = $area;
             }
         }
@@ -73,7 +78,7 @@ class GeneralSettingsController extends AdminController
      */
     public function saveGeneral()
     {
-        if (! auth()->user()->can('admin.settings')) {
+        if (!auth()->user()->can('admin.settings')) {
             return redirect()->to(ADMIN_AREA)->with('error', lang('Btw\Core.notAuthorized'));
         }
 
@@ -84,18 +89,30 @@ class GeneralSettingsController extends AdminController
             'timeFormat' => 'required|string',
         ];
 
-        if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        if (!$this->validate($rules)) {
+            // return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            $response = [
+                'messages' => [
+                    'errors' => $this->validator->getErrors()
+                ]
+            ];
+            return $this->respond($response, 422);
         }
 
-        setting('Site.siteName', $this->request->getPost('siteName'));
-        setting('Site.siteOnline', $this->request->getPost('siteOnline'));
-        setting('App.appTimezone', $this->request->getPost('timezone'));
+        setting('Site.siteName', $this->request->getVar('siteName'));
+        setting('Site.siteOnline', $this->request->getVar('siteOnline'));
+        setting('App.appTimezone', $this->request->getVar('timezone'));
 
-        setting('App.dateFormat', $this->request->getPost('dateFormat'));
-        setting('App.timeFormat', $this->request->getPost('timeFormat'));
+        setting('App.dateFormat', $this->request->getVar('dateFormat'));
+        setting('App.timeFormat', $this->request->getVar('timeFormat'));
 
-        return redirect()->to(ADMIN_AREA . '/settings/general')->with('message', lang('Btw.resourcesSaved', ['settings']));
+        $response = [
+            'messages' => [
+                'success' => lang('Btw.resourcesSaved', ['settings'])
+            ]
+        ];
+        return $this->respond($response, 200);
+
     }
 
     /**

@@ -21,6 +21,10 @@ composer require adnduweb/btw-core:dev-develop
 
 # Installation Alpine js
     npm i alpinejs
+    npm install @alpinejs/persist
+
+# Installation Htmx js
+    npm i htmx.org
 
 # Modification du Chargement des fichiers
 import liveReload from 'vite-plugin-live-reload'
@@ -29,3 +33,10 @@ liveReload([__dirname + '/**/*.php', __dirname + '/app/Modules/**/*.php'])
 # Lancement de l'application
     php spark serve
     npm run dev
+
+
+# Inspirations
+https://demo.cartify.dev/admin/settings
+https://www.patreon.com/lonnieezell/posts
+https://demo.ticksify.com/agent/login
+https://viewi.net/docs/integrations-code-igniter4
