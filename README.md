@@ -41,3 +41,6 @@ https://www.patreon.com/lonnieezell/posts
 https://demo.ticksify.com/agent/login
 https://viewi.net/docs/integrations-code-igniter4
 https://demos.creative-tim.com/notus-react/?_ga=2.243129153.299807871.1676216059-1015485538.1676124710#/admin/settings
+https://rappasoft.com/blog/snippet-5-creating-a-simple-but-cool-delete-button-with-alpinejs-and-tailwindcss
+https://django-htmx-alpine.nicholasmoen.com/tasks/
+https://htmx.org/extensions/web-sockets/

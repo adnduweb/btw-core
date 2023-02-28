@@ -6,3 +6,11 @@
 .svg-white svg path {
   @apply fill-white
 }
+
+[x-cloak] {
+  @apply hidden
+}
+
+[data-loading] {
+  display: none;
+}

@@ -1,8 +1,10 @@
 //This is you main entry file, Be creative =)
 
 import "../css/app.css"
-
+console.log('la ');
 import 'htmx.org';
+// general config
+htmx.config.useTemplateFragments = true;
 
 import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
@@ -10,7 +12,8 @@ import { defineExtension } from "htmx.org";
 Alpine.plugin(persist)
 
 window.Alpine = Alpine;
-
+import "../js/morph.js"
+import "../js/loading-states.js"
 htmx.defineExtension('json-enc', {
     onEvent: function (name, evt) {
         if (name === "htmx:configRequest") {
@@ -24,8 +27,36 @@ htmx.defineExtension('json-enc', {
     }
 });
 
+
+htmx.defineExtension('alpine-morph', {
+    isInlineSwap: function (swapStyle) {
+        return swapStyle === 'morph';
+    },
+    handleSwap: function (swapStyle, target, fragment) {
+        if (swapStyle === 'morph') {
+            if (fragment.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                Alpine.morph(target, fragment.firstElementChild);
+                return [target];
+            } else {
+                Alpine.morph(target, fragment.outerHTML);
+                return [target];
+            }
+        }
+    }
+});
+
 //Prefix alpine special attributes to pass W3C validation
 document.addEventListener('alpine:init', () => {
+
+    Alpine.data('listen', () => ({
+        confirmationModal: false,
+        emitTo(link, action, attributes) {
+            console.log(link);
+            console.log(action);
+            console.log(attributes);
+            this.confirmationModal = true;
+        }
+    }));
 
     Alpine.store("toasts", {
         counter: 0,
@@ -180,7 +211,7 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
             } else if (evt.detail.xhr.status === 403) {
                 // if the response code 418 (I'm a teapot) is returned, retarget the
                 // content of the response to the element with the id `teapot`
-                confirm("This page has expired.\nWould you like to refresh the page?") && window.location.reload()
+                // confirm("This page has expired.\nWould you like to refresh the page?") && window.location.reload()
             }
 
         });
@@ -287,4 +318,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         UpdateProcessWireFrontendContentUsingHtmxDemo.listenToHTMXRequests()
     }
+})
+
+// this function does run, due to HTMX's HX-Trigger-After-Swap header
+// but cannot change the showDelete paramter above
+document.body.addEventListener('deleteConfirmed', function (evt) {
+    console.log(evt);
+    document.getElementById('recordSelector').dispatchEvent(new CustomEvent('deleteOK'));
+    // Alpine.data('showDelete', () => {showDelete = true});
 })
