@@ -13,7 +13,7 @@ namespace Btw\Core\Commands;
 
 use Btw\Core\Commands\Install\Publisher;
 use Btw\Core\Users\Models\UserModel;
-use Btw\Core\Users\User;
+use Btw\Core\Entity\User;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
@@ -45,7 +45,7 @@ class Install extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'bf:install';
+    protected $usage = 'btw:install';
 
     /**
      * The Command's Arguments
@@ -97,7 +97,7 @@ class Install extends BaseCommand
             CLI::write('If you chose SQLite3 as your database driver, the database will be created automatically on the next step (migration).', 'yellow');
             CLI::newLine();
             CLI::write('To migrate and create the initial user, please run: ', 'yellow');
-            CLI::write("\tphp spark bf:install --continue", 'green');
+            CLI::write("\tphp spark btw:install --continue", 'green');
         } else {
             $this->migrate();
             $this->createUser();
