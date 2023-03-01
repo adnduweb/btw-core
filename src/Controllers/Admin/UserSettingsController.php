@@ -11,9 +11,9 @@
 
 namespace Btw\Core\Controllers\Admin;
 
-use Btw\Core\Controllers\BaseController;
+use Btw\Core\Controllers\AdminController;
 
-class UserSettingsController extends BaseController
+class UserSettingsController extends AdminController
 {
     protected $theme      = 'Admin';
     protected $viewPrefix = 'Btw\Core\Views\admin\users\\';
@@ -52,39 +52,98 @@ class UserSettingsController extends BaseController
      */
     public function save()
     {
-        $rules = [
-            'minimumPasswordLength' => 'required|integer|greater_than[6]',
-            'defaultGroup'          => 'required|string',
-        ];
 
-        if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        switch ($this->request->getVar('section')) {
+            case 'registration':
+
+                $post = $this->request->getVar();
+
+                $validation = service('validation');
+
+                $validation->setRules([
+                    'defaultGroup'          => 'required|string',
+                ]);
+
+                if (!$validation->run($post)) {
+                    return view('Btw\Core\Views\admin\users\form_cell_registration', [
+                        'validation' => $validation
+                    ]) . alert('danger', 'Form validation failed.');;
+                }
+
+                setting('Auth.allowRegistration', (bool) $this->request->getPost('allowRegistration'));
+
+                // Actions
+                $actions             = setting('Auth.actions');
+                $actions['register'] = $this->request->getPost('emailActivation') ?? null;
+                setting('Auth.actions', $actions);
+
+
+                return view('Btw\Core\Views\admin\users\form_cell_registration', [
+                    'groups' => setting('AuthGroups.groups'),
+                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
+                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+
+                break;
+            case 'login':
+
+                // Remember Me
+                $sessionConfig                     = setting('Auth.sessionConfig');
+                $sessionConfig['allowRemembering'] = $this->request->getPost('allowRemember') ?? false;
+                $sessionConfig['rememberLength']   = $this->request->getPost('rememberLength');
+                setting('Auth.sessionConfig', $sessionConfig);
+
+                // Actions
+                $actions             = setting('Auth.actions');
+                $actions['login']    = $this->request->getPost('email2FA') ?? null;
+                setting('Auth.actions', $actions);
+
+                return view('Btw\Core\Views\admin\users\form_cell_login', [
+                    'groups' => setting('AuthGroups.groups'),
+                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
+                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+
+                break;
+            case 'password':
+
+                $post = $this->request->getVar();
+
+                $validation = service('validation');
+
+                $validation->setRules([
+                    'minimumPasswordLength' => 'required|integer|greater_than[6]'
+                ]);
+
+                if (!$validation->run($post)) {
+                    return view('Btw\Core\Views\admin\users\form_cell_password', [
+                        'validation' => $validation
+                    ]) . alert('danger', 'Form validation failed.');;
+                }
+
+                setting('Auth.minimumPasswordLength', (int) $this->request->getPost('minimumPasswordLength'));
+                setting('Auth.passwordValidators', $this->request->getPost('validators'));
+
+                return view('Btw\Core\Views\admin\users\form_cell_password', [
+                    'groups' => setting('AuthGroups.groups'),
+                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
+                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+
+                break;
+
+            case 'avatar':
+
+                // Avatars
+                setting('Users.useGravatar', $this->request->getPost('useGravatar') ?? false);
+                setting('Users.gravatarDefault', $this->request->getPost('gravatarDefault'));
+                setting('Users.avatarNameBasis', $this->request->getPost('avatarNameBasis'));
+
+                return view('Btw\Core\Views\admin\users\form_cell_avatar', [
+                    'groups' => setting('AuthGroups.groups'),
+                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
+                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+
+                break;
+            default:
+                alert('danger', lang('Btw.erreor', ['settings']));
         }
-
-        setting('Auth.allowRegistration', (bool) $this->request->getPost('allowRegistration'));
-        setting('Auth.minimumPasswordLength', (int) $this->request->getPost('minimumPasswordLength'));
-        setting('Auth.passwordValidators', $this->request->getPost('validators'));
-        setting('AuthGroups.defaultGroup', $this->request->getPost('defaultGroup'));
-
-        // Actions
-        $actions             = setting('Auth.actions');
-        $actions['login']    = $this->request->getPost('email2FA') ?? null;
-        $actions['register'] = $this->request->getPost('emailActivation') ?? null;
-        setting('Auth.actions', $actions);
-
-        // Remember Me
-        $sessionConfig                     = setting('Auth.sessionConfig');
-        $sessionConfig['allowRemembering'] = $this->request->getPost('allowRemember') ?? false;
-        $sessionConfig['rememberLength']   = $this->request->getPost('rememberLength');
-        setting('Auth.sessionConfig', $sessionConfig);
-
-        // Avatars
-        setting('Users.useGravatar', $this->request->getPost('useGravatar') ?? false);
-        setting('Users.gravatarDefault', $this->request->getPost('gravatarDefault'));
-        setting('Users.avatarNameBasis', $this->request->getPost('avatarNameBasis'));
-
-        alert('success', lang('Bonfire.resourcesSaved', ['settings']));
-
-        return redirect()->back();
     }
 }

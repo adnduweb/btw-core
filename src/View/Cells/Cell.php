@@ -44,7 +44,6 @@ class Cell
         if (! function_exists('decamelize')) {
             helper('inflector');
         }
-        echo 'fdsgdgsdg'; exit;
 
         return $this->view($this->view);
     }

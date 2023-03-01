@@ -94,7 +94,7 @@ class ComponentRenderer
             $component  = $this->factory($match['name'], $view);
 
             return $component instanceof Component
-                ? $component->withView($view)->render()
+                ? $component->withView($view)->withData($attributes)->render()
                 : $this->renderView($view, $attributes);
         }, $output);
     }
@@ -188,7 +188,8 @@ class ComponentRenderer
         if (strpos($name, '.')) {
             $tav =  explode('.', $name);
             $class    = pascalize($tav[1]) . 'Component.php';
-            $filePath = $tav[0] . '/' . str_replace($tav[1] . '.php', $class, $view);
+            $filePath = str_replace(ucfirst($tav[1]) . '.php', $class, $view);
+
         } else {
             $class    = pascalize($name) . 'Component.php';
             $filePath = str_replace($name . '.php', $class, $view);
