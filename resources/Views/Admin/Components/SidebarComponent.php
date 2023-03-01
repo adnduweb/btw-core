@@ -1,0 +1,20 @@
+<?php
+
+use Btw\Core\View\Component;
+
+/**
+ * Class SidebarComponent
+ *
+ * Uses the MenuManager to get the registered menu items
+ * and render out the sidebar.
+ */
+class SidebarComponent extends Component
+{
+    public function render(): string
+    {
+        return $this->renderView($this->view, [
+            'menu' => service('menus')->menu('sidebar'),
+            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        ]);
+    }
+}

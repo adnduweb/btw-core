@@ -41,5 +41,15 @@ class Module extends BaseModuleController
         $sidebar->menu('sidebar')->collection('settings')->addItem($item);
 
         // print_r($sidebar);exit;
+
+         // Add to the Content menu
+         $sidebar = service('menus');
+         $item    = new MenuItem([
+             'title'           => 'Groups',
+             'namedRoute'      => 'groups-list',
+             'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
+             'permission'      => 'groups.view',
+         ]);
+         $sidebar->menu('sidebar')->collection('settings')->addItem($item);
     }
 }

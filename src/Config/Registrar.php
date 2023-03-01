@@ -41,12 +41,12 @@ class Registrar
                 'protect'   => Protect::class
             ],
             'globals' => [
-                'before' => [
-                    'csrf' => ['except' => ['api/record/[0-9]+']],
-                ],
-                'after' => array_merge($props['globals']['after'], [
-                    'alerts'
-                ]),
+                // 'before' => [
+                //     'csrf' => ['except' => ['api/record/[0-9]+']],
+                // ],
+                // 'after' => array_merge($props['globals']['after'], [
+                //     'alerts'
+                // ]),
             ],
             'filters' => [
                 'protect' => [
@@ -83,6 +83,15 @@ class Registrar
         return [
             'decorators' => [
                 Decorator::class,
+            ],
+        ];
+    }
+
+    public static function Pager(): array
+    {
+        return [
+            'templates' => [
+                'default_htmx_full' => 'Btw\Core\Views\Pager\default_htmx_full',
             ],
         ];
     }

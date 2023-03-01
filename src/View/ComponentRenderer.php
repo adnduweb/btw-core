@@ -144,7 +144,7 @@ class ComponentRenderer
             )?
         /x';
 
-        if (! preg_match_all($pattern, $attributeString, $matches, PREG_SET_ORDER)) {
+        if (!preg_match_all($pattern, $attributeString, $matches, PREG_SET_ORDER)) {
             return [];
         }
 
@@ -183,19 +183,29 @@ class ComponentRenderer
     private function factory(string $name, string $view): ?Component
     {
         // Locate the class in the same folder as the view
-        $class    = pascalize($name) . 'Component.php';
-        $filePath = str_replace($name . '.php', $class, $view);
+
+        // Dir ? 
+        if (strpos($name, '.')) {
+            $tav =  explode('.', $name);
+            $class    = pascalize($tav[1]) . 'Component.php';
+            $filePath = $tav[0] . '/' . str_replace($tav[1] . '.php', $class, $view);
+        } else {
+            $class    = pascalize($name) . 'Component.php';
+            $filePath = str_replace($name . '.php', $class, $view);
+        }
 
         if (empty($filePath)) {
             return null;
         }
 
-        if (! file_exists($filePath)) {
+
+        if (!file_exists($filePath)) {
             return null;
         }
+
         $className = service('locator')->getClassname($filePath);
 
-        if (! class_exists($className)) {
+        if (!class_exists($className)) {
             include_once $filePath;
         }
 
@@ -211,7 +221,19 @@ class ComponentRenderer
     {
         // First search within the current theme
         $path     = Theme::path();
-        $filePath = $path . 'Components/' . $name . '.php';
+        if (empty($path)) {
+            if (service('request')->header('X-Theme')) {
+                $path  = Theme::path(ucfirst(service('request')->getHeaderLine('X-Theme')));
+            }
+        }
+
+        // Dir ? 
+        if (strpos($name, '.')) {
+            $tav =  explode('.', $name);
+            $filePath = $path . 'Components/' . ucfirst($tav[0]) . '/' . ucfirst($tav[1]) . '.php';
+        } else {
+            $filePath = $path . 'Components/' . $name . '.php';
+        }
 
         if (is_file($filePath)) {
             return $filePath;
