@@ -31,6 +31,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->post('settings/users', 'UserSettingsController::save', ['as' => 'user-settings-save']);
     // Manage Users
     $routes->match(['get', 'post'], 'users', 'UserController::list', ['as' => 'user-list']);
+    $routes->get('user/update', 'UserSettingsController::update', ['as' => 'user-update']);
 
     $routes->get('groups', 'GroupsController::index', ['as' => 'groups-list']);
     $routes->get('groups/show/(:any)', 'GroupsController::show/$1', ['as' => 'group-show']);

@@ -12,12 +12,6 @@
 
 <body hx-ext="morph" hx-ext="ajax-header" hx-headers='{"<?= csrf_token() ?>": "<?= csrf_hash() ?>", "X-Theme": "admin"}' class="h-full antialiased font-sans bg-slate-100">
 
-    <!-- <aside id="alerts-wrapper">
-        {alerts}
-    </aside> -->
-
-
-
     <!-- Main content -->
     <div class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
         <div class="h-100 d-flex align-items-stretch">

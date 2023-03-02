@@ -19,9 +19,9 @@
                 </p>
             </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
             <?= form_open(route_to('user-settings-save'), [
-                'id' => 'kt_users_form_registration', 'hx-post' => route_to('user-settings-save'), 'hx-target' => '#registration',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loadingtest",
+                'id' => 'kt_users_form_registration', 'hx-post' => route_to('user-settings-save'), 'hx-target' => '#registration',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingregistration",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <?= csrf_field() ?>
@@ -40,9 +40,9 @@
                 </p>
             </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
             <?= form_open(route_to('user-settings-save'), [
-                'id' => 'kt_users_form_login', 'hx-post' => route_to('user-settings-save'), 'hx-target' => '#login',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loading",
+                'id' => 'kt_users_form_login', 'hx-post' => route_to('user-settings-save'), 'hx-target' => '#login',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc",  'novalidate' => false, 'data-loading-target' => "#loadinglogin",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <?= csrf_field() ?>
@@ -61,9 +61,9 @@
                 </p>
             </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
             <?= form_open(route_to('user-settings-save'), [
-                'id' => 'kt_users_form_password', 'hx-post' => route_to('user-settings-save'), 'hx-target' => '#password',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loading",
+                'id' => 'kt_users_form_password', 'hx-post' => route_to('user-settings-save'), 'hx-target' => '#password',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc",  'novalidate' => false, 'data-loading-target' => "#loadingpassword",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <?= csrf_field() ?>
@@ -82,9 +82,9 @@
                 </p>
             </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
             <?= form_open(route_to('user-settings-save'), [
-                'id' => 'kt_users_form_avatar', 'hx-post' => route_to('user-settings-save'), 'hx-target' => '#avatar',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loading",
+                'id' => 'kt_users_form_avatar', 'hx-post' => route_to('user-settings-save'), 'hx-target' => '#avatar', 'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc",  'novalidate' => false, 'data-loading-target' => "#loadingavatar",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <?= csrf_field() ?>
@@ -104,6 +104,11 @@
 
 <?php $this->section('scripts') ?>
 <script>
+
+document.body.addEventListener("updateAvatar",
+    function (evt) {
+        console.info("avatar updated")
+    })
 
 </script>
 <?php $this->endSection() ?>

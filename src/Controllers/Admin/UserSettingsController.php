@@ -56,7 +56,7 @@ class UserSettingsController extends AdminController
         switch ($this->request->getVar('section')) {
             case 'registration':
 
-                $post = $this->request->getVar();
+                $requestJson = $this->request->getJSON(true);
 
                 $validation = service('validation');
 
@@ -64,19 +64,19 @@ class UserSettingsController extends AdminController
                     'defaultGroup'          => 'required|string',
                 ]);
 
-                if (!$validation->run($post)) {
+                if (!$validation->run($requestJson)) {
                     return view('Btw\Core\Views\admin\users\form_cell_registration', [
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');;
                 }
 
-                setting('Auth.allowRegistration', (bool) $this->request->getPost('allowRegistration'));
+                setting('Auth.allowRegistration', (bool) $requestJson['allowRegistration']);
+                Setting('AuthGroups.defaultGroup', $requestJson['defaultGroup']);
 
                 // Actions
                 $actions             = setting('Auth.actions');
-                $actions['register'] = $this->request->getPost('emailActivation') ?? null;
+                $actions['register'] = $requestJson['emailActivation'] ?? null;
                 setting('Auth.actions', $actions);
-
 
                 return view('Btw\Core\Views\admin\users\form_cell_registration', [
                     'groups' => setting('AuthGroups.groups'),
@@ -86,15 +86,17 @@ class UserSettingsController extends AdminController
                 break;
             case 'login':
 
+                $requestJson = $this->request->getJSON(true);
+
                 // Remember Me
                 $sessionConfig                     = setting('Auth.sessionConfig');
-                $sessionConfig['allowRemembering'] = $this->request->getPost('allowRemember') ?? false;
-                $sessionConfig['rememberLength']   = $this->request->getPost('rememberLength');
+                $sessionConfig['allowRemembering'] = $requestJson['allowRemember'] ?? false;
+                $sessionConfig['rememberLength']   = $requestJson['rememberLength'];
                 setting('Auth.sessionConfig', $sessionConfig);
 
                 // Actions
                 $actions             = setting('Auth.actions');
-                $actions['login']    = $this->request->getPost('email2FA') ?? null;
+                $actions['login']    = $requestJson['email2FA'] ?? null;
                 setting('Auth.actions', $actions);
 
                 return view('Btw\Core\Views\admin\users\form_cell_login', [
@@ -105,7 +107,7 @@ class UserSettingsController extends AdminController
                 break;
             case 'password':
 
-                $post = $this->request->getVar();
+                $requestJson = $this->request->getJSON(true);
 
                 $validation = service('validation');
 
@@ -113,14 +115,14 @@ class UserSettingsController extends AdminController
                     'minimumPasswordLength' => 'required|integer|greater_than[6]'
                 ]);
 
-                if (!$validation->run($post)) {
+                if (!$validation->run($requestJson)) {
                     return view('Btw\Core\Views\admin\users\form_cell_password', [
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');;
                 }
 
-                setting('Auth.minimumPasswordLength', (int) $this->request->getPost('minimumPasswordLength'));
-                setting('Auth.passwordValidators', $this->request->getPost('validators'));
+                setting('Auth.minimumPasswordLength', (int)$requestJson['minimumPasswordLength']);
+                setting('Auth.passwordValidators',$requestJson['validators']);
 
                 return view('Btw\Core\Views\admin\users\form_cell_password', [
                     'groups' => setting('AuthGroups.groups'),
@@ -131,11 +133,14 @@ class UserSettingsController extends AdminController
 
             case 'avatar':
 
-                // Avatars
-                setting('Users.useGravatar', $this->request->getPost('useGravatar') ?? false);
-                setting('Users.gravatarDefault', $this->request->getPost('gravatarDefault'));
-                setting('Users.avatarNameBasis', $this->request->getPost('avatarNameBasis'));
+                $requestJson = $this->request->getJSON(true);
 
+                // Avatars
+                setting('Users.useGravatar', $requestJson['useGravatar'] ?? false);
+                setting('Users.gravatarDefault', $requestJson['gravatarDefault']);
+                setting('Users.avatarNameBasis', $requestJson['avatarNameBasis']);
+
+                $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
                 return view('Btw\Core\Views\admin\users\form_cell_avatar', [
                     'groups' => setting('AuthGroups.groups'),
                     'defaultGroup'    => setting('AuthGroups.defaultGroup'),
@@ -145,5 +150,13 @@ class UserSettingsController extends AdminController
             default:
                 alert('danger', lang('Btw.erreor', ['settings']));
         }
+    }
+
+    public function update(){
+
+        return view('Themes\Admin\partials\headers\renderAvatar', [
+            'auth' => auth()
+        ]); 
+        
     }
 }

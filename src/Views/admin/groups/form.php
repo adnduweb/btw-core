@@ -17,7 +17,7 @@
                 </p>
             </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="mt-5 md:mt-0 md:col-span-2 data-loading-states">
             <?= form_open(route_to('group-save'), [
                 'id' => 'kt_groups_form', 'hx-post' => route_to('group-save'), 'hx-target' => '#allergy_target',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loading",
                 'data-loading-class-remove' => "hidden"
