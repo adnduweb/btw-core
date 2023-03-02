@@ -80,11 +80,11 @@ class GroupsController extends AdminController
         }
 
         $data['table'] = new TableHelper($this->baseURL, $data['sortColumn'], $data['sortDirection']);
+       
 
         if ($this->request->isHtmx() && !$this->request->isBoosted()) {
-            return view('Michalsn\CodeIgniterHtmxDemo\Views\books\table', $data);
+            return view('Btw\Core\Views\admin\groups\table', $data);
         }
-
 
         echo $this->render($this->viewPrefix . 'index', $data);
     }

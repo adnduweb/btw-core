@@ -1,9 +1,9 @@
 <?php if (empty($groups)) : ?>
     <div class="card-body">
         <div class="empty">
-            <p class="empty-title">No books</p>
+            <p class="empty-title">No groups</p>
             <p class="empty-subtitle text-muted">
-                No books found :(
+                No groups found :(
             </p>
         </div>
     </div>
