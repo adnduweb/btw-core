@@ -1,4 +1,4 @@
-<div class="bg-white sticky top-0 z-20 flex-shrink-0 flex h-16 border-b border-slate-200 dark:border-slate-600 dark:bg-slate-800">
+<div class="relative z-10 flex h-16 flex-shrink-0 bg-white shadow border-slate-200 dark:border-slate-600 dark:bg-slate-800">
     <button @click="open = !open" type="button" class="px-4 border-r border-slate-200 text-slate-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-slate-900 lg:hidden dark:border-slate-600">
         <span class="sr-only">Open sidebar</span>
         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">

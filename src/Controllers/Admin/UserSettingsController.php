@@ -18,6 +18,20 @@ class UserSettingsController extends AdminController
     protected $theme      = 'Admin';
     protected $viewPrefix = 'Btw\Core\Views\admin\users\\';
 
+    protected $rememberOptions = [
+        '1 hour'   => 1 * HOUR,
+        '4 hours'  => 4 * HOUR,
+        '8 hours'  => 8 * HOUR,
+        '25 hours' => 24 * HOUR,
+        '1 week'   => 1 * WEEK,
+        '2 weeks'  => 2 * WEEK,
+        '3 weeks'  => 3 * WEEK,
+        '1 month'  => 1 * MONTH,
+        '2 months' => 2 * MONTH,
+        '6 months' => 6 * MONTH,
+        '1 year'   => 12 * MONTH,
+    ];
+
     /**
      * Display the Email settings page.
      *
@@ -25,22 +39,10 @@ class UserSettingsController extends AdminController
      */
     public function index()
     {
-        $rememberOptions = [
-            '1 hour'   => 1 * HOUR,
-            '4 hours'  => 4 * HOUR,
-            '8 hours'  => 8 * HOUR,
-            '25 hours' => 24 * HOUR,
-            '1 week'   => 1 * WEEK,
-            '2 weeks'  => 2 * WEEK,
-            '3 weeks'  => 3 * WEEK,
-            '1 month'  => 1 * MONTH,
-            '2 months' => 2 * MONTH,
-            '6 months' => 6 * MONTH,
-            '1 year'   => 12 * MONTH,
-        ];
+       
 
         return $this->render($this->viewPrefix . 'user_settings', [
-            'rememberOptions' => $rememberOptions,
+            'rememberOptions' => $this->rememberOptions,
             'defaultGroup'    => setting('AuthGroups.defaultGroup'),
             'groups'          => setting('AuthGroups.groups'),
         ]);
@@ -70,7 +72,7 @@ class UserSettingsController extends AdminController
                     ]) . alert('danger', 'Form validation failed.');;
                 }
 
-                setting('Auth.allowRegistration', (bool) $requestJson['allowRegistration']);
+                setting('Auth.allowRegistration', $requestJson['allowRegistration'] ?? false );
                 Setting('AuthGroups.defaultGroup', $requestJson['defaultGroup']);
 
                 // Actions
@@ -100,6 +102,7 @@ class UserSettingsController extends AdminController
                 setting('Auth.actions', $actions);
 
                 return view('Btw\Core\Views\admin\users\form_cell_login', [
+                    'rememberOptions' => $this->rememberOptions,
                     'groups' => setting('AuthGroups.groups'),
                     'defaultGroup'    => setting('AuthGroups.defaultGroup'),
                 ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
@@ -122,7 +125,7 @@ class UserSettingsController extends AdminController
                 }
 
                 setting('Auth.minimumPasswordLength', (int)$requestJson['minimumPasswordLength']);
-                setting('Auth.passwordValidators',$requestJson['validators']);
+                setting('Auth.passwordValidators',$requestJson['validators[]']);
 
                 return view('Btw\Core\Views\admin\users\form_cell_password', [
                     'groups' => setting('AuthGroups.groups'),

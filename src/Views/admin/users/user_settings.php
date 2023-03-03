@@ -3,13 +3,9 @@
 <?php $this->section('main') ?>
 <x-page-head>
     <x-module-title><i class="fas fa-user"></i> Users</x-module-title>
-    <h2>Settings</h2>
 </x-page-head>
 
 <x-admin-box>
-
-
-
     <div class="md:grid md:grid-cols-3 md:gap-6 mb-10">
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
@@ -93,9 +89,6 @@
             <?= form_close(); ?>
         </div>
     </div>
-
-
-
 
 
 

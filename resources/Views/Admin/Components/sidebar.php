@@ -1,4 +1,4 @@
-<div hx-boost="true" style="color-scheme: dark;">
+<div class="flex md:flex-shrink-0" hx-boost="true" style="color-scheme: dark;">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div x-show="open" class="relative z-40 lg:hidden" role="dialog" aria-modal="true" style="display: none;">
         <div x-show="open" x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-on:click="open = false" class="fixed inset-0 bg-slate-600 bg-opacity-75" style="display: none;"></div>
@@ -133,7 +133,7 @@
         </div>
     </div>
     <!-- Static sidebar for desktop -->
-    <div class="hidden lg:flex lg:w-64 lg:fixed lg:inset-y-0">
+    <div class="hidden lg:flex w-64 flex-col">
         <div class="flex-1 flex flex-col min-h-0 dark:border-r dark:border-slate-600">
             <div class="flex h-16 flex-shrink-0 px-4 bg-slate-800">
                 <a href="https://demo.ticksify.com/agent" class="flex items-center">

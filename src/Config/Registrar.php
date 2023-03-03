@@ -107,22 +107,30 @@ class Registrar
         $autoloader = service('autoloader');
 
         $namespaces = [];
+        $namespaces["Themes"] = [ROOTPATH .'resources/Views'];
+        $namespaces["Btw\\Core"] = [realpath(__DIR__ . "/../")];
 
-        // echo realpath(__DIR__ . "/../"); 
+        $paths = config('Btw')->appModules;
+        foreach ($paths as $namespace => $dir) {
+            if (!is_dir($dir)) {
+                continue;
+            }
 
-        $namespaces["Btw\\Core}"] = [realpath(__DIR__ . "/../")];
+            $dir = rtrim($dir, DIRECTORY_SEPARATOR);
+            $map = directory_map($dir, 1);
 
-        // foreach ($map as $row) {
-        //     if (substr($row, -1) !== DIRECTORY_SEPARATOR || in_array(trim($row, '/ '), self::$nonModuleFolders, true)) {
-        //         continue;
-        //     }
+            foreach ($map as $row) {
+                if (substr($row, -1) !== DIRECTORY_SEPARATOR) {
+                    continue;
+                }
 
-        //     $name = trim($row, DIRECTORY_SEPARATOR);
+                $name = trim($row, DIRECTORY_SEPARATOR);
+                // $modules["{$namespace}\\{$name}"] = "{$dir}/{$name}";
+                $key = str_replace('btw-', '', $name);
+                $namespaces["Btw\\" . ucfirst($key)] = [APPPATH . "Modules/{$name}/src"];
+            }
+        }
 
-        //     $namespaces["Btw\\Core\\{{$name}}"] = [realpath(__DIR__ . "/../{$name}")];
-        // }
-
-        // print_r($namespaces); exit;
 
         // Insert the namespaces into the psr4 array in the autoloader
         // to ensure that Btw's files get loader prior to vendor files
@@ -136,6 +144,7 @@ class Registrar
         $prefixes      = array_merge($prefixesStart, $namespaces, $prefixesEnd);
 
         $rp->setValue($autoloader, $prefixes);
+
     }
 }
 

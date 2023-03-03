@@ -23,7 +23,7 @@ service('auth')->routes($routes, ['except' => ['login', 'register']]);
 $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], static function ($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
     $routes->get('settings/general', 'GeneralSettingsController::general', ['as' => 'general-settings']);
-    $routes->post('settings/general', 'GeneralSettingsController::saveGeneral');
+    $routes->post('settings/general', 'GeneralSettingsController::saveGeneral', ['as' => 'general-post-settings']);
     $routes->get('settings/timezones', 'GeneralSettingsController::getTimezones');
 
     // User Settings

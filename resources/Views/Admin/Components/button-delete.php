@@ -24,7 +24,7 @@
         <span class="text-gray-200 dark:text-gray-800 py-2"> <?= ucfirst(lang('Btw.AreYouSure?')); ?></span>
 
         <form hx-delete="<?= $route_to; ?>" method="delete" action="<?= $route_to; ?>" class="py-2">
-            <?= csrf_field() ?>
+            <?= ''; // csrf_field() ?>
 
             <button
                 x-on:click="$el.form.submit()"

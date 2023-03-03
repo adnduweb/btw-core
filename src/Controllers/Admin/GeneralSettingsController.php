@@ -82,37 +82,82 @@ class GeneralSettingsController extends AdminController
             return redirect()->to(ADMIN_AREA)->with('error', lang('Btw\Core.notAuthorized'));
         }
 
-        $rules = [
-            'siteName'   => 'required|string',
-            'timezone'   => 'required|string',
-            'dateFormat' => 'required|string',
-            'timeFormat' => 'required|string',
-        ];
+        switch ($this->request->getVar('section')) {
+            case 'general':
 
-        if (!$this->validate($rules)) {
-            // return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-            $response = [
-                'messages' => [
-                    'errors' => $this->validator->getErrors()
-                ]
-            ];
-            return $this->respond($response, 422);
+                $requestJson = $this->request->getJSON(true);
+                $validation = service('validation');
+
+                $validation->setRules([
+                    'siteName'   => 'required|string'
+                ]);
+
+                if (!$validation->run($requestJson)) {
+                    return view('Btw\Core\Views\admin\settings\form_cell_general', [
+                        'validation' => $validation
+                    ]) . alert('danger', 'Form validation failed.');
+                }
+
+                setting('Site.siteName', $requestJson['siteName']);
+                setting('Site.siteOnline', $requestJson['siteOnline'] ?? 0);
+
+                return view('Btw\Core\Views\admin\settings\form_cell_general', []) . alert('success', lang('Btw.resourcesSaved', ['users']));
+
+                break;
+            case 'dateandtime':
+
+                $requestJson = $this->request->getJSON(true);
+                $validation = service('validation');
+
+                $validation->setRules([
+                    'timezone'   => 'required|string',
+                    'dateFormat' => 'required|string',
+                    'timeFormat' => 'required|string',
+                ]);
+
+                if (!$validation->run($requestJson)) {
+                    return view('Btw\Core\Views\admin\settings\form_cell_dateandtime', [
+                        'validation' => $validation
+                    ]) . alert('danger', 'Form validation failed.');
+                }
+
+                setting('App.appTimezone', $requestJson['timezone']);
+                setting('App.dateFormat', $requestJson['dateFormat']);
+                setting('App.timeFormat', $requestJson['timeFormat']);
+
+                $timezoneAreas = [];
+
+                foreach (timezone_identifiers_list() as $timezone) {
+                    if (strpos($timezone, '/') === false) {
+                        $timezoneAreas[] = $timezone;
+
+                        continue;
+                    }
+
+                    [$area, $zone] = explode('/', $timezone);
+                    if (!in_array($area, $timezoneAreas, true)) {
+                        $timezoneAreas[] = $area;
+                    }
+                }
+
+                $currentTZ     = setting('App.appTimezone');
+                $currentTZArea = strpos($currentTZ, '/') === false
+                    ? $currentTZ
+                    : substr($currentTZ, 0, strpos($currentTZ, '/'));
+
+
+                return view('Btw\Core\Views\admin\settings\form_cell_dateandtime', [
+                    'timezones'       => $timezoneAreas,
+                    'currentTZArea'   => $currentTZArea,
+                    'timezoneOptions' => $this->getTimezones($currentTZArea),
+                    'dateFormat'      => setting('App.dateFormat') ?: 'M j, Y',
+                    'timeFormat'      => setting('App.timeFormat') ?: 'g:i A',
+                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+
+                break;
+            default:
+                alert('danger', lang('Btw.erreor', ['settings']));
         }
-
-        setting('Site.siteName', $this->request->getVar('siteName'));
-        setting('Site.siteOnline', $this->request->getVar('siteOnline'));
-        setting('App.appTimezone', $this->request->getVar('timezone'));
-
-        setting('App.dateFormat', $this->request->getVar('dateFormat'));
-        setting('App.timeFormat', $this->request->getVar('timeFormat'));
-
-        $response = [
-            'messages' => [
-                'success' => lang('Btw.resourcesSaved', ['settings'])
-            ]
-        ];
-        return $this->respond($response, 200);
-
     }
 
     /**

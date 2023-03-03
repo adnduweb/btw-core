@@ -148,6 +148,8 @@ class ComponentRenderer
             return [];
         }
 
+       
+
         $attributes = [];
 
         foreach ($matches as $match) {

@@ -5,9 +5,14 @@ module.exports = {
   content: [
     "./app/Modules/**/*.php",
     "./resources/**/*.php",
+    "./resources/Views/**/**/*.php",
+    "./resources/Views/**/**/**/*.php",
     "./resources/**/*.js",
     "./app/Views/*.php",
     "./vendor/adnduweb/btw-core/src/Views/*.php",
+    "./vendor/adnduweb/btw-core/src/Views/**/*.php",
+    "./vendor/adnduweb/btw-core/resources/Views/**/**/*.php",
+    "./vendor/adnduweb/btw-core/resources/Views/**/**/**/*.php",
   ],
   theme: {
 
@@ -85,6 +90,8 @@ module.exports = {
     "disabled",
   ],
   plugins: [
+
+    //require("daisyui"),
 
     require('flowbite/plugin'),
 

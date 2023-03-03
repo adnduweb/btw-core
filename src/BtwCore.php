@@ -227,7 +227,7 @@ class BtwCore
                         $modules["btw\\" . ucfirst($key)] = APPPATH . "Modules/{$name}/src";                }
             }
 
-            // cache()->save('app-modules-search', $modules);
+             cache()->save('app-modules-search', $modules);
         }
 
         // save instances of our module configs

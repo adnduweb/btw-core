@@ -95,6 +95,7 @@ class AuthGroups extends ShieldAuthGroups
             'recycler.*',
             'site.*',
             'logs.*',
+            'devis.*'
         ],
         'admin' => [
             'admin.access',
