@@ -23,7 +23,7 @@
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <input type="hidden" name="alias" value="<?= $alias; ?>" />
-            <?= $this->setVar('group', $group)->include('Btw\Core\Views\admin\groups\form_cell'); ?>
+            <?= $this->setVar('group', $group)->include('Btw\Core\Views\Admin\groups\form_cell'); ?>
             <?= form_close(); ?>
         </div>
     </div>

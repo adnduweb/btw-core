@@ -23,7 +23,7 @@
             ]); ?>
             <?= csrf_field() ?>
             <input type="hidden" name="section" value="general" />
-            <?= $this->include('Btw\Core\Views\admin\settings\form_cell_general'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\settings\form_cell_general'); ?>
             <?= form_close(); ?>
         </div>
     </div>
@@ -45,7 +45,7 @@
             ]); ?>
             <?= csrf_field() ?>
             <input type="hidden" name="section" value="dateandtime" />
-            <?= $this->include('Btw\Core\Views\admin\settings\form_cell_dateandtime'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\settings\form_cell_dateandtime'); ?>
             <?= form_close(); ?>
         </div>
     </div>

@@ -22,7 +22,7 @@
             ]); ?>
             <?= csrf_field() ?>
             <input type="hidden" name="section" value="registration" />
-            <?= $this->include('Btw\Core\Views\admin\users\form_cell_registration'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\users\form_cell_registration'); ?>
             <?= form_close(); ?>
         </div>
     </div>
@@ -43,7 +43,7 @@
             ]); ?>
             <?= csrf_field() ?>
             <input type="hidden" name="section" value="login" />
-            <?= $this->include('Btw\Core\Views\admin\users\form_cell_login'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\users\form_cell_login'); ?>
             <?= form_close(); ?>
         </div>
     </div>
@@ -64,7 +64,7 @@
             ]); ?>
             <?= csrf_field() ?>
             <input type="hidden" name="section" value="password" />
-            <?= $this->include('Btw\Core\Views\admin\users\form_cell_password'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\users\form_cell_password'); ?>
             <?= form_close(); ?>
         </div>
     </div>
@@ -85,7 +85,7 @@
             ]); ?>
             <?= csrf_field() ?>
             <input type="hidden" name="section" value="avatar" />
-            <?= $this->include('Btw\Core\Views\admin\users\form_cell_avatar'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\users\form_cell_avatar'); ?>
             <?= form_close(); ?>
         </div>
     </div>
