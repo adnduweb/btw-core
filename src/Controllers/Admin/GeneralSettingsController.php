@@ -32,7 +32,7 @@ class GeneralSettingsController extends AdminController
      */
     protected $theme = 'Admin';
 
-    protected $viewPrefix = 'Btw\Core\Views\admin\settings\\';
+    protected $viewPrefix = 'Btw\Core\Views\Admin\settings\\';
 
     protected $rememberOptions = [
         '1 hour'   => 1 * HOUR,
@@ -116,7 +116,7 @@ class GeneralSettingsController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    return view('Btw\Core\Views\admin\settings\cells\form_cell_general', [
+                    return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');
                 }
@@ -124,7 +124,7 @@ class GeneralSettingsController extends AdminController
                 setting('Site.siteName', $requestJson['siteName']);
                 setting('Site.siteOnline', $requestJson['siteOnline'] ?? 0);
 
-                return view('Btw\Core\Views\admin\settings\cells\form_cell_general', []) . alert('success', lang('Btw.resourcesSaved', ['users']));
+                return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', []) . alert('success', lang('Btw.resourcesSaved', ['users']));
 
                 break;
             case 'dateandtime':
@@ -139,7 +139,7 @@ class GeneralSettingsController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    return view('Btw\Core\Views\admin\settings\cells\form_cell_dateandtime', [
+                    return view('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime', [
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');
                 }
@@ -169,7 +169,7 @@ class GeneralSettingsController extends AdminController
                     : substr($currentTZ, 0, strpos($currentTZ, '/'));
 
 
-                return view('Btw\Core\Views\admin\settings\cells\form_cell_dateandtime', [
+                return view('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime', [
                     'timezones'       => $timezoneAreas,
                     'currentTZArea'   => $currentTZArea,
                     'timezoneOptions' => $this->getTimezones($currentTZArea),
@@ -253,7 +253,7 @@ class GeneralSettingsController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    return view('Btw\Core\Views\admin\settings\cells\form_cell_registration', [
+                    return view('Btw\Core\Views\Admin\settings\cells\form_cell_registration', [
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');;
                 }
@@ -268,7 +268,7 @@ class GeneralSettingsController extends AdminController
 
                 $this->response->triggerClientEvent('updateSettingsRegistration');
 
-                return view('Btw\Core\Views\admin\settings\cells\form_cell_registration', [
+                return view('Btw\Core\Views\Admin\settings\cells\form_cell_registration', [
                     'groups' => setting('AuthGroups.groups'),
                     'defaultGroup'    => setting('AuthGroups.defaultGroup'),
                 ]) . alert('success', lang('Btw.resourcesSaved', ['settings']));
@@ -290,7 +290,7 @@ class GeneralSettingsController extends AdminController
                 $actions['login']    = $requestJson['email2FA'] ?? null;
                 setting('Auth.actions', $actions);
 
-                return view('Btw\Core\Views\admin\settings\cells\form_cell_login', [
+                return view('Btw\Core\Views\Admin\settings\cells\form_cell_login', [
                     'rememberOptions' => $this->rememberOptions,
                     'groups' => setting('AuthGroups.groups'),
                     'defaultGroup'    => setting('AuthGroups.defaultGroup'),
@@ -325,7 +325,7 @@ class GeneralSettingsController extends AdminController
         ]);
 
         if (!$validation->run($requestJson)) {
-            return view('Btw\Core\Views\admin\users\form_cell_password', [
+            return view('Btw\Core\Views\Admin\users\form_cell_password', [
                 'validation' => $validation
             ]) . alert('danger', 'Form validation failed.');;
         }
@@ -333,7 +333,7 @@ class GeneralSettingsController extends AdminController
         setting('Auth.minimumPasswordLength', (int)$requestJson['minimumPasswordLength']);
         setting('Auth.passwordValidators', $requestJson['validators[]']);
 
-        return view('Btw\Core\Views\admin\settings\cells\form_cell_password', [
+        return view('Btw\Core\Views\Admin\settings\cells\form_cell_password', [
             'groups' => setting('AuthGroups.groups'),
             'defaultGroup'    => setting('AuthGroups.defaultGroup'),
         ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
@@ -364,7 +364,7 @@ class GeneralSettingsController extends AdminController
 
         $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
 
-        return view('Btw\Core\Views\admin\settings\cells\form_cell_avatar', [
+        return view('Btw\Core\Views\Admin\settings\cells\form_cell_avatar', [
             'groups' => setting('AuthGroups.groups'),
             'defaultGroup'    => setting('AuthGroups.defaultGroup'),
         ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
@@ -401,7 +401,7 @@ class GeneralSettingsController extends AdminController
         ]);
 
         if (!$validation->run($requestJson)) {
-            return view('Btw\Core\Views\admin\settings\cells\form_cell_email', [
+            return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
                 'config'    => config('Email'),
                 'activeTab' => setting('Email.protocol') ?? 'smtp',
                 'validation' => $validation
@@ -424,7 +424,7 @@ class GeneralSettingsController extends AdminController
         setting('Email.SMTPTimeout', $requestJson['SMTPTimeout']);
         setting('Email.SMTPKeepAlive', $requestJson['SMTPKeepAlive']);
 
-        return view('Btw\Core\Views\admin\settings\cells\form_cell_email', [
+        return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
             'config'    => config('Email'),
             'activeTab' => setting('Email.protocol') ?? 'smtp'
         ]) . alert('success', lang('Btw.resourcesSaved', ['users']));

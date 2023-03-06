@@ -32,7 +32,7 @@ class GroupsController extends AdminController
     /**
      * Base Views.
      */
-    protected $viewPrefix = 'Btw\Core\Views\admin\groups\\';
+    protected $viewPrefix = 'Btw\Core\Views\Admin\groups\\';
 
     /**
      * Displays the site's initial page.
@@ -83,7 +83,7 @@ class GroupsController extends AdminController
        
 
         if ($this->request->isHtmx() && !$this->request->isBoosted()) {
-            return view('Btw\Core\Views\admin\groups\table', $data);
+            return view('Btw\Core\Views\Admin\groups\table', $data);
         }
 
         echo $this->render($this->viewPrefix . 'index', $data);
@@ -136,7 +136,7 @@ class GroupsController extends AdminController
         ]);
 
         if (!$validation->run($post)) {
-            return view('Btw\Core\Views\admin\groups\form_cell', [
+            return view('Btw\Core\Views\Admin\groups\form_cell', [
                 'group' => $group, 'validation' => $validation
             ]) . alert('danger', 'Form validation failed.');;
         }
@@ -152,7 +152,7 @@ class GroupsController extends AdminController
 
 
 
-        return view('Btw\Core\Views\admin\groups\form_cell', [
+        return view('Btw\Core\Views\Admin\groups\form_cell', [
             'group' => $group
         ]) . alert('success', lang('Btw.resourcesSaved', ['groups']));
     }

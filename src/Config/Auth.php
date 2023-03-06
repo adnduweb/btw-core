@@ -20,6 +20,7 @@ class Auth extends ShieldAuth
      * ///////////////////////////////////////////////////////////////////
      */
     public array $views = [
+        'email_layout'                => '\Btw\Core\Views\email',
         'login'                       => '\Btw\Core\Views\auth\login',
         'register'                    => '\Btw\Core\Views\auth\register',
         'layout'                      => 'master',

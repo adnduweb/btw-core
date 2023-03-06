@@ -31,7 +31,7 @@ class PermissionsController extends AdminController
     /**
      * Base Views.
      */
-    protected $viewPrefix = 'Btw\Core\Views\admin\permissions\\';
+    protected $viewPrefix = 'Btw\Core\Views\Admin\permissions\\';
 
     /**
      * Displays the site's initial page.
@@ -75,13 +75,13 @@ class PermissionsController extends AdminController
         //print_r($data); exit;
 
         if ($this->request->isHtmx() && !$this->request->isBoosted()) {
-            return view('Btw\Core\Views\admin\permissions\table', $data);
+            return view('Btw\Core\Views\Admin\permissions\table', $data);
         }
 
         echo $this->render($this->viewPrefix . 'index', $data);
     }
 
     public function add(){
-        Auth()->user()->addPermission('devis-create', 'devis-edit');
+        Auth()->user()->addPermission('devis.create', 'devis.edit');
     }
 }

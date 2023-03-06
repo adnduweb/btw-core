@@ -22,7 +22,7 @@ use Bonfire\Dashboard\CellManager;
 class DashboardController extends AdminController
 {
 
-    protected $viewPrefix = 'Btw\Core\Views\admin\\';
+    protected $viewPrefix = 'Btw\Core\Views\Admin\\';
 
     /**
      * Displays the site's initial page.

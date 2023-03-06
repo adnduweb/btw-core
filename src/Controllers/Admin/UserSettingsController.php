@@ -16,7 +16,7 @@ use Btw\Core\Controllers\AdminController;
 class UserSettingsController extends AdminController
 {
     protected $theme      = 'Admin';
-    protected $viewPrefix = 'Btw\Core\Views\admin\users\\';
+    protected $viewPrefix = 'Btw\Core\Views\Admin\users\\';
 
     protected $rememberOptions = [
         '1 hour'   => 1 * HOUR,
@@ -67,7 +67,7 @@ class UserSettingsController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    return view('Btw\Core\Views\admin\users\form_cell_registration', [
+                    return view('Btw\Core\Views\Admin\users\form_cell_registration', [
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');;
                 }
@@ -80,7 +80,7 @@ class UserSettingsController extends AdminController
                 $actions['register'] = $requestJson['emailActivation'] ?? null;
                 setting('Auth.actions', $actions);
 
-                return view('Btw\Core\Views\admin\users\form_cell_registration', [
+                return view('Btw\Core\Views\Admin\users\form_cell_registration', [
                     'groups' => setting('AuthGroups.groups'),
                     'defaultGroup'    => setting('AuthGroups.defaultGroup'),
                 ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
@@ -101,7 +101,7 @@ class UserSettingsController extends AdminController
                 $actions['login']    = $requestJson['email2FA'] ?? null;
                 setting('Auth.actions', $actions);
 
-                return view('Btw\Core\Views\admin\users\form_cell_login', [
+                return view('Btw\Core\Views\Admin\users\form_cell_login', [
                     'rememberOptions' => $this->rememberOptions,
                     'groups' => setting('AuthGroups.groups'),
                     'defaultGroup'    => setting('AuthGroups.defaultGroup'),
@@ -119,7 +119,7 @@ class UserSettingsController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    return view('Btw\Core\Views\admin\users\form_cell_password', [
+                    return view('Btw\Core\Views\Admin\users\form_cell_password', [
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');;
                 }
@@ -127,7 +127,7 @@ class UserSettingsController extends AdminController
                 setting('Auth.minimumPasswordLength', (int)$requestJson['minimumPasswordLength']);
                 setting('Auth.passwordValidators',$requestJson['validators[]']);
 
-                return view('Btw\Core\Views\admin\users\form_cell_password', [
+                return view('Btw\Core\Views\Admin\users\form_cell_password', [
                     'groups' => setting('AuthGroups.groups'),
                     'defaultGroup'    => setting('AuthGroups.defaultGroup'),
                 ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
@@ -144,7 +144,7 @@ class UserSettingsController extends AdminController
                 setting('Users.avatarNameBasis', $requestJson['avatarNameBasis']);
 
                 $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
-                return view('Btw\Core\Views\admin\users\form_cell_avatar', [
+                return view('Btw\Core\Views\Admin\users\form_cell_avatar', [
                     'groups' => setting('AuthGroups.groups'),
                     'defaultGroup'    => setting('AuthGroups.defaultGroup'),
                 ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
