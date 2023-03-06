@@ -116,8 +116,13 @@ class BtwCore
         $menus->createMenu('sidebar');
         $menus->menu('sidebar')
             ->createCollection('content', 'Content');
+
         $menus->menu('sidebar')
-            ->createCollection('settings', 'Settings')
+            ->createCollection('access', 'Accès')
+            ->setFontAwesomeIcon('fas fa-cog')
+            ->setCollapsible();
+        $menus->menu('sidebar')
+            ->createCollection('system', 'Système')
             ->setFontAwesomeIcon('fas fa-cog')
             ->setCollapsible();
         $menus->menu('sidebar')
@@ -141,35 +146,34 @@ class BtwCore
     public function discoverCoreModules()
     {
         // if (!$modules = cache('btw-modules-search')) {
-            $modules  = [];
-            $excluded = ['Config', 'Language', 'Views'];
+        $modules  = [];
+        $excluded = ['Config', 'Language', 'Views'];
 
-            $map = directory_map(VENDORPATH . 'adnduweb', 1);
+        $map = directory_map(VENDORPATH . 'adnduweb', 1);
 
         //    print_r($map); exit;
 
-            foreach ($map as $row) {
-                if (substr($row, -1) !== DIRECTORY_SEPARATOR) {
-                    continue;
-                }
-
-                $name = trim($row, DIRECTORY_SEPARATOR);
-                if (in_array($name, $excluded, true)) {
-                    continue;
-                }
-
-                // echo $name; exit;
-
-                // $modules["Btw\\{$name}"] = __DIR__ . "/{$name}";
-                $key = str_replace('btw-', '' , $name);
-                if($key == 'core')
-                    $modules["btw\Core"] = VENDORPATH . "adnduweb/{$name}/src";
-                else
-                    $modules["btw\\" . ucfirst($key)] = APPPATH . "Modules/{$name}/src";
-
+        foreach ($map as $row) {
+            if (substr($row, -1) !== DIRECTORY_SEPARATOR) {
+                continue;
             }
 
-            cache()->save('btw-modules-search', $modules);
+            $name = trim($row, DIRECTORY_SEPARATOR);
+            if (in_array($name, $excluded, true)) {
+                continue;
+            }
+
+            // echo $name; exit;
+
+            // $modules["Btw\\{$name}"] = __DIR__ . "/{$name}";
+            $key = str_replace('btw-', '', $name);
+            if ($key == 'core')
+                $modules["btw\Core"] = VENDORPATH . "adnduweb/{$name}/src";
+            else
+                $modules["btw\\" . ucfirst($key)] = APPPATH . "Modules/{$name}/src";
+        }
+
+        cache()->save('btw-modules-search', $modules);
         // }
 
         //  print_r($modules); exit;
@@ -220,14 +224,15 @@ class BtwCore
 
                     // $modules["{$namespace}\\{$name}"] = "{$dir}/{$name}";
 
-                    $key = str_replace('btw-', '' , $name);
-                    if($key == 'core')
+                    $key = str_replace('btw-', '', $name);
+                    if ($key == 'core')
                         $modules["btw\Core"] = APPPATH . "Modules/{$name}/src";
                     else
-                        $modules["btw\\" . ucfirst($key)] = APPPATH . "Modules/{$name}/src";                }
+                        $modules["btw\\" . ucfirst($key)] = APPPATH . "Modules/{$name}/src";
+                }
             }
 
-             cache()->save('app-modules-search', $modules);
+            cache()->save('app-modules-search', $modules);
         }
 
         // save instances of our module configs

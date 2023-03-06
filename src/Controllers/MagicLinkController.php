@@ -1,8 +1,8 @@
 <?php
 
-namespace Bonfire\Auth\Controllers;
+namespace Btw\Core\Controllers;
 
-use Bonfire\View\Themeable;
+use Btw\Core\View\Themeable;
 use CodeIgniter\Shield\Controllers\MagicLinkController as ShieldMagicLinkController;
 
 class MagicLinkController extends ShieldMagicLinkController

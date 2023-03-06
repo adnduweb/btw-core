@@ -146,10 +146,6 @@
                         <?= theme()->getSVG('duotune/graphs/gra008.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true); ?>
                         <?= lang('Admin.Dashboard'); ?>
                     </a>
-                    <a href="<?= route_to('general-settings'); ?>" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md <?= (in_array((string)$currentUrl, [route_to('general-settings')])) ? "bg-slate-900" : "" ; ?> text-slate-300 hover:bg-slate-700 hover:text-white">
-                        <?= theme()->getSVG('duotone/code/Settings4.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true); ?>
-                        <?= lang('Admin.Settings'); ?>
-                    </a>
 
                     <hr class="border-t border-gray-600 my-5" aria-hidden="true">
 

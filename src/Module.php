@@ -26,30 +26,50 @@ class Module extends BaseModuleController
         $item    = new MenuItem([
             'title'           => 'Users',
             'namedRoute'      => 'user-list',
-            'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
+            'fontIconSvg'     => theme()->getSVG('duotune/communication/com014.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
             'permission'      => 'users.view',
         ]);
-        $sidebar->menu('sidebar')->collection('content')->addItem($item);
+        $sidebar->menu('sidebar')->collection('access')->addItem($item);
 
-        // Add Users Settings
-        $item = new MenuItem([
-            'title'           => 'Users',
-            'namedRoute'      => 'user-settings',
-            'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'users.settings',
-        ]);
-        $sidebar->menu('sidebar')->collection('settings')->addItem($item);
+        // // Add Users Settings
+        // $item = new MenuItem([
+        //     'title'           => 'Users',
+        //     'namedRoute'      => 'user-settings',
+        //     'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+        //     'permission'      => 'users.settings',
+        // ]);
+        // $sidebar->menu('sidebar')->collection('access')->addItem($item);
 
         // print_r($sidebar);exit;
+
+        // Add to the Content menu
+        $sidebar = service('menus');
+        $item    = new MenuItem([
+            'title'           => 'Groups',
+            'namedRoute'      => 'groups-list',
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen049.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
+            'permission'      => 'groups.view',
+        ]);
+        $sidebar->menu('sidebar')->collection('access')->addItem($item);
+
+        // Add to the Content menu
+        $sidebar = service('menus');
+        $item    = new MenuItem([
+            'title'           => 'Permissions',
+            'namedRoute'      => 'permissions-list',
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen051.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
+            'permission'      => 'permissions.view',
+        ]);
+        $sidebar->menu('sidebar')->collection('access')->addItem($item);
 
          // Add to the Content menu
          $sidebar = service('menus');
          $item    = new MenuItem([
-             'title'           => 'Groups',
-             'namedRoute'      => 'groups-list',
-             'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
-             'permission'      => 'groups.view',
+             'title'           => lang('Btw.Settings'),
+             'namedRoute'      => 'settings-general',
+             'fontIconSvg'     => theme()->getSVG('duotone/Code/Settings4.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
+             'permission'      => 'admin.view',
          ]);
-         $sidebar->menu('sidebar')->collection('settings')->addItem($item);
+         $sidebar->menu('sidebar')->collection('system')->addItem($item);
     }
 }

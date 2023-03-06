@@ -33,14 +33,17 @@ class Select
         }
 
         $html = "";
+        $i = 0;
         $html .= '<option value="0">How long to remember...</option>';
         if (isset($params['options']) && count($params['options'])) :
-            
+
             foreach ($params['options'] as $key => $val) :
-                $newSelected = ($params['selected'] === (string) $val) ?  'selected' : '' ;
-                $html .= '<option value="'. $val . '" '.  $newSelected . '>';
+                $apinejs  = isset($params['alpinejs']) ?  $params['alpinejs'][$i]  : '' ; 
+                $newSelected = ($params['selected'] === (string) $val) ?  'selected' : '';
+                $html .= '<option value="' . $val . '" ' . $apinejs . ' ' .  $newSelected . '>';
                 $html .= $key;
                 $html .= '</option>';
+                $i++;
             endforeach;
         endif;
 

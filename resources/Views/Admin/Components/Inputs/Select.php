@@ -4,11 +4,13 @@
 $type = (isset($type)) ? $type : 'text';
 $labelNew = (isset($label)) ? str_replace(' ', '_', $label) : '';
 $nameNew = (isset($name)) ? str_replace(' ', '_', $name) : '';
+$xOnClick = (isset($xOnClick)) ? 'x-on:click="'.$xOnClick.'"' : false;
+$xChange = (isset($change)) ? '@change="'.$change.'"' : false;
 
 ?>
 
 <label for="<?= $nameNew; ?>" class="form-label"><?= $labelNew; ?></label>
-<select name="<?= $nameNew; ?>" class="border-0 px-3 py-3 placeholder-gray-300 bg-gray-300 text-gray-600 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+<select name="<?= $nameNew; ?>" class="border-0 px-3 py-3 placeholder-gray-300 bg-gray-300 text-gray-600 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" <?= $xOnClick; ?> <?= $xChange; ?>>
 <?= $slot; ?>
 </select>
 

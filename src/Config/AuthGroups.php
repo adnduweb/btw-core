@@ -88,6 +88,7 @@ class AuthGroups extends ShieldAuthGroups
         'superadmin' => [
             'admin.*',
             'groups.*',
+            'permissions.*',
             'users.*',
             'beta.*',
             'widgets.*',

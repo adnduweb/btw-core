@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-theme="retro" lang="<?= service('request')->getLocale(); ?>" class="h-full <?= detectBrowser(); ?>" x-cloak x-data="{theme: localStorage.getItem('_X_theme') || localStorage.setItem('_X_theme', 'system')}" x-init="$watch('theme', val => localStorage.setItem('_X_theme', val))" x-bind:class="{'dark': theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
+<html dir="ltr" data-theme="retro" lang="<?= service('request')->getLocale(); ?>" class="h-full <?= detectBrowser(); ?>" x-cloak x-data="{theme: localStorage.getItem('_X_theme') || localStorage.setItem('_X_theme', 'system')}" x-init="$watch('theme', val => localStorage.setItem('_X_theme', val))" x-bind:class="{'dark': theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
 
 <head>
 
@@ -10,7 +10,7 @@
     <?= $viewMeta->render('style') ?>
 </head>
 
-<body hx-ext="morph" hx-ext="ajax-header" hx-headers='{"<?= csrf_token() ?>": "<?= csrf_hash() ?>", "X-Theme": "admin"}' class="h-full antialiased font-sans bg-slate-100">
+<body hx-ext="morph" hx-ext="ajax-header" hx-history="true" hx-headers='{"<?= csrf_token() ?>": "<?= csrf_hash() ?>", "X-Theme": "admin"}' class="h-full antialiased font-sans bg-slate-100">
 
     <!-- Main content -->
     <div class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
@@ -32,7 +32,6 @@
         </div>
     </div>
 
-    <x-message />
     <div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50"></div>
 
     <script src="https://unpkg.com/hyperscript.org@0.9.7" crossorigin="anonymous"></script>
