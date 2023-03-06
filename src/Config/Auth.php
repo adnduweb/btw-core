@@ -21,17 +21,17 @@ class Auth extends ShieldAuth
      */
     public array $views = [
         'email_layout'                => '\Btw\Core\Views\email',
-        'login'                       => '\Btw\Core\Views\auth\login',
-        'register'                    => '\Btw\Core\Views\auth\register',
+        'login'                       => '\Btw\Core\Views\Auth\login',
+        'register'                    => '\Btw\Core\Views\Auth\register',
         'layout'                      => 'master',
         'action_email_2fa'            => '\CodeIgniter\Shield\Views\email_2fa_show',
         'action_email_2fa_verify'     => '\CodeIgniter\Shield\Views\email_2fa_verify',
         'action_email_2fa_email'      => '\CodeIgniter\Shield\Views\Email\email_2fa_email',
         'action_email_activate_show'  => '\CodeIgniter\Shield\Views\email_activate_show',
         'action_email_activate_email' => '\CodeIgniter\Shield\Views\Email\email_activate_email',
-        'magic-link-login'            => '\Btw\Core\Views\auth\magic_link_form',
-        'magic-link-message'          => '\Btw\Core\Views\auth\magic_link_message',
-        'magic-link-email'            => '\Btw\Core\Views\auth\magic_link_email',
+        'magic-link-login'            => '\Btw\Core\Views\Auth\magic_link_form',
+        'magic-link-message'          => '\Btw\Core\Views\Auth\magic_link_message',
+        'magic-link-email'            => '\Btw\Core\Views\Auth\magic_link_email',
     ];
 
     /**
