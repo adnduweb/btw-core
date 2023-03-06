@@ -5,6 +5,7 @@ module core Ci4
 
 composer create-project codeigniter4/appstarter my-app
 
+Ajouter dans le fichier composer.json à la racine de votre projet.
     "minimum-stability": "dev",
     "prefer-stable": true
 

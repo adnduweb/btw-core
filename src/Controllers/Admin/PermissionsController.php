@@ -80,4 +80,8 @@ class PermissionsController extends AdminController
 
         echo $this->render($this->viewPrefix . 'index', $data);
     }
+
+    public function add(){
+        Auth()->user()->addPermission('devis-create', 'devis-edit');
+    }
 }

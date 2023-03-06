@@ -44,6 +44,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->delete('groups/delete/(:any)', 'GroupsController::delete/$1', ['as' => 'group-delete']);
 
     $routes->get('permissions', 'PermissionsController::index', ['as' => 'permissions-list']);
+    $routes->get('permissions/add', 'PermissionsController::add', ['as' => 'permissions-add']);
     $routes->get('permissions/show/(:any)', 'PermissionsController::show/$1', ['as' => 'group-show']);
     $routes->post('permissions/save', 'PermissionsController::saveGroup', ['as' => 'group-save']);
     $routes->delete('permissions/delete/(:any)', 'PermissionsController::delete/$1', ['as' => 'group-delete']);
