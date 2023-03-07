@@ -68,7 +68,7 @@ class Install extends BaseCommand
     private array $supportedFrameworks = ['none', 'react', 'vue', 'svelte'];
 
     private $path;
-
+    
     private array $configFiles = [
         // 'Btw\Core\Assets\Config\Assets',
         //'Btw\Core\Config\Auth',
@@ -249,6 +249,7 @@ class Install extends BaseCommand
         $publisher->copyDirectory($source, $destination);
         $publisher->copyDirectory(BTPATH . '../package.json', APPPATH . '../package.json');
         $publisher->copyDirectory(BTPATH . '../vite.config.js', APPPATH . '../vite.config.js');
+        $publisher->copyDirectory(BTPATH . '../tailwind.config.js', APPPATH . '../tailwind.config.js');
     }
 
     private function setEncryptionKey()
