@@ -15,7 +15,6 @@
 		"codeigniter4/framework": "^4.2",
 		"components/font-awesome": "^6.2",
 		"codeigniter4/shield": "^1.0@beta",
-		"mihatori/codeignitervite": "^1.1",
 		"roave/security-advisories": "dev-latest",
 		"tatter/alerts": "^3.0",
 		"michalsn/codeigniter-htmx": "^1.1"
