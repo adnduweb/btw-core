@@ -1,4 +1,4 @@
-import 'htmx.org';
+import '/node_modules/htmx.org/dist/htmx.js';
 // general config
 htmx.config.useTemplateFragments = true;
 

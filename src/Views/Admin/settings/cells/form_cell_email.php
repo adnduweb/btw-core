@@ -1,7 +1,9 @@
 <div id="email" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
-    <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
-        <h3 class="text-base font-medium leading-6 text-gray-900">Email</h3>
+        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Email</h3>
+
+
 
         <div class="row mb-3">
             <x-label for="fromName" label="<?= lang('Btw.Name'); ?>" />
@@ -23,12 +25,12 @@
             <?php endif ?>
         </div>
 
-        <p>This specifies the default email address and name that will be used when sending an email.</p>
+        <p class="dark:text-gray-300">This specifies the default email address and name that will be used when sending an email.</p>
 
         <fieldset x-data="{openTab: '<?= $activeTab ?>'}">
-            <legend>Mail Settings</legend>
+            <legend  class="dark:text-gray-300">Mail Settings</legend>
 
-            <p>Select the protocol used when sending mail. The most common scenario is using SMTP.</p>
+            <p class="dark:text-gray-300 mb-5">Select the protocol used when sending mail. The most common scenario is using SMTP.</p>
 
             <div class="row mb-3">
                 <div class="form-group col-12 col-sm-6 col-md-3">
@@ -41,7 +43,7 @@
             <div class="tab-content mx-5 mt-3">
                 <!-- Mail Settings -->
                 <div id="mail-settings" x-show="openTab === 'mail'" x-transition>
-                    <p class="alert alert-info">Mail is only available on Linux servers. There are no options.</p>
+                    <p class="alert alert-info dark:text-gray-300">Mail is only available on Linux servers. There are no options.</p>
                 </div>
 
                 <!-- SendMail Settings -->
@@ -181,7 +183,7 @@
 
 
     </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-700 ">
         <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinggeneral" />
     </div>
 

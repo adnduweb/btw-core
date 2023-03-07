@@ -1,7 +1,8 @@
 <div id="general" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
-    <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
-    <h3 class="text-base font-medium leading-6 text-gray-900">Général</h3>
+        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Général</h3>
+
 
         <!-- Site Name -->
         <div class="row">
@@ -25,7 +26,7 @@
         </div>
 
     </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-700 ">
         <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinggeneral" />
     </div>
 

@@ -25,4 +25,14 @@
         </div>
 
 </x-admin-box>
-</div <?php $this->endSection() ?>
+<?php $this->endSection() ?>
+
+
+<?php $this->section('scripts') ?>
+<script>
+    document.body.addEventListener("updateAvatar",
+        function(evt) {
+            console.info("avatar updated")
+        })
+</script>
+<?php $this->endSection() ?>

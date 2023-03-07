@@ -11,7 +11,7 @@ $step = (isset($step)) ? $step : '1';
 
 ?>
 
-<input type="<?= $type; ?>"<?php if ($type == 'number') : ?> min="<?= $min; ?>" step="<?= $step; ?>"<?php endif ?> name="<?= $nameNew ?>" id="<?= $labelNew; ?>" autocomplete="<?= $type; ?>" value="<?= $value ?>" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+<input type="<?= $type; ?>"<?php if ($type == 'number') : ?> min="<?= $min; ?>" step="<?= $step; ?>"<?php endif ?> name="<?= $nameNew ?>" id="<?= $labelNew; ?>" autocomplete="<?= $type; ?>" value="<?= $value ?>" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900" />
 
 <?php if (has_error('siteName')) : ?>
     <p class="text-danger"><?= error((isset($name)) ? str_replace(' ', '_', $name) : '') ?></p>

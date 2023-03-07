@@ -63,8 +63,14 @@ class Install extends BaseCommand
         '--continue' => 'Execute the second install step.',
     ];
 
+    private string $framework;
+
+    private array $supportedFrameworks = ['none', 'react', 'vue', 'svelte'];
+
+    private $path;
+
     private array $configFiles = [
-       // 'Btw\Core\Assets\Config\Assets',
+        // 'Btw\Core\Assets\Config\Assets',
         'Btw\Core\Config\Auth',
         'Btw\Core\Config\AuthGroups',
         'Btw\Core\Config\Btw',
@@ -76,6 +82,11 @@ class Install extends BaseCommand
         //'Btw\Core\Users\Config\Users',
     ];
 
+    public function __construct()
+    {
+        $this->path = service('autoloader')->getNamespace('Btw\\Core')[0];
+    }
+
     /**
      * Actually execute a command.
      */
@@ -83,13 +94,14 @@ class Install extends BaseCommand
     {
         helper('filesystem');
 
-        if (! CLI::getOption('continue')) {
+        if (!CLI::getOption('continue')) {
             $this->ensureEnvFile();
             $this->setAppUrl();
             $this->setEncryptionKey();
             $this->setDatabase();
             $this->publishConfigFiles();
             $this->publishThemes();
+            $this->updateEnvFileVite();
 
             CLI::newLine();
             CLI::write('If you need to create your database, you may run:', 'yellow');
@@ -101,6 +113,7 @@ class Install extends BaseCommand
         } else {
             $this->migrate();
             $this->createUser();
+            
         }
 
         CLI::newLine();
@@ -119,14 +132,14 @@ class Install extends BaseCommand
             return;
         }
 
-        if (! file_exists(ROOTPATH . 'env')) {
+        if (!file_exists(ROOTPATH . 'env')) {
             CLI::error('The original `env` file is not found.');
 
             exit();
         }
 
         // Create the .env file
-        if (! copy(ROOTPATH . 'env', ROOTPATH . '.env')) {
+        if (!copy(ROOTPATH . 'env', ROOTPATH . '.env')) {
             CLI::error('Error copying the env file');
         }
 
@@ -190,7 +203,9 @@ class Install extends BaseCommand
         $destination = APPPATH . '../resources';
 
         $publisher = new Publisher();
-        $publisher->copyDirectory($source, $destination);
+        $publisher->copyDirectory(, $destination);
+        $publisher->copyDirectory(BTPATH . '../package.json', APPPATH . '../package.json');
+        $publisher->copyDirectory(BTPATH . '../vite.config.js', APPPATH . '../vite.config.js');
     }
 
     private function setEncryptionKey()
@@ -250,4 +265,64 @@ class Install extends BaseCommand
         $env = str_replace($find, $replace, $env);
         write_file(ROOTPATH . '.env', $env);
     }
+
+   /**
+	 * Set vite configs in .env file
+	 * 
+	 * @return void
+	 */
+	private function updateEnvFileVite()
+	{
+		CLI::write('Updating .env file...', 'yellow');
+
+		# Get the env file.
+		$envFile = ROOTPATH . '.env';
+
+		# For backup.
+		$backupFile = is_file($envFile) ? 'env-BACKUP-' . time() : null;
+
+		# Does exist? if not, generate it =)
+		if (is_file($envFile)) {
+			# But first, let's take a backup.
+			copy($envFile, ROOTPATH . $backupFile);
+
+			# Get .env.default content
+			$content = file_get_contents($this->path . 'Config/env.default');
+
+			# Append it.
+			file_put_contents($envFile, "\n\n$content", FILE_APPEND);
+		} else {
+			# As we said before, generate it.
+			copy($this->path . 'Config/env.default', ROOTPATH . '.env');
+		}
+
+		# set the backup name in the current one.
+		if ($backupFile) {
+			$envContent = file_get_contents(ROOTPATH . '.env');
+			$backupUpdate = str_replace('VITE_BACKUP_FILE=', "VITE_BACKUP_FILE='$backupFile'", $envContent);
+			file_put_contents($envFile, $backupUpdate);
+		}
+
+		# Define framework.
+		if ($this->framework !== 'none') {
+			# Get .env content.
+			$envContent = file_get_contents($envFile);
+			# Set framework.
+			$updates = str_replace("VITE_FRAMEWORK='none'", "VITE_FRAMEWORK='$this->framework'", $envContent);
+
+			file_put_contents($envFile, $updates);
+
+			# React entry file (main.jsx).
+			if ($this->framework === 'react') {
+				$envContent = file_get_contents($envFile);
+				$updates = str_replace("VITE_ENTRY_FILE='main.js'", "VITE_ENTRY_FILE='main.jsx'", $envContent);
+				file_put_contents($envFile, $updates);
+			}
+		}
+
+		# env updated.
+		CLI::newLine();
+		CLI::write('.env file updated ✅', 'green');
+		CLI::newLine();
+	}
 }

@@ -10,7 +10,7 @@
     <div class="row justify-content-md-center">
 
         <div class="col-sm-12 col-lg-8">
-            <?= $this->include('Btw\Core\Views\admin\permissions\table'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\permissions\table'); ?>
         </div>
 
     </div>

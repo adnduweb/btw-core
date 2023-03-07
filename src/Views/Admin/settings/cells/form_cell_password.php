@@ -1,7 +1,7 @@
-<div id="password" class="shadow sm:rounded-md sm:overflow-hidden">
-    <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+<div id="password" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
+    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
-    <h3 class="text-base font-medium leading-6 text-gray-900">Passwords</h3>
+        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Passwords</h3>
 
         <!-- Site Name -->
         <div class="row">
@@ -15,8 +15,8 @@
         </div>
 
 
-        <label for="passwordValidators" class="form-label">Password Validators</label>
-        <p class="text-muted">These rules determine how secure a password must be.</p>
+        <label for="passwordValidators" class="form-label dark:text-gray-300">Password Validators</label>
+        <p class="text-muted dark:text-gray-300">These rules determine how secure a password must be.</p>
 
         <div class="relative w-full mb-3">
             <!-- Password Validators -->
@@ -32,7 +32,7 @@
                 <x-inputs.checkbox label="<?= lang('Btw.Dictionary Validator'); ?>" name="validators[]" value="CodeIgniter\Shield\Authentication\Passwords\PwnedValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\PwnedValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
             </div>
             <div class="col-6 px-4">
-                <ul class="text-muted small text-sm text-gray-500">
+                <ul class="text-muted small text-sm text-gray-500  dark:text-gray-300">
                     <li>Composition Validator primarily checks the password length requirements.</li>
                     <li>Nothing Personal Validator checks the password for similarities between the password,
                         the email, username, and other personal fields to ensure they are not too similar and easy to guess.</li>
@@ -45,7 +45,7 @@
         </div>
 
     </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-700 ">
         <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingpassword" />
     </div>
 

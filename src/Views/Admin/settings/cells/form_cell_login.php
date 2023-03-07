@@ -1,7 +1,7 @@
-<div id="login" class="shadow sm:rounded-md sm:overflow-hidden">
-    <div x-data="{remember: <?= old('allowRemember', setting('Auth.sessionConfig')['allowRemembering']) ? 1 : 0 ?>}" class="px-4 py-5 bg-white space-y-6 sm:p-6">
-    
-    <h3 class="text-base font-medium leading-6 text-gray-900">Login</h3>
+<div id="login" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
+    <div x-data="{remember: <?= old('allowRemember', setting('Auth.sessionConfig')['allowRemembering']) ? 1 : 0 ?>}" class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+
+        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Login</h3>
 
         <div class="row mb-3">
             <x-inputs.checkbox label="<?= lang('Btw.Allow users to be remembered'); ?>" name="allowRemember" checked="<?= (old('allowRemember', setting('Auth.sessionConfig')['allowRemembering'])) ?>" description="This makes it so users do not have to login every visit." xOnClick="remember = ! remember" />
@@ -30,7 +30,7 @@
         </div>
 
     </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-700 ">
         <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinglogin" />
     </div>
 </div>

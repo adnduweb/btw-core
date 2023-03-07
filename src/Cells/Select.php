@@ -32,16 +32,18 @@ class Select
             throw new RuntimeException('You must provide the Select view cell with the selected to use.');
         }
 
+
         $html = "";
         $i = 0;
         $html .= '<option value="0">How long to remember...</option>';
+        
         if (isset($params['options']) && count($params['options'])) :
 
             foreach ($params['options'] as $key => $val) :
                 $apinejs  = isset($params['alpinejs']) ?  $params['alpinejs'][$i]  : '' ; 
                 $newSelected = ($params['selected'] === (string) $val) ?  'selected' : '';
                 $html .= '<option value="' . $val . '" ' . $apinejs . ' ' .  $newSelected . '>';
-                $html .= $key;
+                $html .= !isset($params['byKey']) ? $key : $val;
                 $html .= '</option>';
                 $i++;
             endforeach;

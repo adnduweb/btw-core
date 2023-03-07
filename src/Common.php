@@ -3,7 +3,7 @@
 use Btw\Core\View\Theme;
 use CodeIgniter\I18n\Time;
 
-if (! function_exists('has_error')) {
+if (!function_exists('has_error')) {
     /**
      * Determines whether an error exists
      * for a form field. This requires the errors
@@ -12,7 +12,7 @@ if (! function_exists('has_error')) {
      */
     function has_error(string $field): bool
     {
-        if (! session()->has('errors')) {
+        if (!session()->has('errors')) {
             return false;
         }
 
@@ -20,7 +20,7 @@ if (! function_exists('has_error')) {
     }
 }
 
-if (! function_exists('error')) {
+if (!function_exists('error')) {
     /**
      * Displays the error message for a single form field.
      */
@@ -30,7 +30,7 @@ if (! function_exists('error')) {
     }
 }
 
-if (! function_exists('app_date')) {
+if (!function_exists('app_date')) {
     /**
      * Formats a date according to the format
      * specified in the general settings page.
@@ -69,7 +69,7 @@ if (! function_exists('app_date')) {
     }
 }
 
-if (! function_exists('render')) {
+if (!function_exists('render')) {
     /**
      * Renders a view using the current theme.
      *
@@ -92,7 +92,7 @@ if (! function_exists('render')) {
     }
 }
 
-if (! function_exists('site_offline')) {
+if (!function_exists('site_offline')) {
     /**
      * Determines whether the site is offline.
      */
@@ -102,7 +102,7 @@ if (! function_exists('site_offline')) {
     }
 }
 
-if (! defined('theme')) {
+if (!defined('theme')) {
     /**
      * Provides convenient access to the main Theme class
      * for CodeIgniter Theme.
@@ -189,3 +189,23 @@ if (!function_exists('getCountryByIp')) {
     }
 }
 
+if (!function_exists('generateUsername')) {
+    function generateUsername($fullName)
+    {
+        $removedMultispace = preg_replace('/\s+/', ' ', $fullName);
+
+        $sanitized = preg_replace('/[^A-Za-z0-9\ ]/', '', $removedMultispace);
+
+        $lowercased = strtolower($sanitized);
+
+        $splitted = explode(" ", $lowercased);
+
+        if (count($splitted) == 1) {
+            $username = substr($splitted[0], 0, rand(3, 6)) . rand(111111, 999999);
+        } else {
+            $username = $splitted[0] . substr($splitted[1], 0, rand(0, 4)) . rand(11111, 99999);
+        }
+
+        return $username;
+    }
+}

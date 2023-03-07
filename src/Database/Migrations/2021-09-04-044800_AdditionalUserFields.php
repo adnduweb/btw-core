@@ -27,6 +27,10 @@ class AdditionalUserFields extends Migration
                 'null'       => true,
                 'after'      => 'last_name',
             ],
+            'email_verified_at' => [
+                'type' => 'datetime',
+                'null' => false,
+            ]
         ]);
     }
 

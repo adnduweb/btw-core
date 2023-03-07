@@ -43,7 +43,7 @@ class Protect implements FilterInterface
 
         if ($authenticator->loggedIn()) {
             // echo 'fgsdfgsdfg'; exit;
-            if (in_array((string)$current, [route_to('login')])) {
+            if (in_array((string)$current, [route_to('login'), route_to('magic-link'), route_to('verify-magic-link')])) {
                 return redirect()->route('dashboard');
             }
         }

@@ -22,8 +22,7 @@ service('auth')->routes($routes, ['except' => ['login', 'register']]);
 // Btw Admin routes
 $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], static function ($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
-    $routes->get('settings/general', 'GeneralSettingsController::general', ['as' => 'settings-general']);
-    $routes->post('settings/general', 'GeneralSettingsController::saveGeneral', ['as' => 'general-post-settings']);
+    $routes->match(['get', 'post'], 'settings/general', 'GeneralSettingsController::sectionGeneral', ['as' => 'settings-general']);
     $routes->get('settings/timezones', 'GeneralSettingsController::getTimezones');
     $routes->match(['get', 'post'], 'settings/registration-login', 'GeneralSettingsController::sectionRegistrationLogin', ['as' => 'settings-registration']);
     $routes->match(['get', 'post'], 'settings/passwords', 'GeneralSettingsController::sectionPasswords', ['as' => 'settings-passwords']);
@@ -32,11 +31,13 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
    
 
     // User Settings
-    $routes->get('settings/users', 'UserSettingsController::index', ['as' => 'user-settings']);
+    $routes->match(['get', 'post'], 'settings/user', 'UserSettingsController::editUserCurrent', ['as' => 'user-current-settings']);
     $routes->post('settings/users', 'UserSettingsController::save', ['as' => 'user-settings-save']);
     // Manage Users
     $routes->match(['get', 'post'], 'users', 'UserController::list', ['as' => 'user-list']);
     $routes->get('user/update', 'UserSettingsController::update', ['as' => 'user-update']);
+    $routes->get('user/update-group', 'UserSettingsController::updateGroup', ['as' => 'user-update-group']);
+    
 
     $routes->get('groups', 'GroupsController::index', ['as' => 'groups-list']);
     $routes->get('groups/show/(:any)', 'GroupsController::show/$1', ['as' => 'group-show']);

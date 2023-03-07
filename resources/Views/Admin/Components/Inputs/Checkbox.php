@@ -16,8 +16,8 @@ $class = (isset($class)) ? $class : '';
 ?>
 
 <div class="flex items-center <?= $class; ?>">
-    <input name="<?= $nameNew ?>" id="<?= $labelNew; ?>" type="checkbox" class="checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 " value="<?= $value; ?>" <?php if ($checkedNew) : ?> checked <?php endif ?> <?= $xOnClick; ?> <?= $xChange; ?> >
-    <label for="role-<?= $nameNew ?>" class="ml-3 block whitespace-nowrap text-sm font-medium text-gray-700"><?= $labelNew; ?></label>
+    <input name="<?= $nameNew ?>" id="<?= $labelNew; ?>" type="checkbox" class="checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500" value="<?= $value; ?>" <?php if ($checkedNew) : ?> checked <?php endif ?> <?= $xOnClick; ?> <?= $xChange; ?> >
+    <label for="role-<?= $nameNew ?>" class="ml-3 block whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-300"><?= $labelNew; ?></label>
 </div>
 <?php if (isset($description) && $description != "false") : ?>
     <p class="mt-2 text-sm text-gray-500">

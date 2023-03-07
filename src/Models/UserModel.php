@@ -16,7 +16,7 @@ class UserModel extends ShieldUsers
     protected $returnType    = User::class;
     protected $allowedFields = [
         'username', 'status', 'status_message', 'active', 'last_active', 'deleted_at',
-        'avatar', 'first_name', 'last_name',
+        'avatar', 'first_name', 'last_name', 'email_verified_at'
     ];
 
     /**

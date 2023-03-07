@@ -57,7 +57,7 @@ class GeneralSettingsController extends AdminController
     /**
      * Displays the site's general settings.
      */
-    public function general()
+    public function sectionGeneral()
     {
         if (!auth()->user()->can('admin.settings')) {
             return redirect()->to(ADMIN_AREA)->with('error', lang('Btw.notAuthorized'));
@@ -83,26 +83,16 @@ class GeneralSettingsController extends AdminController
             ? $currentTZ
             : substr($currentTZ, 0, strpos($currentTZ, '/'));
 
-        echo $this->render($this->viewPrefix . 'settings_general', [
-            'timezones'       => $timezoneAreas,
-            'currentTZArea'   => $currentTZArea,
-            'timezoneOptions' => $this->getTimezones($currentTZArea),
-            'dateFormat'      => setting('App.dateFormat') ?: 'M j, Y',
-            'timeFormat'      => setting('App.timeFormat') ?: 'g:i A',
-            'menu' => service('menus')->menu('sidebar_on'),
-            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
-        ]);
-    }
-
-    /**
-     * Saves the general settings
-     *
-     * @return \CodeIgniter\HTTP\RedirectResponse
-     */
-    public function saveGeneral()
-    {
-        if (!auth()->user()->can('admin.settings')) {
-            return redirect()->to(ADMIN_AREA)->with('error', lang('Btw\Core.notAuthorized'));
+        if (!$this->request->is('post')) {
+            return $this->render($this->viewPrefix . 'settings_general', [
+                'timezones'       => $timezoneAreas,
+                'currentTZArea'   => $currentTZArea,
+                'timezoneOptions' => $this->getTimezones($currentTZArea),
+                'dateFormat'      => setting('App.dateFormat') ?: 'M j, Y',
+                'timeFormat'      => setting('App.timeFormat') ?: 'g:i A',
+                'menu' => service('menus')->menu('sidebar_on'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
         }
 
         switch ($this->request->getVar('section')) {
@@ -123,7 +113,7 @@ class GeneralSettingsController extends AdminController
 
                 setting('Site.siteName', $requestJson['siteName']);
                 setting('Site.siteOnline', $requestJson['siteOnline'] ?? 0);
-
+               
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', []) . alert('success', lang('Btw.resourcesSaved', ['users']));
 
                 break;
@@ -409,8 +399,8 @@ class GeneralSettingsController extends AdminController
         }
 
         $port = $requestJson['SMTPPort'] === 'other'
-        ? $requestJson['SMTPPortOther']
-        : $requestJson['SMTPPort'];
+            ? $requestJson['SMTPPortOther']
+            : $requestJson['SMTPPort'];
 
         setting('Email.fromName', $requestJson['fromName']);
         setting('Email.fromEmail', $requestJson['fromEmail']);

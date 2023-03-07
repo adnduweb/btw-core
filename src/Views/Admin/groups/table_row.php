@@ -1,14 +1,14 @@
-<tr class="relative hover:bg-slate-50" >
-    <td class="border-dashed border-t border-gray-300  px-3"><span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer"  x-on:click="location.replace('<?= site_url(route_to('group-show', $group['alias'])); ?>')">
+<tr class="relative dark:hover:bg-gray-600 hover:bg-slate-50 " >
+    <td class="border-dashed border-t border-gray-300  px-3"><span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer  dark:text-gray-200"  x-on:click="location.replace('<?= site_url(route_to('group-show', $group['alias'])); ?>')">
             <?= $group['title']; ?></span>
     </td>
-    <td class="border-dashed border-t border-gray-300"><span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer"  x-on:click="location.replace('<?= site_url(route_to('group-show', $group['alias'])); ?>')">
+    <td class="border-dashed border-t border-gray-300"><span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer  dark:text-gray-200"  x-on:click="location.replace('<?= site_url(route_to('group-show', $group['alias'])); ?>')">
             <?= $group['description']; ?></span>
     </td>
-    <td class="border-dashed border-t border-gray-300"><span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer"  x-on:click="location.replace('<?= site_url(route_to('group-show', $group['alias'])); ?>')">
+    <td class="border-dashed border-t border-gray-300"><span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer  dark:text-gray-200"  x-on:click="location.replace('<?= site_url(route_to('group-show', $group['alias'])); ?>')">
             <?= $group['alias']; ?></span>
     </td>
-    <td class="border-dashed border-t border-gray-300"><span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer"  x-on:click="location.replace('<?= site_url(route_to('group-show', $group['alias'])); ?>')">
+    <td class="border-dashed border-t border-gray-300"><span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer  dark:text-gray-200"  x-on:click="location.replace('<?= site_url(route_to('group-show', $group['alias'])); ?>')">
             <?= $group['user_count']; ?></span>
     </td>
     <!-- <td class="text-end border-dashed border-t border-gray-300  px-3">

@@ -20,7 +20,7 @@
                 </thead>
                 <tbody id="permissions-table-rows">
                     <?php foreach ($permissions as $k => $v) : ?>
-                        <?= $this->setData(['permission' => [$k, $v]])->include('Btw\Core\Views\admin\permissions\table_row'); ?>
+                        <?= $this->setData(['permission' => [$k, $v]])->include('Btw\Core\Views\Admin\permissions\table_row'); ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>

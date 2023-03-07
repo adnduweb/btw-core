@@ -12,142 +12,132 @@
 namespace Btw\Core\Controllers\Admin;
 
 use Btw\Core\Controllers\AdminController;
+use Btw\Core\Menus\MenuItem;
+use Btw\Core\Entities\User;
+use Btw\Core\Models\UserModel;
+
 
 class UserSettingsController extends AdminController
 {
     protected $theme      = 'Admin';
     protected $viewPrefix = 'Btw\Core\Views\Admin\users\\';
 
-    protected $rememberOptions = [
-        '1 hour'   => 1 * HOUR,
-        '4 hours'  => 4 * HOUR,
-        '8 hours'  => 8 * HOUR,
-        '25 hours' => 24 * HOUR,
-        '1 week'   => 1 * WEEK,
-        '2 weeks'  => 2 * WEEK,
-        '3 weeks'  => 3 * WEEK,
-        '1 month'  => 1 * MONTH,
-        '2 months' => 2 * MONTH,
-        '6 months' => 6 * MONTH,
-        '1 year'   => 12 * MONTH,
-    ];
+    public function __construct()
+    {
+        self::setupMenus();
+        $this->addMenuSidebar();
+    }
+
 
     /**
      * Display the Email settings page.
      *
      * @return string
      */
-    public function index()
+    public function editUserCurrent()
     {
-       
 
-        return $this->render($this->viewPrefix . 'user_settings', [
-            'rememberOptions' => $this->rememberOptions,
-            'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-            'groups'          => setting('AuthGroups.groups'),
-        ]);
-    }
 
-    /**
-     * Saves the email settings to the config file, where it
-     * is automatically saved by our dynamic configuration system.
-     */
-    public function save()
-    {
+        $groups = setting('AuthGroups.groups');
+        asort($groups);
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'settings_user', [
+                'userCurrent' => auth()->user(),
+                'currentGroup'    => array_flip(auth()->user()->getGroups()),
+                'groups'          => setting('AuthGroups.groups'),
+                'menu' => service('menus')->menu('sidebar_user_current'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+
+        $users = new UserModel();
+
+        /**
+         * @var User
+         */
+        $user = $users->find(auth()->id());
+
 
         switch ($this->request->getVar('section')) {
-            case 'registration':
+            case 'general':
 
                 $requestJson = $this->request->getJSON(true);
-
                 $validation = service('validation');
 
                 $validation->setRules([
-                    'defaultGroup'          => 'required|string',
+                    'email'      => 'required|valid_email|unique_email[' . auth()->id() . ']',
+                    'first_name' => 'permit_empty|string|min_length[3]',
+                    'last_name'  => 'permit_empty|string|min_length[3]',
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    return view('Btw\Core\Views\Admin\users\form_cell_registration', [
+                    return view('Btw\Core\Views\Admin\users\cells\form_cell_information', [
+                        'userCurrent' => $user,
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');;
                 }
 
-                setting('Auth.allowRegistration', $requestJson['allowRegistration'] ?? false );
-                Setting('AuthGroups.defaultGroup', $requestJson['defaultGroup']);
+                $user->fill($requestJson);
+                $user->username = generateUsername($requestJson['last_name'] . ' ' .  $requestJson['first_name']);
 
-                // Actions
-                $actions             = setting('Auth.actions');
-                $actions['register'] = $requestJson['emailActivation'] ?? null;
-                setting('Auth.actions', $actions);
+                // Try saving basic details
+                try {
+                    if (!$users->save($user)) {
+                        log_message('error', 'User errors', $users->errors());
 
-                return view('Btw\Core\Views\Admin\users\form_cell_registration', [
-                    'groups' => setting('AuthGroups.groups'),
-                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+                        $response = ['errors' => lang('Bonfire.unknownSaveError', ['user'])];
+                        return $this->respond($response, ResponseInterface::HTTP_FORBIDDEN);
+                    }
+                } catch (DataException $e) {
+                    // Just log the message for now since it's
+                    // likely saying the user's data is all the same
+                    log_message('debug', 'SAVING USER: ' . $e->getMessage());
+                }
 
-                break;
-            case 'login':
 
-                $requestJson = $this->request->getJSON(true);
+                $this->response->triggerClientEvent('updateUserCurrent');
 
-                // Remember Me
-                $sessionConfig                     = setting('Auth.sessionConfig');
-                $sessionConfig['allowRemembering'] = $requestJson['allowRemember'] ?? false;
-                $sessionConfig['rememberLength']   = $requestJson['rememberLength'];
-                setting('Auth.sessionConfig', $sessionConfig);
-
-                // Actions
-                $actions             = setting('Auth.actions');
-                $actions['login']    = $requestJson['email2FA'] ?? null;
-                setting('Auth.actions', $actions);
-
-                return view('Btw\Core\Views\Admin\users\form_cell_login', [
-                    'rememberOptions' => $this->rememberOptions,
-                    'groups' => setting('AuthGroups.groups'),
-                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+                return view('Btw\Core\Views\Admin\users\cells\form_cell_information', [
+                    'userCurrent' => $user,
+                    'menu' => service('menus')->menu('sidebar_user_current'),
+                    'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                ]) . alert('success', lang('Btw.resourcesSaved', ['settings']));
 
                 break;
-            case 'password':
+            case 'groups':
 
                 $requestJson = $this->request->getJSON(true);
-
                 $validation = service('validation');
 
                 $validation->setRules([
-                    'minimumPasswordLength' => 'required|integer|greater_than[6]'
+                    'currentGroup[]'      => 'required'
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    return view('Btw\Core\Views\Admin\users\form_cell_password', [
+                    return view('Btw\Core\Views\Admin\users\cells\cell_groups', [
+                        'userCurrent' => auth()->user(),
+                        'currentGroup'    => array_flip(auth()->user()->getGroups()),
+                        'groups'          => setting('AuthGroups.groups'),
                         'validation' => $validation
                     ]) . alert('danger', 'Form validation failed.');;
                 }
 
-                setting('Auth.minimumPasswordLength', (int)$requestJson['minimumPasswordLength']);
-                setting('Auth.passwordValidators',$requestJson['validators[]']);
 
-                return view('Btw\Core\Views\Admin\users\form_cell_password', [
-                    'groups' => setting('AuthGroups.groups'),
-                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+                if (!is_array($requestJson['currentGroup[]']))
+                    $requestJson['currentGroup[]']  = [$requestJson['currentGroup[]']];
 
-                break;
+                // Save the user's groups
+                $user->syncGroups(...($requestJson['currentGroup[]'] ?? []));
 
-            case 'avatar':
+                $this->response->triggerClientEvent('updateGroupUserCurrent');
 
-                $requestJson = $this->request->getJSON(true);
-
-                // Avatars
-                setting('Users.useGravatar', $requestJson['useGravatar'] ?? false);
-                setting('Users.gravatarDefault', $requestJson['gravatarDefault']);
-                setting('Users.avatarNameBasis', $requestJson['avatarNameBasis']);
-
-                $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
-                return view('Btw\Core\Views\Admin\users\form_cell_avatar', [
-                    'groups' => setting('AuthGroups.groups'),
-                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-                ]) . alert('success', lang('Btw.resourcesSaved', ['users']));
+                return view('Btw\Core\Views\Admin\users\cells\cell_groups', [
+                    'userCurrent' => auth()->user(),
+                    'currentGroup'    => array_flip( $user->getGroups()),
+                    'groups'          => setting('AuthGroups.groups'),
+                ]) . alert('success', lang('Btw.resourcesSaved', ['settings']));
 
                 break;
             default:
@@ -155,11 +145,78 @@ class UserSettingsController extends AdminController
         }
     }
 
-    public function update(){
-
+    public function update()
+    {
         return view('Themes\Admin\partials\headers\renderAvatar', [
             'auth' => auth()
-        ]); 
-        
+        ]);
+    }
+
+    public function updateGroup(){
+        return view('Btw\Core\Views\Admin\users\cells\line_group', [
+            'userCurrent' => auth()->user()
+        ]);
+    }
+
+    /**
+     * Creates any admin-required menus so they're
+     * available to use by any modules.
+     */
+    private function setupMenus()
+    {
+        $menus = service('menus');
+
+        // Sidebar menu
+        $menus->createMenu('sidebar_user_current');
+        $menus->menu('sidebar_user_current')
+            ->createCollection('content', 'Content');
+    }
+    public function addMenuSidebar()
+    {
+        $sidebar = service('menus');
+        $item    = new MenuItem([
+            'title'           => 'Information',
+            'namedRoute'      => 'user-current-settings',
+            'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission'      => 'admin.view',
+            'weight' => 1
+        ]);
+        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+
+        $item    = new MenuItem([
+            'title'           => 'Capabilities',
+            'namedRoute'      => 'settings-registration',
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission'      => 'admin.view',
+            'weight' => 2
+        ]);
+        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+
+        $item    = new MenuItem([
+            'title'           => 'Change password',
+            'namedRoute'      => 'settings-passwords',
+            'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission'      => 'admin.view',
+            'weight' => 3
+        ]);
+        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+
+        $item    = new MenuItem([
+            'title'           => 'History',
+            'namedRoute'      => 'settings-avatar',
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission'      => 'admin.view',
+            'weight' => 4
+        ]);
+        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+
+        $item    = new MenuItem([
+            'title'           => 'Delete',
+            'namedRoute'      => 'settings-email',
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission'      => 'admin.view',
+            'weight' => 5
+        ]);
+        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
     }
 }

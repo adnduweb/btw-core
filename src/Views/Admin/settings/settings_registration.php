@@ -36,4 +36,4 @@
         </div>
 
 </x-admin-box>
-</div <?php $this->endSection() ?>
+<?php $this->endSection() ?>
