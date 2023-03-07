@@ -71,11 +71,11 @@ class Install extends BaseCommand
 
     private array $configFiles = [
         // 'Btw\Core\Assets\Config\Assets',
-        'Btw\Core\Config\Auth',
-        'Btw\Core\Config\AuthGroups',
+        //'Btw\Core\Config\Auth',
+        //'Btw\Core\Config\AuthGroups',
         'Btw\Core\Config\Btw',
         //'Btw\Core\Config\Site',
-        'Btw\Core\Config\Themes',
+        //'Btw\Core\Config\Themes',
         //'Btw\Core\Consent\Config\Consent',
         //'Btw\Core\Dashboard\Config\Dashboard',
         //'Btw\Core\Recycler\Config\Recycler',
@@ -97,9 +97,12 @@ class Install extends BaseCommand
         if (!CLI::getOption('continue')) {
             $this->ensureEnvFile();
             $this->setAppUrl();
+            $this->setSession();
+            $this->setCookie();
             $this->setEncryptionKey();
             $this->setDatabase();
             $this->publishConfigFiles();
+            $this->framework = 'none';
             $this->publishThemes();
             $this->updateEnvFileVite();
 
@@ -113,6 +116,10 @@ class Install extends BaseCommand
         } else {
             $this->migrate();
             $this->createUser();
+            CLI::newLine();
+            CLI::write('run: npm install && npm run dev');
+            CLI::write('Suivre le processus d\'installation du package');
+            CLI::write('run: npm install && npm run dev');
             
         }
 
@@ -168,9 +175,10 @@ class Install extends BaseCommand
         $driver = CLI::prompt('Database driver:', ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']);
         $name   = CLI::prompt('Database name:', 'bonfire');
         if ($driver !== 'SQLite3') {
-            $host = CLI::prompt('Database host:', 'localhost');
+            $host = CLI::prompt('Database host:', '127.0.0.1');
             $user = CLI::prompt('Database username:', 'root');
             $pass = CLI::prompt('Database password:', 'root');
+            $port = CLI::prompt('Database port:', '3306');
         }
         $prefix = CLI::prompt('Table prefix, if any (like bf_)');
 
@@ -182,7 +190,42 @@ class Install extends BaseCommand
             $this->updateEnvFile('# database.default.password = root', "database.default.password = {$pass}");
         }
         $this->updateEnvFile('# database.default.DBPrefix =', "database.default.DBPrefix = {$prefix}");
+        if ($port !== '3306') {
+            $this->updateEnvFile('# database.default.port = 3306', "database.default.port = {$port}");
+        }
+        
     }
+
+    private function setSession(){
+
+        CLI::write('Generating session', 'yellow');
+        $this->updateEnvFile("# session.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'", "session.sessionDriver = 'CodeIgniter\Session\Handlers\DatabaseHandler'");
+        $this->updateEnvFile("# session.sessionCookieName = 'ci_session'", "session.sessionCookieName = 'adn_".rand()."'");
+        $this->updateEnvFile("# session.sessionExpiration = 7200", "session.sessionExpiration = 86400");
+        $this->updateEnvFile("# session.sessionSavePath = null", "session.sessionSavePath = 'sessions'");
+        $this->updateEnvFile("# session.sessionMatchIP = false", "session.sessionMatchIP = true");
+        $this->updateEnvFile("# session.sessionTimeToUpdate = 300", "session.sessionTimeToUpdate = 300");
+        $this->updateEnvFile("# session.sessionRegenerateDestroy = false", "session.sessionRegenerateDestroy = true");
+        CLI::write('Session saved to .env file', 'green');
+        CLI::newLine();
+    }
+
+    private function setCookie(){
+        CLI::write('Generating Cookie', 'yellow');
+        $this->updateEnvFile("# security.csrfProtection = 'cookie'", "security.csrfProtection = 'session'");
+        $this->updateEnvFile("# security.tokenRandomize = false", "security.tokenRandomize = false");
+        $this->updateEnvFile("# security.tokenName = 'csrf_token_name'", "security.tokenName = 'csrf_token_name'");
+        $this->updateEnvFile("# security.headerName = 'X-CSRF-TOKEN'", "security.headerName = 'X-CSRF-TOKEN'");
+        $this->updateEnvFile("# security.cookieName = 'csrf_cookie_name'", "security.cookieName = 'adn_".rand()."'");
+        $this->updateEnvFile("# security.expires = 7200", "security.expires = 7200");
+        $this->updateEnvFile("# security.regenerate = true", "security.regenerate = false");
+        $this->updateEnvFile("# security.redirect = true", "security.redirect = true");
+        $this->updateEnvFile("# security.samesite = 'Lax'", "security.samesite = 'Lax'");
+        CLI::write('Cookie saved to .env file', 'green');
+        CLI::newLine();
+
+    }
+
 
     private function publishConfigFiles()
     {
@@ -203,7 +246,7 @@ class Install extends BaseCommand
         $destination = APPPATH . '../resources';
 
         $publisher = new Publisher();
-        $publisher->copyDirectory(, $destination);
+        $publisher->copyDirectory($source, $destination);
         $publisher->copyDirectory(BTPATH . '../package.json', APPPATH . '../package.json');
         $publisher->copyDirectory(BTPATH . '../vite.config.js', APPPATH . '../vite.config.js');
     }

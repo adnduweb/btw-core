@@ -18,10 +18,7 @@ class Decorator implements ViewDecoratorInterface
 
         # Check whether vite is running or manifest is ready.
         if (env('VITE_AUTO_INJECTING') && Vite::routeIsNotExluded()) {
-            if (Vite::isReady() === false) {
-                throw new \Exception('CodeIgniter Vite package is installed, but not initialized. did you run "php spark vite:init" ?');
-            }
-
+            
             # First inject app div
             $html = str_replace('<body>', "<body>\n\t<div id=\"app\">", $html);
             # Close the div

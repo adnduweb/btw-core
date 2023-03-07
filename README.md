@@ -3,15 +3,18 @@ module core Ci4
 
 # Installation
 
-composer create-project codeigniter4/appstarter my-app
+    composer create-project codeigniter4/appstarter my-app
 
 Ajouter dans le fichier composer.json à la racine de votre projet.
     "minimum-stability": "dev",
     "prefer-stable": true
 
-composer require adnduweb/btw-core:dev-develop
+Installer le package
+
+    composer require adnduweb/btw-core:dev-develop
 
     php spark btw:install
+    php spark btw:install -- continue
     php spark vite:init
     npm install
 
@@ -28,8 +31,16 @@ composer require adnduweb/btw-core:dev-develop
     npm i htmx.org
 
 # Modification du Chargement des fichiers
-import liveReload from 'vite-plugin-live-reload'
-liveReload([__dirname + '/**/*.php', __dirname + '/app/Modules/**/*.php'])
+Ajouter dans le fichier "vite.config.js" à la racine de votre projet
+
+    import liveReload from 'vite-plugin-live-reload'
+    plugins: [
+            ...
+			liveReload([__dirname + '/**/*.php', __dirname + '/app/Modules/**/*.php', , __dirname + '/vendor/adnduweb/btw-core/src/**/*.php'])
+            ...
+		],
+Modifier le fichier .env 
+    # security.csrfProtection = 'cookie' par security.csrfProtection = 'session'
 
 # Lancement de l'application
     php spark serve
