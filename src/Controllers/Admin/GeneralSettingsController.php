@@ -275,10 +275,10 @@ class GeneralSettingsController extends AdminController
                 $sessionConfig['rememberLength']   = $requestJson['rememberLength'];
                 setting('Auth.sessionConfig', $sessionConfig);
 
-                // // Actions
-                // $actions             = setting('Auth.actions');
-                // $actions['login']    = $requestJson['email2FA'] ?? null;
-                // setting('Auth.actions', $actions);
+                // Actions
+                $actions             = setting('Auth.actions');
+                $actions['login']    = $requestJson['email2FA'] ?? null;
+                setting('Auth.actions', $actions);
 
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_login', [
                     'rememberOptions' => $this->rememberOptions,

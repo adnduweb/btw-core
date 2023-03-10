@@ -19,15 +19,15 @@
                 </x-inputs.select>
             </div>
         </div>
-<!-- 
+
         <div class="row mb-3">
-            <x-inputs.checkbox label="<?= lang('Btw.Force 2FA check after login?'); ?>" name="email2FA" value="Btw\Core\Authentication\Actions\Email2FA" checked="<?= (old('email2FA', setting('Auth.actions')['login']) === 'Btw\Core\Authentication\Actions\Email2FA') ?>" description="If checked, will send a code via email for them to confirm." />
+            <x-inputs.checkbox label="<?= lang('Btw.Force 2FA check after login?'); ?>" name="email2FA" value="Btw\Core\Authentication\Actions\Email2FA" checked="<?= (old('email2FA', setting('Auth.actions')['login']) === 'Btw\Core\Authentication\Actions\Email2FA') ?>" description="If checked, will send a code via email for them to confirm general application." />
             <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('email2FA'); ?>
                 </div>
             <?php endif ?>
-        </div> -->
+        </div>
 
     </div>
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-700 ">
