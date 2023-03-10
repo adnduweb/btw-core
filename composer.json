@@ -17,7 +17,8 @@
 		"codeigniter4/shield": "^1.0@beta",
 		"roave/security-advisories": "dev-latest",
 		"tatter/alerts": "^3.0",
-		"michalsn/codeigniter-htmx": "^1.1"
+		"michalsn/codeigniter-htmx": "^1.1",
+		"whichbrowser/parser": "^2.1"
 	},
 	"require-dev": {
 		"codeigniter/coding-standard": "^1.1",
