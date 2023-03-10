@@ -4,6 +4,7 @@ namespace Btw\Core\Config;
 
 use Btw\Core\Filters\Admin;
 use Btw\Core\Filters\Protect;
+use Btw\Core\Filters\ActivityFilter;
 use Btw\Core\View\Decorator;
 use Btw\Core\Validation\UserRules;
 use CodeIgniter\Shield\Authentication\Passwords\ValidationRules as PasswordRules;
@@ -38,15 +39,16 @@ class Registrar
                 'tokens'  => TokenAuth::class,
                 'chain'   => ChainAuth::class,
                 'admin'   => Admin::class,
-                'protect'   => Protect::class
+                'protect'   => Protect::class,
+                'activities' => ActivityFilter::class,
             ],
             'globals' => [
                 // 'before' => [
                 //     'csrf' => ['except' => ['api/record/[0-9]+']],
                 // ],
-                // 'after' => array_merge($props['globals']['after'], [
-                //     'alerts'
-                // ]),
+                'after' => array_merge($props['globals']['after'], [
+                    'activities'
+                ]),
             ],
             'filters' => [
                 'protect' => [

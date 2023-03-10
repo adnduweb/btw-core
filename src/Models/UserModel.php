@@ -2,7 +2,7 @@
 
 namespace Btw\Core\Models;
 
-use Btw\Core\Entity\User;
+use Btw\Core\Entities\User;
 use CodeIgniter\Shield\Models\UserModel as ShieldUsers;
 use Faker\Generator;
 

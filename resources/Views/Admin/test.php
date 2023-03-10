@@ -1,5 +1,5 @@
 <!doctype html>
-<html dir="ltr" data-theme="retro" lang="<?= service('request')->getLocale(); ?>" class="h-full <?= detectBrowser(); ?>" x-cloak x-data="{theme: localStorage.getItem('_X_theme') || localStorage.setItem('_X_theme', 'system')}" x-init="$watch('theme', val => localStorage.setItem('_X_theme', val))" x-bind:class="{'dark': theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
+<html >
 
 <head>
 
@@ -10,7 +10,7 @@
     <?= $viewMeta->render('style') ?>
 </head>
 
-<body hx-ext="ajax-header" hx-history="true" hx-headers='{"<?= csrf_token() ?>": "<?= csrf_hash() ?>", "X-Theme": "admin"}' class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
+<body>
 
     <!-- Main content -->
     <div class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
@@ -38,15 +38,6 @@
 
         <script src="https://unpkg.com/hyperscript.org@0.9.7" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
-
-        <!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
-        <div class="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">
-            <div>
-                <a title="Buy me a beer" href="#" target="_blank" class="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12">
-                    <img class="object-cover object-center w-full h-full rounded-full" src="https://i.pinimg.com/originals/60/fd/e8/60fde811b6be57094e0abc69d9c2622a.jpg" />
-                </a>
-            </div>
-        </div>
 
         <?= $this->renderSection('scripts') ?>
         <?= $viewMeta->render('script') ?>

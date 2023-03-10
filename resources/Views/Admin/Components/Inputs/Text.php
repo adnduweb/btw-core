@@ -8,10 +8,15 @@ $type = (isset($type)) ? $type : 'text';
 $value = esc(set_value(str_replace(' ', '_', $name), $value ?? null), 'attr');
 $min = (isset($min)) ? $min : '0';
 $step = (isset($step)) ? $step : '1';
+$xType = (isset($xType)) ? ':type="' . $xType . '"' : '';
+$xModel = (isset($xModel)) ? 'x-model="' . $xModel . '"' : '';
+$xInput = (isset($xInput)) ? '@input="' . $xInput . '"' : '';
+
+
 
 ?>
 
-<input type="<?= $type; ?>"<?php if ($type == 'number') : ?> min="<?= $min; ?>" step="<?= $step; ?>"<?php endif ?> name="<?= $nameNew ?>" id="<?= $labelNew; ?>" autocomplete="<?= $type; ?>" value="<?= $value ?>" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900" />
+<input <?= $xInput; ?> <?= $xModel; ?> <?= $xType; ?> type="<?= $type; ?>"<?php if ($type == 'number') : ?> min="<?= $min; ?>" step="<?= $step; ?>"<?php endif ?> name="<?= $nameNew ?>" id="<?= $nameNew; ?>" autocomplete="<?= $type; ?>" value="<?= $value ?>" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900" />
 
 <?php if (has_error('siteName')) : ?>
     <p class="text-danger"><?= error((isset($name)) ? str_replace(' ', '_', $name) : '') ?></p>

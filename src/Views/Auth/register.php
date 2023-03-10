@@ -17,9 +17,9 @@
             <h5 class="card-title mb-5"><?= lang('Auth.register') ?></h5>
 
             <?php if (session('error') !== null) : ?>
-                <div class="alert alert-danger" role="alert"><?= session('error') ?></div>
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert"><?= session('error') ?></div>
             <?php elseif (session('errors') !== null) : ?>
-                <div class="alert alert-danger" role="alert">
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                     <?php if (is_array(session('errors'))) : ?>
                         <?php foreach (session('errors') as $error) : ?>
                             <?= $error ?>
@@ -30,7 +30,7 @@
                     <?php endif ?>
                 </div>
             <?php endif ?>
-
+            
             <form action="<?= url_to('register') ?>" method="post">
                 <?= csrf_field() ?>
 

@@ -5,8 +5,6 @@ import "../css/app.css"
 import "../js/alpine.js"
 import "../js/Htmx.js"
 
-
-
 /**
  * Select All checkbox for data tables
  * using plain javascript

@@ -6,6 +6,44 @@ import { defineExtension } from "htmx.org";
 
 import "../js/morph.js"
 import "../js/loading-states.js"
+
+
+htmx.onLoad(function(content) {
+    // reinitialize your bootstrap elements here
+    // console.log('onLoad');
+});
+
+// add CSRFToken to HTMX headers
+document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRFToken'] = document.querySelector('[name=X-CSRF-TOKEN]').content;
+})
+
+// if an htmx request returns 204 and contains a custom statusText,
+// then create a status message from the custom statusText
+htmx.on('htmx:afterOnLoad', (e) => {
+    let response = e.detail.xhr;
+    if (response.status === 204 && response.statusText !== 'No Content') {
+        hStatusMessageDisplay(e.detail.xhr.statusText);
+    }
+});
+
+htmx.defineExtension('alpine-morph', {
+    isInlineSwap: function (swapStyle) {
+        return swapStyle === 'morph';
+    },
+    handleSwap: function (swapStyle, target, fragment) {
+        if (swapStyle === 'morph') {
+            if (fragment.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                Alpine.morph(target, fragment.firstElementChild);
+                return [target];
+            } else {
+                Alpine.morph(target, fragment.outerHTML);
+                return [target];
+            }
+        }
+    }
+});
+
 htmx.defineExtension('json-enc', {
     onEvent: function (name, evt) {
         if (name === "htmx:configRequest") {

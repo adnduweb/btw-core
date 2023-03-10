@@ -122,7 +122,7 @@
             <div class="ml-3 relative">
                 <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
                     <div @click="open = ! open" class="">
-                        <button hx-get="/admin/user/update" hx-trigger="load delay:1s, updateAvatar from:body" type="button" class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800" aria-expanded="false" aria-haspopup="true">
+                        <button hx-get="/admin/user/update" hx-trigger="updateAvatar from:body" type="button" class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800" aria-expanded="false" aria-haspopup="true">
                             <?= $this->setVar('auth', auth())->include('partials/headers/renderAvatar'); ?>
                         </button>
                     </div>

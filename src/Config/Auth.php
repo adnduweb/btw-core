@@ -8,7 +8,12 @@ use Btw\Core\Models\UserModel;
 use CodeIgniter\Shield\Authentication\Actions\ActionInterface;
 use CodeIgniter\Shield\Authentication\AuthenticatorInterface;
 use CodeIgniter\Shield\Authentication\Authenticators\AccessTokens;
-use CodeIgniter\Shield\Authentication\Authenticators\Session;
+use Btw\Core\Authentication\Authenticators\Session;
+use Btw\Core\Authentication\Authenticators\SessionOverride;
+use CodeIgniter\Shield\Authentication\Passwords\CompositionValidator;
+use CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator;
+use CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator;
+use CodeIgniter\Shield\Authentication\Passwords\PwnedValidator;
 use CodeIgniter\Shield\Authentication\Passwords\ValidatorInterface;
 use CodeIgniter\Shield\Config\Auth as ShieldAuth;
 
@@ -24,14 +29,44 @@ class Auth extends ShieldAuth
         'login'                       => '\Btw\Core\Views\Auth\login',
         'register'                    => '\Btw\Core\Views\Auth\register',
         'layout'                      => 'master',
-        'action_email_2fa'            => '\CodeIgniter\Shield\Views\email_2fa_show',
-        'action_email_2fa_verify'     => '\CodeIgniter\Shield\Views\email_2fa_verify',
-        'action_email_2fa_email'      => '\CodeIgniter\Shield\Views\Email\email_2fa_email',
-        'action_email_activate_show'  => '\CodeIgniter\Shield\Views\email_activate_show',
-        'action_email_activate_email' => '\CodeIgniter\Shield\Views\Email\email_activate_email',
+        'action_email_2fa'            => '\Btw\Core\Views\Auth\email_2fa_show',
+        'action_email_2fa_verify'     => '\Btw\Core\Views\Auth\email_2fa_verify',
+        'action_email_2fa_email'      => '\Btw\Core\Views\Auth\Email\email_2fa_email',
+        'action_email_activate_show'  => '\Btw\Core\Views\Auth\email_activate_show',
+        'action_email_activate_email' => '\Btw\Core\Views\Auth\Email\email_activate_email',
         'magic-link-login'            => '\Btw\Core\Views\Auth\magic_link_form',
         'magic-link-message'          => '\Btw\Core\Views\Auth\magic_link_message',
         'magic-link-email'            => '\Btw\Core\Views\Auth\magic_link_email',
+    ];
+
+   /**
+     * --------------------------------------------------------------------
+     * Customize Name of Shield Tables
+     * --------------------------------------------------------------------
+     * Only change if you want to rename the default Shield table names
+     *
+     * It may be necessary to change the names of the tables for
+     * security reasons, to prevent the conflict of table names,
+     * the internal policy of the companies or any other reason.
+     *
+     * - users                  Auth Users Table, the users info is stored.
+     * - auth_identities        Auth Identities Table, Used for storage of passwords, access tokens, social login identities, etc.
+     * - auth_logins            Auth Login Attempts, Table records login attempts.
+     * - auth_token_logins      Auth Token Login Attempts Table, Records Bearer Token type login attempts.
+     * - auth_remember_tokens   Auth Remember Tokens (remember-me) Table.
+     * - auth_groups_users      Groups Users Table.
+     * - auth_permissions_users Users Permissions Table.
+     *
+     * @var array<string, string>
+     */
+    public array $tables = [
+        'users'             => 'users',
+        'identities'        => 'auth_identities',
+        'logins'            => 'auth_logins',
+        'token_logins'      => 'auth_token_logins',
+        'remember_tokens'   => 'auth_remember_tokens',
+        'groups_users'      => 'auth_groups_users',
+        'permissions_users' => 'auth_permissions_users',
     ];
 
     /**
@@ -89,6 +124,7 @@ class Auth extends ShieldAuth
     public array $authenticators = [
         'tokens'  => AccessTokens::class,
         'session' => Session::class,
+        'sessionOverride' => SessionOverride::class,
     ];
 
     /**
@@ -151,6 +187,9 @@ class Auth extends ShieldAuth
      * --------------------------------------------------------------------
      * If true, will always update the `last_active` datetime for the
      * logged in user on every page request.
+     * This feature only works when session/tokens filter is active.
+     *
+     * @see https://codeigniter4.github.io/shield/install/#protect-all-pages for set filters.
      */
     public bool $recordActiveDate = true;
 
@@ -231,7 +270,7 @@ class Auth extends ShieldAuth
      */
     public array $validFields = [
         'email',
-        // 'username',
+        'username',
     ];
 
     /**

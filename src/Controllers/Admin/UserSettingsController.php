@@ -15,6 +15,10 @@ use Btw\Core\Controllers\AdminController;
 use Btw\Core\Menus\MenuItem;
 use Btw\Core\Entities\User;
 use Btw\Core\Models\UserModel;
+use CodeIgniter\Shield\Models\LoginModel;
+use Btw\Core\Models\SessionModel;
+use CodeIgniter\Shield\Models\UserIdentityModel;
+use ReflectionException;
 
 
 class UserSettingsController extends AdminController
@@ -36,8 +40,6 @@ class UserSettingsController extends AdminController
      */
     public function editUserCurrent()
     {
-
-
         $groups = setting('AuthGroups.groups');
         asort($groups);
 
@@ -135,7 +137,7 @@ class UserSettingsController extends AdminController
 
                 return view('Btw\Core\Views\Admin\users\cells\cell_groups', [
                     'userCurrent' => auth()->user(),
-                    'currentGroup'    => array_flip( $user->getGroups()),
+                    'currentGroup'    => array_flip($user->getGroups()),
                     'groups'          => setting('AuthGroups.groups'),
                 ]) . alert('success', lang('Btw.resourcesSaved', ['settings']));
 
@@ -152,11 +154,241 @@ class UserSettingsController extends AdminController
         ]);
     }
 
-    public function updateGroup(){
+    public function updateGroup()
+    {
         return view('Btw\Core\Views\Admin\users\cells\line_group', [
             'userCurrent' => auth()->user()
         ]);
     }
+
+    public function history()
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+        if ($user === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user']));
+        }
+
+        /** @var LoginModel $loginModel */
+        $loginModel = model(LoginModel::class);
+        $logins     = $loginModel->where('identifier', $user->email)->orderBy('date', 'desc')->limit(20)->findAll();
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'settings_user_history', [
+                'user'   => $user,
+                'logins' => $logins,
+                'menu' => service('menus')->menu('sidebar_user_current'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+    }
+
+    public function sessionBrowser()
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+        if ($user === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user']));
+        }
+
+        /** @var SessionModel $sessionModel */
+        $sessionModel = model(SessionModel::class);
+        $sessions = $sessionModel->where('user_id', Auth()->user()->id)->orderBy('timestamp', 'desc')->limit(10)->find();
+
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'settings_user_browser', [
+                'user'   => $user,
+                'sessions' => $sessions,
+                'menu' => service('menus')->menu('sidebar_user_current'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+    }
+
+    public function capabilities()
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+        if ($user === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user']));
+        }
+
+        $permissions = setting('AuthGroups.permissions');
+        if (is_array($permissions)) {
+            ksort($permissions);
+        }
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'settings_user_capabilities', [
+                'permissions'   => $permissions,
+                'user'   => $user,
+                'menu' => service('menus')->menu('sidebar_user_current'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+    }
+
+    /**
+     * Toggle capability.
+     */
+    public function toggle(string $perm)
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+
+        $requestJson = $this->request->getJSON(true);
+
+        if (isset($requestJson['permissions']) && !is_array($requestJson['permissions']))
+            $requestJson['permissions'] = [$requestJson['permissions']];
+
+        $user->syncPermissions(...($requestJson['permissions'] ?? []));
+
+        $permissions = setting('AuthGroups.permissions');
+        if (is_array($permissions)) {
+            ksort($permissions);
+        }
+
+        return view('Btw\Core\Views\Admin\users\cells\form_cell_capabilities_row', [
+            'rowPermission'   => [$perm, $permissions[$perm]],
+            'user'   => $user,
+            'menu' => service('menus')->menu('sidebar_user_current'),
+            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        ]) . alert('success', lang('Btw.resourcesSaved', ['settings']));
+    }
+
+    /**
+     * Toggle all capabilities.
+     */
+    public function toggleAll()
+    {
+
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+
+        // print_r($this->request->getJSON(true)); exit;
+        $requestJson = $this->request->getJSON(true);
+
+        $user->syncPermissions(...($requestJson['permissions'] ?? []));
+
+        $permissions = setting('AuthGroups.permissions');
+        if (is_array($permissions)) {
+            ksort($permissions);
+        }
+
+        return view('Btw\Core\Views\Admin\users\cells\form_cell_capabilities_tr', [
+            'permissions'   => $permissions,
+            'user'   => $user,
+            'menu' => service('menus')->menu('sidebar_user_current'),
+            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        ]) . alert('success', lang('Btw.resourcesSaved', ['settings']));
+    }
+
+    /**
+     * Change user's password.
+     *
+     */
+    public function changePassword()
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+        if ($user === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user']));
+        }
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'settings_user_change_password', [
+                'userCurrent' => auth()->user(),
+                'menu' => service('menus')->menu('sidebar_user_current'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+
+        $requestJson = $this->request->getJSON(true);
+        $validation = service('validation');
+
+        $validation->setRules([
+            'current_password'      => 'required|strong_password',
+            'new_password'      => 'required|strong_password',
+            'pass_confirm' => 'required|matches[new_password]',
+        ]);
+
+        if (!$validation->run($requestJson)) {
+            return view('Btw\Core\Views\Admin\users\cells\form_cell_changepassword', [
+                'userCurrent' => $user,
+                'validation' => $validation
+            ]) . alert('danger', 'Form validation failed.');;
+        }
+
+        //On vérifie que le mote d epasse en cours est connu 
+        $validCreds = auth()->check(['password' => $requestJson['current_password'], 'email' => $user->email]); 
+        if(!$validCreds->isOK()){
+            return view('Btw\Core\Views\Admin\users\cells\form_cell_changepassword', [
+                'userCurrent' => $user,
+                'validation' => $validation
+            ]) . alert('danger', 'Erreur de mot de passe en cours.');;
+        }
+
+
+        // Save the new user's email/password
+        $identity = $user->getEmailIdentity();
+
+        if ($requestJson['new_password'] !== null) {
+            $identity->secret2 = service('passwords')->hash($requestJson['new_password']);
+        }
+
+        if ($identity->hasChanged()) {
+            model(UserIdentityModel::class)->save($identity);
+        }
+
+        return view('Btw\Core\Views\Admin\users\cells\form_cell_changepassword', [
+            'userCurrent' => auth()->user()
+        ]) . alert('success', lang('Btw.resourcesSaved', ['settings']));
+    }
+
+    
+    public function twoFactor()
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+        if ($user === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user']));
+        }
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'settings_user_two_factor', [
+                'user'   => $user,
+                'menu' => service('menus')->menu('sidebar_user_current'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+
+        $requestJson = $this->request->getJSON(true);
+        
+         // Actions
+         $actions             = setting('Auth.actions');
+         $actions['login']    = $requestJson['email2FA'] ?? null;
+         $context = 'user:' . user_id();
+         service('settings')->set('Auth.actions', $actions, $context);
+
+         return view('Btw\Core\Views\Admin\users\cells\form_cell_two_factor', [
+            'user'   => $user,
+        ]) . alert('success', lang('Btw.resourcesSaved', ['settings']));
+    }
+
+
 
     /**
      * Creates any admin-required menus so they're
@@ -185,7 +417,7 @@ class UserSettingsController extends AdminController
 
         $item    = new MenuItem([
             'title'           => 'Capabilities',
-            'namedRoute'      => 'settings-registration',
+            'namedRoute'      => 'user-capabilities',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'admin.view',
             'weight' => 2
@@ -194,7 +426,16 @@ class UserSettingsController extends AdminController
 
         $item    = new MenuItem([
             'title'           => 'Change password',
-            'namedRoute'      => 'settings-passwords',
+            'namedRoute'      => 'user-change-password',
+            'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission'      => 'admin.view',
+            'weight' => 3
+        ]);
+        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+
+        $item    = new MenuItem([
+            'title'           => 'Two Factor',
+            'namedRoute'      => 'user-two-factor',
             'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'admin.view',
             'weight' => 3
@@ -203,7 +444,16 @@ class UserSettingsController extends AdminController
 
         $item    = new MenuItem([
             'title'           => 'History',
-            'namedRoute'      => 'settings-avatar',
+            'namedRoute'      => 'user-history',
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission'      => 'admin.view',
+            'weight' => 4
+        ]);
+        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+
+        $item    = new MenuItem([
+            'title'           => 'Browser',
+            'namedRoute'      => 'user-session-browser',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'admin.view',
             'weight' => 4

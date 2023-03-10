@@ -14,7 +14,7 @@
         </div>
 
         <div class="row mb-3">
-            <x-inputs.checkbox  label="<?= lang('Btw.Force email verification after registration?'); ?>" name="emailActivation" value='CodeIgniter\Shield\Authentication\Actions\EmailActivator' checked="<?= (old('emailActivation', setting('Auth.actions')['register']) === 'CodeIgniter\Shield\Authentication\Actions\EmailActivator'); ?>" description="If checked, will send a code via email for them to confirm." />
+            <x-inputs.checkbox  label="<?= lang('Btw.Force email verification after registration?'); ?>" name="emailActivation" value='Btw\Core\Authentication\Actions\EmailActivator' checked="<?= (old('emailActivation', setting('Auth.actions')['register']) === 'Btw\Core\Authentication\Actions\EmailActivator'); ?>" description="If checked, will send a code via email for them to confirm." />
             <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('emailActivation'); ?>

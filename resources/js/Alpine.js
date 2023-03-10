@@ -17,6 +17,10 @@ document.addEventListener('alpine:init', () => {
         }
     }));
 
+    Alpine.store('config', {
+        userIsAuthenticated: true
+    });
+
     Alpine.store("toasts", {
         counter: 0,
         list: [],
