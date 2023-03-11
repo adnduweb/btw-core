@@ -56,3 +56,8 @@ https://demos.creative-tim.com/notus-react/?_ga=2.243129153.299807871.1676216059
 https://rappasoft.com/blog/snippet-5-creating-a-simple-but-cool-delete-button-with-alpinejs-and-tailwindcss
 https://django-htmx-alpine.nicholasmoen.com/tasks/
 https://htmx.org/extensions/web-sockets/
+https://tailwindcomponents.com/component/password-generator-and-strength-score
+gestiond es erreurs -> alpinejs & htmx -> https://github.com/alpinejs/alpine/discussions/2916
+
+# Aide
+https://forum.codeigniter.com/showthread.php?tid=84604

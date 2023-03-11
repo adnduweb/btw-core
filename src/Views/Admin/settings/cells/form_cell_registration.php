@@ -5,7 +5,7 @@
 
 
         <div class="row mb-3">
-            <x-inputs.checkbox  label="<?= lang('Btw.Allow users to register themselves on the site'); ?>" name="allowRegistration" checked="<?= (old('allowRegistration', setting('Auth.allowRegistration'))) ?>" description="If unchecked, an admin will need to create users." />
+            <x-inputs.switch label="<?= lang('Btw.Allow users to register themselves on the site'); ?>" name="allowRegistration" value="1" checked="<?= (old('allowRegistration', setting('Auth.allowRegistration') ?? false)) ?>" description="If unchecked, an admin will need to create users." />
             <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('allowRegistration'); ?>
@@ -14,7 +14,7 @@
         </div>
 
         <div class="row mb-3">
-            <x-inputs.checkbox  label="<?= lang('Btw.Force email verification after registration?'); ?>" name="emailActivation" value='Btw\Core\Authentication\Actions\EmailActivator' checked="<?= (old('emailActivation', setting('Auth.actions')['register']) === 'Btw\Core\Authentication\Actions\EmailActivator'); ?>" description="If checked, will send a code via email for them to confirm." />
+                 <x-inputs.switch label="<?= lang('Btw.Force email verification after registration?'); ?>" name="emailActivation" value="Btw\Core\Authentication\Actions\EmailActivator" checked="<?= (old('emailActivation', setting('Auth.actions')['register']) === 'Btw\Core\Authentication\Actions\EmailActivator'); ?>" description="If checked, will send a code via email for them to confirm." />
             <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('emailActivation'); ?>
@@ -30,7 +30,7 @@
                     <label class="form-label mb-10 dark:text-gray-300">Default User Group:</label>
                     <?php foreach ($groups as $group => $info) : ?>
                         <div class="form-check ml-4 mb-2 mt-2 ">
-                            <x-inputs.radio  label="<?= esc(ucfirst($info['title'])); ?>" name="defaultGroup" value="<?= $group ?>" checked="<?= ($group === $defaultGroup); ?>" description="false" />
+                            <x-inputs.radio label="<?= esc(ucfirst($info['title'])); ?>" name="defaultGroup" value="<?= $group ?>" checked="<?= ($group === $defaultGroup); ?>" description="false" />
                         </div>
                     <?php endforeach ?>
 

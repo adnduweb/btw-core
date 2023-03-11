@@ -1,8 +1,11 @@
 import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
+import focus from '@alpinejs/focus'
+import morph from '@alpinejs/morph'
+window.Alpine = Alpine
+Alpine.plugin(focus)
+Alpine.plugin(morph)
 Alpine.plugin(persist)
-
-window.Alpine = Alpine;
 
 //Prefix alpine special attributes to pass W3C validation
 document.addEventListener('alpine:init', () => {
@@ -114,3 +117,38 @@ document.addEventListener('alpine:init', () => {
 
 
 Alpine.start();
+
+// Alpine.morph(el, newHtml, {
+//     updating(el, toEl, childrenOnly, skip) {
+//         //
+//         console.log('updating');
+//     },
+ 
+//     updated(el, toEl) {
+//         //
+//         console.log('updated');
+//     },
+ 
+//     removing(el, skip) {
+//         //
+//     },
+ 
+//     removed(el) {
+//         //
+//     },
+ 
+//     adding(el, skip) {
+//         //
+//     },
+ 
+//     added(el) {
+//         //
+//     },
+ 
+//     key(el) {
+//         // By default Alpine uses the `key=""` HTML attribute.
+//         return el.id
+//     },
+ 
+//     lookahead: true, // Default: false
+// })

@@ -4,6 +4,7 @@ namespace Btw\Core\Entities;
 
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
+use \DateTime;
 
 class Session extends Entity
 {
@@ -20,6 +21,6 @@ class Session extends Entity
 
     public function getTimestamp()
     {
-        return $this->attributes['date_session'] = Time::createFromTimestamp($this->attributes['timestamp'])->humanize();
+        return $this->attributes['date_session'] = Time::parse($this->attributes['timestamp'])->humanize();
     }
 }

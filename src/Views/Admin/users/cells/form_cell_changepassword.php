@@ -1,7 +1,8 @@
-<div id="changepassword" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
+<div id="changepassword" class="shadow sm:rounded-md sm:overflow-hidden">
     <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Change paswword</h3>
+
 
 
         <?php ''; // print_r($userCurrent); 
@@ -34,7 +35,7 @@
             <div x-data="{ show: true }" class="w-full relative mb-6">
                 <x-label for="password" label="<?= lang('Btw.New password'); ?>" />
                 <div class="relative">
-                    <x-inputs.text name="new_password" value="" description="false" xType="show ? 'password' : 'text' " xModel="password" />
+                    <x-inputs.text name="new_password" value="" description="false" xType="show ? 'password' : 'text' " xModel="new_password" />
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
                         <svg class="h-6 text-gray-400 dark:text-gray-200" fill="none" @click="show = !show" :class="{'hidden': !show, 'block':show }" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 576 512">
                             <path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
@@ -59,7 +60,7 @@
                 <div class="w-full ">
                     <x-label for="pass_confirm" label="<?= lang('Btw.Confirm password'); ?>" />
                     <div class="relative">
-                        <x-inputs.text name="pass_confirm" value="" description="false" xType="show ? 'password' : 'text' " xModel="pass_confirm"/>
+                        <x-inputs.text name="pass_confirm" value="" description="false" xType="show ? 'password' : 'text' " xModel="pass_confirm" />
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
                             <svg class="h-6 text-gray-400 dark:text-gray-200" fill="none" @click="show = !show" :class="{'hidden': !show, 'block':show }" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 576 512">
                                 <path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
@@ -82,7 +83,6 @@
             </div>
 
         </div>
-
 
         <div class="flex -mx-1">
             <template x-for="(v,i) in 5">
@@ -115,7 +115,6 @@
         </div>
 
 
-
     </div>
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-700 ">
         <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingchangepassword" />
@@ -125,11 +124,11 @@
 
 <?php $this->section('scripts') ?>
 <script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('changePassword', () => ({
+    function app() {
+        return {
             showPasswordField: true,
             passwordScore: 0,
-            password: '',
+            new_password: '',
             pass_confirm: '',
             chars: {
                 lower: 'abcdefghijklmnopqrstuvwxyz',
@@ -137,17 +136,21 @@
                 numeric: '0123456789',
                 symbols: '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
             },
+            init() {
+                console.log('changePassword loaded');
+                this.generatePassword();
+            },
             charsLength: 12,
             checkStrength: function() {
-                if (!this.password) return this.passwordScore = 0;
-                this.passwordScore = zxcvbn(this.password).score + 1;
+                if (!this.new_password) return this.passwordScore = 0;
+                this.passwordScore = zxcvbn(this.new_password).score + 1;
             },
             generatePassword: function() {
                 console.log(document.getElementById('charsSymbols').checked);
                 var _pass = this.shuffleArray(
                     ((document.getElementById('charsLower').checked ? this.chars.lower : '') + (document.getElementById('charsUpper').checked ? this.chars.upper : '') + (document.getElementById('charsNumeric').checked ? this.chars.numeric : '') + (document.getElementById('charsSymbols').checked ? this.chars.symbols : '')).split('')
                 ).join('').substring(0, this.charsLength);
-                this.password = _pass;
+                this.new_password = _pass;
                 this.pass_confirm = _pass;
                 this.checkStrength();
             },
@@ -158,8 +161,7 @@
                 }
                 return array;
             }
-
-        }));
-    });
+        }
+    }
 </script>
 <?php $this->endSection() ?>

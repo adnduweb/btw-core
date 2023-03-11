@@ -15,9 +15,9 @@
             <?php endif ?>
         </div>
 
-         <!-- Site Online? -->
+        <!-- Site Online? -->
         <div class="row">
-            <x-inputs.checkbox  label="<?= lang('Btw.siteOnline'); ?>" name="siteOnline" checked="<?= (old('siteOnline', setting('Site.siteOnline') ?? false)) ?>" description="If unchecked, only Superadmin and user groups with permission can access the site." />
+            <x-inputs.switch label="<?= lang('Btw.siteOnline'); ?>" name="siteOnline" value="1" checked="<?= (old('siteOnline', setting('Site.siteOnline') ?? false)) ?>" description="If unchecked, only Superadmin and user groups with permission can access the site." />
             <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('siteOnline'); ?>

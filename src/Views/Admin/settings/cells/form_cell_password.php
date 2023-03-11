@@ -23,13 +23,13 @@
             <div class="form-group col-6 col-sm-4">
 
                 <!-- Composition Validator -->
-                <x-inputs.checkbox label="<?= lang('Btw.Composition Validator'); ?>" name="validators[]" value="CodeIgniter\Shield\Authentication\Passwords\CompositionValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\CompositionValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
+                <x-inputs.switch label="<?= lang('Btw.Composition Validator'); ?>" name="validators" value="CodeIgniter\Shield\Authentication\Passwords\CompositionValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\CompositionValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />     
                 <!-- Nothing Personal Validator -->
-                <x-inputs.checkbox label="<?= lang('Btw.Nothing Personal Validator'); ?>" name="validators[]" value="CodeIgniter\Shield\Authentication\Passwords\Passwords" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
+                <x-inputs.switch label="<?= lang('Btw.Nothing Personal Validator'); ?>" name="validators" value="CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
                 <!-- Dictionary Validator -->
-                <x-inputs.checkbox label="<?= lang('Btw.Composition Validator'); ?>" name="validators[]" value="CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
-                <!-- Pwned Validator -->
-                <x-inputs.checkbox label="<?= lang('Btw.Dictionary Validator'); ?>" name="validators[]" value="CodeIgniter\Shield\Authentication\Passwords\PwnedValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\PwnedValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
+                <x-inputs.switch label="<?= lang('Btw.Composition Validator'); ?>" name="validators" value="CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
+                 <!-- Pwned Validator -->
+                 <x-inputs.switch label="<?= lang('Btw.Dictionary Validator'); ?>" name="validators" value="CodeIgniter\Shield\Authentication\Passwords\PwnedValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\PwnedValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
             </div>
             <div class="col-6 px-4">
                 <ul class="text-muted small text-sm text-gray-500  dark:text-gray-300">

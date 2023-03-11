@@ -1,5 +1,5 @@
 <div id="avatar" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
-    <div x-data="{useGravatar: <?= old('useGravatar', setting('Users.useGravatar')) ? true : '0' ?>}" class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div x-data="{useGravatar: <?= old('useGravatar', setting('Users.useGravatar')) ? true : 'false' ?>}" class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Avatars</h3>
 
@@ -15,8 +15,8 @@
 
         <!-- Use Gravatar -->
         <div class="row mb-3">
-            <x-inputs.checkbox label="<?= lang('Btw.Use Gravatar for avatars'); ?>" name="useGravatar" checked="<?= (old('useGravatar', setting('Users.useGravatar'))) ?>" change="useGravatar = ! useGravatar" />
-            <?php if (isset($validation)) :  ?>
+            <x-inputs.switch label="<?= lang('Btw.Use Gravatar for avatars'); ?>" name="useGravatar" value="1" checked="<?= (old('useGravatar', setting('Users.useGravatar'))) ?>" xNotData="true" xOn="useGravatar" xChange="useGravatar = ! useGravatar" description="false" />
+           <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('useGravatar'); ?>
                 </div>
@@ -26,7 +26,7 @@
 
         <!-- Gravatar Default -->
 
-        <div class="row mb-3" x-show="useGravatar">
+        <div class="row mb-3" x-show="useGravatar != false">
             <div class="form-group col-12 col-sm-4">
                 <x-inputs.select label="<?= lang('Btw.Gravatar for default style'); ?>" name="gravatarDefault">
                     <?= view_cell('Btw\Core\Cells\Select::renderList', [

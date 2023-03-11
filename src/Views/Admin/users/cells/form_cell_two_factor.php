@@ -5,7 +5,7 @@
 
 
         <div class="row mb-3">
-            <x-inputs.checkbox label="<?= lang('Btw.Force 2FA check after login?'); ?>" name="email2FA" value="Btw\Core\Authentication\Actions\Email2FA" checked="<?= (old('email2FA', setting()->get('Auth.actions', 'user:' . user_id())['login']) === 'Btw\Core\Authentication\Actions\Email2FA') ?>" description="If checked, will send a code via email for them to confirm." />
+        <x-inputs.switch label="<?= lang('Btw.Force 2FA check after login?'); ?>" name="email2FA" value="Btw\Core\Authentication\Actions\Email2FA" checked="<?= (old('email2FA', setting()->get('Auth.actions', 'user:' . user_id())['login']) === 'Btw\Core\Authentication\Actions\Email2FA') ?>" description="If checked, will send a code via email for them to confirm" />
             <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('email2FA'); ?>

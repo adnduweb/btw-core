@@ -3,6 +3,7 @@
 namespace Btw\Core\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use CodeIgniter\Database\RawSql;
 
 class CreateTableSessions extends Migration
 {
@@ -31,11 +32,9 @@ class CreateTableSessions extends Migration
 				'null'       => false
 			],
 			'timestamp'  => [
-				'type'       => 'INT',
-				'constraint' => 10,
-				'unsigned'   => true,
+				'type'       => 'TIMESTAMP',
 				'null'       => false,
-				'default'    => 0
+				'default'    => new RawSql('CURRENT_TIMESTAMP')
 			],
 			'data'       => [
 				'type'       => 'TEXT',

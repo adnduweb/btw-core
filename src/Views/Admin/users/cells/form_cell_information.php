@@ -3,7 +3,6 @@
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Général</h3>
 
-
         <?php ''; // print_r($userCurrent); 
         ?>
         <!-- Site Name -->

@@ -4,7 +4,7 @@
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Login</h3>
 
         <div class="row mb-3">
-            <x-inputs.checkbox label="<?= lang('Btw.Allow users to be remembered'); ?>" name="allowRemember" checked="<?= (old('allowRemember', setting('Auth.sessionConfig')['allowRemembering'])) ?>" description="This makes it so users do not have to login every visit." xOnClick="remember = ! remember" />
+            <x-inputs.switch label="<?= lang('Btw.Allow users to be remembered'); ?>" name="allowRemember" value="1" checked="<?= (old('allowRemember', setting('Auth.sessionConfig')['allowRemembering'])) ?>" description="This makes it so users do not have to login every visit." xOnClick="remember = ! remember" />
             <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('allowRemember'); ?>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="row mb-3">
-            <x-inputs.checkbox label="<?= lang('Btw.Force 2FA check after login?'); ?>" name="email2FA" value="Btw\Core\Authentication\Actions\Email2FA" checked="<?= (old('email2FA', setting('Auth.actions')['login']) === 'Btw\Core\Authentication\Actions\Email2FA') ?>" description="If checked, will send a code via email for them to confirm general application." />
+            <x-inputs.switch label="<?= lang('Btw.Force 2FA check after login?'); ?>" name="email2FA" value="Btw\Core\Authentication\Actions\Email2FA" checked="<?= (old('email2FA', setting('Auth.actions')['login']) === 'Btw\Core\Authentication\Actions\Email2FA') ?>" description="If checked, will send a code via email for them to confirm general application." />
             <?php if (isset($validation)) :  ?>
                 <div class="invalid-feedback block">
                     <?= $validation->getError('email2FA'); ?>

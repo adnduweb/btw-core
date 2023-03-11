@@ -321,7 +321,7 @@ class GeneralSettingsController extends AdminController
         }
 
         setting('Auth.minimumPasswordLength', (int)$requestJson['minimumPasswordLength']);
-        setting('Auth.passwordValidators', $requestJson['validators[]']);
+        setting('Auth.passwordValidators', $requestJson['validators']);
 
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_password', [
             'groups' => setting('AuthGroups.groups'),
