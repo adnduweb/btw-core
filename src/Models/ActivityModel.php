@@ -51,9 +51,9 @@ class ActivityModel extends Model
          * @see https://codeigniter4.github.io/CodeIgniter4/extending/authentication.html
          */
         $userId = function_exists('user_id') ? user_id() : null;
-        echo '<pre>';
-       print_r(db_connect());
-       echo '</pre>';
+    //     echo '<pre>';
+    //    print_r(db_connect());
+    //    echo '</pre>';
 
         return new Activity([
             'method'     => $request->getMethod(),
