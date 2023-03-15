@@ -87,6 +87,9 @@ if (!function_exists('render')) {
         $viewMeta         = service('viewMeta');
         $data['viewMeta'] = $viewMeta;
 
+        $viewJavascript         = service('viewJavascript');
+        $data['viewJavascript'] = $viewJavascript;
+
         return $renderer->setData($data)
             ->render($view, $options, true);
     }
@@ -207,5 +210,33 @@ if (!function_exists('generateUsername')) {
         }
 
         return $username;
+    }
+}
+
+if (!function_exists('getAdminToken')) {
+    /**
+     * Tokenize a string.
+     *
+     * @param string $string string to encript
+     */
+    function getAdminToken($string)
+    {
+        return !empty($string) ? hashToken($string) : false;
+    }
+}
+
+if (!function_exists('hashToken')) {
+    /**
+     * Hash password.
+     *
+     * @param string $passwd String to has
+     *
+     * @return string Hashed password
+     *
+     * @since 1.7.0
+     */
+    function hashToken($passwd)
+    {
+        return md5(env('encryption.key') . $passwd);
     }
 }

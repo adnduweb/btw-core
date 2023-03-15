@@ -4,6 +4,8 @@
  * @var CodeIgniter\Router\RouteCollection $routes
  */
 
+ $routes->get('assets/(:any)', '\Btw\Core\Controllers\AssetController::serve/$1');
+
 
 // Authentication Routes that override Shield's
 $routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth'], static function ($routes) {
@@ -51,7 +53,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
 
 
 
-
+    $routes->match(['get', 'post'], 'logs/files/list', 'ActivityController::logsFile', ['as' => 'logs-file']);
 
 
 

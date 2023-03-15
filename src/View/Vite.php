@@ -50,23 +50,26 @@ class Vite
             # You look much pretty as a php object =).
             $manifest = json_decode($manifest);
 
+            //  print_r($manifest); exit;
+
             # Now, we will get all js files and css from the manifest.
             foreach ($manifest as $file)
             {
+                // print_r($file);exit; 
                 # Check extension
                 $fileExtension = substr($file->file, -3, 3);
 
                 # Generate js tag.
                 if ($fileExtension === '.js' && isset($file->isEntry) && $file->isEntry === true && (!isset($file->isDynamicEntry) || $file->isDynamicEntry !== true))
                 {
-                    $result['js'] .= '<script type="module" src="/' . $file->file . '"></script>';
+                    $result['js'] .= '<script type="module" src="/' . $file->file . '"></script>' . "\n";
                 }
 
                 if (!empty($file->css))
                 {
                     foreach ($file->css as $cssFile)
                     {
-                        $result['css'] .= '<link rel="stylesheet" href="/' . $cssFile . '" />';
+                        $result['css'] .= '<link rel="stylesheet" href="/' . $cssFile . '" />'. "\n";
                     }
                 }
             }

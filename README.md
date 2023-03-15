@@ -58,6 +58,7 @@ https://django-htmx-alpine.nicholasmoen.com/tasks/
 https://htmx.org/extensions/web-sockets/
 https://tailwindcomponents.com/component/password-generator-and-strength-score
 gestiond es erreurs -> alpinejs & htmx -> https://github.com/alpinejs/alpine/discussions/2916
+https://github.com/datamweb/shield-oauth
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604

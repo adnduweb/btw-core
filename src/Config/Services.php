@@ -6,6 +6,8 @@ use Btw\Core\Btw;
 use Btw\Core\Menus\Manager as MenuManager;
 use Btw\Core\View\Theme as Theme;
 use Btw\Core\View\Metadata;
+use Btw\Core\View\Javascriptdata;
+
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -65,6 +67,22 @@ class Services extends BaseService
 
         return new Metadata();
     }
+
+    /**
+     * Returns the view metadata manager.
+     *
+     * @return Javascriptdata
+     */
+    public static function viewJavascript(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('viewJavascript');
+        }
+
+        return new Javascriptdata();
+    }
+
+    
 
     /**
      * Return List AdminTheme.

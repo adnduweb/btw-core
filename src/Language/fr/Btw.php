@@ -37,4 +37,7 @@ return [
     'name' => 'Role',
     'description' => 'description',
     'save' => 'Sauvegarder',
+    'Dashboard' => 'Tableau de bord',
+    'Logs' => 'Archives',
+    'Settings' => 'Préférences',
 ];

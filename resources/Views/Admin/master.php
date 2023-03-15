@@ -8,7 +8,11 @@
     <?= csrf_meta() ?>
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
-    
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> 
+
+    <?= $viewJavascript->render(); ?>
+    <?= $viewJavascript->renderLangJson('admin/js/language/fr.json'); ?>
+ 
 </head>
 
 <body hx-ext="ajax-header" hx-history="true" hx-headers='{"<?= csrf_token() ?>": "<?= csrf_hash() ?>", "X-Theme": "admin"}' class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
@@ -26,6 +30,9 @@
                 <?= ''; //$this->include('_stats') 
                 ?>
 
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
                 <main class="relative flex-1 overflow-y-auto px-8 py-6 dark:bg-gray-900 ">
                     <?= $this->renderSection('main') ?>
                 </main>
@@ -37,6 +44,7 @@
 
         <?= $this->renderSection('modals') ?>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://unpkg.com/hyperscript.org@0.9.7" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
 

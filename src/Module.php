@@ -71,5 +71,15 @@ class Module extends BaseModuleController
              'permission'      => 'admin.view',
          ]);
          $sidebar->menu('sidebar')->collection('system')->addItem($item);
+
+          // Add to the Content menu
+          $sidebar = service('menus');
+          $item    = new MenuItem([
+              'title'           => lang('Btw.Logs'),
+              'namedRoute'      => 'logs-file',
+              'fontIconSvg'     => theme()->getSVG('duotone/Code/Settings4.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true),
+              'permission'      => 'admin.view',
+          ]);
+          $sidebar->menu('sidebar')->collection('system')->addItem($item);
     }
 }

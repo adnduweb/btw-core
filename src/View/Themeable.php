@@ -42,6 +42,9 @@ trait Themeable
         $viewMeta         = service('viewMeta');
         $data['viewMeta'] = $viewMeta;
 
+        $viewJavascript         = service('viewJavascript');
+        $data['viewJavascript'] = $viewJavascript;
+
         return $renderer->setData($data)
             ->render($view, $options, true);
     }

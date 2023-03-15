@@ -18,14 +18,22 @@ class Decorator implements ViewDecoratorInterface
 
         # Check whether vite is running or manifest is ready.
         if (env('VITE_AUTO_INJECTING') && Vite::routeIsNotExluded()) {
-            
-            # First inject app div
-            $html = str_replace('<body>', "<body>\n\t<div id=\"app\">", $html);
-            # Close the div
-            $html = str_replace('</body>', "\n\t</div>\n</body>", $html);
+
+
+            if (Vite::isReady() === false) {
+                throw new \Exception('CodeIgniter Vite package is installed, but not initialized. did you run "php spark vite:init" ?');
+            }
+
+            // # First inject app div
+            // $html = str_replace('<body>', "<body>\n\t<div id=\"app\">", $html);
+            // # Close the div
+            // $html = str_replace('</body>', "\n\t</div>\n</body>", $html);
 
             # Get generated tags.
             $tags = Vite::tags();
+
+            // var_dump($tags['js']);
+            // exit;
 
             $jsTags  = $tags['js'];
 
@@ -33,12 +41,21 @@ class Decorator implements ViewDecoratorInterface
             if (!empty($tags['css'])) {
                 $cssTags = $tags['css'];
 
-                $html = str_replace('</head>', "\n\t$cssTags\n", $html);
-                $html = str_replace('</body>', "\n\t$jsTags\n</body>", $html);
+                if (strpos($html, "\n\t$cssTags\n") === false) {
+                    $html = str_replace('</head>', "\n\t$cssTags\n</head>", $html);
+                }
+
+                if (strpos($html, "\n\t$jsTags\n") === false) {
+                    $html = str_replace('</head>', "\n\t$jsTags\n</head>", $html);
+                }
             } else {
-                $html = str_replace('</head>', "\n\t$jsTags\n</head>", $html);
+                if (strpos($html, "\n\t$jsTags\n") === false) {
+                    $html = str_replace('</head>', "\n\t$jsTags\n</head>", $html);
+                }
             }
         }
+
+        // return $html;
 
         $components = self::factory();
 

@@ -8,6 +8,7 @@ Alpine.plugin(morph)
 Alpine.plugin(persist)
 
 //Prefix alpine special attributes to pass W3C validation
+ // Alpine.prefix('data-x-')
 document.addEventListener('alpine:init', () => {
 
     Alpine.data('listen', () => ({
@@ -48,7 +49,6 @@ document.addEventListener('alpine:init', () => {
         },
     });
 
-    // Alpine.prefix('data-x-')
     // Stores variable globally 
     Alpine.store('sidebar', {
         full: false,
