@@ -3,10 +3,11 @@
 namespace Btw\Core\Config;
 
 use Btw\Core\Btw;
-use Btw\Core\Menus\Manager as MenuManager;
+use Btw\Core\Libraries\Menus\Manager as MenuManager;
 use Btw\Core\View\Theme as Theme;
 use Btw\Core\View\Metadata;
 use Btw\Core\View\Javascriptdata;
+use Btw\Core\Libraries\Oauth\Basic\ShieldOAuth;
 
 use CodeIgniter\Config\BaseService;
 
@@ -42,7 +43,7 @@ class Services extends BaseService
     /**
      * Returns the system menu manager
      *
-     * @return Bonfire\Menus\Manager|mixed
+     * @return Btw\Core\Libraries\Menus\Manager|mixed
      */
     public static function menus(bool $getShared = true)
     {
@@ -99,5 +100,14 @@ class Services extends BaseService
         }
 
         return new Theme();
+    }
+
+    public static function ShieldOAuth($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('ShieldOAuth');
+        }
+
+        return new ShieldOAuth(new ShieldOAuthConfig());
     }
 }

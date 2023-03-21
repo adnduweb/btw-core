@@ -19,7 +19,8 @@
 		"tatter/alerts": "^3.0",
 		"michalsn/codeigniter-htmx": "^1.1",
 		"whichbrowser/parser": "^2.1",
-		"codeigniter4/translations": "^4.3"
+		"codeigniter4/translations": "^4.3",
+		"greenlion/php-sql-parser": "^4.6"
 	},
 	"require-dev": {
 		"codeigniter/coding-standard": "^1.1",

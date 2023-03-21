@@ -5,7 +5,7 @@
 <?= $this->section('main') ?>
 
 
-<x-page-head tAdd='<?=  lang('Btw.AddBouton', ['rôle']); ?>' lAdd='admin/groups-list/add'> <?= lang('Btw.roles'); ?> </x-page-head>
+<x-page-head tAdd='<?=  lang('Btw.AddBouton', ['rôle']); ?>' lAdd='group-add'> <?= lang('Btw.roles'); ?> </x-page-head>
 <x-admin-box collapse=true>
 <?= $this->include('Btw\Core\Views\Admin\groups\table'); ?>
 </x-admin-box>

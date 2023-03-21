@@ -30,11 +30,11 @@ class Logs
         'ALL'      => 'fas fa-minus',
     ];
     private static $levelClasses = [
-        'INFO'     => 'info',
-        'ERROR'    => 'danger',
-        'CRITICAL' => 'danger',
-        'DEBUG'    => 'warning',
-        'ALL'      => 'muted',
+        'INFO'     => 'inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800',
+        'ERROR'    => 'inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800',
+        'CRITICAL' => 'inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800',
+        'DEBUG'    => 'inline-flex items-center rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800',
+        'ALL'      => 'inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800',
     ];
 
     /**

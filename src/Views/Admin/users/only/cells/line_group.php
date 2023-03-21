@@ -1,0 +1,1 @@
+<?= ucfirst(implode(', ', $userCurrent->getGroups())); ?>

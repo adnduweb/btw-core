@@ -35,6 +35,10 @@ class Theme
      */
     protected static $themeInfo;
 
+    protected static $ignore_session = false;
+
+    protected static $message;
+
     /**
      * Sets the active theme.
      */
@@ -243,4 +247,25 @@ class Theme
 
         return $output;
     }
+
+    public static function set_message($type = 'info', $message = '', $title = 'info')
+    {
+        if (empty($message)) {
+            return;
+        }
+        $session = \Config\Services::session();
+
+        if (!self::$ignore_session && isset($session)) {
+            //echo serialize($message); exit;
+            $message = serialize($message);
+            $session->setFlashdata('message', "{$type}::{$message}::{$title}");
+        }
+
+        self::$message = array(
+            'type' => $type,
+            'message' => $message,
+            'title' => $title
+        );
+    }
+
 }

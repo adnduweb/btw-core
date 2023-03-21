@@ -1,0 +1,1 @@
+<a class="text-blue-700" href="mailto:<?= $row->secret; ?>"><span><?= $row->secret; ?></span></a>

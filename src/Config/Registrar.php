@@ -5,6 +5,7 @@ namespace Btw\Core\Config;
 use Btw\Core\Filters\Admin;
 use Btw\Core\Filters\Protect;
 use Btw\Core\Filters\ActivityFilter;
+use Btw\Core\View\ShieldOAuth;
 use Btw\Core\View\Decorator;
 use Btw\Core\Validation\UserRules;
 use CodeIgniter\Shield\Authentication\Passwords\ValidationRules as PasswordRules;
@@ -46,6 +47,9 @@ class Registrar
                 // 'before' => [
                 //     'csrf' => ['except' => ['api/record/[0-9]+']],
                 // ],
+                'before' => [
+                    'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
+                ],
                 'after' => array_merge($props['globals']['after'], [
                     'activities'
                 ]),
@@ -84,6 +88,7 @@ class Registrar
     {
         return [
             'decorators' => [
+                ShieldOAuth::class,
                 Decorator::class,
             ],
         ];
@@ -94,6 +99,7 @@ class Registrar
         return [
             'templates' => [
                 'default_htmx_full' => 'Btw\Core\Views\Pager\default_htmx_full',
+                'btw_full' => 'Btw\Core\Views\Pager\btw_full',
             ],
         ];
     }
@@ -109,7 +115,7 @@ class Registrar
         $autoloader = service('autoloader');
 
         $namespaces = [];
-        $namespaces["Themes"] = [ROOTPATH .'resources/Views'];
+        $namespaces["Themes"] = [ROOTPATH . 'resources/Views'];
         $namespaces["Btw\\Core"] = [realpath(__DIR__ . "/../")];
 
         $paths = config('Btw')->appModules;
@@ -146,7 +152,6 @@ class Registrar
         $prefixes      = array_merge($prefixesStart, $namespaces, $prefixesEnd);
 
         $rp->setValue($autoloader, $prefixes);
-
     }
 }
 

@@ -38,6 +38,6 @@ return [
     'description' => 'description',
     'save' => 'Sauvegarder',
     'Dashboard' => 'Tableau de bord',
-    'Logs' => 'Archives',
+    'Logs' => 'Logs',
     'Settings' => 'Préférences',
 ];

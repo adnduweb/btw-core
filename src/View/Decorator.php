@@ -24,11 +24,6 @@ class Decorator implements ViewDecoratorInterface
                 throw new \Exception('CodeIgniter Vite package is installed, but not initialized. did you run "php spark vite:init" ?');
             }
 
-            // # First inject app div
-            // $html = str_replace('<body>', "<body>\n\t<div id=\"app\">", $html);
-            // # Close the div
-            // $html = str_replace('</body>', "\n\t</div>\n</body>", $html);
-
             # Get generated tags.
             $tags = Vite::tags();
 
@@ -46,7 +41,7 @@ class Decorator implements ViewDecoratorInterface
                 }
 
                 if (strpos($html, "\n\t$jsTags\n") === false) {
-                    $html = str_replace('</head>', "\n\t$jsTags\n</head>", $html);
+                    $html = str_replace('</main>', "\n\t$jsTags\n</main>", $html);
                 }
             } else {
                 if (strpos($html, "\n\t$jsTags\n") === false) {
@@ -55,7 +50,8 @@ class Decorator implements ViewDecoratorInterface
             }
         }
 
-        // return $html;
+        //message ajax not htmx
+        $html = self::message($html);
 
         $components = self::factory();
 
@@ -72,5 +68,53 @@ class Decorator implements ViewDecoratorInterface
         }
 
         return self::$components;
+    }
+
+    public static function message($html)
+    {
+        $session = \Config\Services::session();
+
+        $message = $session->getFlashdata('message');
+        if (!empty($message)) {
+            // Split out the message parts
+            $temp_message = explode('::', $message);
+            if (count($temp_message) > 3) {
+                $type = $temp_message[0];
+                $message = $temp_message[1];
+                $title = $temp_message[2];
+            } else {
+                $type = $temp_message[0];
+                $message = $temp_message[1];
+                $title = $temp_message[2];
+            }
+
+            unset($temp_message);
+
+
+            // If message is empty, check the $message property.
+            if (empty($message)) {
+                if (empty(self::$message['message'])) {
+                    return '';
+                }
+                $message = unserialize(self::$message['message']);
+                $type = self::$message['type'];
+                $title = self::$message['title'];
+            }
+            $message = unserialize($message);
+            $templateVarMessage = '';
+            if (is_array($message) && !empty($message)) {
+                $templateVarMessage .= '<ul>';
+                foreach ($message as $k => $v) {
+                    $templateVarMessage .= '<li>' . addslashes($v) . '</li>';
+                }
+                $templateVarMessage .= '</ul>';
+            } else {
+                $templateVarMessage = addslashes($message);
+            }
+            if (strpos($html, alertHtmx($type, $templateVarMessage)) === false) {
+                $html = str_replace('<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">', '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">' . alertHtmx($type, $templateVarMessage), $html);
+            }
+        }
+        return $html;
     }
 }

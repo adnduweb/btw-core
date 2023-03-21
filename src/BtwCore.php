@@ -11,7 +11,7 @@
 
 namespace Btw\Core;
 
-use Btw\Core\Menus\MenuItem;
+use Btw\Core\Libraries\Menus\MenuItem;
 
 
 include_once __DIR__ . '/Common.php';

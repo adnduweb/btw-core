@@ -18,7 +18,7 @@ class AdminController extends BaseController
 
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        $this->helpers = array_merge($this->helpers, ['alertP', 'auth', 'setting', 'form']);
+        $this->helpers = array_merge($this->helpers, ['alertHtmx', 'auth', 'setting', 'form']);
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 

@@ -20,7 +20,7 @@
                 </div>
                 <div class="mt-5 flex-1 h-0 overflow-y-auto">
                     <nav class="px-2 py-4">
-                        <a href="<?= site_url(); ?>" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md bg-slate-900 text-white">
+                        <a href="<?= site_url(); ?>" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md bg-blue-100 text-blue-700 dark:bg-slate-900 text-white">
                             <svg aria-hidden="true" class="mr-4 flex-shrink-0 h-6 w-6 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"></path>
                             </svg> Dashboard
@@ -47,7 +47,7 @@
 
                                             <?php foreach ($collection->items() as $item) : ?>
                                                 <?php if ($item->userCanSee()) : ?>
-                                                    <a class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-300 hover:bg-slate-700 hover:text-white <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
+                                                    <a class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-300 hover:bg-slate-700 hover:text-white <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
                                                         <?= $item->icon ?>
                                                         <span><?= $item->title ?></span>
                                                     </a>
@@ -71,20 +71,20 @@
     </div>
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:flex w-64 flex-col">
-        <div class="flex-1 flex flex-col min-h-0 dark:border-r dark:border-slate-600">
-            <div class="flex h-16 flex-shrink-0 px-4 bg-slate-800">
-                <a href="<?= site_url(); ?>" class="flex items-center">
-                    <img src="https://demo.ticksify.com/img/logo-white-full.png" alt="Ticksify" class="h-10 w-auto">
+        <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 dark:border-gray-800">
+            <div class="flex h-16 flex-shrink-0 px-4 dark:bg-slate-800 bg-white">
+                <a href="<?= site_url(ADMIN_AREA); ?>" class="flex items-center">
+                    <img src="<?= base_url() . 'logo.png'; ?>" alt="Ticksify" class="h-10 w-auto dark:grayscale grayscale-0">
                 </a>
             </div>
-            <div class="flex-1 flex flex-col overflow-y-auto bg-slate-800">
-                <nav class="flex-1 px-2 py-4">
-                    <a href="<?= route_to('dashboard'); ?>" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md <?= (in_array((string)$currentUrl, [route_to('dashboard')])) ? "bg-slate-900" : ""; ?>  text-white">
-                        <?= theme()->getSVG('duotune/graphs/gra008.svg', 'svg-icon svg-white group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 fill-white', true); ?>
+            <div class="flex-1 flex flex-col overflow-y-auto dark:bg-slate-800 bg-white">
+                <nav class="flex-1 px-2 py-4 ">
+                    <a href="<?= route_to('dashboard'); ?>" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [route_to('dashboard')])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?>">
+                        <?= theme()->getSVG('duotune/graphs/gra008.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-gray-800 group-hover:text-slate-300', true); ?>
                         <?= lang('Btw.Dashboard'); ?>
                     </a>
 
-                    <hr class="border-t border-gray-600 my-5" aria-hidden="true">
+                    <hr class="border-t border-gray-200 dark:border-gray-600 my-5" aria-hidden="true">
 
                     <?php
                     //  print_r($menu); exit; 
@@ -102,7 +102,7 @@
 
                                         <?php foreach ($collection->items() as $item) : ?>
                                             <?php if ($item->userCanSee()) : ?>
-                                                <a class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-slate-300 hover:bg-slate-700 hover:text-white <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
+                                                <a class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
                                                     <?= $item->icon ?>
                                                     <span><?= $item->title ?></span>
                                                 </a>

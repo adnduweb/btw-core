@@ -18,6 +18,7 @@ class Javascriptdata
 
         $this->base[] = ['base_url' => site_url(),];
         $this->base[] = ['current_url'    => current_url()];
+        $this->base[] = ['areaAdmin'    => env('app.areaAdmin')];        
         $this->base[] = ['uri'            => service('request')->getUri()->getPath()];
         $this->base[] = ['basePath'       => '\/'];
         $this->base[] = ['crsftoken'      => csrf_token()];
@@ -51,7 +52,7 @@ class Javascriptdata
         //  print_r($this->base);
         $html = "";
         $output = "";
-        $html .= ' var doudou = [{';
+        $html .= ' var doudou = {';
         $html .= "\n\t\t";
         foreach ($this->base as $val) {
             foreach ($val as $k => $v) {
@@ -69,12 +70,13 @@ class Javascriptdata
                 $html .= ', ' . "\n\t\t";
             }
         }
-        $html .= '}]';
+        $html .= '}';
         $output = "<script>";
         if (ENVIRONMENT == "development" || ENVIRONMENT == "testing") {
             $output .= $html;
         } else {
-            $output .= json_encode(['doudou' => $this->base]);
+            $html2 = preg_replace("/\s+/", "", $html);
+            $output .= str_replace( array( '<br>', '<br />', "\n", "\r", "vardoudou" ), array( '', '', '', '', 'var doudou' ), trim($html2));
         }
 
         $output .= '</script> ' . "\n\t\t";

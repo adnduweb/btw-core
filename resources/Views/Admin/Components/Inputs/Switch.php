@@ -1,7 +1,7 @@
 <?php
 
 /** Definition du text */
-$labelNew = (isset($label)) ? str_replace(' ', '_', $label) : '';
+$labelNew = (isset($label)) ? $label : '';
 $nameNew = (isset($name)) ? str_replace(' ', '_', $name) : '';
 $value = (!empty($value)) ? $value : true;
 $checkedNew = empty($checked) ? "false" : "true";
@@ -17,7 +17,7 @@ $xNotData = (isset($xNotData)) ? '' : 'x-data="{' . $xOn . ': ' . $checkedNew . 
 
 
 <div class="flex items-center <?= $class; ?>">
-    <button type="button" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-400" <?= $xNotData; ?>  role="switch" aria-checked="true" :aria-checked="<?= $xOn; ?>.toString()" @click="<?= $xOn; ?> = !<?= $xOn; ?>" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'bg-slate-400': <?= $xOn; ?>, 'bg-gray-200': !(<?= $xOn; ?>) }" <?= $xOnClick; ?> @change="useGravatar = ! useGravatar">
+    <button type="button" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-400" <?= $xNotData; ?>  role="switch" aria-checked="true" :aria-checked="<?= $xOn; ?>.toString()" @click="<?= $xOn; ?> = !<?= $xOn; ?>" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'bg-slate-400': <?= $xOn; ?>, 'bg-gray-200': !(<?= $xOn; ?>) }" <?= $xOnClick; ?> <?= $xChange; ?> >
         <span class="sr-only">Use setting</span>
         <input type="checkbox" id="toggle" name="<?= $nameNew; ?>" x-model="<?= $xOn; ?>" value="<?= $value; ?>" class="hidden appearance-none w-full h-full active:outline-none focus:outline-none" />
         <span class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'translate-x-5': <?= $xOn; ?>, 'translate-x-0': !(<?= $xOn; ?>) }">

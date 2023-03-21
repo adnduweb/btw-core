@@ -33,7 +33,7 @@ class ActivityController extends AdminController
     public function __construct()
     {
         helper('filesystem');
-        $this->logsLimit   = setting('Site.perPage') ?? 10;
+        $this->logsLimit   = setting('Site.perPage') ?? 60;
         $this->logsHandler = new Logs();
     }
 
@@ -63,7 +63,7 @@ class ActivityController extends AdminController
      *
      * @return RedirectResponse|string
      */
-    public function view(string $file = '')
+    public function viewFile(string $file = '')
     {
         helper('security');
         $file = sanitize_filename($file);

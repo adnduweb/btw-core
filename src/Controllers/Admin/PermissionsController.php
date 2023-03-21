@@ -13,7 +13,7 @@ namespace Btw\Core\Controllers\Admin;
 
 use Btw\Core\Controllers\AdminController;
 use InvalidArgumentException;
-use Btw\Core\TableHelper;
+use Btw\Core\Libraries\TableHelper;
 
 /**
  * Class Dashboard
@@ -79,9 +79,5 @@ class PermissionsController extends AdminController
         }
 
         echo $this->render($this->viewPrefix . 'index', $data);
-    }
-
-    public function add(){
-        Auth()->user()->addPermission('devis.create', 'devis.edit');
     }
 }

@@ -57,6 +57,7 @@ class User extends ShieldUser
      */
     public function avatarLink(?int $size = null): string
     {
+        $contentAvatar = ['googleusercontent'];
         if (empty($this->avatar)) {
             // Default from Gravatar
             if (setting('Users.useGravatar')) {
@@ -69,6 +70,10 @@ class User extends ShieldUser
                     ),
                 ]);
             }
+        }
+        // Oauth
+        if(strpos($this->avatar, 'https') !== false){
+            return $this->avatar;
         }
 
         return !empty($this->avatar)

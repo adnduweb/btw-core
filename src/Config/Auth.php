@@ -25,7 +25,7 @@ class Auth extends ShieldAuth
      * ///////////////////////////////////////////////////////////////////
      */
     public array $views = [
-        'email_layout'                => '\Btw\Core\Views\email',
+        'email_layout'                => '\Btw\Core\Views\Auth\Email\master',
         'login'                       => '\Btw\Core\Views\Auth\login',
         'register'                    => '\Btw\Core\Views\Auth\register',
         'layout'                      => 'master',
@@ -36,7 +36,7 @@ class Auth extends ShieldAuth
         'action_email_activate_email' => '\Btw\Core\Views\Auth\Email\email_activate_email',
         'magic-link-login'            => '\Btw\Core\Views\Auth\magic_link_form',
         'magic-link-message'          => '\Btw\Core\Views\Auth\magic_link_message',
-        'magic-link-email'            => '\Btw\Core\Views\Auth\magic_link_email',
+        'magic-link-email'            => '\Btw\Core\Views\Auth\Email\magic_link_email',
     ];
 
    /**
@@ -85,7 +85,7 @@ class Auth extends ShieldAuth
      */
     public array $redirects = [
         'register'    => '/',
-        'login'       => 'admin',
+        'login'       => ADMIN_AREA,
         'logout'      => 'login',
         'force_reset' => '/',
     ];

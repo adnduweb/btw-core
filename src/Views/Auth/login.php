@@ -90,6 +90,9 @@
 
             </form>
         </div>
+
+        {{ShieldOAuthButtonForLoginPage}}
+
     </div>
 </div>
 

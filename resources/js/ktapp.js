@@ -117,18 +117,18 @@ var KTApp = function () {
         });
     }
 
-    var createBootstrapToasts = function () {
-        var toastElList = [].slice.call(document.querySelectorAll('.toast'));
-        var toastList = toastElList.map(function (toastEl) {
-            if (toastEl.getAttribute("data-kt-initialized") === "1") {
-                return;
-            }
+    // var createBootstrapToasts = function () {
+    //     var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+    //     var toastList = toastElList.map(function (toastEl) {
+    //         if (toastEl.getAttribute("data-kt-initialized") === "1") {
+    //             return;
+    //         }
 
-            toastEl.setAttribute("data-kt-initialized", "1");
+    //         toastEl.setAttribute("data-kt-initialized", "1");
 
-            return new bootstrap.Toast(toastEl, {})
-        });
-    }
+    //         return new bootstrap.Toast(toastEl, {})
+    //     });
+    // }
 
     var createButtons = function () {
         var buttonsGroup = [].slice.call(document.querySelectorAll('[data-kt-buttons="true"]'));
@@ -637,7 +637,7 @@ var KTApp = function () {
 
             createBootstrapPopovers();
 
-            createBootstrapToasts();
+            // createBootstrapToasts();
 
             createDateRangePickers();
 

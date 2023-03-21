@@ -8,17 +8,17 @@
     <?= csrf_meta() ?>
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> 
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
     <?= $viewJavascript->render(); ?>
-    <?= $viewJavascript->renderLangJson('admin/js/language/fr.json'); ?>
- 
+    <?= $viewJavascript->renderLangJson('admin/js/language/'.service('request')->getLocale().'.json'); ?>
+
 </head>
 
 <body hx-ext="ajax-header" hx-history="true" hx-headers='{"<?= csrf_token() ?>": "<?= csrf_hash() ?>", "X-Theme": "admin"}' class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
 
     <!-- Main content -->
-    <div class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
+    <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
         <div class="flex h-screen overflow-hidden bg-base-100">
 
             <x-sidebar />
@@ -33,20 +33,16 @@
                 <div class="progress">
                     <div class="indeterminate"></div>
                 </div>
-                <main class="relative flex-1 overflow-y-auto px-8 py-6 dark:bg-gray-900 ">
+                <main class="relative flex-1 overflow-y-auto px-8 py-6 dark:bg-gray-900">
                     <?= $this->renderSection('main') ?>
                 </main>
-                </main>
+
             </div>
         </div>
 
         <div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50"></div>
 
         <?= $this->renderSection('modals') ?>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://unpkg.com/hyperscript.org@0.9.7" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
 
         <!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
         <div class="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">
@@ -57,9 +53,16 @@
             </div>
         </div>
 
-        <?= $this->renderSection('scripts') ?>
-        <?= $viewMeta->render('script') ?>
-        <?= $viewMeta->render('rawScripts') ?>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+        <script src="https://unpkg.com/hyperscript.org@0.9.7" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+        <?= $this->renderSection('scriptsUrl') ?>
+
+    </main>
+
+    <?= $this->renderSection('scripts') ?>
+    <?= $viewMeta->render('script') ?>
+    <?= $viewMeta->render('rawScripts') ?>
 </body>
 
 </html>

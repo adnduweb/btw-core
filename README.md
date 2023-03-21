@@ -59,6 +59,8 @@ https://htmx.org/extensions/web-sockets/
 https://tailwindcomponents.com/component/password-generator-and-strength-score
 gestiond es erreurs -> alpinejs & htmx -> https://github.com/alpinejs/alpine/discussions/2916
 https://github.com/datamweb/shield-oauth
+https://github.com/hermawanramadhan/CodeIgniter4-DataTables
+composer require michalsn/codeigniter4-uuid
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604

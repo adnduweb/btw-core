@@ -406,7 +406,10 @@ table.dataTable td.dt-left {
 table.dataTable th.dt-center,
 table.dataTable td.dt-center,
 table.dataTable td.dataTables_empty {
-  text-align: center;
+  @apply text-center p-20 dark:text-white
+}
+[name="kt_table_devis_length"]{
+  @apply dark:bg-gray-700 dark:border-none
 }
 table.dataTable th.dt-right,
 table.dataTable td.dt-right {
@@ -512,7 +515,7 @@ table.dataTable tfoot td {
   border-top: 1px solid rgba(0, 0, 0, 0.3);
 }
 table.dataTable tbody tr {
-  background-color: transparent;
+  /* background-color: transparent; */
 }
 table.dataTable tbody tr.selected > * {
   box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.9);
@@ -526,7 +529,7 @@ table.dataTable tbody tr.selected a {
 }
 table.dataTable tbody th,
 table.dataTable tbody td {
-  @apply py-5 px-5
+  /* @apply py-5 px-5 */
 }
 table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
   border-top: 1px solid rgba(0, 0, 0, 0.15);

@@ -12,9 +12,11 @@
 namespace Btw\Core\Controllers\Admin;
 
 use Btw\Core\Controllers\AdminController;
-use InvalidArgumentException;
-use Btw\Core\TableHelper;
+use Btw\Core\Libraries\Menus\MenuItem;
+use Btw\Core\Libraries\TableHelper;
 use CodeIgniter\Shield\Authorization\Groups;
+use InvalidArgumentException;
+
 
 /**
  * Class Dashboard
@@ -33,6 +35,12 @@ class GroupsController extends AdminController
      * Base Views.
      */
     protected $viewPrefix = 'Btw\Core\Views\Admin\groups\\';
+
+    public function __construct()
+    {
+        self::setupMenus();
+        $this->addMenuSidebar();
+    }
 
     /**
      * Displays the site's initial page.
@@ -61,8 +69,6 @@ class GroupsController extends AdminController
             throw new InvalidArgumentException(implode(PHP_EOL, $this->validator->getErrors()));
         }
 
-
-
         $groups = setting('AuthGroups.groups');
         asort($groups);
 
@@ -80,13 +86,58 @@ class GroupsController extends AdminController
         }
 
         $data['table'] = new TableHelper($this->baseURL, $data['sortColumn'], $data['sortDirection']);
-       
+
 
         if ($this->request->isHtmx() && !$this->request->isBoosted()) {
             return view('Btw\Core\Views\Admin\groups\table', $data);
         }
 
         echo $this->render($this->viewPrefix . 'index', $data);
+    }
+
+    /**
+     * Creates a item from the new form data.
+     *
+     */
+    public function create()
+    {
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'group_information_add', [
+                'alias' => 'new',
+                'group' => 'new'
+            ]);
+        }
+
+        $post = $this->request->getVar(['title', 'description']);
+        $validation = service('validation');
+        // validate
+        $validation->setRules([
+            'title'  => ['required', 'string', 'min_length[2]', 'max_length[100]'],
+            'description' => ['required'],
+        ]);
+
+        if (!$validation->run($post)) {
+            return view('Btw\Core\Views\Admin\groups\cells\form_cell_information', [
+                'alias' => 'new',
+                'validation' => $validation
+            ]) . alertHtmx('danger', 'Form validation failed.');;
+        }
+
+        // Save the settings
+        $alias = uniforme($post['title']);
+        $groupConfig         = setting('AuthGroups.groups');
+        $groupConfig[$alias] = [
+            'title'       => $post['title'],
+            'description' => $post['description'],
+        ];
+
+        setting('AuthGroups.groups', $groupConfig);
+
+        theme()->set_message('success', lang('Btw.resourcesCreatead', ['groups']));
+        $this->response->triggerClientEvent('createGroup');
+        return redirect()->hxRedirect('/' .ADMIN_AREA. '/groups');
     }
 
     /**
@@ -98,36 +149,25 @@ class GroupsController extends AdminController
     {
 
         if (!auth()->user()->can('groups.edit')) {
-            alert('error', lang('Core.notAuthorized'));
+            alertHtmx('error', lang('Core.notAuthorized'));
             return redirect()->back();
-        }
-
-        $data['alias'] = $alias;
-        $data['group'] = setting('AuthGroups.groups')[$alias];
-        $data['pageTitleDefault'] = ucfirst(lang('Core.EditGroupsAndPermission') . ' : ' . ucfirst($alias));
-
-        if (empty($data['group'])) {
-            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user group']));
         }
 
         $this->permissions($alias);
 
-        return $this->render($this->viewPrefix . 'form', $data);
-    }
+        if (!$this->request->is('post')) {
 
-
-    /**
-     * Save the group settings
-     *
-     * @return \CodeIgniter\HTTP\RedirectResponse|void
-     */
-    public function saveGroup()
-    {
+            return $this->render($this->viewPrefix . 'group_information', [
+                'alias' => $alias,
+                'group' => setting('AuthGroups.groups')[$alias],
+                'pageTitleDefault' => ucfirst(lang('Core.EditGroupsAndPermission') . ' : ' . ucfirst($alias)),
+                'menu' => service('menus')->menu('sidebar_group'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
 
         $post = $this->request->getVar(['title', 'description', 'alias']);
-
         $validation = service('validation');
-
         $group = setting('AuthGroups.groups')[$post['alias']];
 
         $validation->setRules([
@@ -136,26 +176,160 @@ class GroupsController extends AdminController
         ]);
 
         if (!$validation->run($post)) {
-            return view('Btw\Core\Views\Admin\groups\form_cell', [
+            return view('Btw\Core\Views\Admin\groups\cells\form_cell_information', [
                 'group' => $group, 'validation' => $validation
-            ]) . alert('danger', 'Form validation failed.');;
+            ]) . alertHtmx('danger', 'Form validation failed.');;
         }
 
         // Save the settings
         $groupConfig         = setting('AuthGroups.groups');
         $groupConfig[$post['alias']] = [
-            'title'       => $this->request->getPost('title'),
-            'description' => $this->request->getPost('description'),
+            'title'       => $post['title'],
+            'description' => $post['description'],
         ];
 
-        setting('AuthGroups.groups', $groupConfig);
+        $groupNew = setting('AuthGroups.groups', $groupConfig);
 
-
-
-        return view('Btw\Core\Views\Admin\groups\form_cell', [
-            'group' => $group
-        ]) . alert('success', lang('Btw.resourcesSaved', ['groups']));
+        return view('Btw\Core\Views\Admin\groups\cells\form_cell_information', [
+            'alias' => $alias,
+            'group' => $groupConfig[$post['alias']],
+            'pageTitleDefault' => ucfirst(lang('Core.EditGroupsAndPermission') . ' : ' . ucfirst($alias)),
+            'menu' => service('menus')->menu('sidebar_group'),
+            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['groups']));
     }
+
+
+
+    /**
+     * Display the user to choose the permissions for a group.
+     *
+     * @return \CodeIgniter\HTTP\RedirectResponse|string
+     */
+    public function capabilities(string $alias)
+    {
+
+        if (!auth()->user()->can('groups.edit')) {
+            alertHtmx('error', lang('Core.notAuthorized'));
+            return redirect()->back();
+        }
+
+        $permissions = setting('AuthGroups.permissions');
+        if (is_array($permissions)) {
+            ksort($permissions);
+        }
+
+        $matrix = setting('AuthGroups.matrix');
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'group_capabilities', [
+                'alias' => $alias,
+                'permissions'   => $permissions,
+                'matrix' => (isset($matrix[$alias])) ? array_flip($matrix[$alias]) : false,
+                'menu' => service('menus')->menu('sidebar_group'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+    }
+
+    /**
+     * Toggle capability.
+     */
+    public function toggle(string $perm)
+    {
+
+        $requestJson = $this->request->getJSON(true);
+
+        $groups = new Groups();
+        $group  = $groups->info($requestJson['alias']);
+        if ($group === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user group']));
+        }
+
+        if (isset($requestJson['permissions']) && !is_array($requestJson['permissions']))
+            $requestJson['permissions'] = [$requestJson['permissions']];
+
+        $group->setPermissions($requestJson['permissions'] ?? []);
+
+
+        $permissions = setting('AuthGroups.permissions');
+        if (is_array($permissions)) {
+            ksort($permissions);
+        }
+
+        $matrix = setting('AuthGroups.matrix');
+
+        return view($this->viewPrefix . 'cells\form_cell_capabilities_row', [
+            'alias' => $requestJson['alias'],
+            'permission'   => $perm,
+            'description'   => $permissions[$perm],
+            'matrix' => array_flip($matrix[$requestJson['alias']]),
+            'menu' => service('menus')->menu('sidebar_user_current'),
+            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['groups']));
+    }
+
+    /**
+     * Toggle all capabilities.
+     */
+    public function toggleAll()
+    {
+
+        $requestJson = $this->request->getJSON(true);
+
+        $groups = new Groups();
+        $group  = $groups->info($requestJson['alias']);
+        if ($group === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user group']));
+        }
+
+        if (isset($requestJson['permissions']) && !is_array($requestJson['permissions']))
+            $requestJson['permissions'] = [$requestJson['permissions']];
+
+        $group->setPermissions($requestJson['permissions'] ?? []);
+
+
+        $permissions = setting('AuthGroups.permissions');
+        if (is_array($permissions)) {
+            ksort($permissions);
+        }
+
+        $matrix = setting('AuthGroups.matrix');
+
+        return view($this->viewPrefix . 'cells\form_cell_capabilities_tr', [
+            'permissions'   => $permissions,
+            'alias'   => $requestJson['alias'],
+            'matrix' => array_flip($matrix[$requestJson['alias']]),
+            'menu' => service('menus')->menu('sidebar_user_current'),
+            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+    }
+
+    /**
+     * Delete the item (soft).
+     *
+     * @param string $alias
+     *
+     */
+    public function delete(string $alias)
+    {
+
+        if ($this->request->is('delete')) {
+
+            // Save the settings
+            $groupConfig         = setting('AuthGroups.groups');
+            // unset($groupConfig[$alias]);
+
+            $groupNew = setting('AuthGroups.groups', $groupConfig);
+
+            $this->response->triggerClientEvent('deleteViaModal', true);
+            alertHtmx('success', lang('Btw.resourcesDeleted', ['groups']));
+            $this->response->triggerClientEvent('showMessage', ['level' => 'info', 'message' => 'Here Is A Message']);
+            return $this->response->setJSON(['test' => 'cool']);
+        }
+    }
+
 
     /**
      * Displays a list of all Permissions for a single group
@@ -178,5 +352,47 @@ class GroupsController extends AdminController
 
         $this->viewData['groupPermission'] = $group;
         $this->viewData['permissions'] = $permissions;
+    }
+
+    /**
+     * Creates any admin-required menus so they're
+     * available to use by any modules.
+     */
+    private function setupMenus()
+    {
+        $menus = service('menus');
+
+        // Sidebar menu
+        $menus->createMenu('sidebar_group');
+        $menus->menu('sidebar_group')
+            ->createCollection('content', 'Content');
+    }
+
+    public function addMenuSidebar()
+    {
+
+        $segments = request()->getUri()->getSegments();
+
+        if (isset($segments[2]) && $segments[2] == 'show') {
+
+            $sidebar = service('menus');
+            $item    = new MenuItem([
+                'title'           => 'Information',
+                'namedRoute'      => ['group-show', (isset($segments[3])) ? $segments[3] : null],
+                'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+                'permission'      => 'admin.view',
+                'weight' => 1
+            ]);
+            $sidebar->menu('sidebar_group')->collection('content')->addItem($item);
+
+            $item    = new MenuItem([
+                'title'           => 'Capabilities',
+                'namedRoute'      => ['group-capabilities', (isset($segments[3])) ? $segments[3] : null],
+                'fontIconSvg'     => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+                'permission'      => 'admin.view',
+                'weight' => 2
+            ]);
+            $sidebar->menu('sidebar_group')->collection('content')->addItem($item);
+        }
     }
 }
