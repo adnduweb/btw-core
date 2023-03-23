@@ -6,57 +6,29 @@ use CodeIgniter\Entity\Entity;
 
 class Activity extends Entity
 {
-    protected $dates = [
-        'created_at',
-        'verified_at',
-    ];
-    protected $casts = [
-        'session_id' => 'string',
-        'user_id'    => '?int',
-        'user_agent' => 'string',
-        'method'     => 'string',
-        'scheme'     => 'string',
-        'host'       => 'string',
-        'port'       => 'string',
-        'user'       => 'string',
-        'pass'       => 'string',
-        'path'       => 'string',
-        'query'      => 'string',
-        'fragment'   => 'string',
-        'views'      => 'int',
+    protected $table      = 'activity_log';
+    protected $primaryKey = 'id';
+    protected $dates      = ['created_at'];
+    protected $casts      = [
+        'source_id' => 'int',
+        'user_id'   => 'int',
     ];
 
-    /**
-     * Converts string IP addresses to their database integer format.
+      /**
+     * Renders Datatable Identifier primary
      *
-     * @param int|string|null $ipAddress
+     * @return int
      */
-    public function setIpAddress($ipAddress): void
-    {
-        if (is_string($ipAddress)) {
-            $this->attributes['ip_address'] = ip2long($ipAddress) ?: null;
-
-            return;
-        }
-
-        if (is_int($ipAddress) && long2ip($ipAddress)) {
-            $this->attributes['ip_address'] = $ipAddress;
-
-            return;
-        }
-
-        $this->attributes['ip_address'] = null;
+    public function getIdentifier(){
+        return $this->attributes['id'] ?? null; 
     }
 
-    /**
-     * Converts integer IP addresses to their human pointed format.
+     /**
+     * Renders Datatable Url
+     *
+     * @return string
      */
-    public function getIpAddress(): ?string
-    {
-        if (is_numeric($this->attributes['ip_address'])) {
-            return long2ip($this->attributes['ip_address']);
-        }
-
-        return null;
+    public function getUrlEditAdmin(){
+       return route_to('log-system-information', $this->attributes['id']);
     }
 }

@@ -2,7 +2,7 @@
 
 <?php $this->section('main') ?>
 
-<x-page-head>User </x-page-head>
+<x-page-head> User <?= $userCurrent->last_name; ?> <?= $userCurrent->first_name; ?> </x-page-head>
 
 <x-admin-box>
 

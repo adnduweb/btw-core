@@ -48,7 +48,7 @@ class Module extends BaseModuleController
             'title'           => 'Permissions',
             'namedRoute'      => 'permissions-list',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen051.svg', 'svg-icon  mr-3 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 ', true),
-            'permission'      => 'permissions.view',
+            'permission'      => 'admin.view',
         ]);
         $sidebar->menu('sidebar')->collection('access')->addItem($item);
 
@@ -59,6 +59,7 @@ class Module extends BaseModuleController
              'namedRoute'      => 'settings-general',
              'fontIconSvg'     => theme()->getSVG('duotone/Code/Settings4.svg', 'svg-icon  mr-3 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 ', true),
              'permission'      => 'admin.view',
+             'weight' => 3
          ]);
          $sidebar->menu('sidebar')->collection('system')->addItem($item);
 
@@ -69,7 +70,21 @@ class Module extends BaseModuleController
               'namedRoute'      => 'logs-file',
               'fontIconSvg'     => theme()->getSVG('duotune/text/txt012.svg', 'svg-icon mr-3 flex-shrink-0 h-4 w-6 ml-5 dark:text-gray-200 text-gray-800 ', true),
               'permission'      => 'admin.view',
+              'weight' => 1
           ]);
           $sidebar->menu('sidebar')->collection('system')->addItem($item);
+
+           // Add to the Content menu
+           $sidebar = service('menus');
+           $item    = new MenuItem([
+               'title'           => lang('Btw.systemLogs'),
+               'namedRoute'      => 'logs-system',
+               'fontIconSvg'     => theme()->getSVG('duotune/text/txt012.svg', 'svg-icon mr-3 flex-shrink-0 h-4 w-6 ml-5 dark:text-gray-200 text-gray-800 ', true),
+               'permission'      => 'admin.view',
+               'weight' => 2
+           ]);
+           $sidebar->menu('sidebar')->collection('system')->addItem($item);
+
+          
     }
 }

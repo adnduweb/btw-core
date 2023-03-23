@@ -9,12 +9,30 @@ class User extends ShieldUser
 {
     use HasMeta;
 
+      /**
+     * Renders Datatable Identifier primary
+     *
+     * @return int
+     */
+    public function getIdentifier(){
+        return $this->attributes['id'] ?? null; 
+    }
+
+     /**
+     * Renders Datatable Url
+     *
+     * @return string
+     */
+    public function getUrlEditAdmin(){
+       return route_to('user-only-information', $this->attributes['id']);
+    }
+
     /**
      * Renders out the user's avatar at the specified size (in pixels)
      *
      * @return string
      */
-    public function renderAvatar(int $size = 52)
+    public function renderAvatar(int $size = 52, $class = 'img-fluid') 
     {
         // Determine the color for the user based on their
         // email address since we know we'll always have that
@@ -45,6 +63,7 @@ class User extends ShieldUser
 
         return view('\Btw\Core\Views\_avatar', [
             'user'       => $this,
+            'class'      => $class,
             'size'       => $size,
             'fontSize'   => 20 * ($size / 52),
             'idString'   => $idString,

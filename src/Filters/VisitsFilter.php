@@ -8,24 +8,24 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use RuntimeException;
-use Btw\Core\Config\Activities;
-use Btw\Core\Entities\Activity;
-use Btw\Core\Models\ActivityModel;
+use Btw\Core\Config\Visits;
+use Btw\Core\Entities\Visit;
+use Btw\Core\Models\VisitModel;
 
 /**
  * Activity Filter
  *
  * Records Activity for matching routes.
  */
-class ActivityFilter implements FilterInterface
+class VisitsFilter implements FilterInterface
 {
-    protected Activities $config;
-    protected ActivityModel $model;
+    protected Visits $config;
+    protected VisitModel $model;
 
     public function __construct()
     {
-        $this->config = config('Activities');
-        $this->model  = model(ActivityModel::class);
+        $this->config = config('Visits');
+        $this->model  = model(VisitModel::class);
     }
 
     public function before(RequestInterface $request, $arguments = null): void
@@ -73,7 +73,7 @@ class ActivityFilter implements FilterInterface
         }
 
         // Verify helper function from codeigniter4/authentication-implementation
-        if (! function_exists('user_id') && config('Activity')->trackingMethod === 'user_id') {
+        if (! function_exists('user_id') && config('Visits')->trackingMethod === 'user_id') {
             throw new RuntimeException('The user_id() function must be available to track by user ID.'); // @codeCoverageIgnore
         }
 
@@ -81,7 +81,7 @@ class ActivityFilter implements FilterInterface
         $visit = $this->model->makeFromRequest($request);
 
         // Apply any transformations
-        foreach (config('Activities')->transformers as $transformer) {
+        foreach (config('Visits')->transformers as $transformer) {
             $visit = $transformer::transform($visit, $request);
 
             // Check for a short-circuit

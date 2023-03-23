@@ -19,6 +19,9 @@ window.datatable = Datatable;
 // Datatables.net Initialization
 //
 
+console.log('fdgsdfgsdfgsd');
+console.log(_LANG_.ShowingNoRecords); 
+
 var defaults = {
     "language": {
         "info": _LANG_.Showing + " _START_ " + _LANG_.to + " _END_ " + _LANG_.of + " _TOTAL_ ",
@@ -30,7 +33,9 @@ var defaults = {
             "last": '<i class="last"></i>',
             "next": '<i class="next"></i>',
             "previous": '<i class="previous"></i>'
-        }
+        },
+        "zeroRecords": _LANG_.sZeroRecords,
+        "infoFiltered": "(Affichage de _MAX_ ligne(s))"
     }
 };
 $.extend(true, $.fn.dataTable.defaults, defaults);

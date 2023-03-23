@@ -4,7 +4,7 @@ namespace Btw\Core\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateTableActivity extends Migration
+class CreateTableVisits extends Migration
 {
     /**
      * @return void
@@ -40,7 +40,7 @@ class CreateTableActivity extends Migration
         $this->forge->addKey('created_at');
         $this->forge->addKey('updated_at');
 
-        $this->forge->createTable('activity');
+        $this->forge->createTable('visits');
     }
 
     /**
@@ -48,6 +48,6 @@ class CreateTableActivity extends Migration
      */
     public function down()
     {
-        $this->forge->dropTable('activity');
+        $this->forge->dropTable('visits');
     }
 }

@@ -20,8 +20,8 @@ return [
     'resourcesNotSelected' => 'No {0} were selected.',
 
     'deleteResource' => 'Delete this {0}?',
-    'delete'         => 'Delete',
-    'edit'           => 'Edit',
+    'delete'         => 'Supprimer',
+    'edit'           => 'Modifier',
 
     'notAuthorized' => 'You do not have the correct permissions.',
     'unknownAction' => 'Did not recognize the action you requested.',
@@ -29,7 +29,7 @@ return [
 
     'lastModified' => 'Last Modified',
     'fileSize'     => 'File Size',
-    'yes'     => 'oui',
+    'yes'     => 'Oui',
     'no'     => 'Non',
     'AreYouSure?' => 'Êtes vous sûr ?',
     'roles' => 'Rôles',
@@ -38,6 +38,18 @@ return [
     'description' => 'description',
     'save' => 'Sauvegarder',
     'Dashboard' => 'Tableau de bord',
-    'Logs' => 'Logs',
-    'Settings' => 'Préférences',
+    'Logs' => 'Audits Logs',
+    'systemLogs' => 'System Logs',
+    'Settings' => 'Préférences', 
+    'active' => 'Activer', 
+    'desactive' => 'Désactiver', 
+    'search' => 'Rechercher', 
+    'UsersList' => 'Liste des utilisateurs',
+    'You are currently selecting' => 'Vous avez sélectionné',
+    'rows' => 'ligne(s)', 
+    'Deselect All' => 'déseclectionner',
+    'Action' => 'Actions',
+    'siteName' => 'Nom du site',        
+    'siteOnline' => 'Site en ligne',        
 ];
+

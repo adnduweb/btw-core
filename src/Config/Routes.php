@@ -51,6 +51,8 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->get('users/list', 'UsersController::ajaxDatatable', ['as' => 'users-list-ajax']);
     $routes->match(['get', 'post'], 'users/edit/(:any)/information', 'UsersController::edit/$1', ['as' => 'user-only-information']);
     $routes->match(['get', 'post'], 'users/edit/(:any)/capabilities', 'UsersController::capabilities/$1', ['as' => 'user-only-capabilities']);
+    $routes->put('users/edit/(:any)/capabilities/toggle/(:any)', 'UsersController::toggle/$1/$2', ['as' => 'users-permissions-toggle-only']);
+    $routes->put('users/edit/(:any)/capabilities/toggle-all', 'UsersController::toggleAll/$1', ['as' => 'users-permissions-toggle-all']);
     
     // User Current
     $routes->match(['get', 'post'], 'settings/user', 'UserCurrentController::editUserCurrent', ['as' => 'user-current-settings']);
@@ -69,6 +71,10 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     // Files Logs
     $routes->get('logs/files/list', 'ActivityController::logsFile', ['as' => 'logs-file']);
     $routes->get('logs/files/(:any)', 'ActivityController::viewFile/$1', ['as' => 'log-file-view']);
+    $routes->get('logs/system', 'ActivityController::listsystem', ['as' => 'logs-system']);
+    $routes->get('logs/sytem', 'ActivityController::ajaxDatatableSystem', ['as' => 'logs-system-ajax']);
+    $routes->delete('logs/sytem/delete', 'ActivityController::deleteSystem/$1', ['as' => 'logs-system-delete']);
+    
 
     // Groups
     $routes->get('groups', 'GroupsController::index', ['as' => 'groups-list']);

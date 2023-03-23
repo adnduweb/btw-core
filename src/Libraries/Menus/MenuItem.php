@@ -34,6 +34,11 @@ class MenuItem
     /**
      * @var string|null
      */
+    protected $color;
+
+    /**
+     * @var string|null
+     */
     protected $url;
 
     /**
@@ -76,6 +81,16 @@ class MenuItem
     public function setTitle(string $title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setColor(string $color)
+    {
+        $this->color = $color;
 
         return $this;
     }
@@ -156,6 +171,14 @@ class MenuItem
     public function title()
     {
         return $this->title;
+    }
+
+     /**
+     * @return string
+     */
+    public function color()
+    {
+        return $this->color;
     }
 
     /**

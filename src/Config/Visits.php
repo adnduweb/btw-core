@@ -5,7 +5,7 @@ namespace Btw\Core\Config;
 use CodeIgniter\Config\BaseConfig;
 use Btw\Core\Interfaces\Transformer;
 
-class Activities extends BaseConfig
+class Visits extends BaseConfig
 {
     /**
      * Database field for tracking a unique visitor

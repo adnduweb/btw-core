@@ -2,7 +2,7 @@
 
 <?php $this->section('main') ?>
 
-<x-page-head> User </x-page-head>
+<x-page-head> User <?= $user->last_name; ?> <?= $user->first_name; ?> </x-page-head>
 
 <x-admin-box>
 
@@ -17,7 +17,7 @@
                 ]); ?>
                 <?= csrf_field() ?>
                 <input type="hidden" name="section" value="capabilities" />
-                <?= $this->include('Btw\Core\Views\Admin\users\only\cells\form_cell_capabilities'); ?>
+                <?= $this->setVar('user', $user)->include('Btw\Core\Views\Admin\users\only\cells\form_cell_capabilities'); ?>
                 <?= form_close(); ?>
             </div>
 

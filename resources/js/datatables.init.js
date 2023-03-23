@@ -3,18 +3,22 @@
 //
 
 var defaults = {
-    "language": {
-        "info": _LANG_.Showing + " _START_ " + _LANG_.to + " _END_ " + _LANG_.of + " _TOTAL_ ",
-        "infoEmpty": _LANG_.ShowingNoRecords,
-        "emptyTable": _LANG_.NoDataAvailableInTable,
-        "lengthMenu": "_MENU_",
-        "paginate": {
-            "first": '<i class="first"></i>',
-            "last": '<i class="last"></i>',
-            "next": '<i class="next"></i>',
-            "previous": '<i class="previous"></i>'
-        }
-    }
+    // "language": {
+    //     "zeroRecords": _LANG_.zeroRecords,
+    //     "info": _LANG_.Showing + " _START_ " + _LANG_.to + " _END_ " + _LANG_.of + " _TOTAL_ ",
+    //     "infoEmpty": _LANG_.ShowingNoRecords,
+    //     "emptyTable": _LANG_.NoDataAvailableInTable,
+    //     infoEmpty: "No results returned",
+    //     zeroRecords: "No results returned",
+    //     emptyTable: "No results returned",
+    //     "lengthMenu": "_MENU_",
+    //     "paginate": {
+    //         "first": '<i class="first"></i>',
+    //         "last": '<i class="last"></i>',
+    //         "next": '<i class="next"></i>',
+    //         "previous": '<i class="previous"></i>'
+    //     }
+    // }
 };
 $.extend(true, $.fn.dataTable.defaults, defaults);
 

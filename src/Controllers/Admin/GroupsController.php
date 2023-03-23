@@ -319,7 +319,7 @@ class GroupsController extends AdminController
 
             // Save the settings
             $groupConfig         = setting('AuthGroups.groups');
-            // unset($groupConfig[$alias]);
+            unset($groupConfig[$alias]);
 
             $groupNew = setting('AuthGroups.groups', $groupConfig);
 

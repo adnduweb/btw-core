@@ -4,7 +4,7 @@
         <div x-show="open" x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-on:click="open = false" class="fixed inset-0 bg-slate-600 bg-opacity-75" style="display: none;"></div>
 
         <div class="fixed inset-0 flex z-40">
-            <div x-show="open" x-transition:enter="transition ease-in-out duration-300 transform" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" x-on:click.away="open = false" class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-slate-800" style="display: none;">
+            <div x-show="open" x-transition:enter="transition ease-in-out duration-300 transform" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" x-on:click.away="open = false" class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4  dark:bg-slate-800 bg-white" style="display: none;">
                 <div x-show="open" x-transition:enter="ease-in-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in-out duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="absolute top-0 right-0 -mr-12 pt-2" style="display: none;">
                     <button x-on:click="open = false" type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <span class="sr-only">Close sidebar</span>
@@ -116,6 +116,19 @@
                         <?php endforeach ?>
                     <?php endif ?>
                 </nav>
+            </div>
+            <div class="flex flex-shrink-0 dark:bg-slate-700 bg-gray-200 p-4">
+                <a href="<?= route_to('user-current-settings') ?>" class="group block w-full flex-shrink-0">
+                    <div class="flex items-center">
+                        <div hx-get="<?= route_to('user-update-avatar'); ?>" hx-trigger="updateAvatar from:body" class="inline-block h-9 w-9 rounded-full">
+                          <?= auth()->user()->renderAvatar(32, 'avatar w-8 h-8 rounded-full bg-gray-300 overflow-hidden') ?>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-800 dark:text-gray-200"><?= Auth()->user()->last_name; ?> <?= Auth()->user()->first_name; ?></p>
+                            <p class="text-xs font-medium text-gray-800 dark:text-gray-200 group-hover:text-gray-600">View profile</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

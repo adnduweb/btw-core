@@ -466,8 +466,9 @@ class UserCurrentController extends AdminController
         $item    = new MenuItem([
             'title'           => 'Delete',
             'namedRoute'      => 'settings-email',
-            'fontIconSvg'     => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 text-red-800', true),
             'permission'      => 'admin.view',
+            'color'           => 'text-red-800',
             'weight' => 5
         ]);
         $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);

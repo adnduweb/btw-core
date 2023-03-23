@@ -325,3 +325,12 @@ if (!function_exists('uniforme')) {
         return strtolower($texte);
     }
 }
+
+if (!function_exists('getUser')) {
+    function getUser(int $id): mixed
+    {
+        $user = model(UserModel::class)->find($id);
+
+        return  $user ?? 'system';
+    }
+}

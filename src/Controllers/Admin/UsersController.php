@@ -14,6 +14,7 @@ namespace Btw\Core\Controllers\Admin;
 use Btw\Core\Controllers\AdminController;
 use Btw\Core\Libraries\Menus\MenuItem;
 use Btw\Core\Models\UserModel;
+use Btw\Core\Entities\User;
 use Btw\Core\Libraries\DataTable\DataTable;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\API\ResponseTrait;
@@ -77,16 +78,18 @@ class UsersController extends AdminController
 
         return DataTable::of($model)
             ->add('select', function ($row) {
-                return view('Btw\Core\Views\admin\_datatabase\select', ['row' => $row]);
+                $row = new User((array)$row);
+                return view('Themes\Admin\Datatabase\select', ['row' => $row]);
             }, 'first')
-            ->hide('id')
+            // ->hide('id')
             ->edit('username', function ($row) {
-                return view('Btw\Core\Views\admin\_datatabase\username', ['row' => $row]);
+                $row = new User((array)$row);
+                return view('Themes\Admin\Datatabase\username', ['row' => $row]);
             })
             ->hide('last_name')
             ->hide('first_name')
             ->edit('secret', function ($row) {
-                return view('Btw\Core\Views\admin\_datatabase\email', ['row' => $row]);
+                return view('Themes\Admin\Datatabase\email', ['row' => $row]);
             })
             ->edit('active', function ($row) {
                 $active = ($row->active == '1') ? '<span class="inline-flex items-center rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-800">' . lang('Btw.yes') . '</span>' :  '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.no') . '</span>';
@@ -101,12 +104,13 @@ class UsersController extends AdminController
                 return (!empty($actions['login'])) ? '<span class="inline-flex items-center rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-800">' . lang('Btw.yes') . '</span>' :  '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.no') . '</span>';
             }, 'last')
             ->format('created_at', function ($value) {
-                return Time::parse($value, setting('App.appTimezone'))->format(setting('App.dateFormat') . ' ' . setting('App.timeFormat'));
+                return Time::parse($value, setting('App.appTimezone'))->format(setting('App.dateFormat') . ' à ' . setting('App.timeFormat'));
             })
             ->add('action', function ($row) {
-                return view('Btw\Core\Views\admin\_datatabase\action', ['row' => $row]);
+                $row = new User((array)$row);
+                return view('Themes\Admin\Datatabase\action', ['row' => $row]);
             }, 'last')
-            ->toJson();
+            ->toJson(true);
     }
 
     public function bulkaction()
@@ -241,15 +245,86 @@ class UsersController extends AdminController
             ksort($permissions);
         }
 
+        $group = $user->getGroups();
+        $matrix = setting('AuthGroups.matrix');
+
+
+        $permissionsMatrix = [];
+        foreach ( array_flip($group) as $key => $val) :
+            if (isset($matrix[$key])) :
+                foreach ($matrix[$key] as $key => $val) :
+                    $permissionsMatrix[$val] = $val;
+                endforeach;
+            endif;
+        endforeach;
+
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'user_capabilities', [
                 'permissions'   => $permissions,
+                'permissionsMatrix' => $permissionsMatrix,
                 'user'   => $user,
                 'menu' => service('menus')->menu('sidebar_user'),
                 'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
+    }
+
+    /**
+     * Toggle capability.
+     */
+    public function toggle(int $id, string $perm)
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find($id);
+
+        $requestJson = $this->request->getJSON(true);
+
+        if (isset($requestJson['permissions']) && !is_array($requestJson['permissions']))
+            $requestJson['permissions'] = [$requestJson['permissions']];
+
+        $user->syncPermissions(...($requestJson['permissions'] ?? []));
+
+        $permissions = setting('AuthGroups.permissions');
+        if (is_array($permissions)) {
+            ksort($permissions);
+        }
+
+        return view($this->viewPrefix . 'cells\form_cell_capabilities_row', [
+            'rowPermission'   => [$perm, $permissions[$perm]],
+            'user'   => $user,
+            'menu' => service('menus')->menu('sidebar_user_current'),
+            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+    }
+
+    /**
+     * Toggle all capabilities.
+     */
+    public function toggleAll(int $id)
+    {
+
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find($id);
+
+        // print_r($this->request->getJSON(true)); exit;
+        $requestJson = $this->request->getJSON(true);
+
+        $user->syncPermissions(...($requestJson['permissions'] ?? []));
+
+        $permissions = setting('AuthGroups.permissions');
+        if (is_array($permissions)) {
+            ksort($permissions);
+        }
+
+        return view($this->viewPrefix . 'cells\form_cell_capabilities_tr', [
+            'permissions'   => $permissions,
+            'user'   => $user,
+            'menu' => service('menus')->menu('sidebar_user_current'),
+            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
     }
 
     /**

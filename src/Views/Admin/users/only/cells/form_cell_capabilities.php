@@ -24,7 +24,7 @@
                     <th class="text-left px-6 py-3">
                         <!--begin::Checkbox-->
                         <label class="form-check form-check-sm form-check-custom form-check-solid me-9">
-                            <input @click="toggleAllCheckboxes()" x-bind:checked="selectAll"  class="form-check-input checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500" type="checkbox" value="" <?= ($user->inGroup('superadmin')) ? 'disabled checked="checked"' : '' ; ?> id="kt_select_all" hx-put="<?= route_to('user-permissions-toggle-all'); ?>" hx-include="[name='type']" hx-target="#permissions" hx-trigger="change" hx-swap="outerHTML" />
+                            <input @click="toggleAllCheckboxes()" x-bind:checked="selectAll"  class="form-check-input checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500" type="checkbox" value="" <?= ($user->inGroup('superadmin')) ? 'disabled checked="checked"' : '' ; ?> id="kt_select_all"  hx-put="<?= route_to('users-permissions-toggle-all', $user->id); ?>" hx-include="[name='type']" hx-target="#permissions" hx-trigger="change" hx-swap="outerHTML" />
                             <span class="form-check-label" for="kt_select_all"><?= lang('Btw.Select all'); ?></span>
                         </label>
                         <!--end::Checkbox-->
@@ -33,7 +33,7 @@
                     <th></th>
                 <tr>
             </thead>
-            <?= $this->setVar('permissions', $permissions)->include('Btw\Core\Views\Admin\users\current\cells\form_cell_capabilities_tr'); ?>
+            <?= $this->setVar('permissions', $permissions)->include('Btw\Core\Views\Admin\users\only\cells\form_cell_capabilities_tr'); ?>
         </table>
 
 

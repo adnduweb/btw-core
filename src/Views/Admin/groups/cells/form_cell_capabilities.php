@@ -24,7 +24,7 @@
                     <th class="text-left px-6 py-3">
                         <!--begin::Checkbox-->
                         <label class="form-check form-check-sm form-check-custom form-check-solid me-9">
-                            <input @click="toggleAllCheckboxes()" x-bind:checked="selectAll"  class="form-check-input checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500" type="checkbox" value="" id="kt_select_all" hx-put="<?= route_to('group-permissions-toggle-all'); ?>" hx-include="[name='type']" hx-target="#permissions" hx-trigger="change" hx-swap="outerHTML" />
+                            <input @click="toggleAllCheckboxes()" x-bind:checked="selectAll"  class="form-check-input checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500" type="checkbox" value="" id="kt_select_all"  <?= $alias == 'superadmin' ? 'disabled checked="checked' : '' ?> hx-put="<?= route_to('group-permissions-toggle-all'); ?>" hx-include="[name='type']" hx-target="#permissions" hx-trigger="change" hx-swap="outerHTML" />
                             <span class="form-check-label" for="kt_select_all"><?= lang('Btw.Select all'); ?></span>
                         </label>
                         <!--end::Checkbox-->

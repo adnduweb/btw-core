@@ -5,14 +5,14 @@
 <?= $this->section('main') ?>
 
 
-<x-page-head> <?= lang('Btw.UsersList'); ?> </x-page-head>
+<x-page-head> <?= lang('Btw.LogsSystemList'); ?> </x-page-head>
 <x-admin-box>
     <div class="mb-4 flex justify-between items-center">
         <!--begin::Card title-->
         <div class="flex-1 pr-4">
             <!--begin::Search-->
             <div class="relative md:w-1/3">
-                <input type="text" data-kt-datatable-filter="search" class="w-full pl-10 pr-4 py-2 border-gray-300 dark:border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 dark:text-gray-400 dark:bg-gray-600 font-medium" placeholder="<?= lang('Btw.search'); ?>" />
+                <input type="text" data-kt-datatable-filter="search" class="w-full pl-10 pr-4 py-2 border-gray-300 dark:border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 dark:text-gray-400 dark:bg-gray-700 font-medium" placeholder="<?= lang('Btw.search'); ?>" />
                 <div class="absolute top-0 left-0 inline-flex items-center p-2">
                     <?= service('theme')->getSVG('duotone/General/Search.svg', "svg-icon svg-icon-1 position-absolute ms-6"); ?>
                 </div>
@@ -48,22 +48,11 @@
                             </svg>
                         </button>
 
-                        <div x-show="open" @click.away="open = false" class="z-40 absolute top-0 right-0 w-40 bg-white rounded-lg shadow-lg mt-12 -mr-1 block py-1 overflow-hidden" style="display: none;">
+                        <div x-show="open" @click.away="open = false" class="z-40 absolute top-0 right-0 w-40 bg-white dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-lg mt-12 -mr-1 block py-1 overflow-hidden" style="display: none;">
 
-                            <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
-                                <button type="button" class="w-full flex justify-start text-red-700" data-kt-datatable-action="delete_selected">
+                            <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 dark:hover:bg-gray-600 px-4 py-2">
+                                <button type="button" class="w-full flex justify-start text-red-700 dark:text-gray-200" data-kt-datatable-action="delete_selected">
                                     <span><?= lang('Btw.delete'); ?></span>
-                                </button>
-                            </div>
-                            <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
-                                <button type="button" class="w-full flex justify-start" data-kt-datatable-action="active_selected">
-                                    <span><?= lang('Btw.active'); ?></span>
-                                </button>
-                            </div>
-                            <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
-
-                                <button type="button" class="w-full flex justify-start" data-kt-datatable-action="descative_selected">
-                                    <span><?= lang('Btw.desactive'); ?></span>
                                 </button>
                             </div>
                         </div>
@@ -81,7 +70,7 @@
     <div class="row justify-content-md-center">
 
         <div class="col-sm-12 col-lg-8">
-            <?= $this->include('Btw\Core\Views\Admin\users\only\table'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\activity\system\table'); ?>
         </div>
 
     </div>
@@ -127,7 +116,7 @@
 <script type="module">
     var KTPermissionsList = function() {
         // Define shared variables
-        var table = document.getElementById('kt_table_users');
+        var table = document.getElementById('kt_table_system');
         var datatable;
         var toolbarBase;
         var toolbarSelected;
@@ -139,7 +128,7 @@
             // Set date data order
 
             // Init datatable --- more info on datatables: https://datatables.net/manual/
-            window.Ci4DataTables["kt_table_users-table"] = $(table).DataTable({
+            window.Ci4DataTables["kt_table_system-table"] = $(table).DataTable({
                 'responsive': true,
                 "info": true,
                 "retrieve": true,
@@ -158,7 +147,7 @@
                 //     // 'noRecords': _LANG_.no_record_found,
                 // },
                 "ajax": {
-                    "url": "<?= route_to('users-list-ajax'); ?>"
+                    "url": "<?= route_to('logs-system-ajax'); ?>"
                 },
                 'order': [
                     [1, 'asc']
@@ -172,11 +161,11 @@
                         if (data.active == '0') {
                             row.addClass('notactive');
                         }
-                        row.addClass(' text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
+                        row.addClass('text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass(' text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
+                    $(row).addClass('text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
                 },
 
                 columnDefs: [
@@ -215,7 +204,7 @@
             });
 
             // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
-            window.Ci4DataTables["kt_table_users-table"].on('draw', function(jqXHR, settings) {
+            window.Ci4DataTables["kt_table_system-table"].on('draw', function(jqXHR, settings) {
                 initToggleToolbar();
                 handleDeleteRows();
                 toggleToolbars();
@@ -256,7 +245,7 @@
         var handleSearchDatatable = () => {
             const filterSearch = document.querySelector('[data-kt-datatable-filter="search"]');
             filterSearch.addEventListener('change', function(e) {
-                Ci4DataTables["kt_table_users-table"].search(e.target.value).draw();
+                Ci4DataTables["kt_table_system-table"].search(e.target.value).draw();
             });
         }
 
@@ -267,7 +256,7 @@
             const filterButton = filterForm.querySelector('[data-kt-datatable-filter="filter"]');
             const selectOptions = filterForm.querySelectorAll('select');
 
-            // Filter datatable on submit
+            // Filæter datatable on submit
             filterButton.addEventListener('click', function() {
                 var filterString = '';
 
@@ -283,7 +272,7 @@
                 });
 
                 // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-                Ci4DataTables["kt_table_users-table"].search(filterString).draw();
+                Ci4DataTables["kt_table_system-table"].search(filterString).draw();
             });
         }
 
@@ -304,7 +293,7 @@
                 });
 
                 // Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
-                Ci4DataTables["kt_table_users-table"].search('').draw();
+                Ci4DataTables["kt_table_system-table"].search('').draw();
             });
         }
 
@@ -324,19 +313,9 @@
                     const parent = e.target.closest('tr');
 
                     // Get user name
-                    const userName = parent.querySelectorAll('td')[1].querySelectorAll('span')[0].innerText;
-
+                    const userName = parent.querySelectorAll('td')[1].innerText;
                     var id = $(this).data('id');
 
-                    // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-
-                    // const swalWithBootstrapButtons = Swal.mixin({
-                    //     customClass: {
-                    //         confirmButton: 'btn btn-success',
-                    //         cancelButton: 'btn btn-danger'
-                    //     },
-                    //     buttonsStyling: false
-                    // })
                     Swal.fire({
                         text: "Are you sure you want to delete dd " + userName + "?",
                         icon: "warning",
@@ -356,19 +335,13 @@
                                 token: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
                             };
 
-                            axios.delete("<?= route_to('users-delete') ?>", {
+                            axios.delete("<?= route_to('logs-system-delete') ?>", {
                                     data: packets
                                 })
                                 .then(response => {
-                                    // toastr.success(response.data.messages.success);
-                                    console.log('fafafffffffafa');
-                                    // const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
-                                    // headerCheckbox.checked = false;
-
-                                    console.log(response);
                                     var alerts = document.querySelector('#alerts-wrapper');
                                     alerts.insertAdjacentHTML("beforeend", response.data.messagehtml);
-                                    Ci4DataTables["kt_table_users-table"].ajax.reload();
+                                    Ci4DataTables["kt_table_system-table"].ajax.reload();
 
                                 })
                                 .catch(error => {});
@@ -417,12 +390,13 @@
             // Deleted selected rows
             deleteSelected.addEventListener('click', function() {
                 const ids = [];
-                var dtRow = Ci4DataTables["kt_table_users-table"].rows('.selected').data().map(function(t, e) {
+                var dtRow = Ci4DataTables["kt_table_system-table"].rows('.selected').data().map(function(t, e) {
+                    console.log(t.id);
                     ids.push(t.id);
                 });
 
                 Swal.fire({
-                    text: _LANG_.are_you_sure_delete + " " + Ci4DataTables["kt_table_users-table"].rows('.selected').data().length + " " + _LANG_.selected_records + " ?",
+                    text: _LANG_.are_you_sure_delete + " " + Ci4DataTables["kt_table_system-table"].rows('.selected').data().length + " " + _LANG_.selected_records + " ?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
@@ -439,7 +413,7 @@
                             token: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
                         };
 
-                        axios.delete("<?= route_to('users-delete') ?>", {
+                        axios.delete("<?= route_to('logs-system-delete') ?>", {
                                 data: packets
                             })
                             .then(response => {
@@ -447,7 +421,7 @@
                                 console.log('fabrice');
                                 const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
                                 headerCheckbox.checked = false;
-                                Ci4DataTables["kt_table_users-table"].ajax.reload();
+                                Ci4DataTables["kt_table_system-table"].ajax.reload();
                             })
                             .catch(error => {});
                     }

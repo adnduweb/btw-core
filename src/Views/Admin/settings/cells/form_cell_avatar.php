@@ -48,7 +48,7 @@
 
 
     </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 dark:bg-gray-700 ">
+    <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
         <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingavatar" />
     </div>
 

@@ -5,6 +5,7 @@ namespace Btw\Core\Models;
 use Btw\Core\Entities\User;
 use CodeIgniter\Shield\Models\UserModel as ShieldUsers;
 use Faker\Generator;
+use Btw\Core\Traits\ActivitysTrait;
 
 /**
  * This User model is ready for your customization.
@@ -13,6 +14,13 @@ use Faker\Generator;
  */
 class UserModel extends ShieldUsers
 {
+
+    use ActivitysTrait;
+	protected $afterInsert = ['activityInsert'];
+	protected $afterUpdate = ['activityUpdate'];
+	protected $afterDelete = ['activityDelete'];
+
+
     protected $returnType    = User::class;
     protected $allowedFields = [
         'username', 'status', 'status_message', 'active', 'last_active', 'deleted_at',
@@ -26,7 +34,7 @@ class UserModel extends ShieldUsers
         ['name' => 'username', 'orderable' => true, 'header' => 'Username', 'order_by_username' => 'DESC'],
         // ['name' => 'first_name', 'orderable' => true, 'header' => 'First name', 'order_by_first_name' => 'DESC'],
         // ['name' => 'last_name', 'orderable' => true, 'header' => 'Last name', 'order_by_last_name' => 'DESC'],
-        ['name' => 'email', 'orderable' => true, 'header' => 'Email', 'order_by_email' => 'DESC'],
+        ['name' => 'secret', 'orderable' => true, 'header' => 'Email', 'order_by_email' => 'DESC'],
         ['name' => 'active', 'orderable' => true, 'header' => 'Active', 'order_by_active' => 'DESC'],
         ['name' => 'created_at', 'orderable' => true, 'header' => 'created_at', 'order_by_email' => 'DESC'],
         ['name' => 'type', 'orderable' => true, 'header' => 'Type', 'order_by_type' => 'DESC'],

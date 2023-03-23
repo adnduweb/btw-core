@@ -8,6 +8,8 @@ use Btw\Core\View\Theme as Theme;
 use Btw\Core\View\Metadata;
 use Btw\Core\View\Javascriptdata;
 use Btw\Core\Libraries\Oauth\Basic\ShieldOAuth;
+use Btw\Core\Libraries\Activitys;
+use Btw\Core\Config\Activitys as ActivitysConfig;
 
 use CodeIgniter\Config\BaseService;
 
@@ -83,7 +85,7 @@ class Services extends BaseService
         return new Javascriptdata();
     }
 
-    
+
 
     /**
      * Return List AdminTheme.
@@ -109,5 +111,19 @@ class Services extends BaseService
         }
 
         return new ShieldOAuth(new ShieldOAuthConfig());
+    }
+
+    public static function Activitys(?ActivitysConfig $config = null, bool $getShared = true): Activitys
+    {
+        if ($getShared) {
+            return static::getSharedInstance('Activitys', $config);
+        }
+
+        // If no config was injected then load one
+        if (empty($config)) {
+            $config = config('Activitys');
+        }
+
+        return new Activitys($config);
     }
 }
