@@ -123,17 +123,19 @@
                 <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
                     <div @click="open = ! open" class="">
                         <butto type="button" class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800" aria-expanded="false" aria-haspopup="true">
-                                <?= theme()->getSVG('flags/france.svg', 'svg-icon mr-3 w-5 h-5 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800'); ?>
+                            <span class="avatar w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
+                                <?= theme()->getSVG(Config('Btw')->supportedLocales[service('language')->getLocale()]['flag'], 'svg-icon mr-3 w-5 h-5 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800'); ?>
+                            </span>
                             </button>
                     </div>
 
                     <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-50 my-2 w-48 rounded-md shadow-lg origin-top-right right-0 top-full" style="display: none;" @click="open = false">
                         <div class="rounded-md ring-1 ring-black ring-opacity-5 dark:ring-slate-600 py-1 bg-white dark:bg-slate-800">
                             <?php foreach (Config('Btw')->supportedLocales as $key => $lang) { ?>
-                                <a class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700 flex" href="<?= route_to('user-current-language') ?>?changeLanguageBO=<?=$lang['iso_code']; ?>">
-                                <?= theme()->getSVG($lang['flag'], 'flex svg-icon mr-3 w-5 h-5 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800'); ?>
-                                <span class="ml-5"><?= lang($lang['name']); ?></span>
-                            </a>
+                                <a class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700 flex" href="<?= route_to('user-current-language') ?>?changeLanguageBO=<?= $lang['iso_code']; ?>">
+                                    <?= theme()->getSVG($lang['flag'], 'flex svg-icon mr-3 w-5 h-5 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800'); ?>
+                                    <span class="ml-5"><?= lang($lang['name']); ?></span>
+                                </a>
                             <?php } ?>
                         </div>
                     </div>
