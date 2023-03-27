@@ -334,8 +334,8 @@ class UserCurrentController extends AdminController
         }
 
         //On vérifie que le mote d epasse en cours est connu 
-        $validCreds = auth()->check(['password' => $requestJson['current_password'], 'email' => $user->email]); 
-        if(!$validCreds->isOK()){
+        $validCreds = auth()->check(['password' => $requestJson['current_password'], 'email' => $user->email]);
+        if (!$validCreds->isOK()) {
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
@@ -359,7 +359,7 @@ class UserCurrentController extends AdminController
         ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
     }
 
-    
+
     public function twoFactor()
     {
         $users = model(UserModel::class);
@@ -379,18 +379,27 @@ class UserCurrentController extends AdminController
         }
 
         $requestJson = $this->request->getJSON(true);
-        
-         // Actions
-         $actions             = setting('Auth.actions');
-         $actions['login']    = $requestJson['email2FA'] ?? null;
-         $context = 'user:' . user_id();
-         service('settings')->set('Auth.actions', $actions, $context);
 
-         return view($this->viewPrefix . 'cells\form_cell_two_factor', [
+        // Actions
+        $actions             = setting('Auth.actions');
+        $actions['login']    = $requestJson['email2FA'] ?? null;
+        $context = 'user:' . user_id();
+        service('settings')->set('Auth.actions', $actions, $context);
+
+        return view($this->viewPrefix . 'cells\form_cell_two_factor', [
             'user'   => $user,
         ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
     }
 
+
+    public function changeLangue()
+    {
+
+        $context = 'user:' . user_id();
+        service('settings')->set('Btw.language_bo', $this->request->getGet('changeLanguageBO'), $context);
+
+        return redirect()->back();
+    }
 
 
     /**

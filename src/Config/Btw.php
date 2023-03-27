@@ -10,21 +10,16 @@ class Btw extends BaseConfig
         'filter_list' => 'Btw\Views\_filter_list',
     ];
 
-    /**
-     * --------------------------------------------------------------------------
-     * App Module locations
-     * --------------------------------------------------------------------------
-     *
-     * Any folders that contain modules can be configured here.
-     * When Btw boots up it will automatitcally load any modules in these
-     * folders. The entries MUST be the namespace as the key, and the location
-     * as the value.
-     *
-     *   'MyStuff' => 'app/Modules',
-     *
-     *  You may leave the array empty if you do not wish to use module discovery.
-     */
-    public $appModules = [
-        'App\Modules' => APPPATH . 'Modules',
+    public $supportedLocales = [
+        'fr' => [
+            'name' => 'Btw.french',
+            'iso_code' => 'fr',
+            'flag' => '/flags/france.svg',
+        ],
+        'en' => [
+            'name' => 'Btw.english',
+            'iso_code' => 'en',
+            'flag' => 'flags/united-states.svg',
+        ]
     ];
 }

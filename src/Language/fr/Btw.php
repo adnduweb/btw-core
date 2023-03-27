@@ -50,6 +50,11 @@ return [
     'Deselect All' => 'déseclectionner',
     'Action' => 'Actions',
     'siteName' => 'Nom du site',        
-    'siteOnline' => 'Site en ligne',        
+    'siteOnline' => 'Site en ligne',      
+    'french' => 'Français',      
+    'english' => 'Anglais',        
+    'delete_all' => 'Tout supprimer',   
+    'delete_selected' => 'Supprimer la sélection',   
+    'systemInfos' => 'Informations'
 ];
 

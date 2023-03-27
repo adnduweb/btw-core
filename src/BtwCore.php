@@ -115,7 +115,8 @@ class BtwCore
         // Sidebar menu
         $menus->createMenu('sidebar');
         $menus->menu('sidebar')
-            ->createCollection('content', 'Content');
+            ->createCollection('content', 'Content')
+            ->setCollapsible();
 
         $menus->menu('sidebar')
             ->createCollection('access', 'Accès')
@@ -196,7 +197,7 @@ class BtwCore
             $modules  = [];
             $excluded = ['Config', 'Language', 'Views'];
 
-            $paths = config('Btw')->appModules;
+            $paths = [APPPATH . 'Modules'];
 
             if (!is_array($paths) || empty($paths)) {
                 log_message('debug', 'No app modules directories specified. Skipping.');

@@ -8,41 +8,42 @@
         <!-- Site Name -->
         <div class="flex flex-wrap -mx-3 mb-2">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <x-label for="email" label="<?= lang('Btw.first_name'); ?>" />
-                <x-inputs.text name="first_name" value="<?= old('first_name', $userCurrent->first_name) ?>" description="false" />
-                <?php if (isset($validation)) :  ?>
-                    <div class="invalid-feedback block">
-                        <?= $validation->getError('first_name'); ?>
-                    </div>
-                <?php endif ?>
+                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                    'type' => 'text',
+                    'label' => lang('Btw.first_name'),
+                    'name' => 'first_name',
+                    'value' =>  old('first_name', $userCurrent->first_name)
+                ]); ?>
+
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <x-label for="last_name" label="<?= lang('Btw.last_name'); ?>" />
-                <x-inputs.text name="last_name" value="<?= old('last_name', $userCurrent->last_name) ?>" description="false" />
-                <?php if (isset($validation)) :  ?>
-                    <div class="invalid-feedback block">
-                        <?= $validation->getError('last_name'); ?>
-                    </div>
-                <?php endif ?>
+                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                    'type' => 'text',
+                    'label' => lang('Btw.last_name'),
+                    'name' => 'last_name',
+                    'value' =>  old('last_name', $userCurrent->last_name)
+                ]); ?>
             </div>
         </div>
 
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3">
-                <x-label for="email" label="<?= lang('Btw.email'); ?>" />
-                <x-inputs.text type="email" name="email" value="<?= old('email', $userCurrent->email) ?>" description="<?= lang('Btw.The users will have to re-verify their email address if you change it or you can do it manually'); ?>" />
-                <?php if (isset($validation)) :  ?>
-                    <div class="invalid-feedback block">
-                        <?= $validation->getError('email'); ?>
-                    </div>
-                <?php endif ?>
+
+                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                    'type' => 'email',
+                    'label' => lang('Btw.email'),
+                    'name' => 'email',
+                    'value' =>  old('email', $userCurrent->email),
+                    'description' => lang('Btw.The users will have to re-verify their email address if you change it or you can do it manually')
+                ]); ?>
+
             </div>
         </div>
 
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinginformation" />
+        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinginformation" />
     </div>
 
 </div>

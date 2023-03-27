@@ -16,6 +16,8 @@ class AdminController extends BaseController
      */
     protected $theme = 'Admin';
 
+    protected $langueCurrent;
+
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         $this->helpers = array_merge($this->helpers, ['alertHtmx', 'auth', 'setting', 'form']);
@@ -23,5 +25,10 @@ class AdminController extends BaseController
         parent::initController($request, $response, $logger);
 
         setting('App.themebo', $this->theme);
+
+        $this->langueCurrent = service('settings')->get('Btw.language_bo', 'user:' . Auth()->user()->id) ?? 'fr';
+        service('language')->setLocale($this->langueCurrent);
+        setlocale(LC_TIME, service('request')->getLocale() . '_' .  service('request')->getLocale());
+        
     }
 }

@@ -48,7 +48,7 @@ class Registrar
                 //     'csrf' => ['except' => ['api/record/[0-9]+']],
                 // ],
                 'before' => [
-                    'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
+                    // 'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
                 ],
                 'after' => array_merge($props['globals']['after'], [
                     'visits'
@@ -117,6 +117,26 @@ class Registrar
         $namespaces = [];
         $namespaces["Themes"] = [ROOTPATH . 'resources/Views'];
         $namespaces["Btw\\Core"] = [realpath(__DIR__ . "/../")];
+
+        foreach ([APPPATH . 'Modules'] as $namespace => $dir) {
+            if (!is_dir($dir)) {
+                continue;
+            }
+
+            $dir = rtrim($dir, DIRECTORY_SEPARATOR);
+            $map = directory_map($dir, 1);
+
+            foreach ($map as $row) {
+                if (substr($row, -1) !== DIRECTORY_SEPARATOR) {
+                    continue;
+                }
+
+                $name = trim($row, DIRECTORY_SEPARATOR);
+                // $modules["{$namespace}\\{$name}"] = "{$dir}/{$name}";
+                $key = str_replace('btw-', '', $name);
+                $namespaces["Btw\\" . ucfirst($key)] = [APPPATH . "Modules/{$name}/src"];
+            }
+        }
 
         // Insert the namespaces into the psr4 array in the autoloader
         // to ensure that Btw's files get loader prior to vendor files

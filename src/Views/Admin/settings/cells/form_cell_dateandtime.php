@@ -7,13 +7,20 @@
         <div class="flex flex-wrap">
             <div class="w-full lg:w-6/12 px-4">
                 <div class="relative w-full mb-3">
-                    <x-inputs.select label="<?= lang('Timezone'); ?>" name="timezoneArea" hxGet="/<?= ADMIN_AREA ?>/settings/timezones" hxTarget="#timezone" hxInclude="[name='timezoneArea']" hxTrigger="change" hxSwap="afterSettle">
-                        <?= view_cell('Btw\Core\Cells\Select::renderList', [
-                            'options' => $timezones,
-                            'selected' => $currentTZArea, 
-                            'byKey' => true
-                        ]); ?>
-                    </x-inputs.select>
+
+                    <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
+                        'label' => lang('Btw.Timezone'),
+                        'name' => 'timezoneArea',
+                        'options' => $timezones,
+                        'selected' => $currentTZArea,
+                        'byKey' => true,
+                        'hxGet' => "/" . ADMIN_AREA . "/settings/timezones",
+                        'hxTarget' => "#timezone",
+                        'hxInclude' => "[name='timezoneArea']",
+                        'hxTrigger' => "change",
+                        'hxSwap' => "afterSettle"
+                    ]); ?>
+
                 </div>
             </div>
             <div class="w-full lg:w-6/12 px-4">
@@ -38,23 +45,23 @@
                 <label for="timezone" class="block text-sm font-medium text-gray-700 mt-px pt-2 dark:text-gray-300">Date &amp; Time Format</label>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <x-inputs.radio label="<?= lang('Btw.mm/dd/yyyy') ?>" name="dateFormat" value="m/d/Y" checked="<?= (old('dateFormat', $dateFormat) === 'm/d/Y'); ?>" description="false" />
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.mm/dd/yyyy'), 'name' => 'dateFormat', 'value' => 'm/d/Y', 'checked' => (old('dateFormat', $dateFormat) === 'm/d/Y')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <x-inputs.radio label="<?= lang('Btw.dd/mm/yyyy') ?>" name="dateFormat" value="d/m/Y" checked="<?= (old('dateFormat', $dateFormat) === 'd/m/Y'); ?>" description="false" />
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.dd/mm/yyyy'), 'name' => 'dateFormat', 'value' => 'd/m/Y', 'checked' => (old('dateFormat', $dateFormat) === 'd/m/Y')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <x-inputs.radio label="<?= lang('Btw.dd-mm-yyyy') ?>" name="dateFormat" value="d-m-Y" checked="<?= (old('dateFormat', $dateFormat) === 'd-m-Y'); ?>" description="false" />
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.dd-mm-yyyy'), 'name' => 'dateFormat', 'value' => 'd/m/Y', 'checked' => (old('dateFormat', $dateFormat) === 'd-m-Y')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <x-inputs.radio label="<?= lang('Btw. yyyy-mm-dd') ?>" name="dateFormat" value="Y-m-d" checked="<?= (old('dateFormat', $dateFormat) === 'Y-m-d'); ?>" description="false" />
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.yyyy-mm-dd'), 'name' => 'dateFormat', 'value' => 'M j, Y', 'checked' => (old('dateFormat', $dateFormat) === 'Y-m-d')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <x-inputs.radio label="<?= lang('Btw. mmm dd, yyyy') ?>" name="dateFormat" value="M j, Y" checked="<?= (old('dateFormat', $dateFormat) === 'M j, Y'); ?>" description="false" />
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.mmm dd, yyyy'), 'name' => 'dateFormat', 'value' => 'M j, Y', 'checked' => (old('dateFormat', $dateFormat) === 'M j, Y')]); ?>
                 </div>
 
             </div>
@@ -64,11 +71,11 @@
                 <div class="col-12 col-sm-4">
 
                     <div class="form-check ml-4 mb-2 mt-2 ">
-                        <x-inputs.radio label="<?= lang('Btw.12 hour with AM/PM') ?>" name="timeFormat" value="g:i A" checked="<?= (old('timeFormat', $timeFormat) === 'g:i A'); ?>" description="false" />
+                        <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.12 hour with AM/PM'), 'name' => 'timeFormat', 'value' => 'g:i A', 'checked' => (old('timeFormat', $timeFormat) === 'g:i A')]); ?>
                     </div>
 
                     <div class="form-check ml-4 mb-2 mt-2 ">
-                        <x-inputs.radio label="<?= lang('Btw.24 hour') ?>" name="timeFormat" value="H:i" checked="<?= (old('timeFormat', $timeFormat) === 'H:i'); ?>" description="false" />
+                        <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.24 hour'), 'name' => 'timeFormat', 'value' => 'H:i', 'checked' => (old('timeFormat', $timeFormat) === 'H:i')]); ?>
                     </div>
 
                 </div>
@@ -77,7 +84,7 @@
         </div>
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingdateandtime" />
+        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingdateandtime" />
     </div>
 
 </div>

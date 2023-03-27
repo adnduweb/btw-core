@@ -5,21 +5,27 @@
 
 
         <div class="row mb-3">
-            <x-inputs.switch label="<?= lang('Btw.Allow users to register themselves on the site'); ?>" name="allowRegistration" value="1" checked="<?= (old('allowRegistration', setting('Auth.allowRegistration') ?? false)) ?>" description="If unchecked, an admin will need to create users." />
-            <?php if (isset($validation)) :  ?>
-                <div class="invalid-feedback block">
-                    <?= $validation->getError('allowRegistration'); ?>
-                </div>
-            <?php endif ?>
+
+            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+                'label' => lang('Btw.Allow users to register themselves on the site'),
+                'name' => 'allowRegistration',
+                'value' => '1',
+                'checked' => (old('allowRegistration', setting('Auth.allowRegistration') ?? false)),
+                'description' => "If unchecked, an admin will need to create users."
+            ]); ?>
+
         </div>
 
         <div class="row mb-3">
-                 <x-inputs.switch label="<?= lang('Btw.Force email verification after registration?'); ?>" name="emailActivation" value="Btw\Core\Authentication\Actions\EmailActivator" checked="<?= (old('emailActivation', setting('Auth.actions')['register']) === 'Btw\Core\Authentication\Actions\EmailActivator'); ?>" description="If checked, will send a code via email for them to confirm." />
-            <?php if (isset($validation)) :  ?>
-                <div class="invalid-feedback block">
-                    <?= $validation->getError('emailActivation'); ?>
-                </div>
-            <?php endif ?>
+
+            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+                'label' => lang('Btw.Force email verification after registration?'),
+                'name' => 'emailActivation',
+                'value' => 'Btw\Core\Authentication\Actions\EmailActivator',
+                'checked' => (old('emailActivation', setting('Auth.actions')['register']) === 'Btw\Core\Authentication\Actions\EmailActivator'),
+                'description' => "If checked, will send a code via email for them to confirm"
+            ]); ?>
+
         </div>
 
         <?php if (isset($groups) && count($groups)) : ?>
@@ -30,7 +36,7 @@
                     <label class="form-label mb-10 dark:text-gray-300">Default User Group:</label>
                     <?php foreach ($groups as $group => $info) : ?>
                         <div class="form-check ml-4 mb-2 mt-2 ">
-                            <x-inputs.radio label="<?= esc(ucfirst($info['title'])); ?>" name="defaultGroup" value="<?= $group ?>" checked="<?= ($group === $defaultGroup); ?>" description="false" />
+                            <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => esc(ucfirst($info['title'])), 'name' => 'defaultGroup', 'value' => $group, 'checked' => ($group === $defaultGroup)]); ?>
                         </div>
                     <?php endforeach ?>
 
@@ -42,7 +48,7 @@
         <?php endif ?>
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingregistration" />
+        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingregistration" />
     </div>
 
 </div>

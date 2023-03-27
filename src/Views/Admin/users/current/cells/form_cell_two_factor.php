@@ -5,17 +5,20 @@
 
 
         <div class="row mb-3">
-        <x-inputs.switch label="<?= lang('Btw.Force 2FA check after login?'); ?>" name="email2FA" value="Btw\Core\Authentication\Actions\Email2FA" checked="<?= (old('email2FA', setting()->get('Auth.actions', 'user:' . user_id())['login']) === 'Btw\Core\Authentication\Actions\Email2FA') ?>" description="If checked, will send a code via email for them to confirm" />
-            <?php if (isset($validation)) :  ?>
-                <div class="invalid-feedback block">
-                    <?= $validation->getError('email2FA'); ?>
-                </div>
-            <?php endif ?>
+            
+            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+                'label' => lang('Btw.Force 2FA check after login?'),
+                'name' => 'email2FA',
+                'value' => 'Btw\Core\Authentication\Actions\Email2FA',
+                'checked' => (old('email2FA', setting()->get('Auth.actions', 'user:' . user_id())['login']) === 'Btw\Core\Authentication\Actions\Email2FA'),
+                'description' => "If checked, will send a code via email for them to confirm"
+            ]); ?>
+
         </div>
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingtwofactor" />
+        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingtwofactor" />
     </div>
 
 </div>

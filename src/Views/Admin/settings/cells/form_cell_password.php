@@ -5,13 +5,17 @@
 
         <!-- Site Name -->
         <div class="row">
-            <x-label for="minimumPasswordLength" label="<?= lang('Btw.minimumPasswordLength'); ?>" />
-            <x-inputs.text type="number" name="minimumPasswordLength" min="8" step="1" value="<?= old('minimumPasswordLength', setting('Auth.minimumPasswordLength'))  ?>" description="A minimum value of 8 is suggested. 10 is recommended." />
-            <?php if (isset($validation)) :  ?>
-                <div class="invalid-feedback block">
-                    <?= $validation->getError('minimumPasswordLength'); ?>
-                </div>
-            <?php endif ?>
+
+        <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                'type' => 'number',
+                'label' => lang('Btw.minimumPasswordLength'),
+                'name' => 'minimumPasswordLength',
+                'value' => old('minimumPasswordLength', setting('Auth.minimumPasswordLength')) ,
+                'min' => "8", 
+                'step' => "1",
+                'description' => "A minimum value of 8 is suggested. 10 is recommended."
+            ]); ?>
+
         </div>
 
 
@@ -23,13 +27,13 @@
             <div class="form-group col-6 col-sm-4">
 
                 <!-- Composition Validator -->
-                <x-inputs.switch label="<?= lang('Btw.Composition Validator'); ?>" name="validators" value="CodeIgniter\Shield\Authentication\Passwords\CompositionValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\CompositionValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />     
+                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [ 'label' => lang('Btw.Composition Validator'), 'name' => 'validators', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\CompositionValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\CompositionValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
                 <!-- Nothing Personal Validator -->
-                <x-inputs.switch label="<?= lang('Btw.Nothing Personal Validator'); ?>" name="validators" value="CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
+                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [ 'label' => lang('Btw.Nothing Personal Validator'), 'name' => 'validators', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
                 <!-- Dictionary Validator -->
-                <x-inputs.switch label="<?= lang('Btw.Composition Validator'); ?>" name="validators" value="CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
+                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [ 'label' => lang('Btw.Nothing Composition Validator'), 'name' => 'validators', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
                  <!-- Pwned Validator -->
-                 <x-inputs.switch label="<?= lang('Btw.Dictionary Validator'); ?>" name="validators" value="CodeIgniter\Shield\Authentication\Passwords\PwnedValidator" checked="<?= (in_array('CodeIgniter\Shield\Authentication\Passwords\PwnedValidator', old('validators', setting('Auth.passwordValidators')), true)) ?>" class="mb-3" description="false" />
+                 <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [ 'label' => lang('Btw.Dictionary Validator'), 'name' => 'validators', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\PwnedValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\PwnedValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
             </div>
             <div class="col-6 px-4">
                 <ul class="text-muted small text-sm text-gray-500  dark:text-gray-300">
@@ -46,7 +50,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingpassword" />
+        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingpassword" />
     </div>
 
 </div>

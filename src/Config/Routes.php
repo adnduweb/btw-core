@@ -67,13 +67,20 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'settings/user/change-password', 'UserCurrentController::changePassword', ['as' => 'user-change-password']);
     $routes->match(['get', 'post'], 'settings/user/two-factor', 'UserCurrentController::twoFactor', ['as' => 'user-two-factor']);
     $routes->get('user/update/avatar', 'UserCurrentController::updateAvatar', ['as' => 'user-update-avatar']);
+    $routes->get('user/update/language', 'UserCurrentController::changeLangue', ['as' => 'user-current-language']);
+    
    
     // Files Logs
     $routes->get('logs/files/list', 'ActivityController::logsFile', ['as' => 'logs-file']);
     $routes->get('logs/files/(:any)', 'ActivityController::viewFile/$1', ['as' => 'log-file-view']);
+    $routes->post('logs/files/delete-all', 'ActivityController::deleteFilesAll', ['as' => 'logs-files-delete-all']);
     $routes->get('logs/system', 'ActivityController::listsystem', ['as' => 'logs-system']);
     $routes->get('logs/sytem', 'ActivityController::ajaxDatatableSystem', ['as' => 'logs-system-ajax']);
     $routes->delete('logs/sytem/delete', 'ActivityController::deleteSystem/$1', ['as' => 'logs-system-delete']);
+
+    //Tools
+    $routes->get('system-info', 'SystemInfoController::index', ['as' => 'sys-info']);
+    $routes->get('php-info', 'SystemInfoController::phpInfo', ['as' => 'sys-phpinfo']);
     
 
     // Groups

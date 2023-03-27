@@ -15,7 +15,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingtwofactor" />
+        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingtwofactor" />
     </div>
 
 </div>

@@ -29,7 +29,7 @@
     <?php endif ?>
 
     <div class="px-4 py-3 text-right sm:px-6 ">
-        <x-inputs.button type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingmodalgroups" />
+        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingmodalgroups" />
     </div>
 
 </div>

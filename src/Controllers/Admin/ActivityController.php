@@ -176,4 +176,51 @@ class ActivityController extends AdminController
         }
         return $this->respondNoContent();
     }
+
+     /**
+     * Delete the specified log file or all.
+     *
+     */
+    public function deleteFilesAll()
+    {
+        $delete    = $this->request->getPost('delete');
+        $deleteAll = $this->request->getPost('delete_all');
+
+        if (empty($delete) && empty($deleteAll)) {
+            theme()->set_message('error', lang('Btw.resourcesNotFound', ['Logs']));
+            return redirect()->to(route_to('logs-file'));
+        }
+
+        if (! empty($delete)) {
+            helper('security');
+
+            $checked    = $_POST['checked'];
+            $numChecked = count($checked);
+
+            if (is_array($checked) && $numChecked) {
+                foreach ($checked as $file) {
+                    @unlink($this->logsPath . sanitize_filename($file));
+                }
+
+                theme()->set_message('success', lang('Btw.resourcesDeleted', ['Logs']));
+                return redirect()->to(route_to('logs-file'));
+            }
+        }
+
+        if (! empty($deleteAll)) {
+            if (delete_files($this->logsPath)) {
+                // Restore the index.html file.
+                @copy(APPPATH . '/index.html', "{$this->logsPath}index.html");
+
+                theme()->set_message('success', lang('Btw.resourcesDeletedAll', ['Logs']));
+                return redirect()->to(route_to('logs-file'));
+            }
+
+            theme()->set_message('error', lang('Btw.resourcesErrorDeleted', ['Logs']));
+            return redirect()->to(route_to('logs-file'));
+        }
+
+        theme()->set_message('error', lang('Btw.unknownAction', ['Logs']));
+        return redirect()->to(route_to('logs-file'));
+    }
 }

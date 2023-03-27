@@ -29,4 +29,8 @@ return [
 
     'lastModified' => 'Last Modified',
     'fileSize'     => 'File Size',
+    
+    'Dashboard' => 'Dashboard',
+    'french' => 'French',      
+    'english' => 'English',        
 ];

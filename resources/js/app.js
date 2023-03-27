@@ -15,6 +15,16 @@ window.axios = axios;
 import Datatable from 'datatables.net';
 window.datatable = Datatable;
 
+// import tinymce from "tinymce/tinymce.min.js";
+// window.tinymce = tinymce;
+// import 'tinymce/themes/silver/theme';
+// import 'tinymce/models/dom/model';
+// import 'tinymce/icons/default/icons';
+// import 'tinymce/skins/ui/oxide/skin.min.css';
+// import 'tinymce/skins/ui/oxide/content.min.css';
+// import 'tinymce/skins/content/default/content.css';
+// import 'tinymce/langs/fr_FR';
+
 //
 // Datatables.net Initialization
 //
