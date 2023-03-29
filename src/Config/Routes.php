@@ -13,6 +13,7 @@ $routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth'], static functio
     $routes->post('register', 'RegisterController::registerAction');
     $routes->get('login', 'LoginController::loginView', ['as' => 'login']);
     $routes->post('login', 'LoginController::loginAction');
+    $routes->get('logout', 'LoginController::logoutAction', ['as' => 'logout']);
     $routes->get('login/magic-link', 'MagicLinkController::loginView', ['as' => 'magic-link']);
     $routes->post('login/magic-link', 'MagicLinkController::loginAction');
     $routes->get('login/verify-magic-link', 'MagicLinkController::verify', ['as' => 'verify-magic-link']);
@@ -53,7 +54,14 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'users/edit/(:any)/capabilities', 'UsersController::capabilities/$1', ['as' => 'user-only-capabilities']);
     $routes->put('users/edit/(:any)/capabilities/toggle/(:any)', 'UsersController::toggle/$1/$2', ['as' => 'users-permissions-toggle-only']);
     $routes->put('users/edit/(:any)/capabilities/toggle-all', 'UsersController::toggleAll/$1', ['as' => 'users-permissions-toggle-all']);
-    
+    $routes->match(['get', 'post'], 'users/edit/(:any)/change-password', 'UsersController::changePassword/$1', ['as' => 'user-only-change-password']);
+    $routes->match(['get', 'post'], 'users/edit/(:any)/two-factor', 'UsersController::twoFactor/$1', ['as' => 'user-only-two-factor']);
+    $routes->match(['get', 'post'], 'users/edit/(:any)/history', 'UsersController::history/$1', ['as' => 'user-only-history']);
+    $routes->match(['get', 'post'], 'users/edit/(:any)/browser', 'UsersController::sessionBrowser/$1', ['as' => 'user-only-browser']);
+    $routes->delete('users/delete', 'UsersController::deleteUser', ['as' => 'users-delete']);
+
+
+
     // User Current
     $routes->match(['get', 'post'], 'settings/user', 'UserCurrentController::editUserCurrent', ['as' => 'user-current-settings']);
     $routes->post('settings/users', 'UserCurrentController::save', ['as' => 'user-settings-save']);
@@ -68,8 +76,8 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'settings/user/two-factor', 'UserCurrentController::twoFactor', ['as' => 'user-two-factor']);
     $routes->get('user/update/avatar', 'UserCurrentController::updateAvatar', ['as' => 'user-update-avatar']);
     $routes->get('user/update/language', 'UserCurrentController::changeLangue', ['as' => 'user-current-language']);
-    
-   
+
+
     // Files Logs
     $routes->get('logs/files/list', 'ActivityController::logsFile', ['as' => 'logs-file']);
     $routes->get('logs/files/(:any)', 'ActivityController::viewFile/$1', ['as' => 'log-file-view']);
@@ -81,7 +89,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     //Tools
     $routes->get('system-info', 'SystemInfoController::index', ['as' => 'sys-info']);
     $routes->get('php-info', 'SystemInfoController::phpInfo', ['as' => 'sys-phpinfo']);
-    
+
 
     // Groups
     $routes->get('groups', 'GroupsController::index', ['as' => 'groups-list']);
@@ -98,4 +106,27 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->get('permissions/show/(:any)', 'PermissionsController::show/$1', ['as' => 'group-show']);
     $routes->post('permissions/save', 'PermissionsController::saveGroup', ['as' => 'group-save']);
     $routes->delete('permissions/delete/(:any)', 'PermissionsController::delete/$1', ['as' => 'group-delete']);
+
+    // Tokens
+    $routes->get('tokens/manage', 'TokensController::index', ['as' => 'tokens-manage']);
+    $routes->match(['get', 'post'], 'tokens/create', 'TokensController::create', ['as' => 'tokens-create']);
 });
+
+
+// Clear cache
+// Route::get('/clear-cache', function () {
+//     Artisan::call('cache:clear');
+//     return "Cache is cleared";
+// })->middleware(['auth', 'admin']);
+
+// // Optimize
+// Route::get('/optimize', function () {
+//     Artisan::call('optimize');
+//     return "Cache is optimized";
+// })->middleware(['auth', 'admin']);
+
+// $routes->get('/access/token', static function() {
+//     $token = auth()->user()->generateAccessToken(service('request')->getVar('token_name'));
+// //d42ecd648f7241a1fca9e6fe292feeaa35693715b77c96edd702251d1c53414f
+//     return json_encode(['token' => $token->raw_token]);
+// });

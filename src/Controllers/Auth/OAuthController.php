@@ -48,7 +48,7 @@ class OAuthController extends BaseController implements ControllersInterface
     public function callBack()
     {
         // if user after callback request url
-        if (! session('oauth_name')) {
+        if (!session('oauth_name')) {
             return redirect()->to(config('Auth')->logoutRedirect())->with('error', lang('ShieldOAuthLang.Callback.oauth_class_not_set'));
         }
         $allGet = $this->request->getGet();
@@ -79,19 +79,27 @@ class OAuthController extends BaseController implements ControllersInterface
             $userid = $this->syncingUserInfo($find, $updateFildes);
         }
 
-        if ($this->checkExistenceUser($find) === false) {
-            helper('text');
-            $users = model('ShieldOAuthModel');
-            // new user
-            $entitiesUser = new User($oauthClass->getColumnsName('newUser', $userInfo));
 
-            $users->save($entitiesUser);
-            $userid = $users->getInsertID();
-            // To get the complete user object with ID, we need to get from the database
-            $user = $users->findById($userid);
-            $users->save($user);
-            // Add to default group
-            $users->addToDefaultGroup($user);
+
+        if ($this->checkExistenceUser($find) === false) {
+
+            if (service('settings')->get('ShieldOAuthConfig.allow_register') == true) {
+
+                helper('text');
+                $users = model('ShieldOAuthModel');
+                // new user
+                $entitiesUser = new User($oauthClass->getColumnsName('newUser', $userInfo));
+
+                $users->save($entitiesUser);
+                $userid = $users->getInsertID();
+                // To get the complete user object with ID, we need to get from the database
+                $user = $users->findById($userid);
+                $users->save($user);
+                // Add to default group
+                $users->addToDefaultGroup($user);
+            }else{
+                return redirect()->to(config('Auth')->logoutRedirect())->with('error', lang('ShieldOAuthLang.userUnknown'));
+            }
         }
 
         auth()->loginById($userid);

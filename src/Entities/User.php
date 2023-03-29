@@ -27,6 +27,19 @@ class User extends ShieldUser
        return route_to('user-only-information', $this->attributes['id']);
     }
 
+     /**
+     * Renders Datatable Username Initial
+     *
+     * @return string
+     */
+    public function getNameInitial(){
+
+        $lastName = $this->attributes['last_name'][0] ?? false;
+        $firstName = $this->attributes['first_name'][0] ?? false;
+        return $lastName . ' ' .$firstName; 
+
+    }
+
     /**
      * Renders out the user's avatar at the specified size (in pixels)
      *

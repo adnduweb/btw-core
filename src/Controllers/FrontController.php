@@ -43,6 +43,8 @@ class FrontController extends BaseController
      */
     protected $github;
 
+    protected $lang;
+
     /**
      * Constructor.
      */
@@ -53,6 +55,8 @@ class FrontController extends BaseController
         parent::initController($request, $response, $logger);
 
         $this->github = service('github');
+
+        $this->lang = service('language')->getLocale();
     }
 
     /**

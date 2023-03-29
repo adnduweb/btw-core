@@ -23,7 +23,7 @@
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200 mb-5"><?= lang('ShieldOAuthLang.Type_connect'); ?></h3>
 
 
-        <div x-data="{google_allow_login: <?= old('google_allow_login', setting('ShieldOAuthConfig.google_allow_login')) ? true : 'false' ?>}">
+        <div x-data="{allow_login_google: <?= old('allow_login_google', setting('ShieldOAuthConfig.allow_login_google')) ? true : 'false' ?>}">
 
             <div class="row mb-3">
                 <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
@@ -32,14 +32,14 @@
                     'value' => '1',
                     'checked' => (old('allow_login_google', setting('ShieldOAuthConfig.allow_login_google') ?? false)),
                     'xNotData' => "true",
-                    'xOn' => "google_allow_login",
-                    'xChange' => "google_allow_login = ! google_allow_login"
+                    'xOn' => "allow_login_google",
+                    'xChange' => "allow_login_google = ! allow_login_google"
                 ]); ?>
-
+ 
             </div>
 
             <!-- Site Name -->
-            <div class="row" x-show="google_allow_login != false">
+            <div class="row" x-show="allow_login_google != false">
 
 
                 <?= view_cell('Btw\Core\Cells\InputCell::renderList', [

@@ -22,7 +22,9 @@ class Themes
      */
     public $collections = [
         //__DIR__ . '/../../resources/Views/',
-         __DIR__ . '/../../../../../resources/Views/',
+        //  __DIR__ . '/../../../../../resources/Views/',
+         __DIR__ . '/../../../../../themes/',
+        //  __DIR__ . '/../../themes/',
     ];
 
     /**

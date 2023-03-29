@@ -55,6 +55,7 @@ return [
     'english' => 'Anglais',        
     'delete_all' => 'Tout supprimer',   
     'delete_selected' => 'Supprimer la sélection',   
-    'systemInfos' => 'Informations'
+    'systemInfos' => 'Informations',
+    'back' => 'Retour'
 ];
 

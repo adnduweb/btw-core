@@ -61,6 +61,8 @@ gestiond es erreurs -> alpinejs & htmx -> https://github.com/alpinejs/alpine/dis
 https://github.com/datamweb/shield-oauth
 https://github.com/hermawanramadhan/CodeIgniter4-DataTables
 composer require michalsn/codeigniter4-uuid
+https://blog.benoitblanchon.fr/django-htmx-messages-framework/
+https://til.jacklinke.com/using-htmx-and-server-side-datatables-net-together-in-a-django-project
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604

@@ -7,6 +7,7 @@ use Btw\Core\Filters\Protect;
 use Btw\Core\Filters\VisitsFilter;
 use Btw\Core\View\ShieldOAuth;
 use Btw\Core\View\Decorator;
+use Btw\Core\View\ErrorModalDecorator;
 use Btw\Core\Validation\UserRules;
 use CodeIgniter\Shield\Authentication\Passwords\ValidationRules as PasswordRules;
 use CodeIgniter\Shield\Filters\ChainAuth;
@@ -20,10 +21,6 @@ include_once __DIR__ . '/../Common.php';
 
 class Registrar
 {
-    private static $nonModuleFolders = [
-        'Config',
-    ];
-
     /**
      * Registers the Shield filters.
      */
@@ -90,6 +87,7 @@ class Registrar
             'decorators' => [
                 ShieldOAuth::class,
                 Decorator::class,
+                ErrorModalDecorator::class,
             ],
         ];
     }
@@ -115,7 +113,7 @@ class Registrar
         $autoloader = service('autoloader');
 
         $namespaces = [];
-        $namespaces["Themes"] = [ROOTPATH . 'resources/Views'];
+        $namespaces["Themes"] = [ROOTPATH . 'themes'];
         $namespaces["Btw\\Core"] = [realpath(__DIR__ . "/../")];
 
         foreach ([APPPATH . 'Modules'] as $namespace => $dir) {

@@ -171,7 +171,6 @@ class ActivityController extends AdminController
 
                 $model->delete(['id' => $id]);
             }
-            alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
             return $this->respond(['success' => lang('Core.your_selected_records_have_been_deleted'), 'messagehtml' => alertHtmx('success', lang('Btw.resourcesSaved', ['users']))], 200);
         }
         return $this->respondNoContent();
@@ -187,7 +186,7 @@ class ActivityController extends AdminController
         $deleteAll = $this->request->getPost('delete_all');
 
         if (empty($delete) && empty($deleteAll)) {
-            theme()->set_message('error', lang('Btw.resourcesNotFound', ['Logs']));
+            theme()->set_message_htmx('error', lang('Btw.resourcesNotFound', ['Logs']));
             return redirect()->to(route_to('logs-file'));
         }
 
@@ -202,7 +201,7 @@ class ActivityController extends AdminController
                     @unlink($this->logsPath . sanitize_filename($file));
                 }
 
-                theme()->set_message('success', lang('Btw.resourcesDeleted', ['Logs']));
+                theme()->set_message_htmx('success', lang('Btw.resourcesDeleted', ['Logs']));
                 return redirect()->to(route_to('logs-file'));
             }
         }
@@ -212,15 +211,15 @@ class ActivityController extends AdminController
                 // Restore the index.html file.
                 @copy(APPPATH . '/index.html', "{$this->logsPath}index.html");
 
-                theme()->set_message('success', lang('Btw.resourcesDeletedAll', ['Logs']));
+                theme()->set_message_htmx('success', lang('Btw.resourcesDeletedAll', ['Logs']));
                 return redirect()->to(route_to('logs-file'));
             }
 
-            theme()->set_message('error', lang('Btw.resourcesErrorDeleted', ['Logs']));
+            theme()->set_message_htmx('error', lang('Btw.resourcesErrorDeleted', ['Logs']));
             return redirect()->to(route_to('logs-file'));
         }
 
-        theme()->set_message('error', lang('Btw.unknownAction', ['Logs']));
+        theme()->set_message_htmx('error', lang('Btw.unknownAction', ['Logs']));
         return redirect()->to(route_to('logs-file'));
     }
 }

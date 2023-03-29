@@ -60,4 +60,19 @@ class LoginController extends ShieldLogin
 
         return redirect()->to(config('Auth')->loginRedirect())->withCookies();
     }
+
+        /**
+     * Logs the current user out.
+     */
+    public function logoutAction(): RedirectResponse
+    {
+        // Capture logout redirect URL before auth logout,
+        // otherwise you cannot check the user in `logoutRedirect()`.
+        $url = config('Auth')->logoutRedirect();
+
+        auth()->logout();
+
+        theme()->set_message_not_htmx('success', lang('Auth.successLogout', ['Logs'])); 
+        return redirect()->to($url);
+    }
 }

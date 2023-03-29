@@ -14,6 +14,7 @@ declare(strict_types=1);
 // ShieldOAuthLang language file
 return [
     // Errors List
+    'userUnknown' => 'Utilisateur inconnu',
     'unknown'  => 'Erreur inconnue!',
     'Callback' => [
         'oauth_class_not_set' => 'Une erreur s’est produite, il semble que la classe OAuth n’est pas définie.',

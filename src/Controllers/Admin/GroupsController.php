@@ -135,7 +135,7 @@ class GroupsController extends AdminController
 
         setting('AuthGroups.groups', $groupConfig);
 
-        theme()->set_message('success', lang('Btw.resourcesCreatead', ['groups']));
+        theme()->set_message_htmx('success', lang('Btw.resourcesCreatead', ['groups']));
         $this->response->triggerClientEvent('createGroup');
         return redirect()->hxRedirect('/' .ADMIN_AREA. '/groups');
     }

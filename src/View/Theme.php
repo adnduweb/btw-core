@@ -248,7 +248,7 @@ class Theme
         return $output;
     }
 
-    public static function set_message($type = 'info', $message = '', $title = 'info')
+    public static function set_message_htmx($type = 'info', $message = '', $title = 'info')
     {
         if (empty($message)) {
             return;
@@ -258,7 +258,7 @@ class Theme
         if (!self::$ignore_session && isset($session)) {
             //echo serialize($message); exit;
             $message = serialize($message);
-            $session->setFlashdata('message', "{$type}::{$message}::{$title}");
+            $session->setFlashdata('messageHTMX', "{$type}::{$message}::{$title}");
         }
 
         self::$message = array(
@@ -267,5 +267,27 @@ class Theme
             'title' => $title
         );
     }
+
+    public static function set_message_not_htmx($type = 'info', $message = '', $title = 'info')
+    {
+        if (empty($message)) {
+            return;
+        }
+        $session = \Config\Services::session();
+
+        if (!self::$ignore_session && isset($session)) {
+            //echo serialize($message); exit;
+            $message = serialize($message);
+            $session->setFlashdata('messageNotHTMX', "{$type}::{$message}::{$title}");
+        }
+
+        self::$message = array(
+            'type' => $type,
+            'message' => $message,
+            'title' => $title
+        );
+    }
+
+    
 
 }

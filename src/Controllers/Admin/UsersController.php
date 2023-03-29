@@ -15,6 +15,9 @@ use Btw\Core\Controllers\AdminController;
 use Btw\Core\Libraries\Menus\MenuItem;
 use Btw\Core\Models\UserModel;
 use Btw\Core\Entities\User;
+use CodeIgniter\Shield\Models\LoginModel;
+use Btw\Core\Models\SessionModel;
+use CodeIgniter\Shield\Models\UserIdentityModel;
 use Btw\Core\Libraries\DataTable\DataTable;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\API\ResponseTrait;
@@ -38,7 +41,7 @@ class UsersController extends AdminController
     protected string $baseURL = 'admin/users';
 
 
-    protected $viewPrefix = 'Btw\Core\Views\admin\users\only\\';
+    protected $viewPrefix = 'Btw\Core\Views\Admin\users\only\\';
 
     public function __construct()
     {
@@ -74,7 +77,7 @@ class UsersController extends AdminController
     {
 
         $model = model(UserModel::class);
-        $model->select('users.id, username, last_name, first_name, secret, active, users.created_at')->join('auth_identities', 'auth_identities.user_id = users.id')->where(['type' => 'email_password']);
+        $model->select('users.id, username, last_name, first_name, secret, active, users.created_at')->join('auth_identities', 'auth_identities.user_id = users.id')->where(['type' => 'email_password', 'deleted_at' => null]);
 
         return DataTable::of($model)
             ->add('select', function ($row) {
@@ -186,7 +189,7 @@ class UsersController extends AdminController
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,
-                    'menu' => service('menus')->menu('sidebar_user_current'),
+                    'menu' => service('menus')->menu('sidebar_user'),
                     'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
                 ]) . alertHtmx('success', lang('Btw.resourcesSaved sur ? ', ['settings']));
 
@@ -237,7 +240,8 @@ class UsersController extends AdminController
         /** @var User|null $user */
         $user = $users->find($id);
         if ($user === null) {
-            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user']));
+            theme()->set_message_htmx('success', lang('Btw.resourceNotFound', ['user']));
+            return redirect()->back();
         }
 
         $permissions = setting('AuthGroups.permissions');
@@ -250,7 +254,7 @@ class UsersController extends AdminController
 
 
         $permissionsMatrix = [];
-        foreach ( array_flip($group) as $key => $val) :
+        foreach (array_flip($group) as $key => $val) :
             if (isset($matrix[$key])) :
                 foreach ($matrix[$key] as $key => $val) :
                     $permissionsMatrix[$val] = $val;
@@ -294,7 +298,7 @@ class UsersController extends AdminController
         return view($this->viewPrefix . 'cells\form_cell_capabilities_row', [
             'rowPermission'   => [$perm, $permissions[$perm]],
             'user'   => $user,
-            'menu' => service('menus')->menu('sidebar_user_current'),
+            'menu' => service('menus')->menu('sidebar_user'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
         ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
     }
@@ -322,10 +326,161 @@ class UsersController extends AdminController
         return view($this->viewPrefix . 'cells\form_cell_capabilities_tr', [
             'permissions'   => $permissions,
             'user'   => $user,
-            'menu' => service('menus')->menu('sidebar_user_current'),
+            'menu' => service('menus')->menu('sidebar_user'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
         ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
     }
+
+
+    /**
+     * Change user's password.
+     *
+     */
+    public function changePassword(int $id)
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find($id);
+        if ($user === null) {
+            theme()->set_message_htmx('success', lang('Btw.resourceNotFound', ['user']));
+            return redirect()->back();
+        }
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'user_change_password', [
+                'user' => $user,
+                'menu' => service('menus')->menu('sidebar_user'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+
+        $requestJson = $this->request->getJSON(true);
+        $validation = service('validation');
+
+        $validation->setRules([
+            'current_password'      => 'required|strong_password',
+            'new_password'      => 'required|strong_password',
+            'pass_confirm' => 'required|matches[new_password]',
+        ]);
+
+        if (!$validation->run($requestJson)) {
+            return view($this->viewPrefix . 'cells\form_cell_changepassword', [
+                'userCurrent' => $user,
+                'validation' => $validation
+            ]) . alertHtmx('danger', 'Form validation failed.');;
+        }
+
+        //On vérifie que le mote d epasse en cours est connu 
+        $validCreds = auth()->check(['password' => $requestJson['current_password'], 'email' => $user->email]);
+        if (!$validCreds->isOK()) {
+            return view($this->viewPrefix . 'cells\form_cell_changepassword', [
+                'userCurrent' => $user,
+                'validation' => $validation
+            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');;
+        }
+
+
+        // Save the new user's email/password
+        $identity = $user->getEmailIdentity();
+
+        if ($requestJson['new_password'] !== null) {
+            $identity->secret2 = service('passwords')->hash($requestJson['new_password']);
+        }
+
+        if ($identity->hasChanged()) {
+            model(UserIdentityModel::class)->save($identity);
+        }
+
+        return view($this->viewPrefix . 'cells\form_cell_changepassword', [
+            'user' => $user
+        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+    }
+
+
+    public function twoFactor(int $id)
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find($id);
+        if ($user === null) {
+            theme()->set_message_htmx('success', lang('Btw.resourceNotFound', ['user']));
+            return redirect()->back();
+        }
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'user_two_factor', [
+                'user'   => $user,
+                'menu' => service('menus')->menu('sidebar_user'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+
+        $requestJson = $this->request->getJSON(true);
+
+        // Actions
+        $actions             = setting('Auth.actions');
+        $actions['login']    = $requestJson['email2FA'] ?? null;
+        $context = 'user:' . $id;
+        service('settings')->set('Auth.actions', $actions, $context);
+
+        return view($this->viewPrefix . 'cells\form_cell_two_factor', [
+            'user'   => $user,
+        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+    }
+
+    public function history(int $id)
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find($id);
+        if ($user === null) {
+            theme()->set_message_htmx('success', lang('Btw.resourceNotFound', ['user']));
+            return redirect()->back();
+        }
+
+        /** @var LoginModel $loginModel */
+        $loginModel = model(LoginModel::class);
+        $logins     = $loginModel->where('identifier', $user->email)->orderBy('date', 'desc')->limit(20)->findAll();
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'user_history', [
+                'user'   => $user,
+                'logins' => $logins,
+                'menu' => service('menus')->menu('sidebar_user'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+    }
+
+    public function sessionBrowser(int $id)
+    {
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find($id);
+        if ($user === null) {
+            theme()->set_message_htmx('success', lang('Btw.resourceNotFound', ['user']));
+            return redirect()->back();
+        }
+
+        /** @var SessionModel $sessionModel */
+        $sessionModel = model(SessionModel::class);
+        $sessions = $sessionModel->where('user_id', $user->id)->orderBy('timestamp', 'desc')->limit(10)->find();
+
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'user_browser', [
+                'user'   => $user,
+                'sessions' => $sessions,
+                'menu' => service('menus')->menu('sidebar_user'),
+                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+    }
+
 
     /**
      * Delete the item (soft).
@@ -333,7 +488,7 @@ class UsersController extends AdminController
      * @param string $itemId
      *
      */
-    public function delete()
+    public function deleteUser()
     {
 
         if ($this->request->is('delete')) {
@@ -343,17 +498,27 @@ class UsersController extends AdminController
             if (!is_array($response->id))
                 return false;
 
-            $model = model(DevisModel::class);
+            $model = model(UserModel::class);
 
 
             //print_r($rawInput['id']); exit;
             $isNatif = false;
             foreach ($response->id as $key => $id) {
-
+                
+                if($id == Auth()->user()->id){
+                    // print_r($response); exit;
+                    $this->response->triggerClientEvent('Messages', ['level' => 'info', 'message' => 'Here Is A Message']);
+                    $this->response->triggerClientEvent('reloadTable');
+                    alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+                    return $this->respond(['messagehtml' => alertHtmx('error', lang('Btw.resourcesNotSaved', ['users']))], 200);
+                 
+                    // return $this->response->triggerClientEvent('showMessage', ['level' => 'info', 'message' => 'Here Is A Message']);
+                    
+                }
                 $model->delete(['id' => $id]);
             }
-            alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
-            return $this->respond(['success' => lang('Core.your_selected_records_have_been_deleted'), 'messagehtml' => alertHtmx('success', lang('Btw.resourcesSaved', ['users']))], 200);
+            alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+            return $this->respond(['messagehtml' => alertHtmx('error', lang('Btw.resourcesSaved', ['users']))], 200);
         }
         return $this->respondNoContent();
     }
@@ -399,7 +564,7 @@ class UsersController extends AdminController
 
             $item    = new MenuItem([
                 'title'           => 'Change password',
-                'namedRoute'      => ['user-change-password', (isset($segments[3])) ? $segments[3] : null],
+                'namedRoute'      => ['user-only-change-password', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
                 'permission'      => 'admin.view',
                 'weight' => 3
@@ -408,7 +573,7 @@ class UsersController extends AdminController
 
             $item    = new MenuItem([
                 'title'           => 'Two Factor',
-                'namedRoute'      => ['user-two-factor', (isset($segments[3])) ? $segments[3] : null],
+                'namedRoute'      => ['user-only-two-factor', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
                 'permission'      => 'admin.view',
                 'weight' => 3
@@ -417,7 +582,7 @@ class UsersController extends AdminController
 
             $item    = new MenuItem([
                 'title'           => 'History',
-                'namedRoute'      => ['user-history', (isset($segments[3])) ? $segments[3] : null],
+                'namedRoute'      => ['user-only-history', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
                 'permission'      => 'admin.view',
                 'weight' => 4
@@ -426,7 +591,7 @@ class UsersController extends AdminController
 
             $item    = new MenuItem([
                 'title'           => 'Browser',
-                'namedRoute'      => ['user-session-browser', (isset($segments[3])) ? $segments[3] : null],
+                'namedRoute'      => ['user-only-browser', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
                 'permission'      => 'admin.view',
                 'weight' => 4
@@ -436,7 +601,7 @@ class UsersController extends AdminController
             $item    = new MenuItem([
                 'title'           => 'Delete',
                 'namedRoute'      => ['settings-email', (isset($segments[3])) ? $segments[3] : null],
-                'fontIconSvg'     => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+                'fontIconSvg'     => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 text-red-800', true),
                 'permission'      => 'admin.view',
                 'weight' => 5
             ]);

@@ -63,9 +63,12 @@ class Assets extends BaseConfig
         // 'app'   => __DIR__ . '/../../../resources/Views/App',
         // 'admin' => __DIR__ . '/../../../resources/Views/Admin',
         // 'auth'  => __DIR__ . '/../../../resources/Views/Auth',
-        'app'   => __DIR__ . '/../../../../../resources/Views/App',
-        'admin' => __DIR__ . '/../../../../../resources/Views/Admin',
-        'auth'  => __DIR__ . '/../../../../../resources/Views/Auth',
+        // 'app'   => __DIR__ . '/../../../../../resources/Views/App',
+        // 'admin' => __DIR__ . '/../../../../../resources/Views/Admin',
+        // 'auth'  => __DIR__ . '/../../../../../resources/Views/Auth',
+        'app'   => __DIR__ . '/../../../../../themes/App',
+        'admin' => __DIR__ . '/../../../../../themes/Admin',
+        'auth'  => __DIR__ . '/../../../../../themes/Auth',
         'other' => VENDORPATH,
     ];
 }

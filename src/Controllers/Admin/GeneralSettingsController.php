@@ -442,7 +442,7 @@ class GeneralSettingsController extends AdminController
         // Oauth
         setting('ShieldOAuthConfig.allow_login', $requestJson['allow_login'] ?? false);
         setting('ShieldOAuthConfig.allow_register', $requestJson['allow_register'] ?? false);
-        setting('ShieldOAuthConfig.google_allow_login', $requestJson['google_allow_login'] ?? false);
+        setting('ShieldOAuthConfig.allow_login_google', $requestJson['allow_login_google'] ?? false);
         setting('ShieldOAuthConfig.google_client_id', $requestJson['google_client_id']);
         setting('ShieldOAuthConfig.google_client_secret', $requestJson['google_client_secret']);
 

@@ -19,39 +19,40 @@ class Decorator implements ViewDecoratorInterface
         # Check whether vite is running or manifest is ready.
         if (env('VITE_AUTO_INJECTING') && Vite::routeIsNotExluded()) {
 
-
             if (Vite::isReady() === false) {
                 throw new \Exception('CodeIgniter Vite package is installed, but not initialized. did you run "php spark vite:init" ?');
             }
 
-            # Get generated tags.
-            $tags = Vite::tags();
+            if (Theme::current() == 'Admin' || Theme::current() == 'Auth') {
+                # Get generated tags.
+                $tags = Vite::tags();
 
-            // var_dump($tags['js']);
-            // exit;
+                // var_dump($tags['js']);
+                // exit;
 
-            $jsTags  = $tags['js'];
+                $jsTags  = $tags['js'];
 
-            # now inject css
-            if (!empty($tags['css'])) {
-                $cssTags = $tags['css'];
+                # now inject css
+                if (!empty($tags['css'])) {
+                    $cssTags = $tags['css'];
 
-                if (strpos($html, "\n\t$cssTags\n") === false) {
-                    $html = str_replace('</head>', "\n\t$cssTags\n</head>", $html);
-                }
+                    if (strpos($html, "\n\t$cssTags\n") === false) {
+                        $html = str_replace('</head>', "\n\t$cssTags\n</head>", $html);
+                    }
 
-                if (strpos($html, "\n\t$jsTags\n") === false) {
-                    $html = str_replace('</main>', "\n\t$jsTags\n</main>", $html);
-                }
-            } else {
-                if (strpos($html, "\n\t$jsTags\n") === false) {
-                    $html = str_replace('</head>', "\n\t$jsTags\n</head>", $html);
+                    if (strpos($html, "\n\t$jsTags\n") === false) {
+                        $html = str_replace('</main>', "\n\t$jsTags\n</main>", $html);
+                    }
+                } else {
+                    if (strpos($html, "\n\t$jsTags\n") === false) {
+                        $html = str_replace('</head>', "\n\t$jsTags\n</head>", $html);
+                    }
                 }
             }
-        }
 
-        //message ajax not htmx
-        $html = self::message($html);
+            //message ajax not htmx
+            $html = self::message($html);
+        }
 
         $components = self::factory();
 
@@ -74,42 +75,42 @@ class Decorator implements ViewDecoratorInterface
     {
         $session = \Config\Services::session();
 
-        $message = $session->getFlashdata('message');
-        if (!empty($message)) {
-            // Split out the message parts
-            $temp_message = explode('::', $message);
-            if (count($temp_message) > 3) {
-                $type = $temp_message[0];
-                $message = $temp_message[1];
-                $title = $temp_message[2];
+        $messageHTMX = $session->getFlashdata('messageHTMX');
+        if (!empty($messageHTMX)) {
+            // Split out the messageHTMX parts
+            $temp_messageHTMX = explode('::', $messageHTMX);
+            if (count($temp_messageHTMX) > 3) {
+                $type = $temp_messageHTMX[0];
+                $messageHTMX = $temp_messageHTMX[1];
+                $title = $temp_messageHTMX[2];
             } else {
-                $type = $temp_message[0];
-                $message = $temp_message[1];
-                $title = $temp_message[2];
+                $type = $temp_messageHTMX[0];
+                $messageHTMX = $temp_messageHTMX[1];
+                $title = $temp_messageHTMX[2];
             }
 
-            unset($temp_message);
+            unset($temp_messageHTMX);
 
 
-            // If message is empty, check the $message property.
-            if (empty($message)) {
-                if (empty(self::$message['message'])) {
+            // If messageHTMX is empty, check the $messageHTMX property.
+            if (empty($messageHTMX)) {
+                if (empty(self::$messageHTMX['messageHTMX'])) {
                     return '';
                 }
-                $message = unserialize(self::$message['message']);
-                $type = self::$message['type'];
-                $title = self::$message['title'];
+                $messageHTMX = unserialize(self::$messageHTMX['messageHTMX']);
+                $type = self::$messageHTMX['type'];
+                $title = self::$messageHTMX['title'];
             }
-            $message = unserialize($message);
+            $messageHTMX = unserialize($messageHTMX);
             $templateVarMessage = '';
-            if (is_array($message) && !empty($message)) {
+            if (is_array($messageHTMX) && !empty($messageHTMX)) {
                 $templateVarMessage .= '<ul>';
-                foreach ($message as $k => $v) {
+                foreach ($messageHTMX as $k => $v) {
                     $templateVarMessage .= '<li>' . addslashes($v) . '</li>';
                 }
                 $templateVarMessage .= '</ul>';
             } else {
-                $templateVarMessage = addslashes($message);
+                $templateVarMessage = addslashes($messageHTMX);
             }
             if (strpos($html, alertHtmx($type, $templateVarMessage)) === false) {
                 $html = str_replace('<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">', '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">' . alertHtmx($type, $templateVarMessage), $html);

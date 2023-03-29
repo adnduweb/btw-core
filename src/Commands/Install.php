@@ -242,8 +242,8 @@ class Install extends BaseCommand
 
     private function publishThemes()
     {
-        $source      = BTPATH . '../resources';
-        $destination = APPPATH . '../resources';
+        $source      = BTPATH . '../themes';
+        $destination = APPPATH . '../themes';
 
         $publisher = new Publisher();
         $publisher->copyDirectory($source, $destination);

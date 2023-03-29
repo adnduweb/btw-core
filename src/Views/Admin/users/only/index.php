@@ -7,76 +7,8 @@
 
 <x-page-head> <?= lang('Btw.UsersList'); ?> </x-page-head>
 <x-admin-box>
-    <div class="mb-4 flex justify-between items-center">
-        <!--begin::Card title-->
-        <div class="flex-1 pr-4">
-            <!--begin::Search-->
-            <div class="relative md:w-1/3">
-                <input type="text" data-kt-datatable-filter="search" class="w-full pl-10 pr-4 py-2 border-gray-300 dark:border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 dark:text-gray-400 dark:bg-gray-600 font-medium" placeholder="<?= lang('Btw.search'); ?>" />
-                <div class="absolute top-0 left-0 inline-flex items-center p-2">
-                    <?= service('theme')->getSVG('duotone/General/Search.svg', "svg-icon svg-icon-1 position-absolute ms-6"); ?>
-                </div>
-            </div>
-            <!--end::Search-->
-        </div>
-        <!--begin::Card title-->
-        <!--begin::Card toolbar-->
-        <div class="card-toolbar">
 
-            <!--begin::Toolbar-->
-            <div class="d-flex justify-content-end" data-kt-datatable-toolbar="base">
-
-
-            </div>
-            <!--end::Toolbar-->
-
-            <!--begin::Group actions-->
-            <div class="d-flex justify-content-end align-items-center hidden" data-kt-datatable-toolbar="selected">
-                <div class="fw-bolder me-5">
-                </div>
-                <div class="shadow rounded-lg flex">
-                    <div class="relative">
-                        <button @click.prevent="open = !open" class="rounded-lg inline-flex items-center bg-white hover:text-blue-500 dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:shadow-outline text-gray-500 font-semibold py-2 px-2 md:px-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:hidden" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-                                <path d="M5.5 5h13a1 1 0 0 1 0.5 1.5L14 12L14 19L10 16L10 12L5 6.5a1 1 0 0 1 0.5 -1.5"></path>
-                            </svg>
-                            <span class="hidden md:block"><?= lang('Btw.Action'); ?></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-
-                        <div x-show="open" @click.away="open = false" class="z-40 absolute top-0 right-0 w-40 bg-white rounded-lg shadow-lg mt-12 -mr-1 block py-1 overflow-hidden" style="display: none;">
-
-                            <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
-                                <button type="button" class="w-full flex justify-start text-red-700" data-kt-datatable-action="delete_selected">
-                                    <span><?= lang('Btw.delete'); ?></span>
-                                </button>
-                            </div>
-                            <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
-                                <button type="button" class="w-full flex justify-start" data-kt-datatable-action="active_selected">
-                                    <span><?= lang('Btw.active'); ?></span>
-                                </button>
-                            </div>
-                            <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
-
-                                <button type="button" class="w-full flex justify-start" data-kt-datatable-action="descative_selected">
-                                    <span><?= lang('Btw.desactive'); ?></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--end::Group actions-->
-
-    </div>
-    <!--end::Card toolbar-->
-
-    </div>
+    <?= $this->include('Themes\Admin\Datatabase\_headerTable'); ?>
 
     <div class="row justify-content-md-center">
 
@@ -110,17 +42,7 @@
         last_checked = event.target;
     }
 
-    function toggleColumn(key) {
-        console.log(key);
-    }
 </script>
-<?php $this->endSection() ?>
-
-
-<?php $this->section('scriptsUrl') ?>
-
-<!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script> -->
-<!-- <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script> -->
 <?php $this->endSection() ?>
 
 <?php $this->section('scripts') ?>
@@ -189,7 +111,10 @@
                                 echo "data: 'select',";
                                 echo "targets: 0,";
                                 echo "orderable: false,";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200'";
+                                echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
+                                if (isset($column['responsivePriority'])) :
+                                    echo "responsivePriority: " . $column['responsivePriority'];
+                                endif;
                                 echo "},";
                                 break;
                             case 'action':
@@ -197,15 +122,24 @@
                                 echo "data: 'action',";
                                 echo "targets: -1,";
                                 echo "orderable: false,";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200'";
+                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+                                if (isset($column['responsivePriority'])) :
+                                    echo "responsivePriority: " . $column['responsivePriority'];
+                                endif;
                                 echo "}";
                                 break;
                             default:
                                 echo "{";
                                 echo "data: '" . $column['name'] . "',";
                                 echo "targets: $i, ";
-                                echo "orderable: false,";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200'";
+                                echo "orderable: " . $column['orderable'] . ",";
+                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+                                if (isset($column['responsivePriority'])) :
+                                    echo "responsivePriority: " . $column['responsivePriority'] . ", ";
+                                endif;
+                                echo "createdCell: function(td, cellData, rowData, row, col) {";
+                                echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/page/edit/' + rowData.id + '/information\")');";
+                                echo "}";
                                 echo "},";
                         }
                         ?>
@@ -360,12 +294,6 @@
                                     data: packets
                                 })
                                 .then(response => {
-                                    // toastr.success(response.data.messages.success);
-                                    console.log('fafafffffffafa');
-                                    // const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
-                                    // headerCheckbox.checked = false;
-
-                                    console.log(response);
                                     var alerts = document.querySelector('#alerts-wrapper');
                                     alerts.insertAdjacentHTML("beforeend", response.data.messagehtml);
                                     Ci4DataTables["kt_table_users-table"].ajax.reload();
@@ -443,8 +371,6 @@
                                 data: packets
                             })
                             .then(response => {
-                                // toastr.success(response.data.messages.success);
-                                console.log('fabrice');
                                 const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
                                 headerCheckbox.checked = false;
                                 Ci4DataTables["kt_table_users-table"].ajax.reload();
@@ -478,6 +404,8 @@
                 toolbarBase.classList.add('hidden');
                 toolbarSelected.classList.remove('hidden');
                 rowSelected.classList.remove('hidden');
+                var firstRow = table.rows[0];
+                firstRow.parentNode.insertBefore(rowSelected, firstRow.rows);
             } else {
                 toolbarBase.classList.remove('hidden');
                 toolbarSelected.classList.add('hidden');

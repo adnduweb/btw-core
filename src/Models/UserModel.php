@@ -30,16 +30,13 @@ class UserModel extends ShieldUsers
 
     protected $columns = [
         ['name' => 'selection'],
-        // ['name' => 'id', 'orderable' => true, 'header' => 'ID', 'order_by_id' => 'DESC'],
-        ['name' => 'username', 'orderable' => true, 'header' => 'Username', 'order_by_username' => 'DESC'],
-        // ['name' => 'first_name', 'orderable' => true, 'header' => 'First name', 'order_by_first_name' => 'DESC'],
-        // ['name' => 'last_name', 'orderable' => true, 'header' => 'Last name', 'order_by_last_name' => 'DESC'],
+        ['name' => 'username', 'orderable' => true, 'header' => 'Username', 'order_by_username' => 'DESC', 'responsivePriority' => 1],
         ['name' => 'secret', 'orderable' => true, 'header' => 'Email', 'order_by_email' => 'DESC'],
         ['name' => 'active', 'orderable' => true, 'header' => 'Active', 'order_by_active' => 'DESC'],
         ['name' => 'created_at', 'orderable' => true, 'header' => 'created_at', 'order_by_email' => 'DESC'],
         ['name' => 'type', 'orderable' => true, 'header' => 'Type', 'order_by_type' => 'DESC'],
         ['name' => '2fa', 'orderable' => true, 'header' => '2FA', 'order_by_2fa' => 'DESC'],
-        ['name' => 'action', 'header' => 'Action', 'order_by_alias' => NULL]
+        ['name' => 'action', 'header' => 'Action', 'order_by_alias' => NULL,  'responsivePriority' => 2]
 
     ];
 
