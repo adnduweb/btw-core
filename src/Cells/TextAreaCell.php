@@ -28,6 +28,8 @@ class TextAreaCell
 
     protected $placeholder;
 
+    protected $ckeditor;
+
     public function renderList($params)
     {
         if (!isset($params['label'])) {
@@ -38,6 +40,7 @@ class TextAreaCell
         $this->xType = (isset($params['xType'])) ? ':type="' . $params['xType'] . '"' : '';
         $this->xModel = (isset($params['xModel'])) ? 'x-model="' . $params['xModel'] . '"' : '';
         $this->xInput = (isset($params['xInput'])) ? '@input="' . $params['xInput'] . '"' : '';
+        $this->ckeditor = (isset($params['ckeditor'])) ? true : false;
 
         $html = $this->getLabel($params);
         $html .= $this->getTextarea($params);
@@ -50,7 +53,8 @@ class TextAreaCell
     {
         $html = "";
         if (isset($params['lang']) && $params['lang'] == true) {
-            $html .= '<label for="lang[' . request()->getLocale() . '][' . $params['name'] . ']" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' </label>';
+            // $html .= '<label for="lang[' . request()->getLocale() . '][' . $params['name'] . ']" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' </label>';
+            $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' </label>';
         } else {
             $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' </label>';
         }
@@ -62,11 +66,18 @@ class TextAreaCell
     {
 
         $html = "";
+        $ckeditor = "";
 
-        if (isset($params['lang']) && $params['lang'] == true) {
-            $html .= '<textarea rows="3" '.$this->placeholder.' name="lang[' . request()->getLocale() . '][' . $params['name'] . ']" id="' . $params['name'] . '" ' .$this->xModel. ' ' .$this->xType. ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900"> ' . $params['value'] . ' </textarea>';
+        if ($this->ckeditor == true) {
+            $html .= view('Btw\Core\Cells\views\ckeditor', ['params' => $params]);
         } else {
-            $html .= '<textarea rows="3" '.$this->placeholder.' name="' . $params['name'] . '" id="' . $params['name'] . '" ' .$this->xModel. ' ' .$this->xType. ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900"> ' . $params['value'] . ' </textarea>';
+
+            if (isset($params['lang']) && $params['lang'] == true) {
+                // $html .= '<textarea rows="3" '.$this->placeholder.' name="lang[' . request()->getLocale() . '][' . $params['name'] . ']" id="' . $params['name'] . '" ' .$this->xModel. ' ' .$this->xType. ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900"> ' . $params['value'] . ' </textarea>';
+                $html .= '<textarea ' . $ckeditor . ' rows="3" ' . $this->placeholder . ' name="' . $params['name'] . '" id="' . $params['name'] . '" ' . $this->xModel . ' ' . $this->xType . ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900"> ' . $params['value'] . ' </textarea>';
+            } else {
+                $html .= '<textarea ' . $ckeditor . ' rows="3" ' . $this->placeholder . ' name="' . $params['name'] . '" id="' . $params['name'] . '" ' . $this->xModel . ' ' . $this->xType . ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900"> ' . $params['value'] . ' </textarea>';
+            }
         }
 
         if (isset($params['description'])) {
@@ -97,5 +108,4 @@ class TextAreaCell
         }
         return $html;
     }
-
 }

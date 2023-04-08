@@ -9,7 +9,7 @@
                 'type' => 'text',
                 'label' => lang('Btw.siteName'),
                 'name' => 'siteName',
-                'value' => old('siteName', setting('Site.siteName')) ,
+                'value' => old('siteName', setting('Site.siteName')),
                 'description' => "Appears in admin, and is available throughout the site."
             ]); ?>
         </div>
@@ -21,7 +21,7 @@
                 'type' => 'text',
                 'label' => lang('Btw.siteOnline'),
                 'name' => 'siteOnline',
-                'value' => '1' ,
+                'value' => '1',
                 'checked' => (old('siteOnline', setting('Site.siteOnline') ?? false)),
                 'description' => "If unchecked, only Superadmin and user groups with permission can access the site."
             ]); ?>

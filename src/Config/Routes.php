@@ -114,10 +114,11 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
 
 
 // Clear cache
-// Route::get('/clear-cache', function () {
-//     Artisan::call('cache:clear');
-//     return "Cache is cleared";
-// })->middleware(['auth', 'admin']);
+$routes->get('/clear-cache', static function() {
+    command('Btwcache:clear');
+    service('cache')->delete('twig');
+    return "Cache is cleared";
+}, ['filter' => 'session']);
 
 // // Optimize
 // Route::get('/optimize', function () {

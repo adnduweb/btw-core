@@ -230,6 +230,10 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
 
         htmx.on("htmx:afterSwap", function (evt) {
             // console.log(window);
+        });
+
+        htmx.on("htmx:afterRequest", function (evt) {
+           // console.log(window);
         })
     },
 

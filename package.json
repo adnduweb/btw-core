@@ -18,6 +18,8 @@
         "@alpinejs/focus": "^3.12.0",
         "@alpinejs/morph": "^3.12.0",
         "@alpinejs/persist": "^3.11.1",
+        "@ryangjchandler/alpine-clipboard": "^2.2.0",
+        "@ryangjchandler/alpine-tooltip": "^1.2.0",
         "@sweetalert2/theme-dark": "^5.0.15",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/forms": "^0.5.3",
@@ -32,6 +34,7 @@
         "jquery": "^3.6.4",
         "sweetalert2": "^11.4.8",
         "tinymce": "^6.4.0",
+        "tippy.js": "^6.3.7",
         "tw-elements": "^1.0.0-alpha13",
         "vite-plugin-live-reload": "^3.0.1",
         "zxcvbn": "^4.4.2"

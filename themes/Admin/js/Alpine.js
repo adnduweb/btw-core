@@ -2,10 +2,19 @@ import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 import focus from '@alpinejs/focus'
 import morph from '@alpinejs/morph'
+import Clipboard from "@ryangjchandler/alpine-clipboard"
+import Tooltip from "@ryangjchandler/alpine-tooltip";
+
 window.Alpine = Alpine
 Alpine.plugin(focus)
 Alpine.plugin(morph)
 Alpine.plugin(persist)
+Alpine.plugin(Tooltip);
+Alpine.plugin(Clipboard.configure({
+    onCopy: () => {
+        console.log('Copied!')
+    }
+}))
 
 //Prefix alpine special attributes to pass W3C validation
  // Alpine.prefix('data-x-')

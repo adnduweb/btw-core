@@ -6,7 +6,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Config\View;
 
 
-if (! function_exists('view_fragment')) {
+if (!function_exists('view_fragment')) {
     /**
      * Grabs the current RendererInterface-compatible class
      * and tells it to render the specified view fragments.
@@ -369,5 +369,53 @@ if (!function_exists('getUser')) {
         $user = model(UserModel::class)->find($id);
 
         return  $user ?? 'system';
+    }
+}
+
+
+if (!function_exists('secure_random_string')) {
+    function secure_random_string($length)
+    {
+        $random_string = '';
+        for ($i = 0; $i < $length; $i++) {
+            $number = random_int(0, 36);
+            $character = base_convert($number, 10, 36);
+            $random_string .= $character;
+        }
+        return $random_string;
+    }
+}
+
+
+// Mask email address with (*) stars
+// Example: onl**************@g****.com
+
+if (!function_exists('hideEmailAddressFull')) {
+
+    function hideEmailAddressFull($email)
+    {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            list($first, $last) = explode('@', $email);
+            $first = str_replace(substr($first, '3'), str_repeat('*', strlen($first) - 3), $first);
+            $last = explode('.', $last);
+            $last_domain = str_replace(substr($last['0'], '1'), str_repeat('*', strlen($last['0']) - 1), $last['0']);
+            $hideEmailAddress = $first . '@' . $last_domain . '.' . $last['1'];
+            return $hideEmailAddress;
+        }
+    }
+}
+
+
+// Mask email address with (*) stars
+// Example: onlinewe********@gmail.com
+
+if (!function_exists('hideEmailAddress')) {
+
+    function hideEmailAddress($email)
+    {
+        $em   = explode("@", $email);
+        $name = implode(array_slice($em, 0, count($em) - 1), '@');
+        $len  = floor(strlen($name) / 2);
+        return substr($name, 0, $len) . str_repeat('*', $len) . "@" . end($em);
     }
 }

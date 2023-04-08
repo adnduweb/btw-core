@@ -63,6 +63,12 @@ https://github.com/hermawanramadhan/CodeIgniter4-DataTables
 composer require michalsn/codeigniter4-uuid
 https://blog.benoitblanchon.fr/django-htmx-messages-framework/
 https://til.jacklinke.com/using-htmx-and-server-side-datatables-net-together-in-a-django-project
+https://www.youtube.com/watch?v=Q9eynRwc1CA
+https://blog.benoitblanchon.fr/django-htmx-toasts/
+https://windstatic.com/
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604
+https://stackoverflow.com/questions/75424519/sending-a-value-from-jquery-to-alpinejs
+https://codepen.io/yuxufm/pen/YzLoxvE => add/delete clone
+https://stackoverflow.com/questions/69197458/dynamically-add-new-rows-to-the-table => pareil mais en mieux

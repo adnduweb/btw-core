@@ -16,6 +16,9 @@ import Datatable from 'datatables.net';
 window.datatable = Datatable;
 import 'datatables.net-responsive'
 
+// import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
@@ -62,9 +65,6 @@ window.axios.interceptors.response.use(function (response) {
 //
 // Datatables.net Initialization
 //
-
-console.log('fdgsdfgsdfgsd');
-console.log(_LANG_.ShowingNoRecords);
 
 var defaults = {
     "language": {

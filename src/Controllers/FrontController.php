@@ -45,6 +45,15 @@ class FrontController extends BaseController
 
     protected $lang;
 
+    protected $twig;
+
+    /**
+     * The theme to use.
+     *
+     * @var string
+     */
+    protected $theme = 'App';
+
     /**
      * Constructor.
      */
@@ -53,6 +62,21 @@ class FrontController extends BaseController
         $this->helpers = array_merge($this->helpers, ['assets', 'setting', 'form']);
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
+
+
+        $config = [
+            'paths' => [ROOTPATH . 'themes/App', APPPATH  . 'Modules/btw-front/src/Views/Front'],
+            'cache' => WRITEPATH . '/cache/twig',
+            'debug' => true,
+            'functions'      => ['asset_link', 'setting', 'form']
+        ];
+
+        // print_r(theme()->path($this->theme));
+        // exit;
+       
+
+        $this->twig = new \Btw\Core\Libraries\Twig($config);
+
 
         $this->github = service('github');
 

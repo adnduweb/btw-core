@@ -56,6 +56,10 @@ return [
     'delete_all' => 'Tout supprimer',   
     'delete_selected' => 'Supprimer la sélection',   
     'systemInfos' => 'Informations',
-    'back' => 'Retour'
+    'back' => 'Retour', 
+    'InfomationPage' => 'Information sur la page', 
+    'intitulePage' => 'titre', 
+    'general' => 'Général', 
+    'construction' => 'Construction'
 ];
 

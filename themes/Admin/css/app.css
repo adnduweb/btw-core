@@ -17,6 +17,11 @@
   display: none;
 }
 
+
+.icon-size-6 svg{ 
+  @apply h-[1.075rem] w-[1.075rem]
+}
+
 /* Column Width */
 .checkcolumn-table td:nth-child(1),
 .checkcolumn-table th:nth-child(1) {

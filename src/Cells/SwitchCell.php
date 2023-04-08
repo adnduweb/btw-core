@@ -47,7 +47,7 @@ class SwitchCell
         $this->xNotData = (isset($params['xNotData'])) ? '' : 'x-data="{' . $this->xOn . ': ' . $this->checkedNew . '}"';
 
         $html .= '<div class="flex items-center ' . $this->class . '">';
-        $html .= '<button type="button" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-400" ' . $this->xNotData . '  role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \'bg-slate-400\': ' . $this->xOn . ',\'bg-gray-200\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' >';
+        $html .= '<button type="button" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-400" ' . $this->xNotData . '  role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \'bg-blue-700 dark:bg-slate-700\': ' . $this->xOn . ',\'bg-gray-800\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' >';
         $html .= '<span class="sr-only">Use setting</span>';
         $html .= $this->getInput($params);
         $html .= '<span class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \'translate-x-5\': ' . $this->xOn . ', \'translate-x-0\': !(' . $this->xOn . ') }">';
@@ -78,7 +78,7 @@ class SwitchCell
     public function getLabel($params)
     {
         $html = "";
-        $html .='<label @click="$refs.toggle.click(); $refs.toggle.focus()" :id="$id(\'toggle-label\')" class="text-gray-900 font-medium ml-3">';
+        $html .='<label @click="$refs.toggle.click(); $refs.toggle.focus()" :id="$id(\'toggle-label\')" class="text-gray-900 dark:text-white font-medium ml-3">';
         $html .= $params['label'];
         $html .= '</label>';
 
