@@ -1,6 +1,6 @@
 <div class="flex items-center">
     <div class="flex-shrink-0 h-10 w-10">
-        <a class="text-blue-700" href="<?= $row->getUrlEditAdmin(); ?>/information">
+        <a class="text-blue-700" href="<?= $row->getUrlEditAdmin(); ?>">
             <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-500">
                 <span class="font-medium leading-none text-white"><?= $row->getNameInitial(); ?></span> 
             </span>

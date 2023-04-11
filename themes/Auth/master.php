@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="en"><head>
-	<?= $viewMeta->render('meta') ?>
-
     <?= $viewMeta->render('title') ?>
-
+    <?= csrf_meta() ?>
+    <?= $viewMeta->render('meta') ?>
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
     <?= $viewJavascript->renderLangJson('admin/js/language/'.service('request')->getLocale().'.json'); ?>

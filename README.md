@@ -25,6 +25,7 @@ Installer le package
     php spark btw:install -- continue
     php spark vite:init
     npm install
+    npx tailwindcss init -p
 
 # Lancement de l'application
     php spark serve

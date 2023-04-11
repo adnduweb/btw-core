@@ -2,7 +2,7 @@
     <!-- Trigger -->
     <span x-on:click="open = true">
         <button type="button" class="text-white p-1 rounded text-red-600 hover:text-red-700 dark:text-gray-200 dark:hover:text-gray-800 disabled:opacity-50">
-            <?= theme()->getSVG('duotune/general/gen027.svg', 'svg-icon'); ?>
+            <?= theme()->getSVG('duotune/general/gen027.svg', 'svg-icon text-gray-800 dark:text-gray-200 hover:text-red-600 dark:hover:text-red-600'); ?>
         </button>
     </span>
 
