@@ -10,6 +10,13 @@ Ajouter dans le fichier composer.json à la racine de votre projet.
     composer config minimum-stability dev
     composer config prefer-stable true
 
+Mofification SQL si besoin
+
+    Changez le moteur de stockage utilisé par défaut pour que les nouvelles tables soient toujours créées correctement:
+        set GLOBAL storage_engine='InnoDb'; 
+    Pour MySQL 5.6 et versions ultérieures, utilisez les éléments suivants:
+        SET GLOBAL default_storage_engine = 'InnoDB';
+
 Installer le package
 
     composer require adnduweb/btw-core:dev-develop
