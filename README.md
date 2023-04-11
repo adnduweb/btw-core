@@ -6,8 +6,8 @@ module core Ci4
     composer create-project codeigniter4/appstarter my-app
 
 Ajouter dans le fichier composer.json à la racine de votre projet.
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    composer config minimum-stability dev
+    composer config prefer-stable true
 
 Installer le package
 
@@ -17,30 +17,6 @@ Installer le package
     php spark btw:install -- continue
     php spark vite:init
     npm install
-
-# Installation Tailwind css
-    npm install -D tailwindcss postcss autoprefixer
-    npx tailwindcss init -p
-    npm install flowbite && npm install tw-elements && npm install -D @tailwindcss/typography && npm install vite-plugin-live-reload 
-
-# Installation Alpine js
-    npm i alpinejs
-    npm install @alpinejs/persist
-
-# Installation Htmx js
-    npm i htmx.org
-
-# Modification du Chargement des fichiers
-Ajouter dans le fichier "vite.config.js" à la racine de votre projet
-
-    import liveReload from 'vite-plugin-live-reload'
-    plugins: [
-            ...
-			liveReload([__dirname + '/**/*.php', __dirname + '/app/Modules/**/*.php', , __dirname + '/vendor/adnduweb/btw-core/src/**/*.php'])
-            ...
-		],
-Modifier le fichier .env 
-    # security.csrfProtection = 'cookie' par security.csrfProtection = 'session'
 
 # Lancement de l'application
     php spark serve
