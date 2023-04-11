@@ -68,7 +68,7 @@ class Activitys
         }
 
         // Add common data
-        $audit['user_id']    = Auth()->User()->id;
+        $audit['user_id']    = Auth()->User()->id ?? null;
         $audit['created_at'] = date('Y-m-d H:i:s');
 
         $this->queue[] = $audit;

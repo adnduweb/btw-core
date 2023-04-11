@@ -45,6 +45,7 @@ class Registrar
                 //     'csrf' => ['except' => ['api/record/[0-9]+']],
                 // ],
                 'before' => [
+                    'csrf' => ['except' => ['api/record/[0-9]+']],
                     // 'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
                 ],
                 'after' => array_merge($props['globals']['after'], [

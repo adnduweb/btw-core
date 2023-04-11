@@ -15,7 +15,7 @@
 
 </head>
 
-<body hx-ext="ajax-header" hx-history="true" hx-headers='{"<?= csrf_token() ?>": "<?= csrf_hash() ?>", "X-Theme": "admin"}' class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
+<body hx-ext="ajax-header" hx-history="true" hx-headers='{"X-Theme": "admin"}' class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
 
     <!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">

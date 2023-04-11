@@ -13,7 +13,7 @@ namespace Btw\Core\Commands;
 
 use Btw\Core\Commands\Install\Publisher;
 use Btw\Core\Models\UserModel;
-use Btw\Core\Entity\User;
+use Btw\Core\Entities\User;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 

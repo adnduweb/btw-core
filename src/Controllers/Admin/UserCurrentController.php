@@ -395,6 +395,8 @@ class UserCurrentController extends AdminController
     public function changeLangue()
     {
 
+        // print_r(request()->getUri());exit;
+
         $context = 'user:' . user_id();
         service('settings')->set('Btw.language_bo', $this->request->getGet('changeLanguageBO'), $context);
 

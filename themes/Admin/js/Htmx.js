@@ -15,7 +15,7 @@ htmx.onLoad(function(content) {
 
 // add CSRFToken to HTMX headers
 document.body.addEventListener('htmx:configRequest', (event) => {
-    event.detail.headers['X-CSRFToken'] = document.querySelector('[name=X-CSRF-TOKEN]').content;
+    event.detail.headers['X-CSRF-TOKEN'] = document.querySelector('[name=X-CSRF-TOKEN]').content;
 })
 
 // if an htmx request returns 204 and contains a custom statusText,

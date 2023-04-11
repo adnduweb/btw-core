@@ -19,6 +19,10 @@ import 'datatables.net-responsive'
 // import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 
+// If you are using JavaScript/ECMAScript modules:
+import Dropzone from "dropzone";
+window.dropzone = Dropzone;
+
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',

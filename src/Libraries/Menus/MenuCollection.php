@@ -149,6 +149,20 @@ class MenuCollection extends MenuItem
         return url_is($url . '*');
     }
 
+     /**
+     * Is this collection "active"?
+     * Used in default admin theme to determine
+     * if the subnavs should be open or flyouts.
+     */
+    public function isActiveUrl(): bool
+    {
+        // echo $this->title;
+        // print_r(request()->getUri()); exit;
+        $url = ADMIN_AREA . '/' . $this->name;
+
+        return url_is($url . '*');
+    }
+
     /**
      * Sorts the items by the weight,
      * ensuring that bigger weights

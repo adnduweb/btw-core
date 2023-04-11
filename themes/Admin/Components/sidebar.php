@@ -18,7 +18,7 @@
                         <img src="<?= base_url() . 'logo-adn.png'; ?>" alt="Ticksify" class=" w-full">
                     </a>
                 </div>
-                <div class="mt-5 flex-1 h-0 overflow-y-auto">
+                <div class="mt-5 flex-1 h-0 overflow-y-auto" x-data="{ expanded: false }">
                     <nav class="px-2 py-4">
                         <a href="<?= route_to('dashboard'); ?>" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [route_to('dashboard')])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?>">
                             <?= theme()->getSVG('duotune/graphs/gra008.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-gray-800 group-hover:text-slate-300', true); ?>
@@ -34,21 +34,21 @@
                                 <div class="mt-10">
                                     <nav class="nav flex-column px-0">
                                         <?php if ($collection->isCollapsible()) : ?>
-                                            <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider"> <span><?= $collection->title ?></p>
+                                            <p  @click="expanded = ! expanded" class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider"> <span><?= $collection->title ?></p>
 
-                                            <div class="mt-2 space-y-1  <?= $collection->isActive() ? 'active' : 'flyout' ?>">
+                                            <div x-show="expanded" x-collapse class="mt-2 space-y-1  <?= $collection->isActive() ? 'active' : 'flyout' ?>">
+                                        <?php endif ?>
+
+
+                                        <?php foreach ($collection->items() as $item) : ?>
+                                            <?php if ($item->userCanSee()) : ?>
+                                                <a class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
+                                                    <?= $item->icon ?>
+                                                    <span><?= $item->title ?></span>
+                                                </a>
                                             <?php endif ?>
-
-
-                                            <?php foreach ($collection->items() as $item) : ?>
-                                                <?php if ($item->userCanSee()) : ?>
-                                                    <a class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
-                                                        <?= $item->icon ?>
-                                                        <span><?= $item->title ?></span>
-                                                    </a>
-                                                <?php endif ?>
-                                            <?php endforeach ?>
-                                            <?php if ($collection->isCollapsible()) : ?>
+                                        <?php endforeach ?>
+                                        <?php if ($collection->isCollapsible()) : ?>
                                             </div>
                                         <?php endif ?>
                                     </nav>
@@ -72,7 +72,7 @@
                     <img src="<?= base_url() . 'logo-adn.png'; ?>" alt="Ticksify" class="h-15 w-full dark:grayscale grayscale-0">
                 </a>
             </div>
-            <div class="flex-1 flex flex-col overflow-y-auto dark:bg-slate-800 bg-white">
+            <div class="flex-1 flex flex-col overflow-y-auto dark:bg-slate-800 bg-white" >
                 <nav class="flex-1 px-2 py-4 ">
                     <a href="<?= route_to('dashboard'); ?>" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [route_to('dashboard')])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?>">
                         <?= theme()->getSVG('duotune/graphs/gra008.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-gray-800 group-hover:text-slate-300', true); ?>
@@ -87,11 +87,11 @@
                         <?php foreach ($menu->collections() as $collection) : ?>
 
                             <div class="mt-10">
-                                <nav class="nav flex-column px-0">
+                                <nav class="nav flex-column px-0" x-data="{ expanded: false }">
                                     <?php if ($collection->isCollapsible()) : ?>
-                                        <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider"> <span><?= $collection->title ?></p>
+                                        <p @click="expanded = ! expanded" class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider cursor-pointer"> <span><?= $collection->title ?></p>
 
-                                        <div class="mt-2 space-y-1  <?= $collection->isActive() ? 'active' : 'flyout' ?>">
+                                        <div <?= $collection->isActiveUrl() ? 'x-show="expanded" x-collapse' : 'flyout' ?>  class="mt-2 space-y-1  <?= $collection->isActive() ? 'active' : 'flyout' ?>">
                                         <?php endif ?>
 
 

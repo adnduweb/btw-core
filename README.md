@@ -66,9 +66,11 @@ https://til.jacklinke.com/using-htmx-and-server-side-datatables-net-together-in-
 https://www.youtube.com/watch?v=Q9eynRwc1CA
 https://blog.benoitblanchon.fr/django-htmx-toasts/
 https://windstatic.com/
+https://vemto.app/blog/how-to-create-an-image-upload-viewer-with-alpinejs
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604
 https://stackoverflow.com/questions/75424519/sending-a-value-from-jquery-to-alpinejs
 https://codepen.io/yuxufm/pen/YzLoxvE => add/delete clone
 https://stackoverflow.com/questions/69197458/dynamically-add-new-rows-to-the-table => pareil mais en mieux
+https://pastebin.com/kupzmyx3 -> CRSF

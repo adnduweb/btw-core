@@ -49,7 +49,6 @@ class Javascriptdata
      */
     public function render(): string
     {
-        //  print_r($this->base);
         $html = "";
         $output = "";
         $html .= ' var doudou = {';

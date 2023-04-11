@@ -17,7 +17,7 @@
         <!--begin::Toolbar-->
         <div class="d-flex justify-content-end" data-kt-datatable-toolbar="base">
 
-
+        <?= (isset($add)) ? $this->include($include) : ''; ?>
         </div>
         <!--end::Toolbar-->
 
