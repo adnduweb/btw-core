@@ -250,6 +250,10 @@ class Install extends BaseCommand
         $publisher->copyDirectory(BTPATH . '../package.json', APPPATH . '../package.json');
         $publisher->copyDirectory(BTPATH . '../vite.config.js', APPPATH . '../vite.config.js');
         $publisher->copyDirectory(BTPATH . '../tailwind.config.js', APPPATH . '../tailwind.config.js');
+
+        //logo
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/logo-adn.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/logo-adn-grey.png');
     }
 
     private function setEncryptionKey()

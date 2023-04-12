@@ -56,5 +56,5 @@ class Themes
      * --------------------------------------------------------------------------
      *
      */
-    public $collectionsMedias =  __DIR__ . '/../../resources/medias/';
+    public $collectionsMedias =  __DIR__ . '/../../themes/medias/';
 }

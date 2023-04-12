@@ -69,7 +69,7 @@
         <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 dark:border-gray-800">
             <div class="flex h-16 flex-shrink-0 px-4 dark:bg-slate-800 bg-white">
                 <a href="<?= site_url(ADMIN_AREA); ?>" class="flex items-center">
-                    <img src="<?= base_url() . 'logo-adn.png'; ?>" alt="Ticksify" class="h-15 w-full dark:grayscale grayscale-0">
+                    <img src="<?= base_url() . 'logo-adn.png'; ?>" alt="ADN du Web" class="h-15 w-full dark:grayscale grayscale-0">
                 </a>
             </div>
             <div class="flex-1 flex flex-col overflow-y-auto dark:bg-slate-800 bg-white" >
