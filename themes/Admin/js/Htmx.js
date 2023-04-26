@@ -44,6 +44,22 @@ htmx.defineExtension('alpine-morph', {
     }
 });
 
+htmx.defineExtension('restored', {
+    onEvent : function(name, evt) {
+        if (name === 'htmx:restored'){
+            var restoredElts = evt.detail.document.querySelectorAll(
+                "[hx-trigger='restored'],[data-hx-trigger='restored']"
+            );
+            // need a better way to do this, would prefer to just trigger from evt.detail.elt
+            var foundElt = Array.from(restoredElts).find(
+                (x) => (x.outerHTML === evt.detail.elt.outerHTML)
+            );
+            var restoredEvent = evt.detail.triggerEvent(foundElt, 'restored');
+        }
+        return;
+    }
+})
+
 htmx.defineExtension('json-enc', {
     onEvent: function (name, evt) {
         if (name === "htmx:configRequest") {
@@ -106,24 +122,6 @@ htmx.defineExtension('debug', {
         }
     });
 })();
-
-
-htmx.defineExtension('alpine-morph', {
-    isInlineSwap: function (swapStyle) {
-        return swapStyle === 'morph';
-    },
-    handleSwap: function (swapStyle, target, fragment) {
-        if (swapStyle === 'morph') {
-            if (fragment.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-                Alpine.morph(target, fragment.firstElementChild);
-                return [target];
-            } else {
-                Alpine.morph(target, fragment.outerHTML);
-                return [target];
-            }
-        }
-    }
-});
 
 
 //https://gist.github.com/kongondo/515b80d15f8034edeb686d46752df4ec
@@ -273,3 +271,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         UpdateProcessWireFrontendContentUsingHtmxDemo.listenToHTMXRequests()
     }
 })
+
+// htmx.logger = function(elt, event, data) {
+//     if(console) {
+//         console.log(event, elt, data);
+//     }
+// }

@@ -3,7 +3,7 @@
 /**
  * This file is part of Btw\Core.
  *
- * (c) Lonnie Ezell <lonnieje@gmail.com>
+ * (c) Fabrice Loru <fabrice@adnduweb.com>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -35,17 +35,17 @@ class GeneralSettingsController extends AdminController
     protected $viewPrefix = 'Btw\Core\Views\Admin\settings\\';
 
     protected $rememberOptions = [
-        '1 hour'   => 1 * HOUR,
-        '4 hours'  => 4 * HOUR,
-        '8 hours'  => 8 * HOUR,
+        '1 hour' => 1 * HOUR,
+        '4 hours' => 4 * HOUR,
+        '8 hours' => 8 * HOUR,
         '25 hours' => 24 * HOUR,
-        '1 week'   => 1 * WEEK,
-        '2 weeks'  => 2 * WEEK,
-        '3 weeks'  => 3 * WEEK,
-        '1 month'  => 1 * MONTH,
+        '1 week' => 1 * WEEK,
+        '2 weeks' => 2 * WEEK,
+        '3 weeks' => 3 * WEEK,
+        '1 month' => 1 * MONTH,
         '2 months' => 2 * MONTH,
         '6 months' => 6 * MONTH,
-        '1 year'   => 12 * MONTH,
+        '1 year' => 12 * MONTH,
     ];
 
     public function __construct()
@@ -60,7 +60,12 @@ class GeneralSettingsController extends AdminController
     public function sectionGeneral()
     {
         if (!auth()->user()->can('admin.settings')) {
-            return redirect()->to(ADMIN_AREA)->with('error', lang('Btw.notAuthorized'));
+            if ($this->request->isHtmx()) {
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+            } else {
+                alertHtmx('danger', lang('Btw.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+            }
         }
 
         $timezoneAreas = [];
@@ -78,20 +83,20 @@ class GeneralSettingsController extends AdminController
             }
         }
 
-        $currentTZ     = setting('App.appTimezone');
+        $currentTZ = setting('App.appTimezone');
         $currentTZArea = strpos($currentTZ, '/') === false
             ? $currentTZ
             : substr($currentTZ, 0, strpos($currentTZ, '/'));
 
         if (!$this->request->is('post')) {
             return $this->render($this->viewPrefix . 'settings_general', [
-                'timezones'       => $timezoneAreas,
-                'currentTZArea'   => $currentTZArea,
+                'timezones' => $timezoneAreas,
+                'currentTZArea' => $currentTZArea,
                 'timezoneOptions' => $this->getTimezones($currentTZArea),
-                'dateFormat'      => setting('App.dateFormat') ?: 'M j, Y',
-                'timeFormat'      => setting('App.timeFormat') ?: 'g:i A',
+                'dateFormat' => setting('App.dateFormat') ?: 'M j, Y',
+                'timeFormat' => setting('App.timeFormat') ?: 'g:i A',
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
 
@@ -102,19 +107,21 @@ class GeneralSettingsController extends AdminController
                 $validation = service('validation');
 
                 $validation->setRules([
-                    'siteName'   => 'required|string'
+                    'siteName' => 'required|string'
                 ]);
 
                 if (!$validation->run($requestJson)) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [
                         'validation' => $validation
-                    ]) . alertHtmx('danger', 'Form validation failed.');
+                    ]);
                 }
 
                 setting('Site.siteName', $requestJson['siteName']);
                 setting('Site.siteOnline', $requestJson['siteOnline'] ?? 0);
-               
-                return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', []) . alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+
+                $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
+                return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', []);
 
                 break;
             case 'dateandtime':
@@ -123,15 +130,16 @@ class GeneralSettingsController extends AdminController
                 $validation = service('validation');
 
                 $validation->setRules([
-                    'timezone'   => 'required|string',
+                    'timezone' => 'required|string',
                     'dateFormat' => 'required|string',
                     'timeFormat' => 'required|string',
                 ]);
 
                 if (!$validation->run($requestJson)) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime', [
                         'validation' => $validation
-                    ]) . alertHtmx('danger', 'Form validation failed.');
+                    ]);
                 }
 
                 setting('App.appTimezone', $requestJson['timezone']);
@@ -153,19 +161,19 @@ class GeneralSettingsController extends AdminController
                     }
                 }
 
-                $currentTZ     = setting('App.appTimezone');
+                $currentTZ = setting('App.appTimezone');
                 $currentTZArea = strpos($currentTZ, '/') === false
                     ? $currentTZ
                     : substr($currentTZ, 0, strpos($currentTZ, '/'));
 
-
+                $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime', [
-                    'timezones'       => $timezoneAreas,
-                    'currentTZArea'   => $currentTZArea,
+                    'timezones' => $timezoneAreas,
+                    'currentTZArea' => $currentTZArea,
                     'timezoneOptions' => $this->getTimezones($currentTZArea),
-                    'dateFormat'      => setting('App.dateFormat') ?: 'M j, Y',
-                    'timeFormat'      => setting('App.timeFormat') ?: 'g:i A',
-                ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+                    'dateFormat' => setting('App.dateFormat') ?: 'M j, Y',
+                    'timeFormat' => setting('App.timeFormat') ?: 'g:i A',
+                ]);
 
                 break;
 
@@ -185,16 +193,16 @@ class GeneralSettingsController extends AdminController
             ? $this->request->getVar('timezoneArea')
             : $area;
         $ids = [
-            'Africa'     => DateTimeZone::AFRICA,
-            'America'    => DateTimeZone::AMERICA,
+            'Africa' => DateTimeZone::AFRICA,
+            'America' => DateTimeZone::AMERICA,
             'Antarctica' => DateTimeZone::ANTARCTICA,
-            'Arctic'     => DateTimeZone::ARCTIC,
-            'Asia'       => DateTimeZone::ASIA,
-            'Atlantic'   => DateTimeZone::ATLANTIC,
-            'Australia'  => DateTimeZone::AUSTRALIA,
-            'Europe'     => DateTimeZone::EUROPE,
-            'Indian'     => DateTimeZone::INDIAN,
-            'Pacific'    => DateTimeZone::PACIFIC,
+            'Arctic' => DateTimeZone::ARCTIC,
+            'Asia' => DateTimeZone::ASIA,
+            'Atlantic' => DateTimeZone::ATLANTIC,
+            'Australia' => DateTimeZone::AUSTRALIA,
+            'Europe' => DateTimeZone::EUROPE,
+            'Indian' => DateTimeZone::INDIAN,
+            'Pacific' => DateTimeZone::PACIFIC,
         ];
 
         $options = [];
@@ -203,8 +211,8 @@ class GeneralSettingsController extends AdminController
             $options[] = ['UTC' => 'UTC'];
         } else {
             foreach (timezone_identifiers_list($ids[$area]) as $timezone) {
-                $formattedTimezone  = str_replace('_', ' ', $timezone);
-                $formattedTimezone  = str_replace($area . '/', '', $formattedTimezone);
+                $formattedTimezone = str_replace('_', ' ', $timezone);
+                $formattedTimezone = str_replace($area . '/', '', $formattedTimezone);
                 $options[$timezone] = $formattedTimezone;
             }
         }
@@ -212,7 +220,7 @@ class GeneralSettingsController extends AdminController
         // print_r( $options); exit;
 
         return view($this->viewPrefix . '_timezones', [
-            'options'    => $options,
+            'options' => $options,
             'selectedTZ' => setting('App.appTimezone'),
         ]);
     }
@@ -222,15 +230,23 @@ class GeneralSettingsController extends AdminController
      */
     public function sectionRegistrationLogin()
     {
+        if (!auth()->user()->can('admin.settings')) {
+            if ($this->request->isHtmx()) {
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+            } else {
+                alertHtmx('danger', lang('Btw.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+            }
+        }
 
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'settings_registration', [
                 'rememberOptions' => $this->rememberOptions,
-                'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-                'groups'          => setting('AuthGroups.groups'),
+                'defaultGroup' => setting('AuthGroups.defaultGroup'),
+                'groups' => setting('AuthGroups.groups'),
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
         switch ($this->request->getVar('section')) {
@@ -239,29 +255,32 @@ class GeneralSettingsController extends AdminController
                 $validation = service('validation');
 
                 $validation->setRules([
-                    'defaultGroup'          => 'required|string',
+                    'defaultGroup' => 'required|string',
                 ]);
 
                 if (!$validation->run($requestJson)) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_registration', [
                         'validation' => $validation
-                    ]) . alertHtmx('danger', 'Form validation failed.');;
+                    ]);
+                    ;
                 }
 
                 setting('Auth.allowRegistration', $requestJson['allowRegistration'] ?? false);
                 Setting('AuthGroups.defaultGroup', $requestJson['defaultGroup']);
 
                 // Actions
-                $actions             = setting('Auth.actions');
+                $actions = setting('Auth.actions');
                 $actions['register'] = $requestJson['emailActivation'] ?? null;
                 setting('Auth.actions', $actions);
 
+                $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
                 $this->response->triggerClientEvent('updateSettingsRegistration');
 
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_registration', [
                     'groups' => setting('AuthGroups.groups'),
-                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-                ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+                    'defaultGroup' => setting('AuthGroups.defaultGroup'),
+                ]);
 
                 break;
 
@@ -270,21 +289,22 @@ class GeneralSettingsController extends AdminController
                 $requestJson = $this->request->getJSON(true);
 
                 // Remember Me
-                $sessionConfig                     = setting('Auth.sessionConfig');
+                $sessionConfig = setting('Auth.sessionConfig');
                 $sessionConfig['allowRemembering'] = $requestJson['allowRemember'] ?? false;
-                $sessionConfig['rememberLength']   = $requestJson['rememberLength'];
+                $sessionConfig['rememberLength'] = $requestJson['rememberLength'];
                 setting('Auth.sessionConfig', $sessionConfig);
 
                 // Actions
-                $actions             = setting('Auth.actions');
-                $actions['login']    = $requestJson['email2FA'] ?? null;
+                $actions = setting('Auth.actions');
+                $actions['login'] = $requestJson['email2FA'] ?? null;
                 setting('Auth.actions', $actions);
 
+                $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_login', [
                     'rememberOptions' => $this->rememberOptions,
                     'groups' => setting('AuthGroups.groups'),
-                    'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-                ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+                    'defaultGroup' => setting('AuthGroups.defaultGroup'),
+                ]);
 
                 break;
             default:
@@ -299,11 +319,20 @@ class GeneralSettingsController extends AdminController
     public function sectionPasswords()
     {
 
+        if (!auth()->user()->can('admin.settings')) {
+            if ($this->request->isHtmx()) {
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+            } else {
+                alertHtmx('danger', lang('Btw.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+            }
+        }
+
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'settings_passwords', [
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
 
@@ -315,18 +344,21 @@ class GeneralSettingsController extends AdminController
         ]);
 
         if (!$validation->run($requestJson)) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
             return view('Btw\Core\Views\Admin\users\form_cell_password', [
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Form validation failed.');;
+            ]);
+            ;
         }
 
-        setting('Auth.minimumPasswordLength', (int)$requestJson['minimumPasswordLength']);
+        setting('Auth.minimumPasswordLength', (int) $requestJson['minimumPasswordLength']);
         setting('Auth.passwordValidators', $requestJson['validators']);
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_password', [
             'groups' => setting('AuthGroups.groups'),
-            'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+            'defaultGroup' => setting('AuthGroups.defaultGroup'),
+        ]);
     }
 
 
@@ -336,11 +368,20 @@ class GeneralSettingsController extends AdminController
     public function sectionAvatar()
     {
 
+        if (!auth()->user()->can('admin.settings')) {
+            if ($this->request->isHtmx()) {
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+            } else {
+                alertHtmx('danger', lang('Btw.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+            }
+        }
+
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'settings_avatar', [
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
 
@@ -353,22 +394,33 @@ class GeneralSettingsController extends AdminController
         setting('Users.avatarNameBasis', $requestJson['avatarNameBasis']);
 
         $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
+        $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
 
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_avatar', [
             'groups' => setting('AuthGroups.groups'),
-            'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+            'defaultGroup' => setting('AuthGroups.defaultGroup'),
+        ]);
     }
 
     public function sectionEmail()
     {
+
+        if (!auth()->user()->can('admin.settings')) {
+            if ($this->request->isHtmx()) {
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+            } else {
+                alertHtmx('danger', lang('Btw.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+            }
+        }
+
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'settings_email', [
-                'config'    => config('Email'),
+                'config' => config('Email'),
                 'activeTab' => setting('Email.protocol') ?? 'smtp',
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
 
@@ -376,26 +428,27 @@ class GeneralSettingsController extends AdminController
         $validation = service('validation');
 
         $validation->setRules([
-            'fromName'      => 'required|string|min_length[2]',
-            'fromEmail'     => 'required|valid_email',
-            'protocol'      => 'required|in_list[mail,sendmail,smtp]',
-            'mailPath'      => 'permit_empty|string',
-            'SMTPHost'      => 'permit_empty|string',
-            'SMTPPort'      => 'permit_empty|in_list[25,587,465,2525,other]',
+            'fromName' => 'required|string|min_length[2]',
+            'fromEmail' => 'required|valid_email',
+            'protocol' => 'required|in_list[mail,sendmail,smtp]',
+            'mailPath' => 'permit_empty|string',
+            'SMTPHost' => 'permit_empty|string',
+            'SMTPPort' => 'permit_empty|in_list[25,587,465,2525,other]',
             'SMTPPortOther' => 'permit_empty|string',
-            'SMTPUser'      => 'permit_empty|string',
-            'SMTPPass'      => 'permit_empty|string',
-            'SMTPCrypto'    => 'permit_empty|in_list[ssl,tls]',
-            'SMTPTimeout'   => 'permit_empty|integer|greater_than_equal_to[0]',
+            'SMTPUser' => 'permit_empty|string',
+            'SMTPPass' => 'permit_empty|string',
+            'SMTPCrypto' => 'permit_empty|in_list[ssl,tls]',
+            'SMTPTimeout' => 'permit_empty|integer|greater_than_equal_to[0]',
             'SMTPKeepAlive' => 'permit_empty|in_list[0,1]',
         ]);
 
         if (!$validation->run($requestJson)) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
             return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
-                'config'    => config('Email'),
+                'config' => config('Email'),
                 'activeTab' => setting('Email.protocol') ?? 'smtp',
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Form validation failed.');
+            ]);
         }
 
         $port = $requestJson['SMTPPort'] === 'other'
@@ -414,28 +467,37 @@ class GeneralSettingsController extends AdminController
         setting('Email.SMTPTimeout', $requestJson['SMTPTimeout']);
         setting('Email.SMTPKeepAlive', $requestJson['SMTPKeepAlive']);
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
-            'config'    => config('Email'),
+            'config' => config('Email'),
             'activeTab' => setting('Email.protocol') ?? 'smtp'
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+        ]);
     }
 
-    
 
-     /**
+
+    /**
      * Displays the site's passwords settings.
      */
     public function sectionOauth()
     {
 
+        if (!auth()->user()->can('admin.settings')) {
+            if ($this->request->isHtmx()) {
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+            } else {
+                alertHtmx('danger', lang('Btw.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+            }
+        }
+
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'settings_oauth', [
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
-
 
         $requestJson = $this->request->getJSON(true);
 
@@ -447,10 +509,11 @@ class GeneralSettingsController extends AdminController
         setting('ShieldOAuthConfig.google_client_secret', $requestJson['google_client_secret']);
 
         $this->response->triggerClientEvent('updateOauth', time(), 'receive');
+        $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
 
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_oauth', [
-            'defaultGroup'    => setting('AuthGroups.defaultGroup'),
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
+            'defaultGroup' => setting('AuthGroups.defaultGroup'),
+        ]);
     }
 
     /**
@@ -469,65 +532,65 @@ class GeneralSettingsController extends AdminController
     public function addMenuSidebar()
     {
         $sidebar = service('menus');
-        $item    = new MenuItem([
-            'title'           => 'Général',
-            'namedRoute'      => 'settings-general',
-            'fontIconSvg'     => theme()->getSVG('duotune/abstract/abs029.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+        $item = new MenuItem([
+            'title' => 'Général',
+            'namedRoute' => 'settings-general',
+            'fontIconSvg' => theme()->getSVG('duotune/abstract/abs029.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission' => 'admin.view',
             'weight' => 1
         ]);
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
-        $item    = new MenuItem([
-            'title'           => 'Login & Registration',
-            'namedRoute'      => 'settings-registration',
-            'fontIconSvg'     => theme()->getSVG('duotune/general/gen048.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+        $item = new MenuItem([
+            'title' => 'Login & Registration',
+            'namedRoute' => 'settings-registration',
+            'fontIconSvg' => theme()->getSVG('duotune/general/gen048.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission' => 'admin.view',
             'weight' => 2
         ]);
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
-        $item    = new MenuItem([
-            'title'           => 'Passwords',
-            'namedRoute'      => 'settings-passwords',
-            'fontIconSvg'     => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+        $item = new MenuItem([
+            'title' => 'Passwords',
+            'namedRoute' => 'settings-passwords',
+            'fontIconSvg' => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission' => 'admin.view',
             'weight' => 3
         ]);
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
-        $item    = new MenuItem([
-            'title'           => 'Avatar',
-            'namedRoute'      => 'settings-avatar',
-            'fontIconSvg'     => theme()->getSVG('duotune/general/gen065.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+        $item = new MenuItem([
+            'title' => 'Avatar',
+            'namedRoute' => 'settings-avatar',
+            'fontIconSvg' => theme()->getSVG('duotune/general/gen065.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission' => 'admin.view',
             'weight' => 4
         ]);
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
-        $item    = new MenuItem([
-            'title'           => 'Email',
-            'namedRoute'      => 'settings-email',
-            'fontIconSvg'     => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+        $item = new MenuItem([
+            'title' => 'Email',
+            'namedRoute' => 'settings-email',
+            'fontIconSvg' => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission' => 'admin.view',
             'weight' => 5
         ]);
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
-        $item    = new MenuItem([
-            'title'           => 'Oauth',
-            'namedRoute'      => 'settings-oauth',
-            'fontIconSvg'     => theme()->getSVG('duotune/general/gen062.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+        $item = new MenuItem([
+            'title' => 'Oauth',
+            'namedRoute' => 'settings-oauth',
+            'fontIconSvg' => theme()->getSVG('duotune/general/gen062.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission' => 'admin.view',
             'weight' => 6
         ]);
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
-        $item    = new MenuItem([
-            'title'           => 'Update',
-            'namedRoute'      => 'settings-update',
-            'fontIconSvg'     => theme()->getSVG('duotune/coding/cod005.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+        $item = new MenuItem([
+            'title' => 'Update',
+            'namedRoute' => 'settings-update',
+            'fontIconSvg' => theme()->getSVG('duotune/coding/cod005.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission' => 'admin.view',
             'weight' => 7
         ]);
 

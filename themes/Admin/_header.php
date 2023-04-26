@@ -3,7 +3,18 @@
         <span class="sr-only">Open sidebar</span>
         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"></path>
-        </svg> </button>
+        </svg>
+    </button>
+    <header class="flex items-center px-6">
+        <button class="p-2 -ml-2 mr-2" @click="isSidebarExpanded = !isSidebarExpanded" hx-get="<?= route_to('user-current-sidebarexpanded'); ?>" hx-swap="none">
+            <svg viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 transform" :class="isSidebarExpanded ? 'rotate-180' : 'rotate-0'">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <line x1="4" y1="6" x2="14" y2="6"></line>
+                <line x1="4" y1="18" x2="14" y2="18"></line>
+                <path d="M4 12h17l-3 -3m0 6l3 -3"></path>
+            </svg>
+        </button>
+    </header>
     <div class="flex-1 px-4 flex justify-between">
         <div class="flex-1 flex">
             <form class="w-full flex md:ml-0" action="#" method="GET">
@@ -126,7 +137,7 @@
                             <span class="avatar w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
                                 <?= theme()->getSVG(Config('Btw')->supportedLocales[service('language')->getLocale()]['flag'], 'svg-icon mr-3 w-5 h-5 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800'); ?>
                             </span>
-                            </button>
+                        </button>
                     </div>
 
                     <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-50 my-2 w-48 rounded-md shadow-lg origin-top-right right-0 top-full" style="display: none;" @click="open = false">

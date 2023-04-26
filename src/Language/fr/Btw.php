@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of Bonfire.
+ * This file is part of Doudou.
  *
- * (c) Lonnie Ezell <lonnieje@gmail.com>
+ * (c) Fabrice Loru <fabrice@adnduweb.com>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -24,6 +24,7 @@ return [
     'edit'           => 'Modifier',
 
     'notAuthorized' => 'You do not have the correct permissions.',
+    'notAuthorizedDebug' => 'You do not have the correct permissions : {0}.',
     'unknownAction' => 'Did not recognize the action you requested.',
     'magicLinkInfo' => 'We will send an email with a link to click to sign you in.',
 
@@ -60,6 +61,8 @@ return [
     'InfomationPage' => 'Information sur la page', 
     'intitulePage' => 'titre', 
     'general' => 'Général', 
-    'construction' => 'Construction'
+    'construction' => 'Construction', 
+    'saveData' => 'Les données du module {0} ont été enregistrés.',
+    'errorField' => 'Un ou plusieurs champs sont requis'
 ];
 

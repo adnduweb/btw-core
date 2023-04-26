@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of Bonfire.
+ * This file is part of Doudou.
  *
- * (c) Lonnie Ezell <lonnieje@gmail.com>
+ * (c) Fabrice Loru <fabrice@adnduweb.com>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -34,7 +34,7 @@ class UserCurrentController extends AdminController
 
 
     /**
-     * Display the Email settings page.
+     * Display the Email settings user.
      *
      * @return string
      */
@@ -65,6 +65,13 @@ class UserCurrentController extends AdminController
         switch ($this->request->getVar('section')) {
             case 'general':
 
+                if (!auth()->user()->can('users.edit')) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+                    return view($this->viewPrefix . 'cells\form_cell_information', [
+                        'userCurrent' => $user,
+                    ]);
+                }
+
                 $requestJson = $this->request->getJSON(true);
                 $validation = service('validation');
 
@@ -75,10 +82,11 @@ class UserCurrentController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.errorField', ['user'])]);
                     return view($this->viewPrefix . 'cells\form_cell_information', [
                         'userCurrent' => $user,
                         'validation' => $validation
-                    ]) . alertHtmx('danger', 'Form validation failed.');;
+                    ]);
                 }
 
                 $user->fill($requestJson);
@@ -88,9 +96,7 @@ class UserCurrentController extends AdminController
                 try {
                     if (!$users->save($user)) {
                         log_message('error', 'User errors', $users->errors());
-
-                        $response = ['errors' => lang('Bonfire.unknownSaveError', ['user'])];
-                        return $this->respond($response, ResponseInterface::HTTP_FORBIDDEN);
+                        $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.unknownSaveError', ['user'])]);
                     }
                 } catch (DataException $e) {
                     // Just log the message for now since it's
@@ -100,12 +106,13 @@ class UserCurrentController extends AdminController
 
 
                 $this->response->triggerClientEvent('updateUserCurrent');
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.saveData', ['user'])]);
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,
                     'menu' => service('menus')->menu('sidebar_user_current'),
                     'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
-                ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+                ]);
 
                 break;
             case 'groups':
@@ -157,7 +164,7 @@ class UserCurrentController extends AdminController
     public function updateGroup(int $id)
     {
         if (!$user = (model(UserModel::class)->find($id))) {
-            throw new PageNotFoundException('Incorrect book id.');
+            throw new userNotFoundException('Incorrect book id.');
         }
         return view($this->viewPrefix . 'cells\line_group', [
             'userCurrent' => $user
@@ -394,14 +401,25 @@ class UserCurrentController extends AdminController
 
     public function changeLangue()
     {
-
-        // print_r(request()->getUri());exit;
-
         $context = 'user:' . user_id();
         service('settings')->set('Btw.language_bo', $this->request->getGet('changeLanguageBO'), $context);
-
         return redirect()->back();
     }
+
+    public function changeSidebarExpanded(){
+
+        $context = 'user:' . user_id();
+        $isSidebarExpanded = service('settings')->get('Btw.isSidebarExpanded', $context);
+       
+        if($isSidebarExpanded == false){
+            service('settings')->set('Btw.isSidebarExpanded', 1, $context);
+        }else{
+            service('settings')->set('Btw.isSidebarExpanded', 0, $context);
+        }        
+       
+        $this->response->triggerClientEvent('updateSidebarExpanded');
+    }
+
 
 
     /**

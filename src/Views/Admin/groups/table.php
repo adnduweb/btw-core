@@ -8,7 +8,7 @@
         </div>
     </div>
 <?php else : ?>
-    <div x-data="listen" class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow overflow-y-auto relative" hx-boost="true">
+    <div x-data="listen" class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow overflow-y-auto relative" hx-boost="false">
         <table class="border-collapse table-auto w-full whitespace-no-wrap  bg-white dark:bg-gray-800 table-striped relative">
             <thead>
                 <tr class="text-left" hx-include="closest .card" hx-swap="morph:outerHTML" hx-target="closest .card">

@@ -76,6 +76,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'settings/user/two-factor', 'UserCurrentController::twoFactor', ['as' => 'user-two-factor']);
     $routes->get('user/update/avatar', 'UserCurrentController::updateAvatar', ['as' => 'user-update-avatar']);
     $routes->get('user/update/language', 'UserCurrentController::changeLangue', ['as' => 'user-current-language']);
+    $routes->get('user/update/sidebar-expanded', 'UserCurrentController::changeSidebarExpanded', ['as' => 'user-current-sidebarexpanded']);
 
 
     // Files Logs

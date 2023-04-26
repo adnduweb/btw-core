@@ -85,38 +85,6 @@ class UserModel extends ShieldUsers
     }
 
 
-
-    /**
-     * Get resource data.
-     *
-     * @param string $search
-     *
-     * @return \CodeIgniter\Database\BaseBuilder
-     */
-    public function getResource(string $search = '')
-    {
-        $builder =  $this->db->table('users')
-            ->select('*');
-        $builder->join('auth_groups_users', 'auth_groups_users.user_id = users.id', 'inner');
-        $builder->join('auth_identities', 'auth_identities.user_id = users.id', 'inner');
-
-        $condition = empty($search)
-            ? $builder
-            : $builder->groupStart()
-            ->like('group', $search)
-            ->orLike('username', $search)
-            ->orLike('secret', $search)
-            ->orLike('last_name', $search)
-            ->orLike('first_name', $search)
-            ->groupEnd();
-
-        return $condition->where([
-            'users.deleted_at'  => null,
-            'users.deleted_at' => null,
-        ]);
-    }
-
-
     /**
      * Returns the groups user.
      */

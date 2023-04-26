@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of Bonfire.
+ * This file is part of Doudou.
  *
- * (c) Lonnie Ezell <lonnieje@gmail.com>
+ * (c) Fabrice Loru <fabrice@adnduweb.com>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -55,13 +55,13 @@ class SelectCell
         $html .= '<select name="' . $params['name'] . '" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900 ease-linear transition-all duration-150" 
         ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxTarget . '  ' . $this->hxInclude . '  ' . $this->hxTrigger . '  ' . $this->hxSwap . ' >';
         $i = 0;
-        $html .= '<option value="0">How long to remember...</option>';
+        $html .= '<option value="0">'.lang('Btw.choisissezVotreValeur').'</option>';
         
         if (isset($params['options']) && count($params['options'])) :
 
             foreach ($params['options'] as $key => $val) :
                 $apinejs  = isset($params['alpinejs']) ?  $params['alpinejs'][$i]  : '' ; 
-                $newSelected = ($params['selected'] === (string) $val) ?  'selected' : '';
+                $newSelected = ($params['selected'] === (string) $val) ?  ' selected="selected" ' : '';
                 $html .= '<option value="' . $val . '" ' . $apinejs . ' ' .  $newSelected . '>';
                 $html .= !isset($params['byKey']) ? $key : $val;
                 $html .= '</option>';
@@ -69,6 +69,30 @@ class SelectCell
             endforeach;
         endif;
         $html .='</select>';
+        $html .= $this->getValidation($params);
+        return $html;
+    }
+
+
+    public function getValidation($params)
+    {
+
+        $html = '';
+        if (isset($params['lang']) && $params['lang'] == true) {
+
+            if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))) :
+                // print_r($params['validation']); exit;
+                $html = '<div class="invalid-feedback block">';
+                $html .= service('validation')->getError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']));
+                $html .= '</div>';
+            endif;
+        } else {
+            if (service('validation')->hasError(uniforme($params['name']))) :
+                $html = '<div class="invalid-feedback block">';
+                $html .= service('validation')->getError(uniforme($params['name']));
+                $html .= '</div>';
+            endif;
+        }
         return $html;
     }
 }

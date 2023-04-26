@@ -3,7 +3,7 @@
 /**
  * This file is part of Btw.
  *
- * (c) Lonnie Ezell <lonnieje@gmail.com>
+ * (c) Fabrice Loru <fabrice@adnduweb.com>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -34,8 +34,8 @@ class Vite
         # Check if vite is running.
         $entryFile = env('VITE_ORIGIN') . '/' . env('VITE_RESOURCES_DIR') . '/' . env('VITE_ENTRY_FILE');
 
-        // $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
-        $result['js'] = '<script type="module" src="' . $entryFile . '"></script>';
+        $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
+        //$result['js'] = '<script type="module" src="' . $entryFile . '"></script>';
 
         # React HMR fix.
         if (!empty($result['js']))

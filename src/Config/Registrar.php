@@ -61,6 +61,7 @@ class Registrar
                 ],
                 'admin' => [
                     'before' => [ADMIN_AREA . '*'],
+                    'after' => [ADMIN_AREA . '*'],
                 ],
             ],
         ];

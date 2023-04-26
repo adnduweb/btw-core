@@ -17,6 +17,7 @@ module.exports = {
 		"./vendor/adnduweb/btw-core/src/Views/**/*.php",
 		"./vendor/adnduweb/btw-core/themes/**/**/*.php",
 		"./vendor/adnduweb/btw-core/themes/**/**/**/*.php",
+		"./node_modules/flowbite/**/*.js"
 	],
 	theme: {
 
@@ -81,6 +82,20 @@ module.exports = {
 				full: "100%",
 			},
 		},
+		animation: {
+			none: 'none',
+			spin: 'spin 1s linear infinite',
+			ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+			pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+			bounce: 'bounce 1s infinite',
+			'slide-in-right': 'slide-in-right .3s ease-in',
+			'slide-in-left': 'slide-in-left .3s ease-in',
+		  },
+		  aspectRatio: {
+			auto: 'auto',
+			square: '1 / 1',
+			video: '16 / 9',
+		  },
 		theme: {
 			colors: {
 				transparent: 'transparent',

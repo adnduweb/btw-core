@@ -91,6 +91,7 @@ class AuthGroups extends ShieldAuthGroups
      */
     public array $matrix = [
         'superadmin' => [
+            'dashboard.*',
             'admin.*',
             'groups.*',
             'users.*',
@@ -100,6 +101,7 @@ class AuthGroups extends ShieldAuthGroups
             'recycler.*',
             'site.*',
             'logs.*',
+            'page.*',
         ],
         'admin' => [
             'admin.access',

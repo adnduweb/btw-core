@@ -6,10 +6,23 @@ use CodeIgniter\Config\BaseConfig;
 
 class Btw extends BaseConfig
 {
+    /**
+     * --------------------------------------------------------------------------
+     * List Views
+     * --------------------------------------------------------------------------
+     *
+     */   
     public $views = [
         'filter_list' => 'Btw\Views\_filter_list',
     ];
 
+
+    /**
+     * --------------------------------------------------------------------------
+     * Supported Locales
+     * --------------------------------------------------------------------------
+     *
+     */   
     public $supportedLocales = [
         'fr' => [
             'name' => 'Btw.french',
@@ -22,4 +35,13 @@ class Btw extends BaseConfig
             'flag' => 'flags/united-states.svg',
         ]
     ];
+
+    /**
+     * --------------------------------------------------------------------------
+     * Sidebar Expanded
+     * --------------------------------------------------------------------------
+     *
+     * If true, Sidebar collapse.
+     */   
+    public $isSidebarExpanded = true;
 }

@@ -865,3 +865,7 @@ th.selection,
 td.selection{
     justify-content: left;
 }
+
+.datepicker-header {
+  @apply h-auto bg-transparent
+}

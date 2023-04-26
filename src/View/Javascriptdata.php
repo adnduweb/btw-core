@@ -24,7 +24,6 @@ class Javascriptdata
         $this->base[] = ['crsftoken'      => csrf_token()];
         $this->base[] = ['csrfHash'      => csrf_hash()];
         $this->base[] = ['env'      => ENVIRONMENT];
-        $this->base[] = ['csrfHash'      => csrf_hash()];
 
         /** @var Session $authenticator */
         $authenticator = auth('session')->getAuthenticator();

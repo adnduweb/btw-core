@@ -70,7 +70,7 @@ class InputCell
 
             $html .= '<div class="relative mt-2 rounded-md shadow-sm">';
             $html .= '<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 bg-gray-600 rounded-l-lg text-center">';
-            $html .= '<span class="h-5 w-5 text-gray-200">'.service('language')->getLocale().'</span>';
+            $html .= '<span class="h-5 w-5 text-gray-200">' . service('language')->getLocale() . '</span>';
             $html .= ' </div>';
             // $html .= '<input type="' . $params['type'] . '" name="lang[' . service('language')->getLocale() . '][' . $params['name'] . ']" id="' . uniforme($params['name']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded-md py-3 px-4 mb-3 pl-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900">';
             $html .= '<input type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded-md py-3 px-4 mb-3 pl-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900">';
@@ -97,16 +97,16 @@ class InputCell
         $html = '';
         if (isset($params['lang']) && $params['lang'] == true) {
 
-            if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))) :
+            if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))):
                 // print_r($params['validation']); exit;
                 $html = '<div class="invalid-feedback block">';
                 $html .= service('validation')->getError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']));
                 $html .= '</div>';
             endif;
         } else {
-            if (service('validation')->hasError(uniforme($params['name']))) :
+            if (service('validation')->hasError($params['name'])):
                 $html = '<div class="invalid-feedback block">';
-                $html .= service('validation')->getError(uniforme($params['name']));
+                $html .= service('validation')->getError($params['name']);
                 $html .= '</div>';
             endif;
         }

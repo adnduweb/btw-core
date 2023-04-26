@@ -29,6 +29,7 @@ class Auth extends ShieldAuth
         'login'                       => '\Btw\Core\Views\Auth\login',
         'register'                    => '\Btw\Core\Views\Auth\register',
         'layout'                      => 'master',
+        'layout_email'                => '\Btw\Core\Views\Auth\Email\master.php',
         'action_email_2fa'            => '\Btw\Core\Views\Auth\email_2fa_show',
         'action_email_2fa_verify'     => '\Btw\Core\Views\Auth\email_2fa_verify',
         'action_email_2fa_email'      => '\Btw\Core\Views\Auth\Email\email_2fa_email',

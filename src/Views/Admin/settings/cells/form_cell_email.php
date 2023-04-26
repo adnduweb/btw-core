@@ -3,7 +3,7 @@
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Email</h3>
 
-
+        <?= validation_list_errors() ?>
 
         <div class="row mb-3">
 
@@ -43,9 +43,6 @@
                         'options' => ['smtp' => 'smtp', 'mail' => 'mail', 'sendmail' => 'sendmail'],
                         'selected' => (old('protocol', setting('Email.protocol'))),
                         'byKey' => true,
-                        'hxGet' => "/" . ADMIN_AREA . "/settings/timezones",
-                        'hxTarget' => "#timezone",
-                        'hxInclude' => "[name='timezoneArea']",
                         'hxTrigger' => "change",
                         'change' => "openTab=event.target.value"
                     ]); ?>
@@ -94,8 +91,9 @@
 
                             <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
                                 'label' => lang('Btw.SMTPPort'),
-                                'name' => 'protocol',
+                                'name' => 'SMTPPort',
                                 'options' =>  ['25' => '25', '587' => '587', '465' => '465',  '2525' => '2525',  'other' => 'other'],
+                                'default' =>  '25',
                                 'selected' => (old('SMTPPort', setting('Email.SMTPPort'))),
                                 'alpinejs' => ['@click="open = false"', '@click="open = false"', '@click="open = false"',  '@click="open = false"',  '@click="open = true"'],
                                 'change' => "openTab=event.target.value"
