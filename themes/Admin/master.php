@@ -52,7 +52,8 @@
 
 </head>
 
-<body hx-ext="ajax-header, debug, json-enc" hx-history="false" hx-headers='{"X-Theme": "admin"}'
+<!-- debug -->
+<body hx-ext="morph, ajax-header, json-enc" hx-history="false" hx-headers='{"X-Theme": "admin"}' 
     class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
 
     <!-- Main content -->
@@ -61,6 +62,7 @@
             x-data="{isSidebarExpanded: <?= (service('settings')->get('Btw.isSidebarExpanded', 'user:' . user_id()) == true) ? 'true' : 'false'; ?>}">
 
             <x-sidebar />
+            <?= '' //$this->include('_sidebar') ?>
 
 
             <div class="flex w-0 flex-1 flex-col overflow-hidden">
@@ -103,7 +105,7 @@
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
         <script src="https://unpkg.com/hyperscript.org@0.9.7" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script> -->
         <?= $this->renderSection('scriptsUrl') ?>
 
     </main>

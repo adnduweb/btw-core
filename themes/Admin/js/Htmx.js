@@ -6,6 +6,7 @@ import { defineExtension } from "htmx.org";
 
 import "../js/morph.js"
 import "../js/loading-states.js"
+// import "../js/head-support.js"
 
 
 htmx.onLoad(function(content) {

@@ -52,6 +52,7 @@ https://www.youtube.com/watch?v=Q9eynRwc1CA
 https://blog.benoitblanchon.fr/django-htmx-toasts/
 https://windstatic.com/
 https://vemto.app/blog/how-to-create-an-image-upload-viewer-with-alpinejs
+https://alpinejs.dev/component/date-range-picker
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604

@@ -115,6 +115,8 @@ class Admin implements FilterInterface
                 // silent
             }
 
+            $body = str_replace('{CustomEvent}', '<script type="module"></script>', $response->getBody());
+
         }
 
         // print_r($allSession);

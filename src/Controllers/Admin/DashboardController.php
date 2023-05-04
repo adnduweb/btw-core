@@ -29,6 +29,9 @@ class DashboardController extends AdminController
      */
     public function index()
     {
+        // Add the page title
+        service('viewMeta')->setTitle('My Site');
+
         echo $this->render($this->viewPrefix . 'dashboard');
     }
 }
