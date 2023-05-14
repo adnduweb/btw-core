@@ -1,16 +1,16 @@
 <div id="general" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
     <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
-        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Général</h3>
+        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200"><?= lang('Btw.cellh3.general'); ?></h3>
 
         <!-- Site Name -->
         <div class="row">
             <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
                 'type' => 'text',
-                'label' => lang('Btw.siteName'),
+                'label' => lang('Form.general.siteName'),
                 'name' => 'siteName',
                 'value' => old('siteName', setting('Site.siteName')),
-                'description' => "Appears in admin, and is available throughout the site."
+                'description' => lang('Form.general.siteNameDesc'),
             ]); ?>
         </div>
 
@@ -23,7 +23,7 @@
                 'name' => 'siteOnline',
                 'value' => '1',
                 'checked' => (old('siteOnline', setting('Site.siteOnline') ?? false)),
-                'description' => "If unchecked, only Superadmin and user groups with permission can access the site."
+                'description' => lang('Form.general.siteOnlineDesc'),
             ]); ?>
 
         </div>

@@ -55,7 +55,7 @@ class SelectCell
         $html .= '<select name="' . $params['name'] . '" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900 ease-linear transition-all duration-150" 
         ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxTarget . '  ' . $this->hxInclude . '  ' . $this->hxTrigger . '  ' . $this->hxSwap . ' >';
         $i = 0;
-        $html .= '<option value="0">'.lang('Btw.choisissezVotreValeur').'</option>';
+        $html .= '<option value="0">'.lang('Form.general.choisissezVotreValeur').'</option>';
         
         if (isset($params['options']) && count($params['options'])) :
 

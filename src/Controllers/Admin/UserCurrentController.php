@@ -106,7 +106,7 @@ class UserCurrentController extends AdminController
 
 
                 $this->response->triggerClientEvent('updateUserCurrent');
-                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.saveData', ['user'])]);
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.saveData', ['user'])]);
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,

@@ -8,8 +8,25 @@
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
-
+ 
 return [
+    'cellh3' => [
+        'general' => 'Général',
+        'DateAndTimeSettings' => 'Réglage de la date',
+        'registration' => 'Enregistrement',
+        'login' => 'Connexion',
+    ],
+    'general' => [
+        'settings' => 'réglages',
+    ],
+    'message' => [
+        'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
+        'formValidationFailed' => 'Une validation de champ est requis',
+    ],
+    'sidebar' => [
+        'LoginAndRegistration' => 'Connexion et enregistrement',
+    ],
+    
     'resourceNotFound'     => 'Unable to find the {0}.',
     'resourceSaved'        => 'The {0} has been saved.',
     'resourcesSaved'       => 'The {0} changes has been successfully saved.',
@@ -60,9 +77,8 @@ return [
     'back' => 'Retour', 
     'InfomationPage' => 'Information sur la page', 
     'intitulePage' => 'titre', 
-    'general' => 'Général', 
+    // 'general' => 'Général', 
     'construction' => 'Construction', 
-    'saveData' => 'Les données du module {0} ont été enregistrés.',
     'errorField' => 'Un ou plusieurs champs sont requis'
 ];
 

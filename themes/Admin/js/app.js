@@ -249,8 +249,16 @@ import "../css/app.css";
 import "../js/ktapp.js";
 import "../js/util.js";
 import "../js/alpine.js";
-import "../js/Htmx.js";
+import "../js/htmx.js";
 
+
+// import htmx from 'htmx.org';
+// general config
+// htmx.config.useTemplateFragments = true;
+// window.Htmx = htmx;
+// console.log('fabrice2');
+// console.log(htmx);
+// import "../js/htmx.js";
 // $(document).on('click', '.group-checkable', function() {
 // if ($(this).parent().parent().parent().hasClass('selected')) {
 //     $(this).parent().parent().parent().removeClass('selected');

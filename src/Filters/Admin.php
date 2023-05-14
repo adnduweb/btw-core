@@ -97,7 +97,7 @@ class Admin implements FilterInterface
                         bubbles: true,
                         cancelable: true,
                         detail: {
-                            content: "'. lang('Btw.notAuthorized').'",
+                            content: "' . lang('Btw.notAuthorized') . '",
                             type: "error",
                           }
                     });
@@ -116,8 +116,12 @@ class Admin implements FilterInterface
             }
 
             $body = str_replace('{CustomEvent}', '<script type="module"></script>', $response->getBody());
+            return $response->setBody($body);
 
         }
+
+        $body = str_replace('{CustomEvent}', '<script type="module"></script>', $response->getBody());
+        return $response->setBody($body);
 
         // print_r($allSession);
         // exit;

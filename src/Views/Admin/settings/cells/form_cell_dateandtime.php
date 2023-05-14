@@ -1,7 +1,7 @@
 <div id="dateandtime" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
     <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
-        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Date and Time Settings</h3>
+        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200"><?= lang('Btw.cellh3.DateAndTimeSettings'); ?></h3>
 
         <!-- Timezone -->
         <div class="flex flex-wrap">
@@ -9,7 +9,7 @@
                 <div class="relative w-full mb-3">
 
                     <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
-                        'label' => lang('Btw.Timezone'),
+                        'label' => lang('Form.settings.Timezone'),
                         'name' => 'timezoneArea',
                         'options' => $timezones,
                         'selected' => $currentTZArea,
@@ -25,7 +25,7 @@
             </div>
             <div class="w-full lg:w-6/12 px-4">
                 <div class="relative w-full mb-3">
-                    <label for="timezone" class="block text-sm font-medium text-gray-700 mt-px pb-2">Pays</label>
+                    <label for="timezone" class="block text-sm font-medium text-gray-700 mt-px pb-2"><?=  lang('Form.general.country'); ?></label>
                     <select name="timezone" id="timezone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900 ease-linear transition-all duration-150">
                         <?php if (isset($timezoneOptions) && !empty($timezoneOptions)) : ?>
                             <?= $timezoneOptions ?>
@@ -45,7 +45,7 @@
                 <label for="timezone" class="block text-sm font-medium text-gray-700 mt-px pt-2 dark:text-gray-300">Date &amp; Time Format</label>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.mm/dd/yyyy'), 'name' => 'dateFormat', 'value' => 'm/d/Y', 'checked' => (old('dateFormat', $dateFormat) === 'm/d/Y')]); ?>
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' =>lang('Form.time.mm/dd/yyyy'), 'name' => 'dateFormat', 'value' => 'm/d/Y', 'checked' => (old('dateFormat', $dateFormat) === 'm/d/Y')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">

@@ -13,7 +13,6 @@ namespace Btw\Core\Controllers\Admin;
 
 use Btw\Core\Controllers\AdminController;
 use CodeIgniter\API\ResponseTrait;
-use Btw\Core\Adapters\RawJsonResponse;
 use DateTimeZone;
 use Btw\Core\Libraries\Menus\MenuItem;
 
@@ -92,6 +91,7 @@ class GeneralSettingsController extends AdminController
             return $this->render($this->viewPrefix . 'settings_general', [
                 'timezones' => $timezoneAreas,
                 'currentTZArea' => $currentTZArea,
+                'siteOnline' => setting('Site.siteOnline'),
                 'timezoneOptions' => $this->getTimezones($currentTZArea),
                 'dateFormat' => setting('App.dateFormat') ?: 'M j, Y',
                 'timeFormat' => setting('App.timeFormat') ?: 'g:i A',
@@ -111,7 +111,7 @@ class GeneralSettingsController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [
                         'validation' => $validation
                     ]);
@@ -120,8 +120,8 @@ class GeneralSettingsController extends AdminController
                 setting('Site.siteName', $requestJson['siteName']);
                 setting('Site.siteOnline', $requestJson['siteOnline'] ?? 0);
 
-                $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
-                return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', []);
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
+                return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [ 'siteOnline' => setting('Site.siteOnline')]);
 
                 break;
             case 'dateandtime':
@@ -136,7 +136,7 @@ class GeneralSettingsController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime', [
                         'validation' => $validation
                     ]);
@@ -166,7 +166,7 @@ class GeneralSettingsController extends AdminController
                     ? $currentTZ
                     : substr($currentTZ, 0, strpos($currentTZ, '/'));
 
-                $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime', [
                     'timezones' => $timezoneAreas,
                     'currentTZArea' => $currentTZArea,
@@ -259,8 +259,10 @@ class GeneralSettingsController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_registration', [
+                        'groups' => setting('AuthGroups.groups'),
+                        'defaultGroup' => setting('AuthGroups.defaultGroup'),
                         'validation' => $validation
                     ]);
                     ;
@@ -274,7 +276,7 @@ class GeneralSettingsController extends AdminController
                 $actions['register'] = $requestJson['emailActivation'] ?? null;
                 setting('Auth.actions', $actions);
 
-                $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
                 $this->response->triggerClientEvent('updateSettingsRegistration');
 
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_registration', [
@@ -299,7 +301,7 @@ class GeneralSettingsController extends AdminController
                 $actions['login'] = $requestJson['email2FA'] ?? null;
                 setting('Auth.actions', $actions);
 
-                $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_login', [
                     'rememberOptions' => $this->rememberOptions,
                     'groups' => setting('AuthGroups.groups'),
@@ -344,7 +346,7 @@ class GeneralSettingsController extends AdminController
         ]);
 
         if (!$validation->run($requestJson)) {
-            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
             return view('Btw\Core\Views\Admin\users\form_cell_password', [
                 'validation' => $validation
             ]);
@@ -354,7 +356,7 @@ class GeneralSettingsController extends AdminController
         setting('Auth.minimumPasswordLength', (int) $requestJson['minimumPasswordLength']);
         setting('Auth.passwordValidators', $requestJson['validators']);
 
-        $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_password', [
             'groups' => setting('AuthGroups.groups'),
             'defaultGroup' => setting('AuthGroups.defaultGroup'),
@@ -394,7 +396,7 @@ class GeneralSettingsController extends AdminController
         setting('Users.avatarNameBasis', $requestJson['avatarNameBasis']);
 
         $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
-        $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
 
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_avatar', [
             'groups' => setting('AuthGroups.groups'),
@@ -443,7 +445,7 @@ class GeneralSettingsController extends AdminController
         ]);
 
         if (!$validation->run($requestJson)) {
-            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['settings'])]);
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
             return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
                 'config' => config('Email'),
                 'activeTab' => setting('Email.protocol') ?? 'smtp',
@@ -467,7 +469,7 @@ class GeneralSettingsController extends AdminController
         setting('Email.SMTPTimeout', $requestJson['SMTPTimeout']);
         setting('Email.SMTPKeepAlive', $requestJson['SMTPKeepAlive']);
 
-        $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
             'config' => config('Email'),
             'activeTab' => setting('Email.protocol') ?? 'smtp'
@@ -509,7 +511,7 @@ class GeneralSettingsController extends AdminController
         setting('ShieldOAuthConfig.google_client_secret', $requestJson['google_client_secret']);
 
         $this->response->triggerClientEvent('updateOauth', time(), 'receive');
-        $this->response->triggerClientEvent('showMessage', ['type' => 'info', 'content' => lang('Btw.resourcesSaved', ['settings'])]);
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
 
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_oauth', [
             'defaultGroup' => setting('AuthGroups.defaultGroup'),
@@ -542,7 +544,7 @@ class GeneralSettingsController extends AdminController
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
         $item = new MenuItem([
-            'title' => 'Login & Registration',
+            'title' => lang('Btw.sidebar.LoginAndRegistration'),
             'namedRoute' => 'settings-registration',
             'fontIconSvg' => theme()->getSVG('duotune/general/gen048.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission' => 'admin.view',

@@ -41,7 +41,9 @@ class SwitchCell
 
         $html = "";
 
-        $this->checkedNew = empty($params['checked']) ? "false" : "true";
+      
+
+        $this->checkedNew = $params['checked'] == false ? 'false' : 'true';
         $this->value = (!empty($params['value'])) ? $params['value'] : true;
         $this->xOnClick = (isset($params['xOnClick'])) ? 'x-on:click="' . $params['xOnClick'] . '"' : false;
         $this->xChange = (isset($params['xChange'])) ? '@change="' . $params['xChange'] . '"' : false;
@@ -51,8 +53,7 @@ class SwitchCell
         $this->xNotData = (isset($params['xNotData'])) ? '' : 'x-data="{' . $this->xOn . ': ' . $this->checkedNew . '}"';
         $this->hxGet = (isset($params['hxGet'])) ? 'hx-get="'.$params['hxGet'].'"' : '';
         $this->hxSwap = (isset($params['hxSwap'])) ? 'hx-swap="'.$params['hxSwap'].'"' : '';
-        
-
+              
         $html .= '<div class="flex items-center ' . $this->class . '">';
         $html .= '<button type="button" class="button-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-100" ' . $this->xNotData . '  role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \'bg-gray-400 dark:bg-gray-700\': ' . $this->xOn . ',\'bg-slate-100\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' ' .  $this->hxGet . ' ' .  $this->hxSwap .' >';
         $html .= '<span class="sr-only">Use setting</span>';
