@@ -1,57 +1,74 @@
 {
-    "name": "codeigniter4/appstarter",
-    "type": "project",
-    "description": "CodeIgniter4 starter app",
-    "homepage": "https://codeigniter.com",
-    "license": "MIT",
-    "require": {
-        "php": "^7.4 || ^8.0",
-        "codeigniter4/framework": "^4.0",
-        "roave/security-advisories": "dev-latest",
-        "codeigniter4/shield": "^1.0@beta",
-        "adnduweb/btw-core": "dev-develop",
-        "whichbrowser/parser": "^2.1",
-        "codeigniter4/translations": "^4.3",
-        "greenlion/php-sql-parser": "^4.6",
-        "knplabs/github-api": "^3.11",
-        "symfony/http-client": "^6.0",
-        "nyholm/psr7": "^1.5",
-        "league/commonmark": "^2.3",
-        "twig/twig": "^3.5"
-    },
-    "require-dev": {
-        "fakerphp/faker": "^1.9",
-        "mikey179/vfsstream": "^1.6",
-        "phpunit/phpunit": "^9.1",
-        "codeigniter4/devkit": "^1.1"
-    },
-    "suggest": {
-        "ext-fileinfo": "Improves mime type detection for files"
-    },
-    "autoload": {
-        "exclude-from-classmap": [
-            "**/Database/Migrations/**"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\Support\\": "tests/_support"
-        }
-    },
-    "scripts": {
-        "test": "phpunit"
-    },
-    "support": {
-        "forum": "https://forum.codeigniter.com/",
-        "source": "https://github.com/codeigniter4/CodeIgniter4",
-        "slack": "https://codeigniterchat.slack.com"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "config": {
-        "allow-plugins": {
-            "phpstan/extension-installer": true,
-            "php-http/discovery": true
-        }
-    }
+	"name": "adnduweb/btw-core",
+	"type": "project",
+	"description": "Drop-in admin panel form CodeIgniter 4",
+	"keywords": [
+		"codeigniter",
+		"codeigniter4",
+		"btw"
+	],
+	"homepage": "https://github.com/adnduweb/btw-core",
+	"license": "MIT",
+	"require": {
+		"php": "^7.4 || ^8.0",
+		"ext-json": "*",
+		"codeigniter4/framework": "^4.2",
+		"components/font-awesome": "^6.2",
+		"codeigniter4/shield": "^1.0@beta",
+		"roave/security-advisories": "dev-latest",
+		"tatter/alerts": "^3.0",
+		"whichbrowser/parser": "^2.1",
+		"codeigniter4/translations": "^4.3",
+		"greenlion/php-sql-parser": "^4.6",
+		"twig/twig": "^3.4.3"
+	},
+	"require-dev": {
+		"codeigniter/coding-standard": "^1.1",
+		"fakerphp/faker": "^1.9",
+		"mikey179/vfsstream": "^1.6",
+		"nexusphp/cs-config": "^3.1",
+		"nexusphp/tachycardia": "^1.0",
+		"phpstan/phpstan": "^1.1",
+		"phpunit/phpunit": "^9.1",
+		"psr/container": "^1.0",
+		"qossmic/deptrac-shim": "^0.24.0"
+	},
+	"suggest": {
+		"ext-fileinfo": "Improves mime type detection for files"
+	},
+	"autoload": {
+		"psr-4": {
+			"Btw\\Core\\": "src"
+		},
+		"exclude-from-classmap": [
+			"**/Database/Migrations/**"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests",
+			"Tests\\Support\\": "tests/_support"
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"scripts": {
+		"analyze": "phpstan analyze",
+		"ci": [
+			"Composer\\Config::disableProcessTimeout",
+			"@deduplicate",
+			"@analyze",
+			"@test",
+			"@inspect",
+			"@style"
+		],
+		"deduplicate": "phpcpd src/",
+		"inspect": "deptrac analyze --cache-file=build/deptrac.cache",
+		"style": "php-cs-fixer fix --verbose --ansi --using-cache=no",
+		"test": "./vendor/bin/phpunit"
+	},
+	"support": {
+		"forum": "https://forum.codeigniter.com/",
+		"source": "https://github.com/adnduweb/btw-core"
+	}
 }
