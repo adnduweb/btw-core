@@ -24,7 +24,7 @@ class InputCell
 
     protected $xModel;
 
-    protected $xInput;
+    protected $required;
 
     public function renderList($params)
     {
@@ -37,6 +37,7 @@ class InputCell
         $this->xType = (isset($params['xType'])) ? ':type="' . $params['xType'] . '"' : '';
         $this->xModel = (isset($params['xModel'])) ? 'x-model="' . $params['xModel'] . '"' : '';
         $this->xInput = (isset($params['xInput'])) ? '@input="' . $params['xInput'] . '"' : '';
+        $this->required = (isset($params['required'])) ? 'required' : '';
 
         $html = $this->getLabel($params);
         $html .= $this->getInput($params);
@@ -48,11 +49,12 @@ class InputCell
     public function getLabel($params)
     {
         $html = "";
+        $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
         if (isset($params['lang']) && $params['lang'] == true) {
             // $html .= '<label for="lang[' . service('language')->getLocale() . '][' . $params['name'] . ']" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' </label>';
-            $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' </label>';
+            $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' ' . $required . ' </label>';
         } else {
-            $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' </label>';
+            $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300"> ' . $params['label'] . ' ' . $required . ' </label>';
         }
 
         return $html;
@@ -66,6 +68,13 @@ class InputCell
             $html .= '<div class="relative">';
         }
 
+        if (request()->is('json')) {
+            $requestOld = request()->getJSON(true);
+            if (isset($requestOld[$params['name']])) {
+                $params['value'] = $requestOld[$params['name']];
+            }
+        }
+
         if (isset($params['lang']) && $params['lang'] == true) {
 
             $html .= '<div class="relative mt-2 rounded-md shadow-sm">';
@@ -73,7 +82,7 @@ class InputCell
             $html .= '<span class="h-5 w-5 text-gray-200">' . service('language')->getLocale() . '</span>';
             $html .= ' </div>';
             // $html .= '<input type="' . $params['type'] . '" name="lang[' . service('language')->getLocale() . '][' . $params['name'] . ']" id="' . uniforme($params['name']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded-md py-3 px-4 mb-3 pl-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900">';
-            $html .= '<input type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded-md py-3 px-4 mb-3 pl-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900">';
+            $html .= '<input ' . $this->required . ' type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded-md py-3 px-4 mb-3 pl-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900">';
             $html .= ' </div>';
         } else {
             $html .= '<input type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded-md py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900">';
@@ -99,13 +108,13 @@ class InputCell
 
             if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))):
                 // print_r($params['validation']); exit;
-                $html = '<div class="invalid-feedback block">';
+                $html = '<div class="invalid-feedback block text-red-600">';
                 $html .= service('validation')->getError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']));
                 $html .= '</div>';
             endif;
         } else {
             if (service('validation')->hasError($params['name'])):
-                $html = '<div class="invalid-feedback block">';
+                $html = '<div class="invalid-feedback block text-red-600">';
                 $html .= service('validation')->getError($params['name']);
                 $html .= '</div>';
             endif;

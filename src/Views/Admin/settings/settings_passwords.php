@@ -13,7 +13,7 @@
         <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
                 <?= form_open(route_to('settings-passwords'), [
-                    'id' => 'kt_users_form_password', 'hx-post' => route_to('settings-passwords'), 'hx-target' => '#password',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc",  'novalidate' => false, 'data-loading-target' => "#loadingpassword",
+                    'id' => 'kt_users_form_password', 'hx-post' => route_to('settings-passwords'), 'hx-target' => '#password', 'hx-ext' => "loading-states, debug, json-enc",  'novalidate' => false, 'data-loading-target' => "#loadingpassword",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= csrf_field() ?>

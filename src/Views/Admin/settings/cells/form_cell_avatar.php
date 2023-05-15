@@ -9,7 +9,7 @@
             <div class="form-group col-12 col-sm-4">
 
                 <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
-                    'label' => lang('Btw.Display initials based on:'),
+                    'label' => lang('Form.settings.DisplayInitialsBasedOn'),
                     'name' => 'avatarNameBasis',
                     'options' => ['name' => 'Full Name', 'username' => 'Username'],
                     'selected' => old('avatarNameBasis', setting('Users.avatarNameBasis'))
@@ -22,7 +22,7 @@
         <div class="row mb-3">
 
             <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
-                'label' => lang('BtwUse Gravatar for avatars'),
+                'label' => lang('Form.settings.UseGravatarForAvatars'),
                 'name' => 'useGravatar',
                 'value' => '1',
                 'checked' => (old('useGravatar', setting('Users.useGravatar'))),
@@ -39,7 +39,7 @@
         <div class="row mb-3" x-show="useGravatar != false">
             <div class="form-group col-12 col-sm-4">
                 <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
-                    'label' => lang('Btw.Gravatar for default style'),
+                    'label' => lang('Form.settings.GravatarForDefaultStyle'),
                     'name' => 'gravatarDefault',
                     'options' => [
                         'mp' => 'mystery person',

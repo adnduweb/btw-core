@@ -392,7 +392,7 @@ class GeneralSettingsController extends AdminController
 
         // Avatars
         setting('Users.useGravatar', $requestJson['useGravatar'] ?? false);
-        setting('Users.gravatarDefault', $requestJson['gravatarDefault']);
+       // setting('Users.gravatarDefault', $requestJson['gravatarDefault']);
         setting('Users.avatarNameBasis', $requestJson['avatarNameBasis']);
 
         $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
@@ -446,6 +446,7 @@ class GeneralSettingsController extends AdminController
 
         if (!$validation->run($requestJson)) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
+            $this->response->setReswap('outerHTML');
             return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
                 'config' => config('Email'),
                 'activeTab' => setting('Email.protocol') ?? 'smtp',
@@ -553,7 +554,7 @@ class GeneralSettingsController extends AdminController
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
         $item = new MenuItem([
-            'title' => 'Passwords',
+            'title' => lang('Btw.sidebar.passwords'),
             'namedRoute' => 'settings-passwords',
             'fontIconSvg' => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission' => 'admin.view',
@@ -589,7 +590,7 @@ class GeneralSettingsController extends AdminController
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
         $item = new MenuItem([
-            'title' => 'Update',
+            'title' =>  lang('Btw.sidebar.update'),
             'namedRoute' => 'settings-update',
             'fontIconSvg' => theme()->getSVG('duotune/coding/cod005.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission' => 'admin.view',

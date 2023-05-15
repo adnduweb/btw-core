@@ -15,6 +15,10 @@ return [
         'DateAndTimeSettings' => 'Réglage de la date',
         'registration' => 'Enregistrement',
         'login' => 'Connexion',
+        'passwords' => 'Gestion des mots de passe',
+        'PasswordValidators' => 'Validateurs de mots de passe',
+        'Email' => 'Email',
+        'MailSettings' => 'Réglages des mails',
     ],
     'general' => [
         'settings' => 'réglages',
@@ -25,6 +29,8 @@ return [
     ],
     'sidebar' => [
         'LoginAndRegistration' => 'Connexion et enregistrement',
+        'passwords' => 'Mots de passe',
+        'update' => 'Mise à jour'
     ],
     
     'resourceNotFound'     => 'Unable to find the {0}.',

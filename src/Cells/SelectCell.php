@@ -82,13 +82,13 @@ class SelectCell
 
             if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))) :
                 // print_r($params['validation']); exit;
-                $html = '<div class="invalid-feedback block">';
+                $html = '<div class="invalid-feedback block text-red-600">';
                 $html .= service('validation')->getError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']));
                 $html .= '</div>';
             endif;
         } else {
             if (service('validation')->hasError(uniforme($params['name']))) :
-                $html = '<div class="invalid-feedback block">';
+                $html = '<div class="invalid-feedback block text-red-600">';
                 $html .= service('validation')->getError(uniforme($params['name']));
                 $html .= '</div>';
             endif;

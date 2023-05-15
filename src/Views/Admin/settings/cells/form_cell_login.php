@@ -30,7 +30,7 @@
         </div>
 
         <div class="row mb-3">
-nkkjljlkj
+
             <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
                 'label' => lang('Form.settings.Force2FACheckAfterLogin'),
                 'name' => 'email2FA',
