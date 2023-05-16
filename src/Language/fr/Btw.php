@@ -19,9 +19,11 @@ return [
         'PasswordValidators' => 'Validateurs de mots de passe',
         'Email' => 'Email',
         'MailSettings' => 'Réglages des mails',
+        'OtherInformation' => 'Autres informations'
     ],
     'general' => [
         'settings' => 'réglages',
+        'users' => 'utilisateurs',
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',

@@ -21,7 +21,7 @@ use CodeIgniter\Shield\Models\UserIdentityModel;
 use ReflectionException;
 
 
-class UserCurrentController extends AdminController
+class ProfileController extends AdminController
 {
     protected $theme      = 'Admin';
     protected $viewPrefix = 'Btw\Core\Views\Admin\users\\current\\';
@@ -82,7 +82,7 @@ class UserCurrentController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.errorField', ['user'])]);
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
                     return view($this->viewPrefix . 'cells\form_cell_information', [
                         'userCurrent' => $user,
                         'validation' => $validation
@@ -106,7 +106,7 @@ class UserCurrentController extends AdminController
 
 
                 $this->response->triggerClientEvent('updateUserCurrent');
-                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.saveData', ['user'])]);
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,
@@ -125,12 +125,13 @@ class UserCurrentController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
                     return view($this->viewPrefix . 'cells\cell_groups', [
                         'userCurrent' => auth()->user(),
                         'currentGroup'    => array_flip(auth()->user()->getGroups()),
                         'groups'          => setting('AuthGroups.groups'),
                         'validation' => $validation
-                    ]) . alertHtmx('danger', 'Form validation failed.');;
+                    ]);
                 }
 
 
@@ -141,12 +142,12 @@ class UserCurrentController extends AdminController
                 $user->syncGroups(...($requestJson['currentGroup[]'] ?? []));
 
                 $this->response->triggerClientEvent('updateGroupUserCurrent');
-
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
                 return view($this->viewPrefix . 'cells\cell_groups', [
                     'userCurrent' => auth()->user(),
                     'currentGroup'    => array_flip($user->getGroups()),
                     'groups'          => setting('AuthGroups.groups'),
-                ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+                ]);
 
                 break;
             default:
