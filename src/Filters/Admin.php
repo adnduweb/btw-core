@@ -61,8 +61,9 @@ class Admin implements FilterInterface
         // Restrict an IP address to no more than 1 request
         // per second across the entire site.
         if ($request->isHtmx()) {
-
-            if ($request->is('post') || $request->is('json')) {
+           
+            if (!$request->is('get') && ($request->is('post') || $request->is('json'))) {
+                print_r($request->getMethod()); 
                 if (service('throttler')->check(md5($request->getIPAddress()), 4, MINUTE) === false) {
                     response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.throttled', [service('throttler')->getTokenTime()])]);
                     return service('response')->setStatusCode(

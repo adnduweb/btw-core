@@ -66,7 +66,9 @@ return [
         'TheseRulesDetermineHowSecurePassword' => 'Ces règles déterminent le degré de sécurité d\'un mot de passe',
         'ThisSpecifiesTheDefaultEmailAddressAndNnameThatWillBeUsedWhenSendingAnEmail' => "Ceci spécifie l'adresse électronique et le nom par défaut qui seront utilisés lors de l'envoi d'un courrier électronique.",
         'SelectTheProtocolUsedWhenSendingMailSMTP' => "Sélectionnez le protocole utilisé pour l'envoi de courrier. Le scénario le plus courant est l'utilisation du protocole SMTP.",
-        'MailIsOnlyAvailableOnLinuxServers' => "Mail n'est disponible que sur les serveurs Linux. Il n'y a pas d'options"
+        'MailIsOnlyAvailableOnLinuxServers' => "Mail n'est disponible que sur les serveurs Linux. Il n'y a pas d'options", 
+        'Force2FACheckAfterLogin' => "Forcer le contrôle 2FA après la connexion", 
+        'Force2FACheckAfterLoginDesc' => "Si la case est cochée, un code sera envoyé par courrier électronique pour confirmation.",
     ],
     'general' => [
         'title' => 'Titre',
@@ -128,9 +130,9 @@ return [
     ],
     'users' => [
         'Capabilities' => 'Capacités',
-        'Current password' => 'Mot de passe actuel',
-        'New password' => 'Nouveau mot de passe',
-        'Confirm password' => 'Confirmer le mot de passe',
+        'currentPassword' => 'Mot de passe actuel',
+        'newPassword' => 'Nouveau mot de passe',
+        'confirmPassword' => 'Confirmer le mot de passe',
         'LOWERCASE' => 'Minuscule',
         'UPPERCASE' => 'Majuscule',
         'NUMBERS' => 'Nombres',
@@ -150,5 +152,7 @@ return [
         'LastUpdated' => 'Mis à jour pour la dernière fois',
         'UsersList' => 'Liste des utilisateurs',
         'changeRole' => 'Modifier le rôle',
+        'passwordLength' => 'Longueur du mot de passe', 
+        'TwoFactoAuthentification' => 'Authentification à deux facteurs'
     ]
 ];
