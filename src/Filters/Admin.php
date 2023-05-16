@@ -58,6 +58,26 @@ class Admin implements FilterInterface
         //     }
         // }
 
+        // Restrict an IP address to no more than 1 request
+        // per second across the entire site.
+        if ($request->isHtmx()) {
+
+            if ($request->is('post') || $request->is('json')) {
+                if (service('throttler')->check(md5($request->getIPAddress()), 4, MINUTE) === false) {
+                    response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.throttled', [service('throttler')->getTokenTime()])]);
+                    return service('response')->setStatusCode(
+                        429,
+                        lang('Auth.throttled', [service('throttler')->getTokenTime()]) // message
+                    )->setJson([
+                        'message' => lang('Auth.throttled'), 
+                        'time' => service('throttler')->getTokenTime(), 
+                        'csrf_hash' => csrf_hash(),
+                        'ip' => $request->getIPAddress()
+                    ]);
+                }
+            }
+        }
+
 
 
 

@@ -16,7 +16,7 @@
                     'id' => 'kt_users_form_avatar', 'hx-post' => route_to('settings-avatar'), 'hx-target' => '#avatar', 'hx-ext' => "loading-states, debug, json-enc",  'novalidate' => false, 'data-loading-target' => "#loadingavatar",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
-                <?= csrf_field() ?>
+                <?= ''; //csrf_field() ?>
                 <input type="hidden" name="section" value="avatar" />
                 <?= $this->include('Btw\Core\Views\Admin\settings\cells\form_cell_avatar'); ?>
                 <?= form_close(); ?>

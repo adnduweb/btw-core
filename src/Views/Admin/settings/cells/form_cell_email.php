@@ -53,13 +53,12 @@
 
             <div class="tab-content mx-5 mt-3">
                 <!-- Mail Settings -->
-                <div id="mail-settings" x-show="openTab != 'mail'" x-transition>
+                <div id="mail-settings" x-show="openTab === 'mail'" style="display: none;" x-transition>
                     <p class="alert alert-info dark:text-gray-300 text-sm text-gray-500"><?= lang('Form.settings.MailIsOnlyAvailableOnLinuxServers'); ?> </p>
                 </div>
 
                 <!-- SendMail Settings -->
-                <div id="mail-settings" x-show="openTab === 'sendmail'" x-transition>
-
+                <div id="mail-settings" x-show="openTab === 'sendmail'" style="display: none;" x-transition>
                     <div class="row mb-3">
 
                         <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
@@ -73,7 +72,7 @@
                 </div>
 
                 <!-- SMTP Settings -->
-                <div id="mail-settings" x-show="openTab === 'smtp'" x-transition>
+                <div id="mail-settings" x-show="openTab === 'smtp'" style="display: none;" x-transition>
                     <!-- Host -->
                     <div class="row mb-3" x-data="{open: 0}">
 

@@ -15,7 +15,7 @@
 	}
 }">
 
-        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200"><?= lang('Btw.Capabilities'); ?></h3>
+        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200"><?= lang('Btw.sidebar.capabilities'); ?></h3>
 
         <table class="table table-striped border-collapse table-auto w-full whitespace-no-wrap  bg-white dark:bg-gray-800 table-striped relative" id="ckeck-list-checkbox">
 
@@ -24,8 +24,8 @@
                     <th class="text-left px-6 py-3">
                         <!--begin::Checkbox-->
                         <label class="form-check form-check-sm form-check-custom form-check-solid me-9">
-                            <input @click="toggleAllCheckboxes()" x-bind:checked="selectAll"  class="form-check-input checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500" type="checkbox" value="" <?= ($user->inGroup('superadmin')) ? 'disabled checked="checked"' : '' ; ?> id="kt_select_all" hx-put="<?= route_to('user-permissions-toggle-all'); ?>" hx-include="[name='type']" hx-target="#permissions" hx-trigger="change" hx-swap="outerHTML" />
-                            <span class="form-check-label" for="kt_select_all"><?= lang('Btw.Select all'); ?></span>
+                            <input @click="toggleAllCheckboxes()" x-bind:checked="selectAll"  class="form-check-input checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500 <?= ($user->inGroup('superadmin')) ? 'text-gray-300' : '' ; ?>" type="checkbox" value="" <?= ($user->inGroup('superadmin')) ? 'disabled checked="checked"' : '' ; ?> id="kt_select_all" hx-put="<?= route_to('user-permissions-toggle-all'); ?>" hx-include="[name='type']" hx-target="#permissions" hx-trigger="change" hx-swap="outerHTML" />
+                            <span class="form-check-label" for="kt_select_all"><?= lang('Btw.general.selectAll'); ?></span>
                         </label>
                         <!--end::Checkbox-->
                     </th>

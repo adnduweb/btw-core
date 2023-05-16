@@ -8,7 +8,7 @@
                 'name' => 'allow_login',
                 'value' => '1',
                 'checked' => (old('allow_login', setting('ShieldOAuthConfig.allow_login') ?? false))
-            ]); ?>
+            ]); ?> 
         </div>
 
         <div class="row mb-3">
@@ -23,7 +23,7 @@
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200 mb-5"><?= lang('ShieldOAuthLang.Type_connect'); ?></h3>
 
 
-        <div x-data="{allow_login_google: <?= old('allow_login_google', setting('ShieldOAuthConfig.allow_login_google')) ? true : 'false' ?>}">
+        <div x-data="{allow_login_google: <?= old('allow_login_google', setting('ShieldOAuthConfig.allow_login_google')) ? 'true' : 'false' ?>}">
 
             <div class="row mb-3">
                 <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
@@ -97,7 +97,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinggeneral" />
+        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingoauth" />
     </div>
 
 </div>

@@ -2,7 +2,7 @@
 
 <?php $this->section('main') ?>
 
-<x-page-head>Settings </x-page-head>
+<x-page-head> <?= lang('Btw.general.editProfile'); ?> </x-page-head>
 
 <x-admin-box>
 
@@ -12,7 +12,7 @@
         <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
                 <?= form_open(route_to('user-current-settings'), [
-                    'id' => 'kt_users_form_information', 'hx-post' => route_to('user-current-settings'), 'hx-target' => '#general',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadinginformation",
+                    'id' => 'kt_users_form_information', 'hx-post' => route_to('user-current-settings'), 'hx-target' => '#general',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadinginformation",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= csrf_field() ?>

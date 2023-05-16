@@ -2,7 +2,7 @@
 
 <?php $this->section('main') ?>
 
-<x-page-head>Settings </x-page-head>
+<x-page-head> <?= lang('Btw.general.editProfile'); ?> </x-page-head>
 
 <x-admin-box>
 

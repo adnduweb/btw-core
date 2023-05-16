@@ -21,7 +21,7 @@ use CodeIgniter\Shield\Models\UserIdentityModel;
 use ReflectionException;
 
 
-class UserCurrentController extends AdminController
+class ProfileController extends AdminController
 {
     protected $theme      = 'Admin';
     protected $viewPrefix = 'Btw\Core\Views\Admin\users\\current\\';
@@ -82,7 +82,7 @@ class UserCurrentController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
-                    $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.errorField', ['user'])]);
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
                     return view($this->viewPrefix . 'cells\form_cell_information', [
                         'userCurrent' => $user,
                         'validation' => $validation
@@ -106,7 +106,7 @@ class UserCurrentController extends AdminController
 
 
                 $this->response->triggerClientEvent('updateUserCurrent');
-                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.saveData', ['user'])]);
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,
@@ -125,12 +125,13 @@ class UserCurrentController extends AdminController
                 ]);
 
                 if (!$validation->run($requestJson)) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
                     return view($this->viewPrefix . 'cells\cell_groups', [
                         'userCurrent' => auth()->user(),
                         'currentGroup'    => array_flip(auth()->user()->getGroups()),
                         'groups'          => setting('AuthGroups.groups'),
                         'validation' => $validation
-                    ]) . alertHtmx('danger', 'Form validation failed.');;
+                    ]);
                 }
 
 
@@ -141,12 +142,12 @@ class UserCurrentController extends AdminController
                 $user->syncGroups(...($requestJson['currentGroup[]'] ?? []));
 
                 $this->response->triggerClientEvent('updateGroupUserCurrent');
-
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
                 return view($this->viewPrefix . 'cells\cell_groups', [
                     'userCurrent' => auth()->user(),
                     'currentGroup'    => array_flip($user->getGroups()),
                     'groups'          => setting('AuthGroups.groups'),
-                ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+                ]);
 
                 break;
             default:
@@ -265,13 +266,13 @@ class UserCurrentController extends AdminController
         if (is_array($permissions)) {
             ksort($permissions);
         }
-
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
         return view($this->viewPrefix . 'cells\form_cell_capabilities_row', [
             'rowPermission'   => [$perm, $permissions[$perm]],
             'user'   => $user,
             'menu' => service('menus')->menu('sidebar_user_current'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+        ]);
     }
 
     /**
@@ -293,13 +294,13 @@ class UserCurrentController extends AdminController
         if (is_array($permissions)) {
             ksort($permissions);
         }
-
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
         return view($this->viewPrefix . 'cells\form_cell_capabilities_tr', [
             'permissions'   => $permissions,
             'user'   => $user,
             'menu' => service('menus')->menu('sidebar_user_current'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+        ]);
     }
 
     /**
@@ -334,10 +335,11 @@ class UserCurrentController extends AdminController
         ]);
 
         if (!$validation->run($requestJson)) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Form validation failed.');;
+            ]);
         }
 
         //On vérifie que le mote d epasse en cours est connu 
@@ -361,9 +363,10 @@ class UserCurrentController extends AdminController
             model(UserIdentityModel::class)->save($identity);
         }
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
         return view($this->viewPrefix . 'cells\form_cell_changepassword', [
             'userCurrent' => auth()->user()
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+        ]);
     }
 
 
@@ -393,9 +396,10 @@ class UserCurrentController extends AdminController
         $context = 'user:' . user_id();
         service('settings')->set('Auth.actions', $actions, $context);
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
         return view($this->viewPrefix . 'cells\form_cell_two_factor', [
             'user'   => $user,
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+        ]);
     }
 
 
@@ -448,7 +452,7 @@ class UserCurrentController extends AdminController
         $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
-            'title'           => 'Capabilities',
+            'title'           => lang('Btw.sidebar.capabilities'),
             'namedRoute'      => 'user-capabilities',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'admin.view',
@@ -457,7 +461,7 @@ class UserCurrentController extends AdminController
         $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
-            'title'           => 'Change password',
+            'title'           => lang('Btw.sidebar.changePassword'),
             'namedRoute'      => 'user-change-password',
             'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'admin.view',
@@ -466,7 +470,7 @@ class UserCurrentController extends AdminController
         $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
-            'title'           => 'Two Factor',
+            'title'           => lang('Btw.sidebar.TwoFactoAuthentification'),
             'namedRoute'      => 'user-two-factor',
             'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'admin.view',
@@ -475,7 +479,7 @@ class UserCurrentController extends AdminController
         $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
-            'title'           => 'History',
+            'title'           => lang('Btw.sidebar.historyLogin'),
             'namedRoute'      => 'user-history',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'admin.view',
@@ -484,7 +488,7 @@ class UserCurrentController extends AdminController
         $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
-            'title'           => 'Browser',
+            'title'           => lang('Btw.sidebar.historyBrowser'),            
             'namedRoute'      => 'user-session-browser',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission'      => 'admin.view',

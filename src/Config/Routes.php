@@ -63,20 +63,20 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
 
 
     // User Current
-    $routes->match(['get', 'post'], 'settings/user', 'UserCurrentController::editUserCurrent', ['as' => 'user-current-settings']);
-    $routes->post('settings/users', 'UserCurrentController::save', ['as' => 'user-settings-save']);
-    $routes->get('user/update', 'UserCurrentController::update', ['as' => 'user-update']);
-    $routes->get('user/update-group/(:any)', 'UserCurrentController::updateGroup/$1', ['as' => 'user-update-group']);
-    $routes->match(['get', 'post'], 'settings/user/history', 'UserCurrentController::history', ['as' => 'user-history']);
-    $routes->match(['get', 'post'], 'settings/user/browser', 'UserCurrentController::sessionBrowser', ['as' => 'user-session-browser']);
-    $routes->match(['get', 'post'], 'settings/user/capabilities', 'UserCurrentController::capabilities', ['as' => 'user-capabilities']);
-    $routes->put('settings/user/capabilities/toggle/(:any)', 'UserCurrentController::toggle/$1', ['as' => 'user-permissions-toggle-only']);
-    $routes->put('settings/user/capabilities/toggle-all', 'UserCurrentController::toggleAll', ['as' => 'user-permissions-toggle-all']);
-    $routes->match(['get', 'post'], 'settings/user/change-password', 'UserCurrentController::changePassword', ['as' => 'user-change-password']);
-    $routes->match(['get', 'post'], 'settings/user/two-factor', 'UserCurrentController::twoFactor', ['as' => 'user-two-factor']);
-    $routes->get('user/update/avatar', 'UserCurrentController::updateAvatar', ['as' => 'user-update-avatar']);
-    $routes->get('user/update/language', 'UserCurrentController::changeLangue', ['as' => 'user-current-language']);
-    $routes->get('user/update/sidebar-expanded', 'UserCurrentController::changeSidebarExpanded', ['as' => 'user-current-sidebarexpanded']);
+    $routes->match(['get', 'post'], 'settings/user', 'ProfileController::editUserCurrent', ['as' => 'user-current-settings']);
+    $routes->post('settings/users', 'ProfileController::save', ['as' => 'user-settings-save']);
+    $routes->get('user/update', 'ProfileController::update', ['as' => 'user-update']);
+    $routes->get('user/update-group/(:any)', 'ProfileController::updateGroup/$1', ['as' => 'user-update-group']);
+    $routes->match(['get', 'post'], 'settings/user/history', 'ProfileController::history', ['as' => 'user-history']);
+    $routes->match(['get', 'post'], 'settings/user/browser', 'ProfileController::sessionBrowser', ['as' => 'user-session-browser']);
+    $routes->match(['get', 'post'], 'settings/user/capabilities', 'ProfileController::capabilities', ['as' => 'user-capabilities']);
+    $routes->put('settings/user/capabilities/toggle/(:any)', 'ProfileController::toggle/$1', ['as' => 'user-permissions-toggle-only']);
+    $routes->put('settings/user/capabilities/toggle-all', 'ProfileController::toggleAll', ['as' => 'user-permissions-toggle-all']);
+    $routes->match(['get', 'post'], 'settings/user/change-password', 'ProfileController::changePassword', ['as' => 'user-change-password']);
+    $routes->match(['get', 'post'], 'settings/user/two-factor', 'ProfileController::twoFactor', ['as' => 'user-two-factor']);
+    $routes->get('user/update/avatar', 'ProfileController::updateAvatar', ['as' => 'user-update-avatar']);
+    $routes->get('user/update/language', 'ProfileController::changeLangue', ['as' => 'user-current-language']);
+    $routes->get('user/update/sidebar-expanded', 'ProfileController::changeSidebarExpanded', ['as' => 'user-current-sidebarexpanded']);
 
 
     // Files Logs

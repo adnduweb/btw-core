@@ -76,7 +76,6 @@ class SelectCell
 
     public function getValidation($params)
     {
-
         $html = '';
         if (isset($params['lang']) && $params['lang'] == true) {
 

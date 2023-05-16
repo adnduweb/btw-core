@@ -1,7 +1,7 @@
 <div id="changepassword" class="shadow sm:rounded-md sm:overflow-hidden">
     <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
-        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Change paswword</h3>
+        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200"><?= lang('Btw.sidebar.changePassword'); ?></h3>
 
 
 
@@ -13,7 +13,7 @@
                 <div class="relative">
                     <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
                         'type' => 'password',
-                        'label' => lang('Btw.Current password'),
+                        'label' => lang('Form.users.currentPassword'),
                         'name' => 'current_password',
                         'value' => "",
                         'xType' => "show ? 'password' : 'text'"
@@ -26,7 +26,7 @@
 
                     <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
                         'type' => 'password',
-                        'label' => lang('Btw.New password'),
+                        'label' => lang('Form.users.newPassword'),
                         'name' => 'new_password',
                         'value' => "",
                         'xType' => "show ? 'password' : 'text'",
@@ -41,7 +41,7 @@
                     <div class="relative">
                         <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
                             'type' => 'password',
-                            'label' => lang('Btw.Confirm password'),
+                            'label' => lang('Form.users.confirmPassword'),
                             'name' => 'pass_confirm',
                             'value' => "",
                             'xType' => "show ? 'password' : 'text'",
@@ -68,24 +68,24 @@
         </div>
         <hr class="my-5 border border-gray-200">
         <div class="mb-2">
-            <label class="block text-xs font-semibold text-gray-500 mb-2">PASSWORD LENGTH</label>
+            <label class="block text-xs font-semibold text-gray-500 mb-2"><?= lang('Form.users.passwordLength'); ?></label>
             <input class="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="Length" type="number" min="6" max="30" step="1" x-model="charsLength" @input="generatePassword()" />
             <input class="w-full" type="range" x-model="charsLength" min="6" max="30" step="1" @input="generatePassword()">
         </div>
         <div class="flex -mx-2 mb-2">
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Btw.LOWERCASE'), 'name' => 'charsLower', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Form.users.LOWERCASE'), 'name' => 'charsLower', 'value' => "", 'checked' => true, 'disabled' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Btw.UPPERCASE'), 'name' => 'charsUpper', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Form.users.UPPERCASE'), 'name' => 'charsUpper', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
         </div>
         <div class="flex -mx-2">
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Btw.NUMBERS'), 'name' => 'charsNumeric', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Form.users.NUMBERS'), 'name' => 'charsNumeric', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Btw.SYMBOLS'), 'name' => 'charsSymbols', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Form.users.SYMBOLS'), 'name' => 'charsSymbols', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
         </div>
 

@@ -1,8 +1,7 @@
 <div id="avatar" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
-    <div x-data="{useGravatar: <?= old('useGravatar', setting('Users.useGravatar')) ? true : 'false' ?>}" class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div x-data="{useGravatar: <?= old('useGravatar', setting('Users.useGravatar')) ? 'true' : 'false' ?>}" class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Avatars</h3>
-
 
         <!-- Name Basis -->
         <div class="row mb-3">

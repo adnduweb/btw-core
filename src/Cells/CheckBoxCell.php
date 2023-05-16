@@ -21,6 +21,7 @@ class CheckBoxCell
     protected $class;
 
     protected $xInput;
+    protected $disabled;
 
     public function renderList($params)
     {
@@ -31,6 +32,7 @@ class CheckBoxCell
         $this->checkedNew = esc(set_value(str_replace(' ', '_', $params['name']), $params['checked'] ?? null), 'attr');
         $this->class = (isset($params['class'])) ? $params['class'] : '';
         $this->xInput = (isset($params['xInput'])) ? '@input="' . $params['xInput'] . '"' : '';
+        $this->disabled = (isset($params['disabled'])) ? 'disabled="disabled"' : '';
 
         $html = '<div class="flex items-center '.$this->class.'">';
         $html .= $this->getInput($params);
@@ -58,9 +60,9 @@ class CheckBoxCell
 
         $html = "";
         if (isset($params['lang']) && $params['lang'] == true) {
-            $html .= '<input type="checkbox" ' .  $this->xInput . ' name="lang[' . request()->getLocale() . '][' . $params['name'] . ']" id="' . $params['name'] . '" autocomplete="text" value="' . $params['value'] . '" ' . $isChecked. ' class="rcheckbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500">';
+            $html .= '<input '.$this->disabled.' type="checkbox" ' .  $this->xInput . ' name="lang[' . request()->getLocale() . '][' . $params['name'] . ']" id="' . $params['name'] . '" autocomplete="text" value="' . $params['value'] . '" ' . $isChecked. ' class="rcheckbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500">';
         } else {
-            $html .= '<input type="checkbox" ' .  $this->xInput . ' name="' . $params['name'] . '" id="' . $params['name']. '" autocomplete="text" value="' . $params['value'] . '" ' . $isChecked. ' class="rcheckbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500">';
+            $html .= '<input '.$this->disabled.' type="checkbox" ' .  $this->xInput . ' name="' . $params['name'] . '" id="' . $params['name']. '" autocomplete="text" value="' . $params['value'] . '" ' . $isChecked. ' class="rcheckbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500">';
         }
 
         if (isset($params['description'])) {

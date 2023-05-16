@@ -392,7 +392,7 @@ class GeneralSettingsController extends AdminController
 
         // Avatars
         setting('Users.useGravatar', $requestJson['useGravatar'] ?? false);
-       // setting('Users.gravatarDefault', $requestJson['gravatarDefault']);
+        setting('Users.gravatarDefault', $requestJson['gravatarDefault']);
         setting('Users.avatarNameBasis', $requestJson['avatarNameBasis']);
 
         $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
