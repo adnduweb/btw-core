@@ -24,12 +24,6 @@ return [
     'general' => [
         'settings' => 'réglages',
         'users' => 'utilisateurs',
-        'selectAll' => 'Tout sélectionner',
-        'signOut' => 'Se déconnecter',
-        'currentSession' => 'Session en cours',
-        'success' => 'Succès',
-        'failed' => 'Echec',
-        'editProfile' => 'Modification de votre profil'
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
@@ -38,12 +32,7 @@ return [
     'sidebar' => [
         'LoginAndRegistration' => 'Connexion et enregistrement',
         'passwords' => 'Mots de passe',
-        'update' => 'Mise à jour',
-        'capabilities' => 'Permissions',
-        'changePassword' => 'Changer de mot de passe', 
-        'TwoFactoAuthentification' => 'Authentification à deux facteurs', 
-        'historyLogin' => 'Historique de connexion',
-        'historyBrowser' => 'Navigateur session',
+        'update' => 'Mise à jour'
     ],
     
     'resourceNotFound'     => 'Unable to find the {0}.',
