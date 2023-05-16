@@ -63,7 +63,6 @@ class Admin implements FilterInterface
         if ($request->isHtmx()) {
            
             if (!$request->is('get') && ($request->is('post') || $request->is('json'))) {
-                print_r($request->getMethod()); 
                 if (service('throttler')->check(md5($request->getIPAddress()), 4, MINUTE) === false) {
                     response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.throttled', [service('throttler')->getTokenTime()])]);
                     return service('response')->setStatusCode(
