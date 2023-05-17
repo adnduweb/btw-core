@@ -87,8 +87,15 @@ class UsersController extends AdminController
                 return view('Themes\Admin\Datatabase\email', ['row' => $row]);
             })
             ->edit('active', function ($row) {
-                $active = ($row->active == '1') ? '<span class="inline-flex items-center rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-800">' . lang('Btw.yes') . '</span>' : '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.no') . '</span>';
-                return $active;
+                // $active = ($row->active == '1') ? '<span class="inline-flex items-center rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-800">' . lang('Btw.yes') . '</span>' : '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.no') . '</span>';
+                // return $active;
+                $row = new User((array) $row);
+                return view('Themes\Admin\Datatabase\switch', [
+                    'row' => $row,
+                    'type' => 'user',
+                    'hxGet' => route_to('user-active-table', $row->id),
+                    'hxSwap' => "none"
+                ]);
             })
             ->add('type', function ($row) {
                 $userCurrent = model(UserModel::class)->getAuthGroupsUsers($row->id);
@@ -103,7 +110,7 @@ class UsersController extends AdminController
             })
             ->add('action', function ($row) {
                 $row = new User((array) $row);
-                return view('Themes\Admin\Datatabase\action', ['row' => $row]);
+                return view('Themes\Admin\Datatabase\action', ['row' => $row, 'type' => 'user', 'actions' =>  $this->actions]);
             }, 'last')
             ->toJson(true);
     }
@@ -112,6 +119,36 @@ class UsersController extends AdminController
     {
         print_r($_POST);
         exit;
+    }
+
+    public function activeTable(int $userId)
+    {
+        $users = model(UserModel::class);
+        if (!$user = $users->find($userId)) {
+            throw new userNotFoundException('Incorrect user id.');
+        }
+
+        if( user_id() == $userId){
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.general.notAuthorized', ['user'])]);
+            return $this;
+        }
+
+        $user->active = $user->active == true ? false : true;
+        $user->updated_at = date('Y-m-d H:i:s');
+
+        // Try saving basic details
+        try {
+            if (!$users->save($user, true)) {
+                log_message('error', 'user errors', $users->errors());
+                alertHtmx('danger', lang('Btw.unknownSaveError', ['user']));
+            }
+            $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
+            //$this->response->triggerClientEvent('reloadTable');
+        } catch (\Exception $e) {
+            log_message('debug', 'SAVING USER: ' . $e->getMessage());
+        }
+
+        $this->response->setStatusCode(204, 'No Content');
     }
 
 
@@ -157,7 +194,7 @@ class UsersController extends AdminController
 
                 if (!$validation->run($requestJson)) {
                     if ($this->request->isHtmx() && !$this->request->isBoosted()) {
-                        $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.formValidationFailed', ['user'])]);
+                        $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
                     } else
                         alertHtmx('danger', 'Form validation failed.');
 
@@ -187,7 +224,7 @@ class UsersController extends AdminController
                 }
 
                 if ($this->request->isHtmx() && !$this->request->isBoosted()) {
-                    $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.saveData', ['user'])]);
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
                     $this->response->triggerClientEvent('updateUser');
                 }
 
@@ -226,7 +263,7 @@ class UsersController extends AdminController
 
 
                 if ($this->request->isHtmx()) {
-                    $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.resourcesSaved', ['user'])]);
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
                     $this->response->triggerClientEvent('updateGroupUserCurrent');
                 }else
                 alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
@@ -304,12 +341,13 @@ class UsersController extends AdminController
             ksort($permissions);
         }
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
         return view($this->viewPrefix . 'cells\form_cell_capabilities_row', [
             'rowPermission' => [$perm, $permissions[$perm]],
             'user' => $user,
             'menu' => service('menus')->menu('sidebar_user'),
             'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+        ]);
     }
 
     /**

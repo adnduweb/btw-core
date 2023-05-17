@@ -24,7 +24,7 @@ use ReflectionException;
 class ProfileController extends AdminController
 {
     protected $theme      = 'Admin';
-    protected $viewPrefix = 'Btw\Core\Views\Admin\users\\current\\';
+    protected $viewPrefix = 'Btw\Core\Views\Admin\users\\profile\\';
 
     public function __construct()
     {
@@ -49,7 +49,7 @@ class ProfileController extends AdminController
                 'userCurrent' => auth()->user(),
                 'currentGroup'    => array_flip(auth()->user()->getGroups()),
                 'groups'          => setting('AuthGroups.groups'),
-                'menu' => service('menus')->menu('sidebar_user_current'),
+                'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
@@ -110,7 +110,7 @@ class ProfileController extends AdminController
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,
-                    'menu' => service('menus')->menu('sidebar_user_current'),
+                    'menu' => service('menus')->menu('sidebar_user_profile'),
                     'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
                 ]);
 
@@ -190,7 +190,7 @@ class ProfileController extends AdminController
             return $this->render($this->viewPrefix . 'settings_user_history', [
                 'user'   => $user,
                 'logins' => $logins,
-                'menu' => service('menus')->menu('sidebar_user_current'),
+                'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
@@ -215,7 +215,7 @@ class ProfileController extends AdminController
             return $this->render($this->viewPrefix . 'settings_user_browser', [
                 'user'   => $user,
                 'sessions' => $sessions,
-                'menu' => service('menus')->menu('sidebar_user_current'),
+                'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
@@ -240,7 +240,7 @@ class ProfileController extends AdminController
             return $this->render($this->viewPrefix . 'settings_user_capabilities', [
                 'permissions'   => $permissions,
                 'user'   => $user,
-                'menu' => service('menus')->menu('sidebar_user_current'),
+                'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
@@ -270,7 +270,7 @@ class ProfileController extends AdminController
         return view($this->viewPrefix . 'cells\form_cell_capabilities_row', [
             'rowPermission'   => [$perm, $permissions[$perm]],
             'user'   => $user,
-            'menu' => service('menus')->menu('sidebar_user_current'),
+            'menu' => service('menus')->menu('sidebar_user_profile'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
         ]);
     }
@@ -298,7 +298,7 @@ class ProfileController extends AdminController
         return view($this->viewPrefix . 'cells\form_cell_capabilities_tr', [
             'permissions'   => $permissions,
             'user'   => $user,
-            'menu' => service('menus')->menu('sidebar_user_current'),
+            'menu' => service('menus')->menu('sidebar_user_profile'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
         ]);
     }
@@ -320,7 +320,7 @@ class ProfileController extends AdminController
 
             return $this->render($this->viewPrefix . 'settings_user_change_password', [
                 'userCurrent' => auth()->user(),
-                'menu' => service('menus')->menu('sidebar_user_current'),
+                'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
@@ -383,7 +383,7 @@ class ProfileController extends AdminController
 
             return $this->render($this->viewPrefix . 'settings_user_two_factor', [
                 'user'   => $user,
-                'menu' => service('menus')->menu('sidebar_user_current'),
+                'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
             ]);
         }
@@ -435,8 +435,8 @@ class ProfileController extends AdminController
         $menus = service('menus');
 
         // Sidebar menu
-        $menus->createMenu('sidebar_user_current');
-        $menus->menu('sidebar_user_current')
+        $menus->createMenu('sidebar_user_profile');
+        $menus->menu('sidebar_user_profile')
             ->createCollection('content', 'Content');
     }
     public function addMenuSidebar()
@@ -444,66 +444,66 @@ class ProfileController extends AdminController
         $sidebar = service('menus');
         $item    = new MenuItem([
             'title'           => 'Information',
-            'namedRoute'      => 'user-current-settings',
+            'namedRoute'      => 'user-profile-settings',
             'fontIconSvg'     => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+            'permission'      => 'admin.view.profile',
             'weight' => 1
         ]);
-        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+        $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
             'title'           => lang('Btw.sidebar.capabilities'),
             'namedRoute'      => 'user-capabilities',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+            'permission'      => 'admin.view.profile',
             'weight' => 2
         ]);
-        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+        $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
             'title'           => lang('Btw.sidebar.changePassword'),
             'namedRoute'      => 'user-change-password',
             'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+            'permission'      => 'admin.view.profile',
             'weight' => 3
         ]);
-        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+        $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
             'title'           => lang('Btw.sidebar.TwoFactoAuthentification'),
             'namedRoute'      => 'user-two-factor',
             'fontIconSvg'     => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+            'permission'      => 'admin.view.profile',
             'weight' => 3
         ]);
-        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+        $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
             'title'           => lang('Btw.sidebar.historyLogin'),
             'namedRoute'      => 'user-history',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+            'permission'      => 'admin.view.profile',
             'weight' => 4
         ]);
-        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+        $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
             'title'           => lang('Btw.sidebar.historyBrowser'),            
             'namedRoute'      => 'user-session-browser',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission'      => 'admin.view',
+            'permission'      => 'admin.view.profile',
             'weight' => 4
         ]);
-        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+        $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
 
         $item    = new MenuItem([
             'title'           => 'Delete',
             'namedRoute'      => 'settings-email',
             'fontIconSvg'     => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 text-red-800', true),
-            'permission'      => 'admin.view',
+            'permission'      => 'admin.view.profile',
             'color'           => 'text-red-800',
             'weight' => 5
         ]);
-        $sidebar->menu('sidebar_user_current')->collection('content')->addItem($item);
+        $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
     }
 }

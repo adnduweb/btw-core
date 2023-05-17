@@ -11,7 +11,7 @@
             <tbody class="text-gray-700 dark:text-gray-200 ">
                 <tr>
                     <td class="text-left py-3 px-4"><?= lang('Form.users.Account Type'); ?></td>
-                    <td class="text-left py-3 px-4" hx-get="/<?= ADMIN_AREA; ?>/user/update-group/<?= auth()->user()->id; ?>" hx-trigger="load delay:1s, updateGroupUserCurrent from:body"> <?= $this->setVar('userCurrent', $userCurrent)->include('Btw\Core\Views\Admin\users\current\cells\line_group'); ?></td>
+                    <td class="text-left py-3 px-4" hx-get="/<?= ADMIN_AREA; ?>/user/update-group/<?= auth()->user()->id; ?>" hx-trigger="load delay:1s, updateGroupUserCurrent from:body"> <?= $this->setVar('userCurrent', $userCurrent)->include('Btw\Core\Views\Admin\users\profile\cells\line_group'); ?></td>
                     <td>
                         <button @click="modelOpen =!modelOpen" class="">
                             <?= lang('Form.users.change'); ?>
@@ -75,14 +75,14 @@
             </div>
 
 
-            <?= form_open(route_to('user-current-settings'), [
-                'id' => 'kt_users_form_modalgroups', 'class' => 'mt-5',  'hx-post' => route_to('user-current-settings'), 'hx-target' => '#modalgroups', 'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingmodalgroups",
+            <?= form_open(route_to('user-profile-settings'), [
+                'id' => 'kt_users_form_modalgroups', 'class' => 'mt-5',  'hx-post' => route_to('user-profile-settings'), 'hx-target' => '#modalgroups', 'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingmodalgroups",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <?= csrf_field() ?>
             <input type="hidden" name="section" value="groups" />
 
-            <?= $this->include('Btw\Core\Views\Admin\users\current\cells\cell_groups'); ?>
+            <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\cell_groups'); ?>
 
 
             <?= form_close(); ?>

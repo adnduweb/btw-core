@@ -17,7 +17,7 @@
                 ]); ?>
                 <?= '' //csrf_field() ?>
                 <input type="hidden" name="section" value="two_factor" />
-                <?= $this->include('Btw\Core\Views\Admin\users\current\cells\form_cell_two_factor'); ?>
+                <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_two_factor'); ?>
                 <?= form_close(); ?>
             </div>
 

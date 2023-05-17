@@ -63,7 +63,7 @@ class Admin implements FilterInterface
         if ($request->isHtmx()) {
            
             if (!$request->is('get') && ($request->is('post') || $request->is('json'))) {
-                if (service('throttler')->check(md5($request->getIPAddress()), 4, MINUTE) === false) {
+                if (service('throttler')->check(md5($request->getIPAddress()), 10, MINUTE) === false) {
                     response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.throttled', [service('throttler')->getTokenTime()])]);
                     return service('response')->setStatusCode(
                         429,
@@ -77,8 +77,6 @@ class Admin implements FilterInterface
                 }
             }
         }
-
-
 
 
         // print_r($controller);

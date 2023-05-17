@@ -84,7 +84,7 @@
                                             <button type="button" class="w-full flex justify-start text-red-700 dark:text-gray-200"
                                                 data-kt-datatable-action="delete_selected">
                                                 <span>
-                                                    <?= lang('Btw.delete'); ?>
+                                                    <?= lang('Btw.general.delete'); ?>
                                                 </span>
                                             </button>
                                         </div>
@@ -97,7 +97,7 @@
                                             <button type="button" class="w-full flex justify-start"
                                                 data-kt-datatable-action="active_selected">
                                                 <span>
-                                                    <?= lang('Btw.active'); ?>
+                                                    <?= lang('Btw.general.active'); ?>
                                                 </span>
                                             </button>
                                         </div>
@@ -111,7 +111,7 @@
                                             <button type="button" class="w-full flex justify-start"
                                                 data-kt-datatable-action="descative_selected">
                                                 <span>
-                                                    <?= lang('Btw.desactive'); ?>
+                                                    <?= lang('Btw.general.desactive'); ?>
                                                 </span>
                                             </button>
                                         </div>

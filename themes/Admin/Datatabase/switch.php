@@ -6,6 +6,14 @@
 ] ; ?>
 
 
+<?php if ((isset($type) && $type == 'user' && user_id() == $row->id)) :
+    $params['disabled'] = true ;
+endif; ?>
+
+<?php if ((isset($type) && $type == 'user' && auth()->user()->inGroup('admin'))) :
+    $params['disabled'] = true ;
+endif; ?>
+
 <?php if (isset($hxGet)) :
     $params['hxGet'] = $hxGet;
 endif; ?>

@@ -104,6 +104,7 @@ class AuthGroups extends ShieldAuthGroups
             'page.*',
         ],
         'admin' => [
+            'admin.view.profile',
             'admin.access',
             'users.list',
             'users.create',

@@ -113,8 +113,10 @@ class Decorator implements ViewDecoratorInterface
                 $templateVarMessage = addslashes($messageHTMX);
             }
             if (strpos($html, alertHtmx($type, $templateVarMessage)) === false) {
-                $html = str_replace('<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">', '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">' . alertHtmx($type, $templateVarMessage), $html);
-            }
+                $html = str_replace(
+                    '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">', 
+                    '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">' . alertHtmx($type, $templateVarMessage), $html);
+            } 
         }
         return $html;
     }

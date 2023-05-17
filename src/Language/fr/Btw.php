@@ -29,7 +29,15 @@ return [
         'currentSession' => 'Session en cours',
         'success' => 'Succès',
         'failed' => 'Echec',
-        'editProfile' => 'Modification de votre profil'
+        'editProfile' => 'Modification de votre profil',
+        'viewProfile' => 'Voir le profil',
+        'edit' => 'Modifier',
+        'delete' => 'Supprimer',
+        'active' => 'Activer',
+        'desactive' => 'Désactiver',
+        'LogsSystemList' => 'Logs du système',
+        'user' => 'utilisateur',
+        'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',

@@ -39,6 +39,10 @@ class ActivityController extends AdminController
     protected $logsLimit;
     protected $logsHandler;
 
+    public $actions = [
+        'delete'
+    ];
+
 
 
     public function __construct()
@@ -109,6 +113,7 @@ class ActivityController extends AdminController
 
         $model = model(ActivityModel::class);
         $data['columns'] = $model->getColumn();
+        $data['actions'] = $this->actions;
 
         return $this->render($this->viewPrefix . 'system\index',  $data);
     }
@@ -141,7 +146,7 @@ class ActivityController extends AdminController
             })
             ->add('action', function ($row) {
                 $row = new Activity((array)$row);
-                return view('Themes\Admin\Datatabase\action', ['row' => $row]);
+                return view('Themes\Admin\Datatabase\action', ['row' => $row, 'actions' => $this->actions]); 
             }, 'last')
             ->toJson(true);
     }
@@ -171,7 +176,8 @@ class ActivityController extends AdminController
 
                 $model->delete(['id' => $id]);
             }
-            return $this->respond(['success' => lang('Core.your_selected_records_have_been_deleted'), 'messagehtml' => alertHtmx('success', lang('Btw.resourcesSaved', ['users']))], 200);
+            //return $this->respond(['success' => lang('Core.your_selected_records_have_been_deleted'), 'messagehtml' => alertHtmx('success', lang('Btw.resourcesSaved', ['users']))], 200);
+            //$this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
         }
         return $this->respondNoContent();
     }
@@ -201,7 +207,7 @@ class ActivityController extends AdminController
                     @unlink($this->logsPath . sanitize_filename($file));
                 }
 
-                theme()->set_message_htmx('success', lang('Btw.resourcesDeleted', ['Logs']));
+                theme()->set_message_htmx('success', lang('Btw.message.resourcesDeleted', ['Logs']));
                 return redirect()->to(route_to('logs-file'));
             }
         }
@@ -211,7 +217,7 @@ class ActivityController extends AdminController
                 // Restore the index.html file.
                 @copy(APPPATH . '/index.html', "{$this->logsPath}index.html");
 
-                theme()->set_message_htmx('success', lang('Btw.resourcesDeletedAll', ['Logs']));
+                theme()->set_message_htmx('success', lang('Btw.message.resourcesDeletedAll', ['Logs']));
                 return redirect()->to(route_to('logs-file'));
             }
 

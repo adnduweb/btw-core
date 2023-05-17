@@ -32,7 +32,7 @@ class UserModel extends ShieldUsers
         ['name' => 'selection'],
         ['name' => 'username', 'orderable' => true, 'header' => 'Username', 'order_by_username' => 'DESC', 'responsivePriority' => 1],
         ['name' => 'secret', 'orderable' => true, 'header' => 'Email', 'order_by_email' => 'DESC'],
-        ['name' => 'active', 'orderable' => true, 'header' => 'Active', 'order_by_active' => 'DESC'],
+        ['name' => 'active', 'orderable' => true, 'header' => 'Active', 'order_by_active' => 'DESC', 'notClick' => true],
         ['name' => 'created_at', 'orderable' => true, 'header' => 'created_at', 'order_by_email' => 'DESC'],
         ['name' => 'type', 'orderable' => true, 'header' => 'Type', 'order_by_type' => 'DESC'],
         ['name' => '2fa', 'orderable' => true, 'header' => '2FA', 'order_by_2fa' => 'DESC'],

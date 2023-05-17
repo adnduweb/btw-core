@@ -41,7 +41,6 @@
         }
         last_checked = event.target;
     }
-
 </script>
 <?php $this->endSection() ?>
 
@@ -138,14 +137,32 @@
                                     echo "responsivePriority: " . $column['responsivePriority'] . ", ";
                                 endif;
                                 echo "createdCell: function(td, cellData, rowData, row, col) {";
-                                echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/page/edit/' + rowData.id + '/information\")');";
+                                if (!isset($column['notClick'])) :
+                                    echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/users/edit/' + rowData.id + '/information\")');";
+                                endif;
                                 echo "}";
                                 echo "},";
                         }
                         ?>
                     <?php $i++;
                     endforeach; ?>
-                ]
+                ],
+                // Use DataTables' initComplete callback to tell htmx to reprocess any htmx attributes in the table
+                // DataTables docs: https://datatables.net/reference/option/initComplete
+                // htmx docs: https://htmx.org/api/#process AND https://htmx.org/docs/#3rd-party
+                "initComplete": function(settings, json) {
+                    htmx.process(table);
+                },
+            });
+
+
+            // Add an event listener that updates the table whenever an htmx request completes
+            // DataTables docs: https://datatables.net/reference/api/ajax.reload()
+            // htmx docs: https://htmx.org/events/#htmx:afterRequest
+            document.body.addEventListener('reloadTable', function(evt) {
+                Ci4DataTables["kt_table_users-table"].ajax.reload(function() {
+                    htmx.process('table');
+                }, false)
             });
 
             // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
@@ -154,6 +171,7 @@
                 handleDeleteRows();
                 toggleToolbars();
                 handleSelectedRowDatatable();
+                htmx.process(table);
             });
 
         }

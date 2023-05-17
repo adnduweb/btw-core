@@ -49,19 +49,19 @@
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.dd/mm/yyyy'), 'name' => 'dateFormat', 'value' => 'd/m/Y', 'checked' => (old('dateFormat', $dateFormat) === 'd/m/Y')]); ?>
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Form.time.dd/mm/yyyy'), 'name' => 'dateFormat', 'value' => 'd/m/Y', 'checked' => (old('dateFormat', $dateFormat) === 'd/m/Y')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.dd-mm-yyyy'), 'name' => 'dateFormat', 'value' => 'd/m/Y', 'checked' => (old('dateFormat', $dateFormat) === 'd-m-Y')]); ?>
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Form.time.dd-mm-yyyy'), 'name' => 'dateFormat', 'value' => 'd/m/Y', 'checked' => (old('dateFormat', $dateFormat) === 'd-m-Y')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.yyyy-mm-dd'), 'name' => 'dateFormat', 'value' => 'M j, Y', 'checked' => (old('dateFormat', $dateFormat) === 'Y-m-d')]); ?>
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Form.time.yyyy-mm-dd'), 'name' => 'dateFormat', 'value' => 'M j, Y', 'checked' => (old('dateFormat', $dateFormat) === 'Y-m-d')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.mmm dd, yyyy'), 'name' => 'dateFormat', 'value' => 'M j, Y', 'checked' => (old('dateFormat', $dateFormat) === 'M j, Y')]); ?>
+                    <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Form.time.mmm dd, yyyy'), 'name' => 'dateFormat', 'value' => 'M j, Y', 'checked' => (old('dateFormat', $dateFormat) === 'M j, Y')]); ?>
                 </div>
 
             </div>
@@ -71,11 +71,11 @@
                 <div class="col-12 col-sm-4">
 
                     <div class="form-check ml-4 mb-2 mt-2 ">
-                        <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.12 hour with AM/PM'), 'name' => 'timeFormat', 'value' => 'g:i A', 'checked' => (old('timeFormat', $timeFormat) === 'g:i A')]); ?>
+                        <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Form.time.12 hour with AM/PM'), 'name' => 'timeFormat', 'value' => 'g:i A', 'checked' => (old('timeFormat', $timeFormat) === 'g:i A')]); ?>
                     </div>
 
                     <div class="form-check ml-4 mb-2 mt-2 ">
-                        <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Btw.24 hour'), 'name' => 'timeFormat', 'value' => 'H:i', 'checked' => (old('timeFormat', $timeFormat) === 'H:i')]); ?>
+                        <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => lang('Form.time.24 hour'), 'name' => 'timeFormat', 'value' => 'H:i', 'checked' => (old('timeFormat', $timeFormat) === 'H:i')]); ?>
                     </div>
 
                 </div>

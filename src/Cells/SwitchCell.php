@@ -33,6 +33,8 @@ class SwitchCell
     /** HTMX swap */
     protected $hxSwap;
 
+    protected $disabled;
+
     public function renderList($params)
     {
         if (!isset($params['label'])) {
@@ -41,7 +43,7 @@ class SwitchCell
 
         $html = "";
 
-      
+// print_r($params); exit;      
 
         $this->checkedNew = $params['checked'] == false ? 'false' : 'true';
         $this->value = (!empty($params['value'])) ? $params['value'] : true;
@@ -53,9 +55,11 @@ class SwitchCell
         $this->xNotData = (isset($params['xNotData'])) ? '' : 'x-data="{' . $this->xOn . ': ' . $this->checkedNew . '}"';
         $this->hxGet = (isset($params['hxGet'])) ? 'hx-get="'.$params['hxGet'].'"' : '';
         $this->hxSwap = (isset($params['hxSwap'])) ? 'hx-swap="'.$params['hxSwap'].'"' : '';
+        $this->disabled = (isset($params['disabled']) && $params['disabled'] == true) ? 'disabled="disabled"' : false;
+        $disabledClass = (isset($params['disabled']) && $params['disabled'] == true) ? 'bg-gray-100 dark:bg-gray-300' : 'bg-gray-400 dark:bg-gray-700';
               
         $html .= '<div class="flex items-center ' . $this->class . '">';
-        $html .= '<button type="button" class="button-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-100" ' . $this->xNotData . '  role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \'bg-gray-400 dark:bg-gray-700\': ' . $this->xOn . ',\'bg-slate-100\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' ' .  $this->hxGet . ' ' .  $this->hxSwap .' >';
+        $html .= '<button '.$this->disabled.' type="button" class="button-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-100" ' . $this->xNotData . '  role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \' '.$disabledClass.' \': ' . $this->xOn . ',\'bg-slate-100\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' ' .  $this->hxGet . ' ' .  $this->hxSwap .' >';
         $html .= '<span class="sr-only">Use setting</span>';
         $html .= $this->getInput($params);
         $html .= '<span class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \'translate-x-5\': ' . $this->xOn . ', \'translate-x-0\': !(' . $this->xOn . ') }">';

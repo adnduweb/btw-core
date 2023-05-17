@@ -33,7 +33,7 @@
                     <th></th>
                 <tr>
             </thead>
-            <?= $this->setVar('permissions', $permissions)->include('Btw\Core\Views\Admin\users\current\cells\form_cell_capabilities_tr'); ?>
+            <?= $this->setVar('permissions', $permissions)->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_capabilities_tr'); ?>
         </table>
 
 

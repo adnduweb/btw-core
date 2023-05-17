@@ -1,14 +1,14 @@
 <?= $this->extend('Themes\Admin\master') ?>
 
-<?= $this->section('title') ?><?= lang('Auth.login') ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= lang('Btw.general.LogsSystemList'); ?> <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 
 
-<x-page-head> <?= lang('Btw.LogsSystemList'); ?> </x-page-head>
+<x-page-head> <?= lang('Btw.general.LogsSystemList'); ?> </x-page-head>
 <x-admin-box>
 
-    <?= $this->include('Themes\Admin\Datatabase\_headerTable'); ?>
+    <?= $this->setData(['actions' => $actions])->include('Themes\Admin\Datatabase\_headerTable'); ?> 
 
     <div class="row justify-content-md-center">
 
@@ -136,9 +136,6 @@
                                 if (isset($column['responsivePriority'])) :
                                     echo "responsivePriority: " . $column['responsivePriority'] . ", ";
                                 endif;
-                                echo "createdCell: function(td, cellData, rowData, row, col) {";
-                                echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/page/edit/' + rowData.id + '/information\")');";
-                                echo "}";
                                 echo "},";
                         }
                         ?>
