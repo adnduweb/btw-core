@@ -98,7 +98,7 @@
 
                                         <?php foreach ($collection->items() as $item) : ?>
                                             <?php if ($item->userCanSee()) : ?>
-                                                <a :class="isSidebarExpanded ? '' : 'justify-center'" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-400 dark:text-slate-300 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-gray-800 text-white dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active bg-gray-800 text-white dark:bg-slate-900' : '' ?>" href="<?= $item->url ?>">
+                                                <a :class="isSidebarExpanded ? '' : 'justify-center'" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-400 dark:text-slate-300 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-gray-800 text-white dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
                                                     <?= $item->icon ?>
                                                     <span :class="isSidebarExpanded ? 'block' : 'hidden'"><?= $item->title ?></span>
                                                 </a>

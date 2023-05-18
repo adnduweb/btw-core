@@ -35,19 +35,20 @@ class ActivityController extends AdminController
 
     protected $viewPrefix = 'Btw\Core\Views\Admin\\activity\\';
 
-    protected $logsPath = WRITEPATH . 'logs/';
+    protected $logsPath   = WRITEPATH . 'logs/';
     protected $logsLimit;
     protected $logsHandler;
 
-    public static $actions = [
+    public $actions = [
         'delete'
     ];
+
 
 
     public function __construct()
     {
         helper('filesystem');
-        $this->logsLimit = setting('Site.perPage') ?? 60;
+        $this->logsLimit   = setting('Site.perPage') ?? 60;
         $this->logsHandler = new Logs();
     }
 
@@ -65,7 +66,7 @@ class ActivityController extends AdminController
         $result = $this->logsHandler->paginateLogs($logs, $this->logsLimit);
 
         return $this->render($this->viewPrefix . 'files\index', [
-            'logs' => $result['logs'],
+            'logs'  => $result['logs'],
             'pager' => $result['pager'],
         ]);
     }
@@ -91,10 +92,10 @@ class ActivityController extends AdminController
         $result = $this->logsHandler->paginateLogs($logs, $this->logsLimit);
 
         return $this->render($this->viewPrefix . 'files\view_log', [
-            'logFile' => $file,
-            'canDelete' => 1,
-            'logContent' => $result['logs'],
-            'pager' => $result['pager'],
+            'logFile'       => $file,
+            'canDelete'     => 1,
+            'logContent'    => $result['logs'],
+            'pager'         => $result['pager'],
             'logFilePretty' => date('F j, Y', strtotime(str_replace('.log', '', str_replace('log-', '', $file)))),
         ]);
     }
@@ -103,18 +104,18 @@ class ActivityController extends AdminController
     {
 
         $data = [
-            'limit' => $this->request->getGet('limit') ?? 5,
-            'page' => $this->request->getGet('page') ?? 1,
-            'query' => $this->request->getGet('query') ?? '',
-            'sortColumn' => $this->request->getGet('sortColumn') ?? 'id',
+            'limit'         => $this->request->getGet('limit') ?? 5,
+            'page'          => $this->request->getGet('page') ?? 1,
+            'query'         => $this->request->getGet('query') ?? '',
+            'sortColumn'    => $this->request->getGet('sortColumn') ?? 'id',
             'sortDirection' => $this->request->getGet('sortDirection') ?? 'asc',
         ];
 
         $model = model(ActivityModel::class);
         $data['columns'] = $model->getColumn();
-        $data['actions'] = self::$actions;
+        $data['actions'] = $this->actions;
 
-        return $this->render($this->viewPrefix . 'system\index', $data);
+        return $this->render($this->viewPrefix . 'system\index',  $data);
     }
 
     /**
@@ -125,51 +126,27 @@ class ActivityController extends AdminController
     {
 
         $model = model(ActivityModel::class);
-        $model->select('id, event_type, event_access, event_method, source, source_id, user_id, event, summary, properties, created_at');
-        // ->orderBy('created_at DESC');
+        $model->select('id, source, source_id, user_id, event, summary, properties, created_at')->orderBy('created_at DESC');
 
         return DataTable::of($model)
-            ->setSearchableColumns(['event_access', 'event_method', 'user_id'])
             ->add('select', function ($row) {
-                $row = new Activity((array) $row);
+                $row = new Activity((array)$row);
                 return view('Themes\Admin\Datatabase\select', ['row' => $row]);
             }, 'first')
             // ->hide('id')
             ->format('created_at', function ($value) {
                 return Time::parse($value, setting('App.appTimezone'))->format(setting('App.dateFormat') . ' à ' . setting('App.timeFormat'));
             })
-            ->edit('event_method', function ($row) {
-
-                switch ($row->event_method) {
-                    case 'get':
-                        return '<span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-300"> GET </span>';
-                        break;
-                    case 'post':
-                        return '<span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2 py-1 rounded dark:bg-green-900 dark:text-green-300"> POST </span>';
-                        break;
-                    case 'delete':
-                        return '<span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2 py-1 rounded dark:bg-red-900 dark:text-red-300"> DELETE </span>';
-                        break;
-                    default:
-                    // silent
-                }
-            })
-
-            ->edit('properties', function ($row) {
-
-                // return json_decode($row->properties);
-                return '<code>' . $row->properties . '</code>';
-            })
             ->edit('user_id', function ($row) {
-                if ($row->user_id == '0' || $row->user_id == null) {
+                if($row->user_id == '0'){
                     return lang('Btw.system');
-                } else {
+                }else{
                     return getUser($row->user_id)->last_name;
                 }
             })
             ->add('action', function ($row) {
-                $row = new Activity((array) $row);
-                return view('Themes\Admin\Datatabase\action', ['row' => $row, 'actions' => DataTable::actions(self::$actions, $row)]);
+                $row = new Activity((array)$row);
+                return view('Themes\Admin\Datatabase\action', ['row' => $row, 'actions' => $this->actions]); 
             }, 'last')
             ->toJson(true);
     }
@@ -199,19 +176,19 @@ class ActivityController extends AdminController
 
                 $model->delete(['id' => $id]);
             }
-            $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['activity'])]);
-            $this->response->triggerClientEvent('reloadTable');
+            //return $this->respond(['success' => lang('Core.your_selected_records_have_been_deleted'), 'messagehtml' => alertHtmx('success', lang('Btw.resourcesSaved', ['users']))], 200);
+            //$this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
         }
         return $this->respondNoContent();
     }
 
-    /**
+     /**
      * Delete the specified log file or all.
      *
      */
     public function deleteFilesAll()
     {
-        $delete = $this->request->getPost('delete');
+        $delete    = $this->request->getPost('delete');
         $deleteAll = $this->request->getPost('delete_all');
 
         if (empty($delete) && empty($deleteAll)) {
@@ -219,10 +196,10 @@ class ActivityController extends AdminController
             return redirect()->to(route_to('logs-file'));
         }
 
-        if (!empty($delete)) {
+        if (! empty($delete)) {
             helper('security');
 
-            $checked = $_POST['checked'];
+            $checked    = $_POST['checked'];
             $numChecked = count($checked);
 
             if (is_array($checked) && $numChecked) {
@@ -235,7 +212,7 @@ class ActivityController extends AdminController
             }
         }
 
-        if (!empty($deleteAll)) {
+        if (! empty($deleteAll)) {
             if (delete_files($this->logsPath)) {
                 // Restore the index.html file.
                 @copy(APPPATH . '/index.html', "{$this->logsPath}index.html");

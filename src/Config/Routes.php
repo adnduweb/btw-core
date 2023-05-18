@@ -59,8 +59,6 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'users/edit/(:any)/history', 'UsersController::history/$1', ['as' => 'user-only-history']);
     $routes->match(['get', 'post'], 'users/edit/(:any)/browser', 'UsersController::sessionBrowser/$1', ['as' => 'user-only-browser']);
     $routes->delete('users/delete', 'UsersController::deleteUser', ['as' => 'users-delete']);
-    $routes->get('users/update/active/(:any)', 'UsersController::activeTable/$1', ['as' => 'user-active-table']);
-    $routes->match(['get', 'post'], 'users/create/', 'UsersController::create', ['as' => 'user-only-create']);
 
 
 
