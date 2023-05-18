@@ -38,6 +38,10 @@ class Admin implements FilterInterface
             return redirect()->to('/')->with('error', lang('Btw.notAuthorized'));
         }
 
+
+        //http://localhost:8080/admin1198009422/users
+
+
         //        // On controle les permissions
         // $controllerName = service('router')->controllerName();
         // $handle = explode('\\', $controllerName);

@@ -10,6 +10,7 @@ use Btw\Core\View\Javascriptdata;
 use Btw\Core\Libraries\Oauth\Basic\ShieldOAuth;
 use Btw\Core\Libraries\Activitys;
 use Btw\Core\Config\Activitys as ActivitysConfig;
+use Btw\Core\Libraries\DataTable\ActionManager as ActionManager;
 
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -180,6 +181,19 @@ class Services extends BaseService
         return new MenuManager();
     }
 
+    /**
+     * Returns the system actions datatable manager
+     *
+     * @return Btw\Core\Libraries\Datatable\ActionManager|mixed
+     */
+    public static function actions(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('actions');
+        }
+
+        return new ActionManager();
+    }
 
     /**
      * Returns the view metadata manager.

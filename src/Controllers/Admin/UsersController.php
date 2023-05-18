@@ -22,8 +22,7 @@ use Btw\Core\Libraries\DataTable\DataTable;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use InvalidArgumentException;
-use ReflectionException;
+use Btw\Core\Libraries\DataTable\ActionItem;
 
 
 /**
@@ -40,7 +39,7 @@ class UsersController extends AdminController
      */
     protected string $baseURL = 'admin/users';
     protected $viewPrefix = 'Btw\Core\Views\Admin\users\only\\';
-    protected $actions = ['delete', 'activate', 'desactivate'];
+    public static $actions = ['edit', 'delete', 'activate', 'desactivate'];
 
     public function __construct()
     {
@@ -56,7 +55,7 @@ class UsersController extends AdminController
 
         $model = model(UserModel::class);
         $data['columns'] = $model->getColumn();
-        $data['actions'] = $this->actions;
+        $data['actions'] = self::$actions;
 
         return $this->render($this->viewPrefix . 'index', $data);
     }
@@ -110,17 +109,12 @@ class UsersController extends AdminController
             })
             ->add('action', function ($row) {
                 $row = new User((array) $row);
-                return view('Themes\Admin\Datatabase\action', ['row' => $row, 'type' => 'user', 'actions' =>  $this->actions]);
+                return view('Themes\Admin\Datatabase\action', ['row' => $row, 'actions' => DataTable::actions(self::$actions, $row)]);
             }, 'last')
             ->toJson(true);
     }
 
-    public function bulkaction()
-    {
-        print_r($_POST);
-        exit;
-    }
-
+    
     public function activeTable(int $userId)
     {
         $users = model(UserModel::class);
@@ -571,6 +565,7 @@ class UsersController extends AdminController
         }
         return $this->respondNoContent();
     }
+
 
     /**
      * Creates any admin-required menus so they're

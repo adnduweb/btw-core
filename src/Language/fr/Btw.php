@@ -41,6 +41,7 @@ return [
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
+        'resourceSaved' => 'Les modifications de {0} ont été enregistrées avec succès.', 
         'formValidationFailed' => 'Une validation de champ est requis',
     ],
     'sidebar' => [
