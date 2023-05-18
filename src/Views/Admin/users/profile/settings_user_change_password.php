@@ -17,7 +17,7 @@
                 ]); ?>
                 <?= csrf_field() ?>
                 <input type="hidden" name="section" value="passwords" />
-                <?= $this->include('Btw\Core\Views\Admin\users\current\cells\form_cell_changepassword'); ?>
+                <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_changepassword'); ?>
                 <?= form_close(); ?>
             </div>
         </div>

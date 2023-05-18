@@ -41,10 +41,10 @@
                 <form class="space-y-4 md:space-y-6" action="<?= route_to('magic-link') ?>" method="post">
                     <?= csrf_field() ?>
 
-                    <p class="text-muted mb-4"><?= lang('Btw.magicLinkInfo') ?></p>
+                    <p class="text-muted mb-4"><?= lang('Btw.MagicLinkInfo'); ?></p>
 
 
-                    <p class="text-muted text-sm text-gray-500">Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
+                    <p class="text-muted text-sm text-gray-500"><?= lang('Btw.ForgoYourPasswordNoProblem'); ?></p>
 
                     <!-- Email -->
                     <div class="mb-5">

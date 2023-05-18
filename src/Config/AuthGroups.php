@@ -81,6 +81,8 @@ class AuthGroups extends ShieldAuthGroups
         'recycler.view'       => 'Can view the Recycler area',
         'logs.view'           => 'Can view the logs',
         'logs.manage'         => 'Can manage the logs',
+        'me.edit'             => 'Can edit user\'s own settings',
+        'me.security'         => 'Can change user\'s own password',
     ];
 
     /**
@@ -102,8 +104,10 @@ class AuthGroups extends ShieldAuthGroups
             'site.*',
             'logs.*',
             'page.*',
+            'me.*',
         ],
         'admin' => [
+            'admin.view.profile',
             'admin.access',
             'users.list',
             'users.create',
@@ -115,6 +119,7 @@ class AuthGroups extends ShieldAuthGroups
             'widgets.*',
             'consent.*',
             'logs.view',
+            'me.*',
         ],
         'developer' => [
             'admin.access',
@@ -130,6 +135,8 @@ class AuthGroups extends ShieldAuthGroups
             'consent.*',
             'recycler.*',
             'logs.*',
+            'me.edit',
+            'me.security',
         ],
         'user' => [],
         'beta' => [

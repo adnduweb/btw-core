@@ -59,11 +59,13 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'users/edit/(:any)/history', 'UsersController::history/$1', ['as' => 'user-only-history']);
     $routes->match(['get', 'post'], 'users/edit/(:any)/browser', 'UsersController::sessionBrowser/$1', ['as' => 'user-only-browser']);
     $routes->delete('users/delete', 'UsersController::deleteUser', ['as' => 'users-delete']);
+    $routes->get('users/update/active/(:any)', 'UsersController::activeTable/$1', ['as' => 'user-active-table']);
+    $routes->match(['get', 'post'], 'users/create/', 'UsersController::create', ['as' => 'user-only-create']);
 
 
 
     // User Current
-    $routes->match(['get', 'post'], 'settings/user', 'ProfileController::editUserCurrent', ['as' => 'user-current-settings']);
+    $routes->match(['get', 'post'], 'settings/user', 'ProfileController::editUserCurrent', ['as' => 'user-profile-settings']);
     $routes->post('settings/users', 'ProfileController::save', ['as' => 'user-settings-save']);
     $routes->get('user/update', 'ProfileController::update', ['as' => 'user-update']);
     $routes->get('user/update-group/(:any)', 'ProfileController::updateGroup/$1', ['as' => 'user-update-group']);
@@ -75,8 +77,8 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'settings/user/change-password', 'ProfileController::changePassword', ['as' => 'user-change-password']);
     $routes->match(['get', 'post'], 'settings/user/two-factor', 'ProfileController::twoFactor', ['as' => 'user-two-factor']);
     $routes->get('user/update/avatar', 'ProfileController::updateAvatar', ['as' => 'user-update-avatar']);
-    $routes->get('user/update/language', 'ProfileController::changeLangue', ['as' => 'user-current-language']);
-    $routes->get('user/update/sidebar-expanded', 'ProfileController::changeSidebarExpanded', ['as' => 'user-current-sidebarexpanded']);
+    $routes->get('user/update/language', 'ProfileController::changeLangue', ['as' => 'user-profile-language']);
+    $routes->get('user/update/sidebar-expanded', 'ProfileController::changeSidebarExpanded', ['as' => 'user-profile-sidebarexpanded']);
 
 
     // Files Logs
@@ -88,7 +90,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->delete('logs/sytem/delete', 'ActivityController::deleteSystem/$1', ['as' => 'logs-system-delete']);
 
     //Tools
-    $routes->get('system-info', 'SystemInfoController::index', ['as' => 'sys-info']);
+    $routes->get('systeminfo', 'SystemInfoController::index', ['as' => 'sys-info']);
     $routes->get('php-info', 'SystemInfoController::phpInfo', ['as' => 'sys-phpinfo']);
 
 

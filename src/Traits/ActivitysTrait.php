@@ -58,15 +58,28 @@ trait ActivitysTrait
     // record successful insert events
     protected function activityInsert(array $data)
     {
-        if (! $data['result']) {
+        if (!$data['result']) {
             return false;
+        }
+        $query = db_connect()->getLastQuery()->getQuery();
+
+        if (!preg_match('/(logs|sessions|visits|activity_log)/i', $query)) {
+            $data['query'] = [
+                'type' => 'query',
+                'method' => 'update',
+                'query' => $query,
+            ];
         }
 
         $activity = [
-            'source'    => get_class($this),
-            'source_id' => $this->db->insertID(), // @phpstan-ignore-line
-            'event'     => 'insert',
-            'summary'   => count($data['data']) . ' fields',
+            'event_type' => 'query',
+            'event_access' => uri_string(),
+            'event_method' => request()->getMethod(),
+            'source' => '\\' . get_class($this),
+            'source_id' => $this->db->insertID(),
+            // @phpstan-ignore-line
+            'event' => 'insert',
+            'summary' => count($data['data']) . ' fields',
             'properties' => json_encode($data),
         ];
         service('activitys')->add($activity);
@@ -78,11 +91,24 @@ trait ActivitysTrait
     protected function activityUpdate(array $data)
     {
         foreach ($data['id'] as $sourceId) {
+            $data['query'] = db_connect()->getLastQuery()->getQuery();
+
+            if (!preg_match('/(logs|sessions|visits|activity_log)/i', $data['query'])) {
+                $data['query'] = [
+                    'type' => 'query',
+                    'method' => 'update',
+                    'query' => $data['query'],
+                ];
+            }
+
             $activity = [
-                'source'    => get_class($this),
+                'event_type' => 'query',
+                'event_access' => uri_string(),
+                'event_method' => request()->getMethod(),
+                'source' => '\\' .get_class($this),
                 'source_id' => $sourceId,
-                'event'     => 'update',
-                'summary'   => count($data['data']) . ' fields',
+                'event' => 'update',
+                'summary' => count($data['data']) . ' fields',
                 'properties' => json_encode($data),
             ];
             service('activitys')->add($activity);
@@ -94,7 +120,7 @@ trait ActivitysTrait
     // record successful delete events
     protected function activityDelete(array $data)
     {
-        if (! $data['result']) {
+        if (!$data['result']) {
             return false;
         }
         if (empty($data['id'])) {
@@ -102,8 +128,8 @@ trait ActivitysTrait
         }
 
         $activity = [
-            'source'  => get_class($this),
-            'event'   => 'delete',
+            'source' => get_class($this),
+            'event' => 'delete',
             'summary' => ($data['purge']) ? 'purge' : 'soft',
             'properties' => json_encode($data),
         ];

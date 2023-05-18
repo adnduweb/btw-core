@@ -1,14 +1,12 @@
 <?= $this->extend('Themes\Admin\master') ?>
-
-<?= $this->section('title') ?><?= lang('Auth.login') ?> <?= $this->endSection() ?>
-
+<?= $this->section('title') ?> <?= lang('Btw.users.usersList'); ?> <?= $this->endSection() ?>
 <?= $this->section('main') ?>
 
+<x-page-head> <?= lang('Btw.users.usersList'); ?> </x-page-head>
 
-<x-page-head> <?= lang('Btw.UsersList'); ?> </x-page-head>
 <x-admin-box>
 
-    <?= $this->include('Themes\Admin\Datatabase\_headerTable'); ?>
+<?= $this->setData(['add' => ['href' => route_to('user-only-create'), 'titre' => lang('btw.users.addUser') ], 'actions' => $actions])->include('Themes\Admin\Datatabase\_headerTable'); ?>
 
     <div class="row justify-content-md-center">
 
@@ -21,29 +19,6 @@
 </x-admin-box>
 
 <?= $this->endSection() ?>
-
-<?php $this->section('scripts') ?>
-<script>
-    // Set the checkbox to be checked from the start 
-    // to end when the user presses the shift key.
-    function checkRange(event) {
-        let checkboxes = document.getElementsByName('selection');
-        let inBetween = false;
-        if (event.shiftKey && event.target.checked) {
-            checkboxes.forEach(checkbox => {
-                if (checkbox === event.target || checkbox === last_checked) {
-                    inBetween = !inBetween;
-                }
-                if (inBetween) {
-                    checkbox.checked = true;
-                }
-            });
-        }
-        last_checked = event.target;
-    }
-
-</script>
-<?php $this->endSection() ?>
 
 <?php $this->section('scripts') ?>
 <script type="module">
@@ -112,7 +87,7 @@
                                 echo "targets: 0,";
                                 echo "orderable: false,";
                                 echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
-                                if (isset($column['responsivePriority'])) :
+                                if (isset($column['responsivePriority'])):
                                     echo "responsivePriority: " . $column['responsivePriority'];
                                 endif;
                                 echo "},";
@@ -123,7 +98,7 @@
                                 echo "targets: -1,";
                                 echo "orderable: false,";
                                 echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                if (isset($column['responsivePriority'])) :
+                                if (isset($column['responsivePriority'])):
                                     echo "responsivePriority: " . $column['responsivePriority'];
                                 endif;
                                 echo "}";
@@ -134,18 +109,36 @@
                                 echo "targets: $i, ";
                                 echo "orderable: " . $column['orderable'] . ",";
                                 echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                if (isset($column['responsivePriority'])) :
+                                if (isset($column['responsivePriority'])):
                                     echo "responsivePriority: " . $column['responsivePriority'] . ", ";
                                 endif;
                                 echo "createdCell: function(td, cellData, rowData, row, col) {";
-                                echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/page/edit/' + rowData.id + '/information\")');";
+                                if (!isset($column['notClick'])):
+                                    echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/users/edit/' + rowData.id + '/information\")');";
+                                endif;
                                 echo "}";
                                 echo "},";
                         }
                         ?>
                     <?php $i++;
                     endforeach; ?>
-                ]
+                ],
+                // Use DataTables' initComplete callback to tell htmx to reprocess any htmx attributes in the table
+                // DataTables docs: https://datatables.net/reference/option/initComplete
+                // htmx docs: https://htmx.org/api/#process AND https://htmx.org/docs/#3rd-party
+                "initComplete": function(settings, json) {
+                    htmx.process(table);
+                },
+            });
+
+
+            // Add an event listener that updates the table whenever an htmx request completes
+            // DataTables docs: https://datatables.net/reference/api/ajax.reload()
+            // htmx docs: https://htmx.org/events/#htmx:afterRequest
+            document.body.addEventListener('reloadTable', function(evt) {
+                Ci4DataTables["kt_table_users-table"].ajax.reload(function() {
+                    htmx.process('table');
+                }, false)
             });
 
             // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
@@ -154,13 +147,14 @@
                 handleDeleteRows();
                 toggleToolbars();
                 handleSelectedRowDatatable();
+                htmx.process(table);
             });
 
         }
 
         const allCheck = table.querySelector('.allCheck');
-        allCheck.addEventListener('click', function() {
-            const checkboxes = table.querySelectorAll('tbody [type="checkbox"]');
+        allCheck.addEventListener('click', function () {
+            const checkboxes = table.querySelectorAll('tbody .selection [type="checkbox"]');
             checkboxes.forEach(c => {
                 if (c.closest('tr').classList.contains('bg-sky-700')) {
                     c.closest('tr').classList.remove('bg-sky-700', 'dark:bg-gray-800', 'selected');
@@ -175,11 +169,11 @@
             // Select filter options
             const groupCheckable = table.querySelectorAll('.group-checkable');
             groupCheckable.forEach(c => {
-                c.addEventListener('click', function() {
-                    if (c.closest('tr').classList.contains('bg-sky-700')) {
-                        c.closest('tr').classList.remove('bg-sky-700', 'dark:bg-gray-800', 'selected');
+                c.addEventListener('click', function () {
+                    if (c.closest('tr').classList.contains('selected')) {
+                        c.closest('tr').classList.remove('selected');
                     } else {
-                        c.closest('tr').classList.add('bg-sky-700', 'dark:bg-gray-800', 'selected');
+                        c.closest('tr').classList.add('selected');
                     }
                 });
             });
@@ -384,7 +378,7 @@
         // Toggle toolbars
         const toggleToolbars = () => {
             // Select refreshed checkbox DOM elements 
-            const allCheckboxes = table.querySelectorAll('tbody [type="checkbox"]');
+            const allCheckboxes = table.querySelectorAll('tbody .selection [type="checkbox"]');
 
             // Detect checkboxes state & count
             let checkedState = false;
@@ -404,9 +398,12 @@
                 toolbarBase.classList.add('hidden');
                 toolbarSelected.classList.remove('hidden');
                 rowSelected.classList.remove('hidden');
+
                 var firstRow = table.rows[0];
                 firstRow.parentNode.insertBefore(rowSelected, firstRow.rows);
+
             } else {
+                table.querySelector('.allCheck').checked = false;
                 toolbarBase.classList.remove('hidden');
                 toolbarSelected.classList.add('hidden');
                 rowSelected.classList.add('hidden');

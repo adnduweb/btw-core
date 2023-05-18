@@ -38,6 +38,10 @@ class Admin implements FilterInterface
             return redirect()->to('/')->with('error', lang('Btw.notAuthorized'));
         }
 
+
+        //http://localhost:8080/admin1198009422/users
+
+
         //        // On controle les permissions
         // $controllerName = service('router')->controllerName();
         // $handle = explode('\\', $controllerName);
@@ -63,7 +67,7 @@ class Admin implements FilterInterface
         if ($request->isHtmx()) {
            
             if (!$request->is('get') && ($request->is('post') || $request->is('json'))) {
-                if (service('throttler')->check(md5($request->getIPAddress()), 4, MINUTE) === false) {
+                if (service('throttler')->check(md5($request->getIPAddress()), 10, MINUTE) === false) {
                     response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.throttled', [service('throttler')->getTokenTime()])]);
                     return service('response')->setStatusCode(
                         429,
@@ -77,8 +81,6 @@ class Admin implements FilterInterface
                 }
             }
         }
-
-
 
 
         // print_r($controller);

@@ -24,7 +24,7 @@ class AdminController extends BaseController
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        setting('App.themebo', $this->theme);
+        //setting('App.themebo', $this->theme);
 
         $this->langueCurrent = service('settings')->get('Btw.language_bo', 'user:' . Auth()->user()->id) ?? 'fr';
         service('language')->setLocale($this->langueCurrent);

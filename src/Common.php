@@ -23,7 +23,7 @@ if (!function_exists('view_fragment')) {
         $renderer = Services::renderer();
 
         /** @var View $config */
-        $config   = config(View::class);
+        $config = config(View::class);
         $saveData = $config->saveData;
 
         if (array_key_exists('saveData', $options)) {
@@ -121,10 +121,10 @@ if (!function_exists('render')) {
 
         $renderer = single_service('renderer', $path);
 
-        $viewMeta         = service('viewMeta');
+        $viewMeta = service('viewMeta');
         $data['viewMeta'] = $viewMeta;
 
-        $viewJavascript         = service('viewJavascript');
+        $viewJavascript = service('viewJavascript');
         $data['viewJavascript'] = $viewJavascript;
 
         return $renderer->setData($data)
@@ -133,7 +133,7 @@ if (!function_exists('render')) {
 }
 
 
-if (! function_exists('viewBtw')) {
+if (!function_exists('viewBtw')) {
     /**
      *  A view using the current theme.
      *
@@ -147,13 +147,13 @@ if (! function_exists('viewBtw')) {
 
         $renderer = single_service('renderer', $path);
 
-        $viewMeta         = service('viewMeta');
+        $viewMeta = service('viewMeta');
         $data['viewMeta'] = $viewMeta;
 
-        $viewJavascript         = service('viewJavascript');
+        $viewJavascript = service('viewJavascript');
         $data['viewJavascript'] = $viewJavascript;
 
-        $config   = config(View::class);
+        $config = config(View::class);
         $saveData = $config->saveData;
 
         if (array_key_exists('saveData', $options)) {
@@ -195,27 +195,27 @@ if (!function_exists('detectBrowser')) {
      */
     function detectBrowser($html = true)
     {
-        $agent   = service('request')->getUserAgent();
+        $agent = service('request')->getUserAgent();
 
         $support = '';
         if ($agent->isBrowser()) {
             // $currentAgent = $agent->getBrowser() . ' ' . $agent->getVersion();
             $currentAgent = $agent->getBrowser();
-            $support      = 'sp_desktop';
+            $support = 'sp_desktop';
         } elseif ($agent->isRobot()) {
             $currentAgent = $this->agent->robot();
-            $support      = 'sp_robot';
+            $support = 'sp_robot';
         } elseif ($agent->isMobile()) {
             $currentAgent = $agent->getMobile();
-            $support      = 'sp_mobile';
+            $support = 'sp_mobile';
         } else {
             $currentAgent = 'Unidentified User Agent';
-            $support      = 'sp_unknow';
+            $support = 'sp_unknow';
         }
 
         if ($html === true) {
             return strtolower(str_replace(['-', '', ' ', '.'], ['_'], $currentAgent))
-                . ' version_' .  strtolower(str_replace(['-', '', ' ', '.'], ['_'], $agent->getVersion()))
+                . ' version_' . strtolower(str_replace(['-', '', ' ', '.'], ['_'], $agent->getVersion()))
                 . ' ' . strtolower(str_replace(['-', '', ' ', '.'], ['_'], $agent->getPlatform())) . ' ' . $support;
         } else {
             return $agent;
@@ -248,7 +248,8 @@ if (!function_exists('getCountryByIp')) {
                 'code' => $ipdat->geoplugin_currencyCode,
                 'city' => $ipdat->geoplugin_city,
                 'lat' => $ipdat->geoplugin_latitude,
-                'lang' => $ipdat->geoplugin_longitude, 'flag' => true
+                'lang' => $ipdat->geoplugin_longitude,
+                'flag' => true
             );
         } else {
             return array(
@@ -256,7 +257,8 @@ if (!function_exists('getCountryByIp')) {
                 'code' => '',
                 'city' => '',
                 'lat' => '',
-                'lang' => '', 'flag' => false
+                'lang' => '',
+                'flag' => false
             );
         }
     }
@@ -401,7 +403,7 @@ if (!function_exists('getUser')) {
     {
         $user = model(UserModel::class)->find($id);
 
-        return  $user ?? 'system';
+        return $user ?? 'system';
     }
 }
 
@@ -446,9 +448,9 @@ if (!function_exists('hideEmailAddress')) {
 
     function hideEmailAddress($email)
     {
-        $em   = explode("@", $email);
+        $em = explode("@", $email);
         $name = implode(array_slice($em, 0, count($em) - 1), '@');
-        $len  = floor(strlen($name) / 2);
+        $len = floor(strlen($name) / 2);
         return substr($name, 0, $len) . str_repeat('*', $len) . "@" . end($em);
     }
 }
@@ -462,5 +464,67 @@ if (!function_exists('dateToFrench')) {
         $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
         $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
         return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date))));
+    }
+}
+
+if (!function_exists('json_readable_encode')) {
+    function json_readable_encode($in, $indent = 0, $from_array = false)
+    {
+        $_myself = __FUNCTION__;
+        $_escape = function ($str) {
+            return preg_replace("!([\b\t\n\r\f\"\\'])!", "\\\\\\1", $str);
+        };
+
+        $out = '';
+
+        foreach ($in as $inline) {
+            foreach ($inline as $key => $value) {
+                $out .= str_repeat("\t", $indent + 1);
+                $out .= "\"" . $_escape((string) $key) . "\": ";
+
+                if (is_object($value) || is_array($value)) {
+                    $out .= "\n";
+                    $out .= $_myself($value, $indent + 1);
+                } elseif (is_bool($value)) {
+                    $out .= $value ? 'true' : 'false';
+                } elseif (is_null($value)) {
+                    $out .= 'null';
+                } elseif (is_string($value)) {
+                    $out .= "\"" . $_escape($value) . "\"";
+                } else {
+                    $out .= $value;
+                }
+
+                $out .= ",\n";
+            }
+        }
+
+        if (!empty($out)) {
+            $out = substr($out, 0, -2);
+        }
+
+        $out = str_repeat("\t", $indent) . "{\n" . $out;
+        $out .= "\n" . str_repeat("\t", $indent) . "}";
+
+        return $out;
+    }
+
+    if (!function_exists('build_list')) {
+    }
+    function build_list($array)
+    {
+        $list = '<ol>';
+        foreach ($array as $key => $value) {
+            foreach ($value as $key => $index) {
+                if (is_array($index)) {
+                    $list .= build_list($index);
+                } else {
+                    $list .= "<li>$index</li>";
+                }
+            }
+        }
+
+        $list .= '</ol>';
+        return $list;
     }
 }

@@ -6,7 +6,7 @@ use RuntimeException;
 
 class Javascriptdata
 {
-    private array $base       = [];
+    private array $base = [];
 
     protected $token;
 
@@ -17,13 +17,13 @@ class Javascriptdata
         $this->token = getAdminToken(service('router')->controllerName() . (isset(Auth()->user()->id) ?? null) . (isset(Auth()->user()->last_login_at) ?? null));
 
         $this->base[] = ['base_url' => site_url(),];
-        $this->base[] = ['current_url'    => current_url()];
-        $this->base[] = ['areaAdmin'    => env('app.areaAdmin')];        
-        $this->base[] = ['uri'            => service('request')->getUri()->getPath()];
-        $this->base[] = ['basePath'       => '\/'];
-        $this->base[] = ['crsftoken'      => csrf_token()];
-        $this->base[] = ['csrfHash'      => csrf_hash()];
-        $this->base[] = ['env'      => ENVIRONMENT];
+        $this->base[] = ['current_url' => current_url()];
+        $this->base[] = ['areaAdmin' => env('app.areaAdmin')];
+        $this->base[] = ['uri' => service('request')->getUri()->getPath()];
+        $this->base[] = ['basePath' => '\/'];
+        $this->base[] = ['crsftoken' => csrf_token()];
+        $this->base[] = ['csrfHash' => csrf_hash()];
+        $this->base[] = ['env' => ENVIRONMENT];
 
         /** @var Session $authenticator */
         $authenticator = auth('session')->getAuthenticator();
@@ -34,11 +34,11 @@ class Javascriptdata
                 $id_group[$v] = $v;
             }
 
-            $this->base[] = ['user_uuid' =>  Auth()->user()->id];
-            $this->base[] = ['id_group' =>  json_encode($id_group)];
-            $this->base[] = ['activer_multilangue' =>  service('settings')->get('App.language_bo', 'multilangue')];
-            $this->base[] = ['tokenHashPage' =>  $this->token];
-            $this->base[] = ['System' =>  json_encode(['sendMailAccountManager' => site_url(route_to('send-mail-account-manager')), 'ajax' => site_url(route_to('ajax'))])];
+            $this->base[] = ['user_uuid' => Auth()->user()->id];
+            $this->base[] = ['id_group' => json_encode($id_group)];
+            $this->base[] = ['activer_multilangue' => service('settings')->get('App.language_bo', 'multilangue')];
+            $this->base[] = ['tokenHashPage' => $this->token];
+            $this->base[] = ['System' => json_encode(['sendMailAccountManager' => site_url(route_to('send-mail-account-manager')), 'ajax' => site_url(route_to('ajax'))])];
         }
     }
 
@@ -50,31 +50,16 @@ class Javascriptdata
     {
         $html = "";
         $output = "";
-        $html .= ' var doudou = {';
+        $html .= ' var doudou = ';
         $html .= "\n\t\t";
-        foreach ($this->base as $val) {
-            foreach ($val as $k => $v) {
-                // print_r($k);
-                // exit;
-                $html .= ' "' . $k . '" : ';
-                if (preg_match('`\[(.+)\]`iU', $v)) {
-                    $html .=  $v;
-                } elseif (preg_match('#{#', $v)) {
-                    $html .=  $v;
-                } else {
-                    $html .= "'" . $v . "'";
-                }
+        $html .= json_readable_encode($this->base);
 
-                $html .= ', ' . "\n\t\t";
-            }
-        }
-        $html .= '}';
         $output = "<script>";
         if (ENVIRONMENT == "development" || ENVIRONMENT == "testing") {
             $output .= $html;
         } else {
             $html2 = preg_replace("/\s+/", "", $html);
-            $output .= str_replace( array( '<br>', '<br />', "\n", "\r", "vardoudou" ), array( '', '', '', '', 'var doudou' ), trim($html2));
+            $output .= str_replace(array('<br>', '<br />', "\n", "\r", "vardoudou"), array('', '', '', '', 'var doudou'), trim($html2));
         }
 
         $output .= '</script> ' . "\n\t\t";
@@ -94,9 +79,9 @@ class Javascriptdata
          *
          * @var string
          */
-        $filename     = array_pop($segments);
+        $filename = array_pop($segments);
         $origFilename = $filename;
-        $filename     = explode('.', $filename);
+        $filename = explode('.', $filename);
 
         // Must be at least a name and extension
         if (count($filename) < 2) {
@@ -105,21 +90,21 @@ class Javascriptdata
             return;
         }
 
-       // If we have a fingerprint...
-       $filename = count($filename) === 3
-       ? $filename[0] . '.' . $filename[2]
-       : $origFilename;
+        // If we have a fingerprint...
+        $filename = count($filename) === 3
+            ? $filename[0] . '.' . $filename[2]
+            : $origFilename;
 
 
         $folder = config('Assets')->folders[array_shift($segments)];
-        $path   = $folder . '/' . implode('/', $segments) . '/' . $filename;
+        $path = $folder . '/' . implode('/', $segments) . '/' . $filename;
 
         if (!is_file($path)) {
             service('response')->setStatusCode(404);
 
             return;
         }
-        return '<script type="text/javascript">var _LANG_ = ' . preg_replace("# {2,}#"," ",preg_replace("#(\r\n|\n\r|\n|\r)#"," ", @file_get_contents($path))) . ';</script>';
+        return '<script type="text/javascript">var _LANG_ = ' . preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", " ", @file_get_contents($path))) . ';</script>';
     }
 
     /**

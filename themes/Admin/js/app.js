@@ -251,7 +251,6 @@ import "../js/util.js";
 import "../js/alpine.js";
 import "../js/htmx.js";
 
-
 // import htmx from 'htmx.org';
 // general config
 // htmx.config.useTemplateFragments = true;
@@ -316,7 +315,6 @@ if (typeof doudou != undefined) {
   var timeoutInMiliseconds = import.meta.env.VITE_SESSION_EXPIRATION * 1000; // 60000
   var timeoutId;
 
-
   function startTimer() {
     // window.setTimeout returns an Id that can be used to start and stop a timer
 
@@ -328,7 +326,7 @@ if (typeof doudou != undefined) {
 
     document.addEventListener("closemodal", () => {
       Alpine.store("openmodal", false);
-	  location.reload();
+      location.reload();
       // clear modal content here if you want
     });
 

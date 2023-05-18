@@ -194,6 +194,17 @@ class DataTable
         ]);
     }
 
+     /**
+     * Make a DataTable instance from builder.
+     *  
+     * Builder from CodeIgniter Query Builder
+     * @param array ActionItem $actionItem
+     */
+    public static function actions($actionItem, $objectRow)
+    {
+        return new ActionItem($actionItem, $objectRow);
+    }
+
 
    
 }   // End of DataTables Library Class.

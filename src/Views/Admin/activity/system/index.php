@@ -1,14 +1,18 @@
 <?= $this->extend('Themes\Admin\master') ?>
 
-<?= $this->section('title') ?><?= lang('Auth.login') ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?>
+<?= lang('Btw.general.LogsSystemList'); ?>
+<?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 
 
-<x-page-head> <?= lang('Btw.LogsSystemList'); ?> </x-page-head>
+<x-page-head>
+    <?= lang('Btw.general.LogsSystemList'); ?>
+</x-page-head>
 <x-admin-box>
 
-    <?= $this->include('Themes\Admin\Datatabase\_headerTable'); ?>
+    <?= $this->setData(['actions' => $actions])->include('Themes\Admin\Datatabase\_headerTable'); ?>
 
     <div class="row justify-content-md-center">
 
@@ -46,7 +50,7 @@
 
 <?php $this->section('scripts') ?>
 <script type="module">
-    var KTPermissionsList = function() {
+    var KTPermissionsList = function () {
         // Define shared variables
         var table = document.getElementById('kt_table_system');
         var datatable;
@@ -56,7 +60,7 @@
         var selectedCount;
 
         // Private functions
-        var initPermissionTable = function() {
+        var initPermissionTable = function () {
             // Set date data order
 
             // Init datatable --- more info on datatables: https://datatables.net/manual/
@@ -88,7 +92,7 @@
                 "lengthChange": true,
                 "stateSave": true,
                 'rows': {
-                    beforeTemplate: function(row, data, index) {
+                    beforeTemplate: function (row, data, index) {
 
                         if (data.active == '0') {
                             row.addClass('notactive');
@@ -96,70 +100,84 @@
                         row.addClass('text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
                     }
                 },
-                createdRow: function(row, data, dataIndex) {
+                createdRow: function (row, data, dataIndex) {
                     $(row).addClass('text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
                 },
 
                 columnDefs: [
                     <?php $i = 0;
-                    foreach ($columns as $column) : ?>
-                        <?php
-                        switch ($column['name']) {
-                            case 'selection':
-                                echo "{";
-                                echo "data: 'select',";
-                                echo "targets: 0,";
-                                echo "orderable: false,";
-                                echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
-                                if (isset($column['responsivePriority'])) :
-                                    echo "responsivePriority: " . $column['responsivePriority'];
-                                endif;
-                                echo "},";
-                                break;
-                            case 'action':
-                                echo "{";
-                                echo "data: 'action',";
-                                echo "targets: -1,";
-                                echo "orderable: false,";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                if (isset($column['responsivePriority'])) :
-                                    echo "responsivePriority: " . $column['responsivePriority'];
-                                endif;
-                                echo "}";
-                                break;
-                            default:
-                                echo "{";
-                                echo "data: '" . $column['name'] . "',";
-                                echo "targets: $i, ";
-                                echo "orderable: " . $column['orderable'] . ",";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                if (isset($column['responsivePriority'])) :
-                                    echo "responsivePriority: " . $column['responsivePriority'] . ", ";
-                                endif;
-                                echo "createdCell: function(td, cellData, rowData, row, col) {";
-                                echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/page/edit/' + rowData.id + '/information\")');";
-                                echo "}";
-                                echo "},";
-                        }
-                        ?>
-                    <?php $i++;
+                    foreach ($columns as $column): ?>
+                                <?php
+                                switch ($column['name']) {
+                                    case 'selection':
+                                        echo "{";
+                                        echo "data: 'select',";
+                                        echo "targets: 0,";
+                                        echo "orderable: false,";
+                                        echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
+                                        if (isset($column['responsivePriority'])):
+                                            echo "responsivePriority: " . $column['responsivePriority'];
+                                        endif;
+                                        echo "},";
+                                        break;
+                                    case 'action':
+                                        echo "{";
+                                        echo "data: 'action',";
+                                        echo "targets: -1,";
+                                        echo "orderable: false,";
+                                        echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+                                        if (isset($column['responsivePriority'])):
+                                            echo "responsivePriority: " . $column['responsivePriority'];
+                                        endif;
+                                        echo "}";
+                                        break;
+                                    default:
+                                        echo "{";
+                                        echo "data: '" . $column['name'] . "',";
+                                        echo "targets: $i, ";
+                                        echo "orderable: " . $column['orderable'] . ",";
+                                        echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+                                        if (isset($column['responsivePriority'])):
+                                            echo "responsivePriority: " . $column['responsivePriority'] . ", ";
+                                        endif;
+                                        echo "},";
+                                }
+                                ?>
+                            <?php $i++;
                     endforeach; ?>
-                ]
+                ],
+                // Use DataTables' initComplete callback to tell htmx to reprocess any htmx attributes in the table
+                // DataTables docs: https://datatables.net/reference/option/initComplete
+                // htmx docs: https://htmx.org/api/#process AND https://htmx.org/docs/#3rd-party
+                "initComplete": function (settings, json) {
+                    htmx.process(table);
+                },
             });
 
+            // Add an event listener that updates the table whenever an htmx request completes
+            // DataTables docs: https://datatables.net/reference/api/ajax.reload()
+            // htmx docs: https://htmx.org/events/#htmx:afterRequest
+            document.body.addEventListener('reloadTable', function (evt) {
+                Ci4DataTables["kt_table_system-table"].ajax.reload(function () {
+                    htmx.process('table');
+                }, false)
+            });
+
+
             // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
-            window.Ci4DataTables["kt_table_system-table"].on('draw', function(jqXHR, settings) {
+            window.Ci4DataTables["kt_table_system-table"].on('draw', function (jqXHR, settings) {
                 initToggleToolbar();
                 handleDeleteRows();
                 toggleToolbars();
                 handleSelectedRowDatatable();
+                htmx.process(table);
             });
 
         }
 
         const allCheck = table.querySelector('.allCheck');
-        allCheck.addEventListener('click', function() {
-            const checkboxes = table.querySelectorAll('tbody [type="checkbox"]');
+        allCheck.addEventListener('click', function () {
+            const checkboxes = table.querySelectorAll('tbody .selection [type="checkbox"]');
             checkboxes.forEach(c => {
                 if (c.closest('tr').classList.contains('bg-sky-700')) {
                     c.closest('tr').classList.remove('bg-sky-700', 'dark:bg-gray-800', 'selected');
@@ -174,11 +192,11 @@
             // Select filter options
             const groupCheckable = table.querySelectorAll('.group-checkable');
             groupCheckable.forEach(c => {
-                c.addEventListener('click', function() {
-                    if (c.closest('tr').classList.contains('bg-sky-700')) {
-                        c.closest('tr').classList.remove('bg-sky-700', 'dark:bg-gray-800', 'selected');
+                c.addEventListener('click', function () {
+                    if (c.closest('tr').classList.contains('selected')) {
+                        c.closest('tr').classList.remove('selected');
                     } else {
-                        c.closest('tr').classList.add('bg-sky-700', 'dark:bg-gray-800', 'selected');
+                        c.closest('tr').classList.add('selected');
                     }
                 });
             });
@@ -188,7 +206,7 @@
         // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
         var handleSearchDatatable = () => {
             const filterSearch = document.querySelector('[data-kt-datatable-filter="search"]');
-            filterSearch.addEventListener('change', function(e) {
+            filterSearch.addEventListener('change', function (e) {
                 Ci4DataTables["kt_table_system-table"].search(e.target.value).draw();
             });
         }
@@ -201,7 +219,7 @@
             const selectOptions = filterForm.querySelectorAll('select');
 
             // Filæter datatable on submit
-            filterButton.addEventListener('click', function() {
+            filterButton.addEventListener('click', function () {
                 var filterString = '';
 
                 // Get filter values
@@ -226,7 +244,7 @@
             const resetButton = document.querySelector('[data-kt-datatable-filter="reset"]');
 
             // Reset datatable
-            resetButton.addEventListener('click', function() {
+            resetButton.addEventListener('click', function () {
                 // Select filter options
                 const filterForm = document.querySelector('[data-kt-datatable-filter="form"]');
                 const selectOptions = filterForm.querySelectorAll('select');
@@ -250,7 +268,7 @@
 
             deleteButtons.forEach(d => {
                 // Delete button on click
-                d.addEventListener('click', function(e) {
+                d.addEventListener('click', function (e) {
                     e.preventDefault();
 
                     // Select parent row
@@ -271,7 +289,7 @@
                             confirmButton: "inline-flex items-center justify-center px-4 py-2 text-sm border border-transparent rounded-md font-medium focus:outline-none focus:ring disabled:opacity-25 disabled:cursor-not-allowed transition bg-red-600 text-white hover:bg-red-500 focus:border-red-700 focus:ring-red-200 active:bg-red-600",
                             cancelButton: "inline-flex items-center justify-center px-4 py-2 text-sm border border-transparent rounded-md font-medium focus:outline-none focus:ring disabled:opacity-25 disabled:cursor-not-allowed transition bg-blue-100 text-blue-700 hover:bg-blue-200 focus:border-blue-300 focus:ring-blue-200 active:bg-blue-300 ml-2"
                         }
-                    }).then(function(result) {
+                    }).then(function (result) {
                         if (result.value) {
 
                             const packets = {
@@ -279,16 +297,11 @@
                                 token: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
                             };
 
-                            axios.delete("<?= route_to('logs-system-delete') ?>", {
-                                    data: packets
-                                })
-                                .then(response => {
-                                    var alerts = document.querySelector('#alerts-wrapper');
-                                    alerts.insertAdjacentHTML("beforeend", response.data.messagehtml);
-                                    Ci4DataTables["kt_table_system-table"].ajax.reload();
-
-                                })
-                                .catch(error => {});
+                            htmx.ajax('DELETE', '<?= route_to('logs-system-delete') ?>', { values: packets, extensions: "json-enc" }).then(() => {
+                                // this code will be executed after the 'htmx:afterOnLoad' event,
+                                // and before the 'htmx:xhr:loadend' event
+                                console.log('Content delete successfully!');
+                            });
 
                         } else if (result.dismiss === 'cancel') {
 
@@ -323,8 +336,8 @@
             // Toggle delete selected toolbar
             checkboxes.forEach(c => {
                 // Checkbox on click event
-                c.addEventListener('click', function() {
-                    setTimeout(function() {
+                c.addEventListener('click', function () {
+                    setTimeout(function () {
                         toggleToolbars();
                     }, 50);
                 });
@@ -332,9 +345,9 @@
 
 
             // Deleted selected rows
-            deleteSelected.addEventListener('click', function() {
+            deleteSelected.addEventListener('click', function () {
                 const ids = [];
-                var dtRow = Ci4DataTables["kt_table_system-table"].rows('.selected').data().map(function(t, e) {
+                var dtRow = Ci4DataTables["kt_table_system-table"].rows('.selected').data().map(function (t, e) {
                     console.log(t.id);
                     ids.push(t.id);
                 });
@@ -350,24 +363,18 @@
                         confirmButton: "inline-flex items-center justify-center px-4 py-2 text-sm border border-transparent rounded-md font-medium focus:outline-none focus:ring disabled:opacity-25 disabled:cursor-not-allowed transition bg-red-600 text-white hover:bg-red-500 focus:border-red-700 focus:ring-red-200 active:bg-red-600",
                         cancelButton: "inline-flex items-center justify-center px-4 py-2 text-sm border border-transparent rounded-md font-medium focus:outline-none focus:ring disabled:opacity-25 disabled:cursor-not-allowed transition bg-blue-100 text-blue-700 hover:bg-blue-200 focus:border-blue-300 focus:ring-blue-200 active:bg-blue-300 ml-2"
                     }
-                }).then(function(result) {
+                }).then(function (result) {
                     if (result.value) {
                         const packets = {
                             id: ids,
                             token: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
                         };
 
-                        axios.delete("<?= route_to('logs-system-delete') ?>", {
-                                data: packets
-                            })
-                            .then(response => {
-                                // toastr.success(response.data.messages.success);
-                                console.log('fabrice');
-                                const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
-                                headerCheckbox.checked = false;
-                                Ci4DataTables["kt_table_system-table"].ajax.reload();
-                            })
-                            .catch(error => {});
+                        htmx.ajax('DELETE', '<?= route_to('logs-system-delete') ?>', { values: packets, extensions: "json-enc" }).then(() => {
+                            // this code will be executed after the 'htmx:afterOnLoad' event,
+                            // and before the 'htmx:xhr:loadend' event
+                            console.log('Content delete successfully!');
+                        });
                     }
                 });
             });
@@ -407,7 +414,7 @@
 
         return {
             // Public functions  
-            init: function() {
+            init: function () {
                 if (!table) {
                     return;
                 }

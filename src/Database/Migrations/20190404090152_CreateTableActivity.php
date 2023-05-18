@@ -10,6 +10,9 @@ class CreateTableActivity extends Migration
     {
         // audit logs
         $fields = [
+            'event_type' => ['type' => 'varchar', 'constraint' => 255],
+            'event_access' => ['type' => 'varchar', 'constraint' => 255],
+            'event_method' => ['type' => 'varchar', 'constraint' => 255],
             'source'     => ['type' => 'varchar', 'constraint' => 63],
             'source_id'  => ['type' => 'int', 'unsigned' => true],
             'user_id'    => ['type' => 'int', 'unsigned' => true, 'null' => true],

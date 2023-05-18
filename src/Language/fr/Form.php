@@ -153,6 +153,7 @@ return [
         'UsersList' => 'Liste des utilisateurs',
         'changeRole' => 'Modifier le rôle',
         'passwordLength' => 'Longueur du mot de passe', 
-        'TwoFactoAuthentification' => 'Authentification à deux facteurs'
+        'TwoFactoAuthentification' => 'Authentification à deux facteurs',
+        'username' => 'Identifiant',
     ]
 ];

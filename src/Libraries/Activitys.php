@@ -68,7 +68,7 @@ class Activitys
         }
 
         // Add common data
-        $audit['user_id']    = Auth()->User()->id ?? null;
+        $audit['user_id'] = Auth()->User()->id ?? null;
         $audit['created_at'] = date('Y-m-d H:i:s');
 
         $this->queue[] = $audit;
@@ -81,8 +81,32 @@ class Activitys
      */
     public function save(): self
     {
-        if (! empty($this->queue)) {
-            $audits = new ActivityModel();
+        $audits = new ActivityModel();
+        if (!preg_match('/(logs|sessions|visits|activity_log)/i', uri_string())) {
+            $audits->insert([
+                'event_type' => 'access',
+                'event_access' => uri_string(),
+                'event_method' => request()->getMethod(),
+                'properties' => json_encode([
+                    'host' => site_url('/', false),
+                    'path' => uri_string(true),
+                    'query' => request()->getUri()->getQuery(),
+                    'ip' => request()->getIPAddress(),
+                    'platform' => request()->getUserAgent()->getPlatform(),
+                    'browser' => request()->getUserAgent()->getBrowser(),
+                    'is_mobile' => request()->getUserAgent()->isMobile(),
+                ]),
+                'source_id' => 0,
+                'source' => service('router')->controllerName(),
+                'event' => 'access',
+                'summary' => 0,
+                'user_id' => Auth()->User()->id ?? null,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+
+        if (!empty($this->queue)) {
+
             $audits->insertBatch($this->queue);
         }
 

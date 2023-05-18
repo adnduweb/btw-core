@@ -17,39 +17,6 @@
     <?= $viewJavascript->render(); ?>
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
 
-    <script type="text/javascript">
-        /**
-         * ----------------------------------------------------------------------------
-         * Javascript Auto Logout in CodeIgniter 4
-         * ---------------------------------------------------------------------------
-         */
-        // Set timeout variables.
-        var timoutNow = <?= env('session.expiration'); ?>; // Timeout of 1800000 / 30 mins - time in ms
-        var logoutUrl = doudou.base_url + doudou.areaAdmin + '/logout'; // URL to logout page.
-
-        var timeoutTimer;
-
-        // Start timer
-        function StartTimers() {
-            timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
-        }
-
-        // Reset timer
-        function ResetTimers() {
-            clearTimeout(timeoutTimer);
-            StartTimers();
-        }
-
-        // Logout user
-        function IdleTimeout() {
-            console.log('logout')
-            window.location = logoutUrl;
-        }
-
-    </script>
-
-
-
 </head>
 
 <!-- debug -->
@@ -99,7 +66,7 @@
 
         <?= $this->include('_notifications') ?>
 
-        <?= '' //$this->include('_modalsLogout') ?>
+        <?= $this->include('_modalsLogout') ?>
 
 
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
