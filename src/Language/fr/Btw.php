@@ -38,11 +38,18 @@ return [
         'LogsSystemList' => 'Logs du système',
         'user' => 'utilisateur',
         'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
+        'accountProfile' => 'Votre profil',
+        'signOut' => 'Se déconnecter',
+        'filters' => 'Filtres',
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
         'resourceSaved' => 'Les modifications de {0} ont été enregistrées avec succès.', 
         'formValidationFailed' => 'Une validation de champ est requis',
+        'resourcesDeleted' => "Les {0} ont été supprimés.",
+        'resourcesUpdatedActive' => "Les {0} ont été mise à jour.",
+        'resourcesUpdatedDesactive' => "Les {0} ont été mise à jour.",
+        
     ],
     'sidebar' => [
         'LoginAndRegistration' => 'Connexion et enregistrement',
@@ -53,6 +60,12 @@ return [
         'TwoFactoAuthentification' => 'Authentification à deux facteurs', 
         'historyLogin' => 'Historique de connexion',
         'historyBrowser' => 'Navigateur session',
+    ],
+    'users' => [
+        'addUser' => 'Créer un utilisateur',
+        'usersList' => 'Liste des utilisateurs',
+        'userCreate' => 'Creer un nouvel utilisateur',
+        
     ],
     
     'resourceNotFound'     => 'Unable to find the {0}.',
@@ -71,7 +84,8 @@ return [
     'notAuthorized' => 'You do not have the correct permissions.',
     'notAuthorizedDebug' => 'You do not have the correct permissions : {0}.',
     'unknownAction' => 'Did not recognize the action you requested.',
-    'magicLinkInfo' => 'We will send an email with a link to click to sign you in.',
+    'MagicLinkInfo' => 'Nous vous enverrons un e-mail avec un lien sur lequel cliquer pour vous connecter.',
+    'ForgoYourPasswordNoProblem' => "Mot de passe oublié? Aucun problème. Indiquez-nous simplement votre adresse e-mail et nous vous enverrons par e-mail un lien de réinitialisation de mot de passe qui vous permettra d'en choisir un nouveau.",
 
     'lastModified' => 'Last Modified',
     'fileSize'     => 'File Size',
@@ -90,7 +104,7 @@ return [
     'active' => 'Activer', 
     'desactive' => 'Désactiver', 
     'search' => 'Rechercher', 
-    'UsersList' => 'Liste des utilisateurs',
+    
     'You are currently selecting' => 'Vous avez sélectionné',
     'rows' => 'ligne(s)', 
     'Deselect All' => 'déseclectionner',

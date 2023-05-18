@@ -82,7 +82,7 @@
 
                     <hr class="border-t border-gray-700 dark:border-gray-600 my-5" aria-hidden="true">
 
-                    <?php
+                    <?php 
                     // print_r($menu); exit; 
                     if (isset($menu)) : ?>
                         <?php foreach ($menu->collections() as $collection) : ?>

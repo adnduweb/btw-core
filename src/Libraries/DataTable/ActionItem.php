@@ -91,8 +91,18 @@ class ActionItem
     {
         $this->delete = true;
 
+        // var_dump(auth()->user()->can(self::getController() . '.delete'));
+        // var_dump(auth()->user()->can('admin.delete'));
+
+
+        // Permissions du module
         if (!auth()->user()->can(self::getController() . '.delete')) {
             $this->delete = false;
+        }
+
+        // Permissions global
+        if (auth()->user()->can('admin.delete')) {
+            $this->delete = true;
         }
 
         if (get_class($objectRows) == 'Btw\Core\Entities\User' && (auth()->user()->inGroup('admin') && $objectRows->inGroup('superadmin'))) {

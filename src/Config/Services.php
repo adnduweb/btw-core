@@ -10,7 +10,8 @@ use Btw\Core\View\Javascriptdata;
 use Btw\Core\Libraries\Oauth\Basic\ShieldOAuth;
 use Btw\Core\Libraries\Activitys;
 use Btw\Core\Config\Activitys as ActivitysConfig;
-use Btw\Core\Libraries\DataTable\ActionManager as ActionManager;
+use Btw\Core\Libraries\Storage\FileSystem;
+use Btw\Core\Libraries\Storage\StorageFactory;
 
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -181,21 +182,7 @@ class Services extends BaseService
         return new MenuManager();
     }
 
-    /**
-     * Returns the system actions datatable manager
-     *
-     * @return Btw\Core\Libraries\Datatable\ActionManager|mixed
-     */
-    public static function actions(bool $getShared = true)
-    {
-        if ($getShared) {
-            return static::getSharedInstance('actions');
-        }
-
-        return new ActionManager();
-    }
-
-    /**
+     /**
      * Returns the view metadata manager.
      *
      * @return Metadata
@@ -264,4 +251,27 @@ class Services extends BaseService
 
         return new Activitys($config);
     }
+
+
+     /**
+     * The storage class provides a simple way to store and retrieve
+     * complex file to local or external service.
+     *
+     * @param null $disk
+     * @param Storage|null $config
+     * @param boolean $getShared
+     *
+     * @return FileSystem
+     */
+    public static function storage($disk = null, Storage $config = null, bool $getShared = true)
+    {
+        $config = $config ?? new Storage();
+
+        if ($getShared) {
+            return static::getSharedInstance('storage', $disk, $config);
+        }
+
+        return StorageFactory::getDisk($config, $disk);
+    }
+
 }

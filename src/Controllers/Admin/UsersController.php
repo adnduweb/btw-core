@@ -22,7 +22,7 @@ use Btw\Core\Libraries\DataTable\DataTable;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Btw\Core\Libraries\DataTable\ActionItem;
+use InvalidArgumentException;
 
 
 /**
@@ -39,7 +39,12 @@ class UsersController extends AdminController
      */
     protected string $baseURL = 'admin/users';
     protected $viewPrefix = 'Btw\Core\Views\Admin\users\only\\';
-    public static $actions = ['edit', 'delete', 'activate', 'desactivate'];
+    public static $actions = [
+        'edit',
+        'delete',
+        'activate',
+        'desactivate'
+    ];
 
     public function __construct()
     {
@@ -86,8 +91,6 @@ class UsersController extends AdminController
                 return view('Themes\Admin\Datatabase\email', ['row' => $row]);
             })
             ->edit('active', function ($row) {
-                // $active = ($row->active == '1') ? '<span class="inline-flex items-center rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-800">' . lang('Btw.yes') . '</span>' : '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.no') . '</span>';
-                // return $active;
                 $row = new User((array) $row);
                 return view('Themes\Admin\Datatabase\switch', [
                     'row' => $row,
@@ -114,7 +117,7 @@ class UsersController extends AdminController
             ->toJson(true);
     }
 
-    
+
     public function activeTable(int $userId)
     {
         $users = model(UserModel::class);
@@ -122,7 +125,7 @@ class UsersController extends AdminController
             throw new userNotFoundException('Incorrect user id.');
         }
 
-        if( user_id() == $userId){
+        if (user_id() == $userId) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.general.notAuthorized', ['user'])]);
             return $this;
         }
@@ -192,7 +195,7 @@ class UsersController extends AdminController
                     } else
                         alertHtmx('danger', 'Form validation failed.');
 
-                   
+
                     return view($this->viewPrefix . 'cells\form_cell_information', [
                         'userCurrent' => $user,
                         'validation' => $validation
@@ -211,7 +214,7 @@ class UsersController extends AdminController
                         $response = ['errors' => lang('Bonfire.unknownSaveError', ['user'])];
                         return $this->respond($response, ResponseInterface::HTTP_FORBIDDEN);
                     }
-                } catch (DataException $e) {
+                } catch (InvalidArgumentException $e) {
                     // Just log the message for now since it's
                     // likely saying the user's data is all the same
                     log_message('debug', 'SAVING USER: ' . $e->getMessage());
@@ -259,8 +262,8 @@ class UsersController extends AdminController
                 if ($this->request->isHtmx()) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
                     $this->response->triggerClientEvent('updateGroupUserCurrent');
-                }else
-                alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+                } else
+                    alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
 
                 return view($this->viewPrefix . 'cells\cell_groups', [
                     'userCurrent' => auth()->user(),
@@ -272,6 +275,93 @@ class UsersController extends AdminController
             default:
                 alertHtmx('danger', lang('Btw.erreor', ['settings']));
         }
+    }
+
+    public function create()
+    {
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'create', [
+                'groups' => setting('AuthGroups.groups')
+            ]);
+        }
+
+        $requestJson = $this->request->getJSON(true);
+        $validation = service('validation');
+
+        $users = new UserModel();
+        $user = new User();
+
+        $rules = config('Users')->validation;
+        $rules['currentGroup[]'] = 'required';
+        $rules['new_password'] = 'required|strong_password';
+        $rules['pass_confirm'] = 'required|matches[new_password]';
+        $rules = array_merge($rules, $user->validationRules('meta'));
+
+        if (!$this->validate($rules)) {
+
+
+            // if (!$validation->run($requestJson)) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
+            return view($this->viewPrefix . 'cells\form_cell_create', [
+                'validation' => $validation,
+                'groups' => setting('AuthGroups.groups')
+            ]);
+        }
+
+        $user->fill($requestJson);
+
+        // Try saving basic details
+        try {
+            if (!$users->save($user)) {
+                log_message('error', 'User errors', $users->errors());
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.unknownSaveError', [lang('Btw.general.user')])]);
+            }
+        } catch (InvalidArgumentException $e) {
+            // Just log the message for now since it's
+            // likely saying the user's data is all the same
+            log_message('debug', 'SAVING USER: ' . $e->getMessage());
+        }
+
+        // We need an ID to on the entity to save groups.
+        if ($user->id === null) {
+            $user->id = $users->getInsertID();
+        }
+
+        // Save the new user's email/password
+        $password = $requestJson['new_password'];
+        $identity = $user->getEmailIdentity();
+        if ($identity === null) {
+            helper('text');
+            $user->createEmailIdentity([
+                'email' => $requestJson['email'],
+                'password' => !empty($password) ? $password : random_string('alnum', 12),
+            ]);
+        }
+        // Update existing user's email identity
+        else {
+            $identity->secret = $requestJson['email'];
+            if ($password !== null) {
+                $identity->secret2 = service('passwords')->hash($password);
+            }
+            if ($identity->hasChanged()) {
+                model(UserIdentityModel::class)->save($identity);
+            }
+        }
+
+        if (!is_array($requestJson['currentGroup[]']))
+            $requestJson['currentGroup[]'] = [$requestJson['currentGroup[]']];
+
+        // Save the user's groups if the user has right permissions
+        if (auth()->user()->can('users.edit')) {
+            $user->syncGroups(...($requestJson['currentGroup[]'] ?? []));
+        }
+
+        Events::trigger('userCreated', $user); 
+
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
+        return redirect()->hxLocation('/' . ADMIN_AREA . '/users/edit/' . $user->id . '/information');
+
     }
 
 
@@ -296,7 +386,8 @@ class UsersController extends AdminController
 
         $permissionsMatrix = [];
         foreach (array_flip($group) as $key => $val):
-            if (isset($matrix[$key])): foreach ($matrix[$key] as $key => $val):
+            if (isset($matrix[$key])):
+                foreach ($matrix[$key] as $key => $val):
                     $permissionsMatrix[$val] = $val;
                 endforeach;
             endif;
