@@ -1,4 +1,4 @@
-<button data-loading-disable data-loading-delay="4000" data-loading-class="bg-gray-100 opacity-20" type="<?= (isset($type)) ? $type : 'button'; ?>" class="inline-flex justify-center cursor-pointer bg-blue-500 text-white active:bg-blue-600 dark:bg-gray-900  font-bold px-4 py-2 text-sm rounded-md shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-in-out duration-1200 transition-all">
+<button data-loading-disable data-loading-delay="4000" data-loading-class="bg-gray-100 opacity-20 disabled:opacity-25" type="<?= (isset($type)) ? $type : 'button'; ?>" class="inline-flex justify-center cursor-pointer bg-blue-500 text-white active:bg-blue-600 dark:bg-gray-900  font-bold px-4 py-2 text-sm rounded-md shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-in-out duration-1200 transition-all">
         
         <div id="<?= (isset($loading)) ? $loading : 'loadingDefault'; ?>" class="hidden mr-2">
                 <svg class="h-4 w-4 animate-spin" viewBox="3 3 18 18">

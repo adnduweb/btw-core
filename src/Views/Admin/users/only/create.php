@@ -17,7 +17,7 @@
                 'id' => 'kt_users_form_information',
                 'hx-post' => route_to('user-only-create'),
                 'hx-target' => '#general',
-                'hx-ext' => "loading-states, debug, json-enc, event-header",
+                'hx-ext' => "loading-states, json-enc, event-header",
                 'novalidate' => false,
                 'data-loading-target' => "#loadinginformation",
                 'data-loading-class-remove' => "hidden"

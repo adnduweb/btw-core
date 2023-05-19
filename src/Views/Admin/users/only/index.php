@@ -22,7 +22,7 @@
 
 <?php $this->section('scripts') ?>
 <script type="module">
-    var KTPermissionsList = function() {
+    var KTUsersList = function() {
         // Define shared variables
         var table = document.getElementById('kt_table_users');
         var datatable;
@@ -426,7 +426,7 @@
 
     // On document ready
     //KTUtil.onDOMContentLoaded(function() {
-    KTPermissionsList.init();
+    KTUsersList.init();
     //});
 </script>
 <?php $this->endSection() ?>

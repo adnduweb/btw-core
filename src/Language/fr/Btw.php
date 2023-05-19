@@ -73,7 +73,7 @@ return [
     'resourcesSaved'       => 'The {0} changes has been successfully saved.',
     'resourceDeleted'      => 'The {0} has been deleted.',
     'resourcesDeleted'     => 'The {0} have been deleted.',
-    'unknownSaveError'     => 'Unknown error saving the {0}.',
+    'unknownSaveError'     => "Erreur inconnue lors de l'enregistrement du {0}.",
     'unknownError'         => 'Unknown error.',
     'resourcesNotSelected' => 'No {0} were selected.',
 

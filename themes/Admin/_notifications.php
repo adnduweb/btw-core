@@ -27,7 +27,7 @@
                     setTimeout(() => this.remove(this.notification), 500)
                 },
             }" x-show="show" x-transition.duration.500ms class="pointer-events-auto relative w-full max-w-lg rounded-md border border-gray-200 dark:bg-white bg-gray-800 py-4 pl-6 pr-4 shadow-lg">
-                <div class="flex items-start">
+                <div class="flex items-center">
                     <!-- Icons -->
                     <div x-show="notification.type === 'info'" class="flex-shrink-0">
                         <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full border-2 dark:border-gray-400 border-gray-100 text-xl font-bold dark:text-gray-400 text-gray-100">!</span>
@@ -46,7 +46,7 @@
 
                     <!-- Text -->
                     <div class="ml-3 w-0 flex-1 pt-0.5">
-                        <p x-text="notification.content" class="text-sm font-medium leading-5 dark:text-gray-900 text-gray-200"></p>
+                        <p x-html="notification.content" class="text-sm font-medium leading-5 dark:text-gray-900 text-gray-200"></p>
                     </div>
 
                     <!-- Remove button -->

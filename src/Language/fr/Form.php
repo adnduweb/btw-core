@@ -91,6 +91,12 @@ return [
         'siteOnlineDesc' => 'Si cette case n\'est pas cochée, seuls Superadmin et les groupes d\'utilisateurs autorisés peuvent accéder au site..',
         'delete' => 'Supprimer',
         'choisissezVotreValeur' => 'Choisissez votre valeur',
+        'titre' => 'Titre',
+        'sousTitre' => 'Sous titre',
+        'descriptionShort' => 'Description courte',
+        'descriptionLong' => 'Description longue',
+        'permalink' => 'Lien',
+        'active' => 'Activer'
 
     ],
     'ShieldOAuthLang' => [

@@ -12,7 +12,7 @@
         <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
                 <?= form_open(route_to('settings-oauth'), [
-                    'id' => 'kt_users_form_general', 'hx-post' => route_to('settings-oauth'), 'hx-target' => '#oauth', 'hx-ext' => "loading-states, debug, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingoauth",
+                    'id' => 'kt_users_form_general', 'hx-post' => route_to('settings-oauth'), 'hx-target' => '#oauth', 'hx-ext' => "loading-states, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingoauth",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= '' //csrf_field() ?>

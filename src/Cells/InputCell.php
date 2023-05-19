@@ -77,7 +77,7 @@ class InputCell
 
         if (isset($params['lang']) && $params['lang'] == true) {
 
-            $html .= '<div class="relative mt-2 rounded-md shadow-sm">';
+            $html .= '<div class="relative rounded-md shadow-sm">';
             $html .= '<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 bg-gray-600 rounded-l-lg text-center">';
             $html .= '<span class="h-5 w-5 text-gray-200">' . service('language')->getLocale() . '</span>';
             $html .= ' </div>';

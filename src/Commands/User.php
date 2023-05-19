@@ -39,7 +39,7 @@ class User extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'shield:user <action>';
+    protected $usage = 'btw:user <action>';
 
     /**
      * Command's Arguments

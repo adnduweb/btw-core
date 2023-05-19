@@ -866,4 +866,8 @@ td.selection{
 
 .datepicker-header {
   @apply h-auto bg-transparent
+} 
+
+:disabled {
+ @apply opacity-25
 }

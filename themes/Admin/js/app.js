@@ -300,10 +300,23 @@ document.body.addEventListener("deleteConfirmed", function (evt) {
 // this function does run, due to HTMX's HX-Trigger-After-Swap header
 // but cannot change the showMessage paramter above
 document.body.addEventListener("showMessage", function (evt) {
+  if (typeof evt.detail.content == "object") {
+    var contentRead = evt.detail.content;
+    var content = "<ul>";
+    Object.keys(contentRead).forEach((item) => {
+      console.log(item); // key
+      console.log(contentRead[item]); // value
+      content += "<li>" + contentRead[item] + "</li>";
+    });
+    content += "</ul>";
+  } else { 
+    content = evt.detail.content;
+  }
+
   document.dispatchEvent(
     new CustomEvent("notify", {
       detail: {
-        content: evt.detail.content,
+        content: content,
         type: evt.detail.type,
       },
       bubbles: true,

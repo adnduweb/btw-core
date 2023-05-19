@@ -44,15 +44,15 @@ class SwitchCell
         $html = "";
 
 
-        $this->checkedNew = $params['checked'] == false ? 'false' : 'true';
+        $this->checkedNew = $params['checked'] == false ? 'false' : 'true';        
 
         if (request()->is('json')) {
             $requestOld = request()->getJSON(true);
             if (isset($requestOld[$params['name']]) && $requestOld[$params['name']] == true) {
-                $this->checkedNew = true;
+                $this->checkedNew = 'true';
             }
         }
-
+        
         $this->value = (!empty($params['value'])) ? $params['value'] : true;
         $this->xOnClick = (isset($params['xOnClick'])) ? 'x-on:click="' . $params['xOnClick'] . '"' : false;
         $this->xChange = (isset($params['xChange'])) ? '@change="' . $params['xChange'] . '"' : false;

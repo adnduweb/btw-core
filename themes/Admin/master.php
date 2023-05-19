@@ -20,7 +20,7 @@
 </head>
 
 <!-- debug -->
-<body hx-ext="morph, ajax-header, json-enc" hx-history="false" hx-headers='{"X-Theme": "admin"}' 
+<body hx-ext="morph, debug, ajax-header, json-enc" hx-history="false" hx-headers='{"X-Theme": "admin"}' 
     class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
 
     <!-- Main content -->

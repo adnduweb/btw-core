@@ -18,7 +18,7 @@
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
             <?= form_open(route_to('general-post-settings'), [
-                'id' => 'kt_users_form_general', 'hx-post' => route_to('general-post-settings'), 'hx-target' => '#general',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadinggeneral",
+                'id' => 'kt_users_form_general', 'hx-post' => route_to('general-post-settings'), 'hx-target' => '#general',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadinggeneral",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <?= csrf_field() ?>
@@ -40,7 +40,7 @@
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
             <?= form_open(route_to('general-post-settings'), [
-                'id' => 'kt_users_form_dateandtime', 'hx-post' => route_to('general-post-settings'), 'hx-target' => '#dateandtime',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, debug, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingdateandtime",
+                'id' => 'kt_users_form_dateandtime', 'hx-post' => route_to('general-post-settings'), 'hx-target' => '#dateandtime',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingdateandtime",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <?= csrf_field() ?>
