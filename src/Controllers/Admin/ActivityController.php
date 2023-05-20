@@ -125,8 +125,8 @@ class ActivityController extends AdminController
     {
 
         $model = model(ActivityModel::class);
-        $model->select('id, event_type, event_access, event_method, source, source_id, user_id, event, summary, properties, created_at');
-        // ->orderBy('created_at DESC');
+        $model->select('id, event_type, event_access, event_method, source, source_id, user_id, event, summary, properties, created_at')
+        ->orderBy('created_at DESC');
 
         return DataTable::of($model)
             ->setSearchableColumns(['event_access', 'event_method', 'user_id'])

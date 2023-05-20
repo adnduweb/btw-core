@@ -16,7 +16,7 @@
 
                 <div class="flex-shrink-0 flex items-center px-4">
                     <a href="<?= site_url(); ?>" class="flex items-center">
-                        <img src="<?= base_url() . 'logo-adn.png'; ?>" alt="Ticksify" class=" w-full">
+                        <img src="<?= base_url() . 'logo-adn-blanc.png'; ?>" alt="Ticksify" class=" w-full">
                     </a>
                 </div>
                 <div class="mt-5 flex-1 h-0 overflow-y-auto" x-data="{ expanded: false }">
@@ -70,7 +70,7 @@
         <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 dark:border-gray-800">
             <div class="flex items-center flex-shrink-0 px-4 dark:bg-slate-800 bg-gray-900">
                 <a href="<?= site_url(ADMIN_AREA); ?>" class="flex items-center">
-                    <img src="<?= base_url() . 'logo-adn.png'; ?>" alt="ADN du Web" class="h-15 w-full dark:grayscale grayscale-0">
+                    <img src="<?= base_url() . 'logo-adn-blanc.png'; ?>" alt="ADN du Web" class="h-15 w-full dark:grayscale grayscale-0">
                 </a>
             </div>
             <div class="flex-1 flex flex-col overflow-y-auto dark:bg-slate-800 bg-gray-900">

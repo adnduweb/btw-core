@@ -4,7 +4,7 @@
 namespace Btw\Core\Libraries\Storage;
 
 
-use App\Config\Storage;
+use Btw\Core\Config\Storage;
 use Btw\Core\Libraries\Storage\Exceptions\StorageException;
 
 class StorageFactory

@@ -96,7 +96,8 @@ return [
         'descriptionShort' => 'Description courte',
         'descriptionLong' => 'Description longue',
         'permalink' => 'Lien',
-        'active' => 'Activer'
+        'active' => 'Activer',
+        'SelectNewPhoto' => 'Sélectionner une photo'
 
     ],
     'ShieldOAuthLang' => [

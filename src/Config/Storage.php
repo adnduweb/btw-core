@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Config;
+namespace Btw\Core\Config;
 
 
 use Btw\Core\Libraries\Storage\Drivers\LocalDisk;
@@ -56,9 +56,9 @@ class Storage extends BaseConfig
      * @var array<string, string>
      */
     public $validDrivers = [
-        'local'     => LocalDisk::class,
-        'public'    => PublicDisk::class,
-        's3'        => S3Disk::class,
+        'local' => LocalDisk::class,
+        'public' => PublicDisk::class,
+        's3' => S3Disk::class,
     ];
 
     public function __construct()
@@ -69,4 +69,23 @@ class Storage extends BaseConfig
             $this->public['baseUrl'] = $_ENV['app.baseURL'];
         }
     }
+
+    public $sizeImg = [
+        'image150x150' => ['150', '150', 'center'],
+        'image300x300' => ['300', '300', 'center'],
+        'image600x600' => ['600', '600', 'center']
+    ];
+
+    public $watermark = false;
+
+    public $watermarkTexte = 'adnduweb';
+
+    public $watermarkDef = [
+        'color' => '#fff',
+        'opacity' => 0.5,
+        'withShadow' => true,
+        'hAlign' => 'center',
+        'vAlign' => 'center',
+        'fontSize' => 20
+    ];
 }

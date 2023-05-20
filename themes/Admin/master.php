@@ -20,7 +20,7 @@
 </head>
 
 <!-- debug -->
-<body hx-ext="morph, debug, ajax-header, json-enc" hx-history="false" hx-headers='{"X-Theme": "admin"}' 
+<body hx-ext="morph, debug, ajax-header" hx-history="false" hx-headers='{"X-Theme": "admin"}' 
     class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
 
     <!-- Main content -->
@@ -72,6 +72,7 @@
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
         <script src="https://unpkg.com/hyperscript.org@0.9.7" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.3.x/dist/index.js"></script>
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script> -->
         <?= $this->renderSection('scriptsUrl') ?>
 

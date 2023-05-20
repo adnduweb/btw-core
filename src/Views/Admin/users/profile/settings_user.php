@@ -11,8 +11,8 @@
 
         <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
-                <?= form_open(route_to('user-profile-settings'), [
-                    'id' => 'kt_users_form_information', 'hx-post' => route_to('user-profile-settings'), 'hx-target' => '#general',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadinginformation",
+                <?= form_open_multipart(route_to('user-profile-settings'), [
+                    'id' => 'kt_users_form_information', 'hx-post' => route_to('user-profile-settings'), 'hx-target' => '#general',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, event-header",  'novalidate' => false, 'data-loading-target' => "#loadinginformation",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= csrf_field() ?>

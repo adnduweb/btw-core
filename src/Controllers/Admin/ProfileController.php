@@ -65,6 +65,23 @@ class ProfileController extends AdminController
         switch ($this->request->getVar('section')) {
             case 'general':
 
+
+                // print_r($_POST);
+                // print_r($_FILES);
+                // print_r($_REQUEST);
+
+                // $file = $this->request->getFile('photo');
+
+                // $storage = service('storage');
+
+                // $result = $storage->store($file, 'attachments/' . date('Y/m'));
+
+                // echo '<pre>';
+                // print_r($result);
+                // echo '</pre>';
+
+                // exit;
+
                 if (!auth()->user()->can('users.edit')) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
                     return view($this->viewPrefix . 'cells\form_cell_information', [
@@ -72,7 +89,7 @@ class ProfileController extends AdminController
                     ]);
                 }
 
-                $requestJson = $this->request->getJSON(true);
+                $requestJson = $this->request->getPost();
                 $validation = service('validation');
 
                 $validation->setRules([

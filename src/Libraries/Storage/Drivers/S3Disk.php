@@ -2,7 +2,7 @@
 
 namespace Btw\Core\Libraries\Storage\Drivers;
 
-use App\Config\Storage;
+use Btw\Core\Config\Storage;
 use Btw\Core\Libraries\Storage\Exceptions\StorageException;
 use Btw\Core\Libraries\Storage\FileSystem;
 use Aws\Result;

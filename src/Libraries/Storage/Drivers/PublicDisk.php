@@ -2,7 +2,7 @@
 
 namespace Btw\Core\Libraries\Storage\Drivers;
 
-use App\Config\Storage;
+use Btw\Core\Config\Storage;
 use Btw\Core\Libraries\Storage\Exceptions\StorageException;
 use Btw\Core\Libraries\Storage\FileSystem;
 use CodeIgniter\HTTP\Files\UploadedFile;
@@ -69,6 +69,7 @@ class PublicDisk implements FileSystem
         $path = empty($path) ? '' : rtrim($path, '/') . '/';
         $fileName = $options['file_name'] ?? $content->getRandomName();
         $overwrite = $options['overwrite'] ?? false;
+        $ext = $options['file_name'] ?? $content->guessExtension();
 
         $fileType = $options['mime_type'] ?? '';
         $fileSize = $options['file_size'] ?? 0;
@@ -80,6 +81,19 @@ class PublicDisk implements FileSystem
         $this->makeDirectory($this->basePath . $path);
 
         $result = $content->move($this->basePath . $path, $fileName, $overwrite);
+
+        if ($sizeImg = config('storage')->sizeImg) {
+
+            foreach ($sizeImg as $item) {
+
+                service('image')->withFile($this->basePath . $path . $fileName)
+                    ->fit($item[0], $item[1], $item[2])
+                    ->save(($this->basePath . $path . str_replace('.' . $ext, '-' . $item[0] . 'x' . $item[1] . '.' . $ext, $fileName)));
+            }
+
+        }
+
+
 
         if ($result) {
             $mode = $options['mode'] ?? $this->mode;
@@ -222,9 +236,12 @@ class PublicDisk implements FileSystem
     private function deleteRecursive($dir)
     {
         foreach (scandir($dir) as $file) {
-            if ('.' === $file || '..' === $file) continue;
-            if (is_dir($dir . DIRECTORY_SEPARATOR . $file)) $this->deleteRecursive($dir . DIRECTORY_SEPARATOR . $file);
-            else unlink($dir . DIRECTORY_SEPARATOR . $file);
+            if ('.' === $file || '..' === $file)
+                continue;
+            if (is_dir($dir . DIRECTORY_SEPARATOR . $file))
+                $this->deleteRecursive($dir . DIRECTORY_SEPARATOR . $file);
+            else
+                unlink($dir . DIRECTORY_SEPARATOR . $file);
         }
         return rmdir($dir);
     }
