@@ -80,7 +80,7 @@
 
 
             <?= form_open(route_to('user-information'), [
-                'id' => 'kt_users_form_modalgroups', 'hx-post' => route_to('user-information'), 'hx-target' => '#modalgroups', 'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingmodalgroups",
+                'id' => 'kt_users_form_modalgroups', 'hx-post' => route_to('user-information'), 'hx-target' => '#modalgroups', 'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loadingmodalgroups",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
             <?= csrf_field() ?>

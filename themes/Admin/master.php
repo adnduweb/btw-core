@@ -19,7 +19,7 @@
 
 </head>
 
-<!-- debug -->
+<!-- debug, loading-states, json-enc, event-header -->
 <body hx-ext="morph, debug, ajax-header" hx-history="false" hx-headers='{"X-Theme": "admin"}' 
     class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
 

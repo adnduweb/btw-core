@@ -5,6 +5,7 @@ namespace Btw\Core\Libraries\Storage\Drivers;
 use Btw\Core\Config\Storage;
 use Btw\Core\Libraries\Storage\Exceptions\StorageException;
 use Btw\Core\Libraries\Storage\FileSystem;
+use Btw\Core\Models\MediaModel;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Exception;
 use RuntimeException;
@@ -82,15 +83,15 @@ class PublicDisk implements FileSystem
 
         $result = $content->move($this->basePath . $path, $fileName, $overwrite);
 
+
+        // Diffrente taille
         if ($sizeImg = config('storage')->sizeImg) {
 
             foreach ($sizeImg as $item) {
-
                 service('image')->withFile($this->basePath . $path . $fileName)
                     ->fit($item[0], $item[1], $item[2])
                     ->save(($this->basePath . $path . str_replace('.' . $ext, '-' . $item[0] . 'x' . $item[1] . '.' . $ext, $fileName)));
             }
-
         }
 
 
@@ -101,7 +102,7 @@ class PublicDisk implements FileSystem
         }
 
         if ($result !== false) {
-            return [
+            $data = [
                 'disk' => $this->disk,
                 'type' => $fileType,
                 'size' => $fileSize,
@@ -111,6 +112,10 @@ class PublicDisk implements FileSystem
                 'file_url' => $this->baseUrl . $path . $fileName,
                 'full_path' => $this->basePath . $path . $fileName,
             ];
+
+            model(MediaModel::class)->insert($data);
+
+            return $data;
         }
 
         return $result;

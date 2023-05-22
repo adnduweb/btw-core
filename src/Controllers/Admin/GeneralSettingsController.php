@@ -103,22 +103,22 @@ class GeneralSettingsController extends AdminController
         switch ($this->request->getVar('section')) {
             case 'general':
 
-                $requestJson = $this->request->getJSON(true);
+                $data = $this->request->getPost();
                 $validation = service('validation');
 
                 $validation->setRules([
                     'siteName' => 'required|string'
                 ]);
 
-                if (!$validation->run($requestJson)) {
+                if (!$validation->run($data)) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [
                         'validation' => $validation
                     ]);
                 }
 
-                setting('Site.siteName', $requestJson['siteName']);
-                setting('Site.siteOnline', $requestJson['siteOnline'] ?? 0);
+                setting('Site.siteName', $data['siteName']);
+                setting('Site.siteOnline', $data['siteOnline'] ?? 0);
 
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [ 'siteOnline' => setting('Site.siteOnline')]);
@@ -126,7 +126,7 @@ class GeneralSettingsController extends AdminController
                 break;
             case 'dateandtime':
 
-                $requestJson = $this->request->getJSON(true);
+                $data = $this->request->getPost();
                 $validation = service('validation');
 
                 $validation->setRules([
@@ -135,16 +135,16 @@ class GeneralSettingsController extends AdminController
                     'timeFormat' => 'required|string',
                 ]);
 
-                if (!$validation->run($requestJson)) {
+                if (!$validation->run($data)) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime', [
                         'validation' => $validation
                     ]);
                 }
 
-                setting('App.appTimezone', $requestJson['timezone']);
-                setting('App.dateFormat', $requestJson['dateFormat']);
-                setting('App.timeFormat', $requestJson['timeFormat']);
+                setting('App.appTimezone', $data['timezone']);
+                setting('App.dateFormat', $data['dateFormat']);
+                setting('App.timeFormat', $data['timeFormat']);
 
                 $timezoneAreas = [];
 
@@ -251,14 +251,14 @@ class GeneralSettingsController extends AdminController
         }
         switch ($this->request->getVar('section')) {
             case 'registration':
-                $requestJson = $this->request->getJSON(true);
+                $data = $this->request->getPost();
                 $validation = service('validation');
 
                 $validation->setRules([
                     'defaultGroup' => 'required|string',
                 ]);
 
-                if (!$validation->run($requestJson)) {
+                if (!$validation->run($data)) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_registration', [
                         'groups' => setting('AuthGroups.groups'),
@@ -268,12 +268,12 @@ class GeneralSettingsController extends AdminController
                     ;
                 }
 
-                setting('Auth.allowRegistration', $requestJson['allowRegistration'] ?? false);
-                Setting('AuthGroups.defaultGroup', $requestJson['defaultGroup']);
+                setting('Auth.allowRegistration', $data['allowRegistration'] ?? false);
+                Setting('AuthGroups.defaultGroup', $data['defaultGroup']);
 
                 // Actions
                 $actions = setting('Auth.actions');
-                $actions['register'] = $requestJson['emailActivation'] ?? null;
+                $actions['register'] = $data['emailActivation'] ?? null;
                 setting('Auth.actions', $actions);
 
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
@@ -288,17 +288,17 @@ class GeneralSettingsController extends AdminController
 
             case 'login':
 
-                $requestJson = $this->request->getJSON(true);
+                $data = $this->request->getPost();
 
                 // Remember Me
                 $sessionConfig = setting('Auth.sessionConfig');
-                $sessionConfig['allowRemembering'] = $requestJson['allowRemember'] ?? false;
-                $sessionConfig['rememberLength'] = $requestJson['rememberLength'];
+                $sessionConfig['allowRemembering'] = $data['allowRemember'] ?? false;
+                $sessionConfig['rememberLength'] = $data['rememberLength'];
                 setting('Auth.sessionConfig', $sessionConfig);
 
                 // Actions
                 $actions = setting('Auth.actions');
-                $actions['login'] = $requestJson['email2FA'] ?? null;
+                $actions['login'] = $data['email2FA'] ?? null;
                 setting('Auth.actions', $actions);
 
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
@@ -338,14 +338,14 @@ class GeneralSettingsController extends AdminController
             ]);
         }
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
         $validation = service('validation');
 
         $validation->setRules([
             'minimumPasswordLength' => 'required|integer|greater_than[6]'
         ]);
 
-        if (!$validation->run($requestJson)) {
+        if (!$validation->run($data)) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
             return view('Btw\Core\Views\Admin\users\form_cell_password', [
                 'validation' => $validation
@@ -353,8 +353,8 @@ class GeneralSettingsController extends AdminController
             ;
         }
 
-        setting('Auth.minimumPasswordLength', (int) $requestJson['minimumPasswordLength']);
-        setting('Auth.passwordValidators', $requestJson['validators']);
+        setting('Auth.minimumPasswordLength', (int) $data['minimumPasswordLength']);
+        setting('Auth.passwordValidators', $data['validators']);
 
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_password', [
@@ -388,12 +388,12 @@ class GeneralSettingsController extends AdminController
         }
 
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
         // Avatars
-        setting('Users.useGravatar', $requestJson['useGravatar'] ?? false);
-        setting('Users.gravatarDefault', $requestJson['gravatarDefault']);
-        setting('Users.avatarNameBasis', $requestJson['avatarNameBasis']);
+        setting('Users.useGravatar', $data['useGravatar'] ?? false);
+        setting('Users.gravatarDefault', $data['gravatarDefault']);
+        setting('Users.avatarNameBasis', $data['avatarNameBasis']);
 
         $this->response->triggerClientEvent('updateAvatar', time(), 'receive');
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
@@ -426,7 +426,7 @@ class GeneralSettingsController extends AdminController
             ]);
         }
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
         $validation = service('validation');
 
         $validation->setRules([
@@ -444,7 +444,7 @@ class GeneralSettingsController extends AdminController
             'SMTPKeepAlive' => 'permit_empty|in_list[0,1]',
         ]);
 
-        if (!$validation->run($requestJson)) {
+        if (!$validation->run($data)) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
             $this->response->setReswap('outerHTML');
             return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
@@ -454,21 +454,21 @@ class GeneralSettingsController extends AdminController
             ]);
         }
 
-        $port = $requestJson['SMTPPort'] === 'other'
-            ? $requestJson['SMTPPortOther']
-            : $requestJson['SMTPPort'];
+        $port = $data['SMTPPort'] === 'other'
+            ? $data['SMTPPortOther']
+            : $data['SMTPPort'];
 
-        setting('Email.fromName', $requestJson['fromName']);
-        setting('Email.fromEmail', $requestJson['fromEmail']);
-        setting('Email.protocol', $requestJson['protocol']);
-        setting('Email.mailPath', $requestJson['mailPath']);
-        setting('Email.SMTPHost', $requestJson['SMTPHost']);
+        setting('Email.fromName', $data['fromName']);
+        setting('Email.fromEmail', $data['fromEmail']);
+        setting('Email.protocol', $data['protocol']);
+        setting('Email.mailPath', $data['mailPath']);
+        setting('Email.SMTPHost', $data['SMTPHost']);
         setting('Email.SMTPPort', $port);
-        setting('Email.SMTPUser', $requestJson['SMTPUser']);
-        setting('Email.SMTPPass', $requestJson['SMTPPass']);
-        setting('Email.SMTPCrypto', $requestJson['SMTPCrypto']);
-        setting('Email.SMTPTimeout', $requestJson['SMTPTimeout']);
-        setting('Email.SMTPKeepAlive', $requestJson['SMTPKeepAlive']);
+        setting('Email.SMTPUser', $data['SMTPUser']);
+        setting('Email.SMTPPass', $data['SMTPPass']);
+        setting('Email.SMTPCrypto', $data['SMTPCrypto']);
+        setting('Email.SMTPTimeout', $data['SMTPTimeout']);
+        setting('Email.SMTPKeepAlive', $data['SMTPKeepAlive']);
 
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
         return view('Btw\Core\Views\Admin\settings\cells\form_cell_email', [
@@ -502,14 +502,14 @@ class GeneralSettingsController extends AdminController
             ]);
         }
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
         // Oauth
-        setting('ShieldOAuthConfig.allow_login', $requestJson['allow_login'] ?? false);
-        setting('ShieldOAuthConfig.allow_register', $requestJson['allow_register'] ?? false);
-        setting('ShieldOAuthConfig.allow_login_google', $requestJson['allow_login_google'] ?? false);
-        setting('ShieldOAuthConfig.google_client_id', $requestJson['google_client_id']);
-        setting('ShieldOAuthConfig.google_client_secret', $requestJson['google_client_secret']);
+        setting('ShieldOAuthConfig.allow_login', $data['allow_login'] ?? false);
+        setting('ShieldOAuthConfig.allow_register', $data['allow_register'] ?? false);
+        setting('ShieldOAuthConfig.allow_login_google', $data['allow_login_google'] ?? false);
+        setting('ShieldOAuthConfig.google_client_id', $data['google_client_id']);
+        setting('ShieldOAuthConfig.google_client_secret', $data['google_client_secret']);
 
         $this->response->triggerClientEvent('updateOauth', time(), 'receive');
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);

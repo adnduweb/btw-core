@@ -239,18 +239,18 @@ class GroupsController extends AdminController
     public function toggle(string $perm)
     {
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
         $groups = new Groups();
-        $group  = $groups->info($requestJson['alias']);
+        $group  = $groups->info($data['alias']);
         if ($group === null) {
             return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user group']));
         }
 
-        if (isset($requestJson['permissions']) && !is_array($requestJson['permissions']))
-            $requestJson['permissions'] = [$requestJson['permissions']];
+        if (isset($data['permissions']) && !is_array($data['permissions']))
+            $data['permissions'] = [$data['permissions']];
 
-        $group->setPermissions($requestJson['permissions'] ?? []);
+        $group->setPermissions($data['permissions'] ?? []);
 
 
         $permissions = setting('AuthGroups.permissions');
@@ -261,10 +261,10 @@ class GroupsController extends AdminController
         $matrix = setting('AuthGroups.matrix');
 
         return view($this->viewPrefix . 'cells\form_cell_capabilities_row', [
-            'alias' => $requestJson['alias'],
+            'alias' => $data['alias'],
             'permission'   => $perm,
             'description'   => $permissions[$perm],
-            'matrix' => array_flip($matrix[$requestJson['alias']]),
+            'matrix' => array_flip($matrix[$data['alias']]),
             'menu' => service('menus')->menu('sidebar_user_current'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
         ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['groups']));
@@ -276,18 +276,18 @@ class GroupsController extends AdminController
     public function toggleAll()
     {
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
         $groups = new Groups();
-        $group  = $groups->info($requestJson['alias']);
+        $group  = $groups->info($data['alias']);
         if ($group === null) {
             return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user group']));
         }
 
-        if (isset($requestJson['permissions']) && !is_array($requestJson['permissions']))
-            $requestJson['permissions'] = [$requestJson['permissions']];
+        if (isset($data['permissions']) && !is_array($data['permissions']))
+            $data['permissions'] = [$data['permissions']];
 
-        $group->setPermissions($requestJson['permissions'] ?? []);
+        $group->setPermissions($data['permissions'] ?? []);
 
 
         $permissions = setting('AuthGroups.permissions');
@@ -299,8 +299,8 @@ class GroupsController extends AdminController
 
         return view($this->viewPrefix . 'cells\form_cell_capabilities_tr', [
             'permissions'   => $permissions,
-            'alias'   => $requestJson['alias'],
-            'matrix' => array_flip($matrix[$requestJson['alias']]),
+            'alias'   => $data['alias'],
+            'matrix' => array_flip($matrix[$data['alias']]),
             'menu' => service('menus')->menu('sidebar_user_current'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
         ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));

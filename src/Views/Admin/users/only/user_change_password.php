@@ -12,7 +12,7 @@
         <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0" x-data="app()" x-init="generatePassword()">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
                 <?= form_open(route_to('user-only-change-password', $user->id), [
-                    'id' => 'kt_users_form_changepassword', 'hx-post' => route_to('user-only-change-password', $user->id), 'hx-target' => '#changepassword',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states, json-enc, event-header",  'novalidate' => false, 'data-loading-target' => "#loadingchangepassword",
+                    'id' => 'kt_users_form_changepassword', 'hx-post' => route_to('user-only-change-password', $user->id), 'hx-target' => '#changepassword',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loadingchangepassword",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= csrf_field() ?>

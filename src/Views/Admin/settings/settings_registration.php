@@ -13,7 +13,7 @@
         <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
                 <?= form_open(route_to('settings-registration'), [
-                    'id' => 'kt_users_form_registration', 'hx-post' => route_to('settings-registration'), 'hx-target' => '#registration', 'hx-ext' => "loading-states, json-enc, event-header", 'novalidate' => false, 'data-loading-target' => "#loadingregistration",
+                    'id' => 'kt_users_form_registration', 'hx-post' => route_to('settings-registration'), 'hx-target' => '#registration', 'hx-ext' => "loading-states", 'novalidate' => false, 'data-loading-target' => "#loadingregistration",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= '' // csrf_field() ?>
@@ -24,7 +24,7 @@
 
             <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
                 <?= form_open(route_to('settings-registration'), [
-                    'id' => 'kt_users_form_login', 'hx-post' => route_to('settings-registration'), 'hx-target' => '#login', 'hx-ext' => "loading-states, json-enc",  'novalidate' => false, 'data-loading-target' => "#loadinglogin",
+                    'id' => 'kt_users_form_login', 'hx-post' => route_to('settings-registration'), 'hx-target' => '#login', 'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loadinglogin",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= '' // csrf_field() ?>

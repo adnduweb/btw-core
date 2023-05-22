@@ -180,7 +180,7 @@ class UsersController extends AdminController
         switch ($this->request->getVar('section')) {
             case 'general':
 
-                $requestJson = $this->request->getJSON(true);
+                $data = $this->request->getPost();
                 $validation = service('validation');
 
                 $validation->setRules([
@@ -189,7 +189,7 @@ class UsersController extends AdminController
                     'last_name' => 'permit_empty|string|min_length[3]',
                 ]);
 
-                if (!$validation->run($requestJson)) {
+                if (!$validation->run($data)) {
                     if ($this->request->isHtmx() && !$this->request->isBoosted()) {
                         $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
                     } else
@@ -203,8 +203,8 @@ class UsersController extends AdminController
                     ;
                 }
 
-                $user->fill($requestJson);
-                $user->username = generateUsername($requestJson['last_name'] . ' ' . $requestJson['first_name']);
+                $user->fill($data);
+                $user->username = generateUsername($data['last_name'] . ' ' . $data['first_name']);
 
                 // Try saving basic details
                 try {
@@ -234,14 +234,14 @@ class UsersController extends AdminController
                 break;
             case 'groups':
 
-                $requestJson = $this->request->getJSON(true);
+                $data = $this->request->getPost();
                 $validation = service('validation');
 
                 $validation->setRules([
                     'currentGroup[]' => 'required'
                 ]);
 
-                if (!$validation->run($requestJson)) {
+                if (!$validation->run($data)) {
                     return view($this->viewPrefix . 'cells\cell_groups', [
                         'userCurrent' => auth()->user(),
                         'currentGroup' => array_flip(auth()->user()->getGroups()),
@@ -252,11 +252,11 @@ class UsersController extends AdminController
                 }
 
 
-                if (!is_array($requestJson['currentGroup[]']))
-                    $requestJson['currentGroup[]'] = [$requestJson['currentGroup[]']];
+                if (!is_array($data['currentGroup[]']))
+                    $data['currentGroup[]'] = [$data['currentGroup[]']];
 
                 // Save the user's groups
-                $user->syncGroups(...($requestJson['currentGroup[]'] ?? []));
+                $user->syncGroups(...($data['currentGroup[]'] ?? []));
 
 
                 if ($this->request->isHtmx()) {
@@ -286,7 +286,7 @@ class UsersController extends AdminController
             ]);
         }
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
         $validation = service('validation');
 
         $users = new UserModel();
@@ -301,7 +301,7 @@ class UsersController extends AdminController
         if (!$this->validate($rules)) {
 
 
-            // if (!$validation->run($requestJson)) {
+            // if (!$validation->run($data)) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
             return view($this->viewPrefix . 'cells\form_cell_create', [
                 'validation' => $validation,
@@ -309,7 +309,7 @@ class UsersController extends AdminController
             ]);
         }
 
-        $user->fill($requestJson);
+        $user->fill($data);
 
         // Try saving basic details
         try {
@@ -329,18 +329,18 @@ class UsersController extends AdminController
         }
 
         // Save the new user's email/password
-        $password = $requestJson['new_password'];
+        $password = $data['new_password'];
         $identity = $user->getEmailIdentity();
         if ($identity === null) {
             helper('text');
             $user->createEmailIdentity([
-                'email' => $requestJson['email'],
+                'email' => $data['email'],
                 'password' => !empty($password) ? $password : random_string('alnum', 12),
             ]);
         }
         // Update existing user's email identity
         else {
-            $identity->secret = $requestJson['email'];
+            $identity->secret = $data['email'];
             if ($password !== null) {
                 $identity->secret2 = service('passwords')->hash($password);
             }
@@ -349,12 +349,12 @@ class UsersController extends AdminController
             }
         }
 
-        if (!is_array($requestJson['currentGroup[]']))
-            $requestJson['currentGroup[]'] = [$requestJson['currentGroup[]']];
+        if (!is_array($data['currentGroup[]']))
+            $data['currentGroup[]'] = [$data['currentGroup[]']];
 
         // Save the user's groups if the user has right permissions
         if (auth()->user()->can('users.edit')) {
-            $user->syncGroups(...($requestJson['currentGroup[]'] ?? []));
+            $user->syncGroups(...($data['currentGroup[]'] ?? []));
         }
 
         Events::trigger('userCreated', $user); 
@@ -414,12 +414,12 @@ class UsersController extends AdminController
         /** @var User|null $user */
         $user = $users->find($id);
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
-        if (isset($requestJson['permissions']) && !is_array($requestJson['permissions']))
-            $requestJson['permissions'] = [$requestJson['permissions']];
+        if (isset($data['permissions']) && !is_array($data['permissions']))
+            $data['permissions'] = [$data['permissions']];
 
-        $user->syncPermissions(...($requestJson['permissions'] ?? []));
+        $user->syncPermissions(...($data['permissions'] ?? []));
 
         $permissions = setting('AuthGroups.permissions');
         if (is_array($permissions)) {
@@ -446,9 +446,9 @@ class UsersController extends AdminController
         $user = $users->find($id);
 
         // print_r($this->request->getJSON(true)); exit;
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
-        $user->syncPermissions(...($requestJson['permissions'] ?? []));
+        $user->syncPermissions(...($data['permissions'] ?? []));
 
         $permissions = setting('AuthGroups.permissions');
         if (is_array($permissions)) {
@@ -487,7 +487,7 @@ class UsersController extends AdminController
             ]);
         }
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
         $validation = service('validation');
 
         $validation->setRules([
@@ -496,7 +496,7 @@ class UsersController extends AdminController
             'pass_confirm' => 'required|matches[new_password]',
         ]);
 
-        if (!$validation->run($requestJson)) {
+        if (!$validation->run($data)) {
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
@@ -505,7 +505,7 @@ class UsersController extends AdminController
         }
 
         //On vérifie que le mote d epasse en cours est connu 
-        $validCreds = auth()->check(['password' => $requestJson['current_password'], 'email' => $user->email]);
+        $validCreds = auth()->check(['password' => $data['current_password'], 'email' => $user->email]);
         if (!$validCreds->isOK()) {
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
@@ -518,8 +518,8 @@ class UsersController extends AdminController
         // Save the new user's email/password
         $identity = $user->getEmailIdentity();
 
-        if ($requestJson['new_password'] !== null) {
-            $identity->secret2 = service('passwords')->hash($requestJson['new_password']);
+        if ($data['new_password'] !== null) {
+            $identity->secret2 = service('passwords')->hash($data['new_password']);
         }
 
         if ($identity->hasChanged()) {
@@ -551,11 +551,11 @@ class UsersController extends AdminController
             ]);
         }
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
         // Actions
         $actions = setting('Auth.actions');
-        $actions['login'] = $requestJson['email2FA'] ?? null;
+        $actions['login'] = $data['email2FA'] ?? null;
         $context = 'user:' . $id;
         service('settings')->set('Auth.actions', $actions, $context);
 

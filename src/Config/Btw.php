@@ -44,4 +44,6 @@ class Btw extends BaseConfig
      * If true, Sidebar collapse.
      */   
     public $isSidebarExpanded = true;
+
+    public $themebo = 'Admin';
 }

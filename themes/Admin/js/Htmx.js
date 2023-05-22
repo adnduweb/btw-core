@@ -695,7 +695,7 @@ htmx.defineExtension("loading-states", {
           targetElt.setAttribute("disabled", true);
 
           setTimeout(() => {
-            console.log("Delayed for 4 second.");
+            //console.log("Delayed for 4 second.");
             targetElt.removeAttribute("disabled");
           }, "2000");
 

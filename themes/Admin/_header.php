@@ -5,7 +5,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"></path>
         </svg>
     </button>
-    <header class="flex items-center px-6">
+    <header class="flex items-center px-6 hidden lg:flex">
         <button class="p-2 -ml-2 mr-2" @click="isSidebarExpanded = !isSidebarExpanded" hx-get="<?= route_to('user-profile-sidebarexpanded'); ?>" hx-swap="none">
             <svg viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 transform" :class="isSidebarExpanded ? 'rotate-180' : 'rotate-0'">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -19,7 +19,7 @@
         <div class="flex-1 flex">
             <form class="w-full flex md:ml-0" action="#" method="GET">
                 <label for="search-field" class="sr-only">
-                    Search
+                    <?= lang('Btw.general.search'); ?>
                 </label>
                 <div class="relative w-full text-slate-400 focus-within:text-slate-600 dark:focus-within:text-slate-300">
                     <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
@@ -27,7 +27,7 @@
                             <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z" clip-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <input id="search-field" type="search" name="search" class="block w-full h-full pl-8 pr-3 py-2 border-transparent bg-transparent text-slate-900 placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:ring-0 focus:border-transparent sm:text-sm dark:text-slate-100 dark:placeholder-slate-400 dark:focus:placeholder-slate-500" placeholder="Search" kl_vkbd_parsed="true">
+                    <input id="search-field" type="search" name="search" class="block w-full h-full pl-8 pr-3 py-2 border-transparent bg-transparent text-slate-900 placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:ring-0 focus:border-transparent sm:text-sm dark:text-slate-100 dark:placeholder-slate-400 dark:focus:placeholder-slate-500" placeholder="<?= lang('Form.general.search'); ?>" kl_vkbd_parsed="true">
                 </div>
             </form>
         </div>

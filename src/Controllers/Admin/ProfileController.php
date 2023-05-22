@@ -66,21 +66,21 @@ class ProfileController extends AdminController
             case 'general':
 
 
-                // print_r($_POST);
-                // print_r($_FILES);
-                // print_r($_REQUEST);
+                print_r($_POST);
+                print_r($_FILES);
+                print_r($_REQUEST);
 
-                // $file = $this->request->getFile('photo');
+                $file = $this->request->getFile('photo');
 
-                // $storage = service('storage');
+                $storage = service('storage');
 
-                // $result = $storage->store($file, 'attachments/' . date('Y/m'));
+                $result = $storage->store($file, 'attachments/' . date('Y/m'));
 
-                // echo '<pre>';
-                // print_r($result);
-                // echo '</pre>';
+                echo '<pre>';
+                print_r($result);
+                echo '</pre>';
 
-                // exit;
+                exit;
 
                 if (!auth()->user()->can('users.edit')) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
@@ -89,7 +89,7 @@ class ProfileController extends AdminController
                     ]);
                 }
 
-                $requestJson = $this->request->getPost();
+                $data = $this->request->getPost();
                 $validation = service('validation');
 
                 $validation->setRules([
@@ -98,7 +98,7 @@ class ProfileController extends AdminController
                     'last_name'  => 'permit_empty|string|min_length[3]',
                 ]);
 
-                if (!$validation->run($requestJson)) {
+                if (!$validation->run($data)) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
                     return view($this->viewPrefix . 'cells\form_cell_information', [
                         'userCurrent' => $user,
@@ -106,8 +106,8 @@ class ProfileController extends AdminController
                     ]);
                 }
 
-                $user->fill($requestJson);
-                $user->username = generateUsername($requestJson['last_name'] . ' ' .  $requestJson['first_name']);
+                $user->fill($data);
+                $user->username = generateUsername($data['last_name'] . ' ' .  $data['first_name']);
 
                 // Try saving basic details
                 try {
@@ -134,14 +134,14 @@ class ProfileController extends AdminController
                 break;
             case 'groups':
 
-                $requestJson = $this->request->getJSON(true);
+                $data = $this->request->getPost();
                 $validation = service('validation');
 
                 $validation->setRules([
                     'currentGroup[]'      => 'required'
                 ]);
 
-                if (!$validation->run($requestJson)) {
+                if (!$validation->run($data)) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
                     return view($this->viewPrefix . 'cells\cell_groups', [
                         'userCurrent' => auth()->user(),
@@ -152,11 +152,11 @@ class ProfileController extends AdminController
                 }
 
 
-                if (!is_array($requestJson['currentGroup[]']))
-                    $requestJson['currentGroup[]']  = [$requestJson['currentGroup[]']];
+                if (!is_array($data['currentGroup[]']))
+                    $data['currentGroup[]']  = [$data['currentGroup[]']];
 
                 // Save the user's groups
-                $user->syncGroups(...($requestJson['currentGroup[]'] ?? []));
+                $user->syncGroups(...($data['currentGroup[]'] ?? []));
 
                 $this->response->triggerClientEvent('updateGroupUserCurrent');
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
@@ -272,12 +272,12 @@ class ProfileController extends AdminController
         /** @var User|null $user */
         $user = $users->find(auth()->id());
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
-        if (isset($requestJson['permissions']) && !is_array($requestJson['permissions']))
-            $requestJson['permissions'] = [$requestJson['permissions']];
+        if (isset($data['permissions']) && !is_array($data['permissions']))
+            $data['permissions'] = [$data['permissions']];
 
-        $user->syncPermissions(...($requestJson['permissions'] ?? []));
+        $user->syncPermissions(...($data['permissions'] ?? []));
 
         $permissions = setting('AuthGroups.permissions');
         if (is_array($permissions)) {
@@ -303,9 +303,9 @@ class ProfileController extends AdminController
         $user = $users->find(auth()->id());
 
         // print_r($this->request->getJSON(true)); exit;
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
-        $user->syncPermissions(...($requestJson['permissions'] ?? []));
+        $user->syncPermissions(...($data['permissions'] ?? []));
 
         $permissions = setting('AuthGroups.permissions');
         if (is_array($permissions)) {
@@ -342,7 +342,7 @@ class ProfileController extends AdminController
             ]);
         }
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
         $validation = service('validation');
 
         $validation->setRules([
@@ -351,7 +351,7 @@ class ProfileController extends AdminController
             'pass_confirm' => 'required|matches[new_password]',
         ]);
 
-        if (!$validation->run($requestJson)) {
+        if (!$validation->run($data)) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
@@ -360,7 +360,7 @@ class ProfileController extends AdminController
         }
 
         //On vérifie que le mote d epasse en cours est connu 
-        $validCreds = auth()->check(['password' => $requestJson['current_password'], 'email' => $user->email]);
+        $validCreds = auth()->check(['password' => $data['current_password'], 'email' => $user->email]);
         if (!$validCreds->isOK()) {
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
@@ -372,8 +372,8 @@ class ProfileController extends AdminController
         // Save the new user's email/password
         $identity = $user->getEmailIdentity();
 
-        if ($requestJson['new_password'] !== null) {
-            $identity->secret2 = service('passwords')->hash($requestJson['new_password']);
+        if ($data['new_password'] !== null) {
+            $identity->secret2 = service('passwords')->hash($data['new_password']);
         }
 
         if ($identity->hasChanged()) {
@@ -405,11 +405,11 @@ class ProfileController extends AdminController
             ]);
         }
 
-        $requestJson = $this->request->getJSON(true);
+        $data = $this->request->getPost();
 
         // Actions
         $actions             = setting('Auth.actions');
-        $actions['login']    = $requestJson['email2FA'] ?? null;
+        $actions['login']    = $data['email2FA'] ?? null;
         $context = 'user:' . user_id();
         service('settings')->set('Auth.actions', $actions, $context);
 

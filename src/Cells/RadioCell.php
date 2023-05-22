@@ -24,8 +24,6 @@ class RadioCell
             throw new RuntimeException('You must provide the Filter view cell with the model to use.');
         }
 
-        $this->checkedNew = esc(set_value(str_replace(' ', '_', $params['name']), $params['checked'] ?? null), 'attr');
-
         $html = '<div class="flex items-center">';
         $html .= $this->getInput($params);
         $html .= $this->getLabel($params);
@@ -48,7 +46,7 @@ class RadioCell
 
     public function getInput($params)
     {
-        $isChecked = ( $this->checkedNew) ? 'checked' : '';
+        $isChecked = ( $params['checked']) ? 'checked' : '';
 
         $html = "";
         if (isset($params['lang']) && $params['lang'] == true) {
