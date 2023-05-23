@@ -112,6 +112,7 @@ class GeneralSettingsController extends AdminController
 
                 if (!$validation->run($data)) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
+                    $this->response->setReswap('innerHTML show:#general:top');
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [
                         'validation' => $validation
                     ]);

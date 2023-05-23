@@ -303,6 +303,7 @@ class UsersController extends AdminController
 
             // if (!$validation->run($data)) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
+            $this->response->setReswap('innerHTML show:#general:top');
             return view($this->viewPrefix . 'cells\form_cell_create', [
                 'validation' => $validation,
                 'groups' => setting('AuthGroups.groups')
@@ -357,7 +358,7 @@ class UsersController extends AdminController
             $user->syncGroups(...($data['currentGroup[]'] ?? []));
         }
 
-        Events::trigger('userCreated', $user); 
+        Events::trigger('userCreated', $user);
 
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
         return redirect()->hxLocation('/' . ADMIN_AREA . '/users/edit/' . $user->id . '/information');

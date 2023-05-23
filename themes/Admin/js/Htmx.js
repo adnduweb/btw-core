@@ -699,12 +699,12 @@ htmx.defineExtension("loading-states", {
             targetElt.removeAttribute("disabled");
           }, "2000");
 
-        //   queueLoadingState(
-        //     sourceElt,
-        //     targetElt,
-        //     () =>  targetElt.setAttribute("disabled", 'disabled'),
-        //     () =>  targetElt.removeAttribute("disabled")
-        //   );
+          //   queueLoadingState(
+          //     sourceElt,
+          //     targetElt,
+          //     () =>  targetElt.setAttribute("disabled", 'disabled'),
+          //     () =>  targetElt.removeAttribute("disabled")
+          //   );
         });
       });
 
@@ -955,6 +955,29 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
     htmx.on("htmx:afterRequest", function (evt) {
       // console.log(window);
     });
+
+	htmx.on("htmx:responseError", function (evt) {
+
+		console.log( import.meta.env.CI_ENVIRONMENT);
+		console.error(evt);
+		console.error(evt.detail);
+		console.error(evt.detail.xhr.responseText);
+		const jsonResponse = JSON.parse(evt.detail.xhr.responseText);
+		console.log(jsonResponse.message);
+		console.error(evt.detail.xhr.responseText.message);
+
+		let event = new CustomEvent("notify", {
+			bubbles: true,
+			cancelable: true,
+			detail: {
+				content: jsonResponse.message,
+				type: "error",
+			  }
+		});
+		// Emit the event
+		document.dispatchEvent(event);
+
+	});
   },
 
   getCSRFToken: function () {

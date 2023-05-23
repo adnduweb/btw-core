@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Btw\Core\Libraries\Storage\Exceptions;
 

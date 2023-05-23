@@ -110,12 +110,20 @@ class PublicDisk implements FileSystem
                 'file_name' => $fileName,
                 'file_path' => $path . $fileName,
                 'file_url' => $this->baseUrl . $path . $fileName,
-                'full_path' => $this->basePath . $path . $fileName,
+                'fullpath' => $this->basePath . $path . $fileName,
             ];
 
-            model(MediaModel::class)->insert($data);
+            try {
+                $mediaId = model(MediaModel::class)->insdert($data);
+            } catch (StorageException $e) {
+                // return response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => model(MediaModel::class)->errors()]);
+                // return redirect()->back()->withInput()->with('errors', model(MediaModel::class)->errors());
+                throw new RuntimeException('Cannot get the pending login User.');
+            }
 
-            return $data;
+
+
+            return $mediaId;
         }
 
         return $result;
