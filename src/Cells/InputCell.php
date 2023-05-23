@@ -68,8 +68,8 @@ class InputCell
             $html .= '<div class="relative">';
         }
 
-        if (request()->is('json')) {
-            $requestOld = request()->getJSON(true);
+        if (request()->is('post')) {
+            $requestOld = request()->getPost();
             if (isset($requestOld[$params['name']])) {
                 $params['value'] = $requestOld[$params['name']];
             }

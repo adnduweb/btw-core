@@ -3,11 +3,18 @@
 namespace Btw\Core\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use Btw\Core\Commands\Install\Publisher;
 
 class BtwSeeder extends Seeder
 {
 	public function run()
 	{
+
+        $twig = WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . 'twig';
+		if (!is_dir($twig) && !@mkdir($twig, 0775, true)) {
+			throw new \Exception('impossible de créer le dossier twig');
+		}
+
 		service('settings')->set('Btw.themebo', 'Admin');
 		service('settings')->set('Site.siteName', '"La meilleur Appli du monde');
 		service('settings')->set('Site.siteOnline', true);
@@ -24,5 +31,21 @@ class BtwSeeder extends Seeder
         service('settings')->set('Email.protocol', 'mail');
         service('settings')->set('Email.mailPath', '/usr/sbin/sendmail');
 
+        //Update themes
+        $this->publishThemes();
+
 	}
+    private function publishThemes()
+    {
+        $source      = BTPATH . '../themes';
+        $destination = APPPATH . '../themes';
+
+        $publisher = new Publisher();
+        $publisher->copyDirectory($source, $destination);
+
+        //logo
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/logo-adn.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/logo-adn-grey.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/logo-adn-grey.png');
+    }
 }
