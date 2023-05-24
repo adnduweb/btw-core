@@ -22,6 +22,9 @@
                         reader.readAsDataURL($refs.photo.files[0]);
     ">
 
+    <?= var_dump(service('storage')->getFile('11')); ?> 
+
+
             <label class="block text-gray-700 text-sm font-bold mb-2 text-center" for="photo">
                 Profile Photo <span class="text-red-600"> </span>
             </label>

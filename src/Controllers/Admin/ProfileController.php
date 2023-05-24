@@ -65,18 +65,6 @@ class ProfileController extends AdminController
         switch ($this->request->getVar('section')) {
             case 'general':
 
-                $file = $this->request->getFile('photo');
-
-                if ($file) {
-
-                    $storage = service('storage');
-
-                    $result = $storage->store($file, 'attachments/' . date('Y/m'));
-
-                    $context = 'user:' . user_id();
-                    service('settings')->set('Btw.photoProfile', $result, $context);
-                }
-
                 if (!auth()->user()->can('users.edit')) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
                     return view($this->viewPrefix . 'cells\form_cell_information', [
@@ -84,8 +72,44 @@ class ProfileController extends AdminController
                     ]);
                 }
 
-                $data = $this->request->getPost();
                 $validation = service('validation');
+                $file = $this->request->getFile('photo') ?? null;
+                if ($file) {
+
+                    $validationRule = [
+                        'photo' => [
+                            'label' => 'Image File',
+                            'rules' => [
+                                'uploaded[photo]',
+                                'is_image[photo]',
+                                'mime_in[photo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
+                                'max_size[photo,100]',
+                                'max_dims[photo,1024,768]',
+                            ],
+                        ],
+                    ];
+                    if (!$this->validate($validationRule)) {
+                        $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $this->validator->getErrors()]);
+                        $this->response->setReswap('innerHTML show:#general:top');
+                        return view($this->viewPrefix . 'cells\form_cell_information', [
+                            'userCurrent' => $user,
+                            'validation' => $this->validator->getErrors()
+                        ]);
+                    }
+
+
+                    $storage = service('storage');
+
+                    $result = $storage->store($file, 'attachments/' . date('Y/m'));
+
+                    $context = 'user:' . user_id();
+                    service('settings')->set('Users.photoProfile', $result, $context);
+                }
+
+
+
+                $data = $this->request->getPost();
+
 
                 $validation->setRules([
                     'email' => 'required|valid_email|unique_email[' . auth()->id() . ']',
@@ -95,6 +119,7 @@ class ProfileController extends AdminController
 
                 if (!$validation->run($data)) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
+                    $this->response->setReswap('innerHTML show:#general:top');
                     return view($this->viewPrefix . 'cells\form_cell_information', [
                         'userCurrent' => $user,
                         'validation' => $validation
@@ -119,6 +144,7 @@ class ProfileController extends AdminController
 
                 $this->response->triggerClientEvent('updateUserCurrent');
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
+                $this->response->setReswap('innerHTML show:#general:top');
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,
@@ -133,7 +159,7 @@ class ProfileController extends AdminController
                 $validation = service('validation');
 
                 $validation->setRules([
-                    'currentGroup[]' => 'required'
+                    'currentGroup' => 'required'
                 ]);
 
                 if (!$validation->run($data)) {
@@ -147,11 +173,11 @@ class ProfileController extends AdminController
                 }
 
 
-                if (!is_array($data['currentGroup[]']))
-                    $data['currentGroup[]'] = [$data['currentGroup[]']];
+                if (!is_array($data['currentGroup']))
+                    $data['currentGroup'] = [$data['currentGroup']];
 
                 // Save the user's groups
-                $user->syncGroups(...($data['currentGroup[]'] ?? []));
+                $user->syncGroups(...($data['currentGroup'] ?? []));
 
                 $this->response->triggerClientEvent('updateGroupUserCurrent');
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
@@ -360,8 +386,7 @@ class ProfileController extends AdminController
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');
-            ;
+            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');;
         }
 
 

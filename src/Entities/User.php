@@ -159,4 +159,28 @@ class User extends ShieldUser
     {
         return $this->metaValidationRules('Users', $prefix);
     }
+
+     /**
+     * Renders out the user's avatar at the specified size (in pixels)
+     *
+     * @return string
+     */
+    public function renderPhotoProfile() 
+    {
+        $context = 'user:' . $this->id;
+        $photoProfile = service('settings')->get('Users.photoProfile', $context)  ?? false;
+
+        if ($photoProfile == true) {
+
+           var_dump(service('storage')->getFile($photoProfile));
+
+            return service('storage')->getFile($photoProfile);
+            
+        } else {
+           
+        }
+
+
+       
+    }
 }

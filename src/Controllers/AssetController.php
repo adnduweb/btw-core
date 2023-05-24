@@ -69,4 +69,36 @@ class AssetController extends Controller
 
         return $this->response->download($origFilename, file_get_contents($path), true);
     }
+
+    public function renderFile(...$segments)
+    {
+        if (count($segments) != 3){
+            //@todo
+            //image par defaut au cas ou
+            return false;
+        }
+
+        $year = $segments[0];
+        $month = $segments[1];
+        $file = $segments[2];
+
+        if(($fileName = file_get_contents(WRITEPATH.'uploads/' .  config('storage')->disk . '/attachments/'.$year . '/' . $month . '/' . $file)) === FALSE)
+            return false;
+
+        $file = new \CodeIgniter\Files\File(WRITEPATH.'uploads/' .  config('storage')->disk . '/attachments/'.$year . '/' . $month . '/' . $file);
+
+        // choose the right mime type
+        $mimeType = $file->getMimeType();
+
+        $this->response
+            ->setStatusCode(200)
+            ->setContentType($mimeType)
+            ->setBody($fileName)
+            ->send();
+
+
+        print_r($segments); exit;
+    }
+       
+
 }

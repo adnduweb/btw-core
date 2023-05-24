@@ -5,6 +5,7 @@
  */
 
 $routes->get('assets/(:any)', '\Btw\Core\Controllers\AssetController::serve/$1');
+// $routes->get('attachments/(:any)', '\Btw\Core\Controllers\AssetController::renderFile/$1');
 
 
 // Authentication Routes that override Shield's

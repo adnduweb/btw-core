@@ -103,6 +103,7 @@ class PublicDisk implements FileSystem
 
         if ($result !== false) {
             $data = [
+                'id' => '2',
                 'disk' => $this->disk,
                 'type' => $fileType,
                 'size' => $fileSize,
@@ -110,11 +111,11 @@ class PublicDisk implements FileSystem
                 'file_name' => $fileName,
                 'file_path' => $path . $fileName,
                 'file_url' => $this->baseUrl . $path . $fileName,
-                'fullpath' => $this->basePath . $path . $fileName,
+                'full_path' => $this->basePath . $path . $fileName,
             ];
 
             try {
-                $mediaId = model(MediaModel::class)->insdert($data);
+                $mediaId = model(MediaModel::class)->insert($data);
             } catch (StorageException $e) {
                 // return response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => model(MediaModel::class)->errors()]);
                 // return redirect()->back()->withInput()->with('errors', model(MediaModel::class)->errors());
@@ -149,6 +150,36 @@ class PublicDisk implements FileSystem
             'path' => $path,
             'contents' => $contents
         ];
+    }
+
+    /**
+     * Get file from storage.
+     *
+     * @param null $path
+     * @param array $options
+     * @return mixed
+     */
+    public function getFile($idFile, $options = [])
+    {
+        $media = model(MediaModel::class)->find($idFile);
+
+        if ($media === false) {
+            return false;
+        }
+
+        if (($fileName = @file_get_contents($media->full_path)) === FALSE)
+            return false;
+
+        $file = new \CodeIgniter\Files\File($media->full_path);
+
+        // choose the right mime type
+        $mimeType = $file->getMimeType();
+        // print_r($media); exit;
+        return response()
+            ->setStatusCode(200)
+            ->setContentType($mimeType)
+            ->setBody($fileName)
+            ->send();
     }
 
     /**
