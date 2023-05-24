@@ -47,6 +47,7 @@ return [
         'resourceSaved' => 'Les modifications de {0} ont été enregistrées avec succès.', 
         'formValidationFailed' => 'Une validation de champ est requis',
         'resourcesDeleted' => "Les {0} ont été supprimés.",
+        'resourcesDeletedAll' => "Les {0} ont été supprimés.",
         'resourcesUpdatedActive' => "Les {0} ont été mise à jour.",
         'resourcesUpdatedDesactive' => "Les {0} ont été mise à jour.",
         

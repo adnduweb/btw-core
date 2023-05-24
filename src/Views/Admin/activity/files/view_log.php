@@ -23,10 +23,10 @@ $this->section('main') ?>
 
                 </tr>
             </thead>
-            <tbody id="books-table-rows">
+            <tbody id="books-table-rows"  x-data="{ open: false }">
                 <?php
                 foreach ($logContent as $key => $log) : ?>
-                    <tr <?php if (array_key_exists('extra', $log)) : ?> style="cursor:pointer" x-data="{ open: false }" <?php else : ?> class="relative dark:hover:bg-gray-600 hover:bg-slate-50 " <?php endif ?>>
+                    <tr <?php if (array_key_exists('extra', $log)) : ?> style="cursor:pointer" <?php else : ?> class="relative dark:hover:bg-gray-600 hover:bg-slate-50 " <?php endif ?>>
                         <td class="border-dashed border-t border-gray-300 "  @click="open = ! open">
                             <span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer  dark:text-gray-200">
                                 <span class="<?= $log['class']; ?>">
@@ -50,7 +50,7 @@ $this->section('main') ?>
                     <?php
                     if (array_key_exists('extra', $log)) : ?>
 
-                        <tr class="collapse bg-light" x-show="open">
+                        <tr class="bg-light" x-show="open">
                             <td class="border-dashed border-t border-gray-300" colspan="3">
                                 <span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer  dark:text-gray-200">
                                     <pre class="text-wrap">  <?= nl2br(trim(esc($log['extra']), " \n")) ?> </pre>

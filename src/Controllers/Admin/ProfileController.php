@@ -45,7 +45,7 @@ class ProfileController extends AdminController
 
         if (!$this->request->is('post')) {
 
-            return $this->render($this->viewPrefix . 'settings_user', [
+            return $this->render($this->viewPrefix . 'profile', [
                 'userCurrent' => auth()->user(),
                 'currentGroup' => array_flip(auth()->user()->getGroups()),
                 'groups' => setting('AuthGroups.groups'),
@@ -225,7 +225,7 @@ class ProfileController extends AdminController
 
         if (!$this->request->is('post')) {
 
-            return $this->render($this->viewPrefix . 'settings_user_history', [
+            return $this->render($this->viewPrefix . 'profile_history', [
                 'user' => $user,
                 'logins' => $logins,
                 'menu' => service('menus')->menu('sidebar_user_profile'),
@@ -250,7 +250,7 @@ class ProfileController extends AdminController
 
         if (!$this->request->is('post')) {
 
-            return $this->render($this->viewPrefix . 'settings_user_browser', [
+            return $this->render($this->viewPrefix . 'profile_browser', [
                 'user' => $user,
                 'sessions' => $sessions,
                 'menu' => service('menus')->menu('sidebar_user_profile'),
@@ -275,7 +275,7 @@ class ProfileController extends AdminController
 
         if (!$this->request->is('post')) {
 
-            return $this->render($this->viewPrefix . 'settings_user_capabilities', [
+            return $this->render($this->viewPrefix . 'profile_capabilities', [
                 'permissions' => $permissions,
                 'user' => $user,
                 'menu' => service('menus')->menu('sidebar_user_profile'),
@@ -356,7 +356,7 @@ class ProfileController extends AdminController
 
         if (!$this->request->is('post')) {
 
-            return $this->render($this->viewPrefix . 'settings_user_change_password', [
+            return $this->render($this->viewPrefix . 'profile_change_password', [
                 'userCurrent' => auth()->user(),
                 'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
@@ -386,7 +386,8 @@ class ProfileController extends AdminController
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');;
+            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');
+            ;
         }
 
 
@@ -419,7 +420,7 @@ class ProfileController extends AdminController
 
         if (!$this->request->is('post')) {
 
-            return $this->render($this->viewPrefix . 'settings_user_two_factor', [
+            return $this->render($this->viewPrefix . 'profile_two_factor', [
                 'user' => $user,
                 'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
@@ -445,7 +446,7 @@ class ProfileController extends AdminController
     {
         $context = 'user:' . user_id();
         service('settings')->set('Btw.language_bo', $this->request->getGet('changeLanguageBO'), $context);
-        return redirect()->hxLocation('/path');
+        return redirect()->hxLocation(str_replace(base_url(), '', $this->request->getCurrentUrl()));
     }
 
     public function changeSidebarExpanded()
