@@ -159,8 +159,12 @@ class PublicDisk implements FileSystem
      * @param array $options
      * @return mixed
      */
-    public function getFile($idFile, $options = [])
+    public function getFileUrl($idFile, $options = [])
     {
+
+        if (is_null($idFile))
+            return false;
+
         $media = model(MediaModel::class)->find($idFile);
 
         if ($media === false) {
@@ -172,14 +176,7 @@ class PublicDisk implements FileSystem
 
         $file = new \CodeIgniter\Files\File($media->full_path);
 
-        // choose the right mime type
-        $mimeType = $file->getMimeType();
-        // print_r($media); exit;
-        return response()
-            ->setStatusCode(200)
-            ->setContentType($mimeType)
-            ->setBody($fileName)
-            ->send();
+        return $media->getFileUrl();
     }
 
     /**

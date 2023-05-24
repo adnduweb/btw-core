@@ -165,22 +165,19 @@ class User extends ShieldUser
      *
      * @return string
      */
-    public function renderPhotoProfile() 
-    {
-        $context = 'user:' . $this->id;
-        $photoProfile = service('settings')->get('Users.photoProfile', $context)  ?? false;
+    // public function renderPhotoProfile() 
+    // {
+    //     $context = 'user:' . $this->id;
+    //     $photoProfile = service('settings')->get('Users.photoProfile', $context)  ?? false;
 
-        if ($photoProfile == true) {
+    //     if ($photoProfile == true) {
 
-           var_dump(service('storage')->getFile($photoProfile));
+    //        var_dump(service('storage')->getFile($photoProfile));
 
-            return service('storage')->getFile($photoProfile);
+    //         return service('storage')->getFile($photoProfile); 
             
-        } else {
+    //     } else {
            
-        }
-
-
-       
-    }
+    //     }       
+    // }
 }

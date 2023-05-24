@@ -83,7 +83,7 @@ class ProfileController extends AdminController
                                 'uploaded[photo]',
                                 'is_image[photo]',
                                 'mime_in[photo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
-                                'max_size[photo,100]',
+                                'max_size[photo,1000]',
                                 'max_dims[photo,1024,768]',
                             ],
                         ],
@@ -445,7 +445,7 @@ class ProfileController extends AdminController
     {
         $context = 'user:' . user_id();
         service('settings')->set('Btw.language_bo', $this->request->getGet('changeLanguageBO'), $context);
-        return redirect()->back();
+        return redirect()->hxLocation('/path');
     }
 
     public function changeSidebarExpanded()

@@ -19,12 +19,16 @@
                 init() {
                     this.$nextTick(() => this.show = true)
  
-                    setTimeout(() => this.transitionOut(), 2000)
+                    if(this.notification.type == 'error'){
+                        setTimeout(() => this.transitionOut(), 10000)
+                    }else{
+                        setTimeout(() => this.transitionOut(), 2000)
+                    }
                 },
                 transitionOut() {
                     this.show = false
  
-                    setTimeout(() => this.remove(this.notification), 500)
+                    setTimeout(() => this.remove(this.notification), 500) 
                 },
             }" x-show="show" x-transition.duration.500ms class="pointer-events-auto relative w-full max-w-lg rounded-md border border-gray-200 dark:bg-white bg-gray-800 py-4 pl-6 pr-4 shadow-lg">
                 <div class="flex items-center">

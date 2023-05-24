@@ -22,7 +22,7 @@
                         reader.readAsDataURL($refs.photo.files[0]);
     ">
 
-    <?= var_dump(service('storage')->getFile('11')); ?> 
+
 
 
             <label class="block text-gray-700 text-sm font-bold mb-2 text-center" for="photo">
@@ -32,8 +32,8 @@
             <div class="text-center">
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="https://images.unsplash.com/photo-1531316282956-d38457be0993?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"
-                        class="w-40 h-40 m-auto rounded-full shadow">
+                    <img src="<?= service('storage')->getFileUrl(setting()->get('Users.photoProfile', 'user:' . user_id())); ?>"
+                        class="w-40 h-40 m-auto rounded-full shadow" />
                 </div>
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" x-show="photoPreview" style="display: none;">
@@ -45,7 +45,7 @@
                 <button type="button"
                     class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3"
                     x-on:click.prevent="$refs.photo.click()">
-                   <?= lang('Form.general.SelectNewPhoto');?>
+                    <?= lang('Form.general.SelectNewPhoto'); ?>
                 </button>
             </div>
         </div>

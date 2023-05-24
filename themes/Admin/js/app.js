@@ -309,7 +309,7 @@ document.body.addEventListener("showMessage", function (evt) {
       content += "<li>" + contentRead[item] + "</li>";
     });
     content += "</ul>";
-  } else { 
+  } else {
     content = evt.detail.content;
   }
 
@@ -366,3 +366,27 @@ if (typeof doudou != undefined) {
     setupTimers();
   });
 }
+
+function updateOnlineStatus(event) {
+  let condition = navigator.onLine ? "online" : "offline";
+  let texte = navigator.onLine ? "Vous êtes déconnecté du reseau" : "Vous êtes connecté du reseau";
+  let type = navigator.onLine ? "success" : "error";
+
+  console.log("Event: " + event.type, " Status: " + condition);
+
+  if (event.type != undefined) {
+    document.dispatchEvent(
+      new CustomEvent("notify", {
+        detail: {
+          content: condition,
+          type: type,
+        },
+        bubbles: true,
+      })
+    );
+  }
+}
+window.addEventListener("online", updateOnlineStatus);
+window.addEventListener("offline", updateOnlineStatus);
+
+updateOnlineStatus({}); //set initial status
