@@ -956,28 +956,22 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
       // console.log(window);
     });
 
-	htmx.on("htmx:responseError", function (evt) {
+    htmx.on("htmx:responseError", function (evt) {
+      if (doudou.env == "production") {
+        // const jsonResponse = JSON.parse(evt.detail.xhr.responseText);
 
-		console.log( import.meta.env.CI_ENVIRONMENT);
-		console.error(evt);
-		console.error(evt.detail);
-		console.error(evt.detail.xhr.responseText);
-		const jsonResponse = JSON.parse(evt.detail.xhr.responseText);
-		console.log(jsonResponse.message);
-		console.error(evt.detail.xhr.responseText.message);
-
-		let event = new CustomEvent("notify", {
-			bubbles: true,
-			cancelable: true,
-			detail: {
-				content: jsonResponse.message,
-				type: "error",
-			  }
-		});
-		// Emit the event
-		document.dispatchEvent(event);
-
-	});
+        let event = new CustomEvent("notify", {
+          bubbles: true,
+          cancelable: true,
+          detail: {
+            content: evt.detail.xhr.statusText,
+            type: "error",
+          },
+        });
+        // Emit the event
+        document.dispatchEvent(event);
+      }
+    });
   },
 
   getCSRFToken: function () {
