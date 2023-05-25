@@ -108,8 +108,8 @@ class Admin implements FilterInterface
         if (!empty($allSession)) {
 
             switch (key($allSession)) {
-                case 'htmx:error':
-                    $data['showMessage'] = ['type' => 'error', 'content' => lang('Btw.notAuthorized')];
+                case 'htmx:errorPermisssion':
+                    $data['showMessage'] = ['type' => 'error', 'content' => lang('Btw.message.notAuthorized')];
                     $response->setHeader('HX-Trigger', json_encode($data));
 
                     $html = '<script type="module">
@@ -119,7 +119,7 @@ class Admin implements FilterInterface
                         bubbles: true,
                         cancelable: true,
                         detail: {
-                            content: "' . lang('Btw.notAuthorized') . '",
+                            content: "' . lang('Btw.message.notAuthorized') . '",
                             type: "error",
                           }
                     });

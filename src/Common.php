@@ -508,9 +508,9 @@ if (!function_exists('json_readable_encode')) {
 
         return $out;
     }
+}
+if (!function_exists('build_list')) {
 
-    if (!function_exists('build_list')) {
-    }
     function build_list($array)
     {
         $list = '<ol>';
@@ -526,5 +526,84 @@ if (!function_exists('json_readable_encode')) {
 
         $list .= '</ol>';
         return $list;
+    }
+}
+
+if (!function_exists('buildPermissionsTable')) {
+
+    /**
+     * Assumes Codeigniter - Shield - Creates a table row(s) to populate the Permissions Table.
+     * This builds from the Shield auth_permissions_users DB Table
+     * @param $user->getPermissions() should be stored like: "group.value" or "controller.permission" 
+     *
+     * This function will split from the "." and populate the table with:
+     *      Group - Permission - Permission - Permission - Permission
+     *      Controller - Permission - Permission - Permission - Permission
+     *      ** Currently set to Create - Read - Update - Delete
+     * 
+     * @param $array = $user->getPermissions();
+     * @param $permissionTable = buildPermissionsTable($array);
+     * @param echo $permissionTable = build out HTML Table.
+     * 
+     * @return array|msg Returns a HTML Table array or `No Data` if `$array` is invalid or empty.
+     * 
+     * 
+     */
+
+    function buildPermissionsTable(array $array)
+    {
+        $pTableHeader = PHP_EOL . '<table class="table table-sm table-bordered table-striped table-hover" style="width: 100%;">' . PHP_EOL . '<thead>' . PHP_EOL . '<tr>' . PHP_EOL . '<th><strong>' . lang('App.controller') . '</strong>:</th>' . PHP_EOL . '<th>Create</th>' . PHP_EOL . '<th>Read</th>' . PHP_EOL . '<th>Update</th>' . PHP_EOL . '<th>Delete</th>' . PHP_EOL . '</thead>' . PHP_EOL . '<tbody>' . PHP_EOL;
+        $pTableFooter = PHP_EOL . '</tbody>' . PHP_EOL . '</table>';
+
+        if (!$array) {
+            $pTableBody = PHP_EOL . '<tr>' . PHP_EOL . '<td colspan="5" class="text-center">No Data Provided...</td>' . PHP_EOL . '</tr>' . PHP_EOL;
+            return $pTableHeader . $pTableBody . $pTableFooter;
+        }
+
+        // This foreach loop will split the data based on the period into the first array
+        // Example: array([controller] => activitylogs [permission] => read )
+        $permData = [];
+        foreach ($array as $key) {
+            list($a, $b) = explode('.', $key);
+            array_push($permData, [
+                'controller' => $a,
+                'permission' => $b,
+            ]);
+        }
+
+        // Sorting the keys and values alphabetically
+        asort($permData);
+
+
+        // grouping to make the controller the index
+        // Example: Array ( [activitylogs] => Array ( [0] => Array ( [controller] => activitylogs [permission] => read ) )
+
+        $grouped = array_reduce(
+            $permData,
+            function ($carry, $item) {
+                $carry[$item['controller']][] = $item;
+                return $carry;
+            },
+            []
+        );
+
+        // Sorting again alphabetically - might not be needed but its free
+        ksort($grouped);
+
+        // Now that we have the array, lets build the HTML table
+        foreach ($grouped as $key => $value):
+
+
+            $pTableBody .= PHP_EOL . '<tr>' . PHP_EOL;
+            $pTableBody .= '<td><strong>' . strtoupper($key) . '</strong></td>' . PHP_EOL;
+
+            $pTableBody .= '<td class="text-center ' . ($value[0]['permission'] == '' ? 'text-danger' : 'text-success') . '"><i class="fas ' . ($value[0]['permission'] == '' ? 'fa-remove' : 'fa-check') . ' fa-xl"></i><br>' . $key . '.' . ($value[0]['permission'] == '' ? 'none!' : $value[0]['permission']) . '</td>' . PHP_EOL;
+            $pTableBody .= '<td class="text-center ' . ($value[1]['permission'] == '' ? 'text-danger' : 'text-success') . '"><i class="fas ' . ($value[1]['permission'] == '' ? 'fa-remove' : 'fa-check') . ' fa-xl"></i><br>' . $key . '.' . ($value[1]['permission'] == '' ? 'none!' : $value[1]['permission']) . '</td>' . PHP_EOL;
+            $pTableBody .= '<td class="text-center ' . ($value[2]['permission'] == '' ? 'text-danger' : 'text-success') . '"><i class="fas ' . ($value[2]['permission'] == '' ? 'fa-remove' : 'fa-check') . ' fa-xl"></i><br>' . $key . '.' . ($value[2]['permission'] == '' ? 'none!' : $value[2]['permission']) . '</td>' . PHP_EOL;
+            $pTableBody .= '<td class="text-center ' . ($value[3]['permission'] == '' ? 'text-danger' : 'text-success') . '"><i class="fas ' . ($value[3]['permission'] == '' ? 'fa-remove' : 'fa-check') . ' fa-xl"></i><br>' . $key . '.' . ($value[3]['permission'] == '' ? 'none!' : $value[3]['permission']) . '</td>' . PHP_EOL;
+            $pTableBody .= '</tr>' . PHP_EOL;
+        endforeach;
+
+        return $pTableHeader . $pTableBody . $pTableFooter;
     }
 }

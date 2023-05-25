@@ -71,7 +71,7 @@
             <div class="flex items-center flex-shrink-0 px-4 dark:bg-slate-800 bg-gray-900 " :class="isSidebarExpanded ? '' : 'pt-5'">
                 <a href="<?= site_url(ADMIN_AREA); ?>" class="flex items-center">
                     <img src="<?= base_url() . 'logo-adn-blanc.png'; ?>" alt="ADN du Web" :class="isSidebarExpanded ? 'block' : 'hidden'" class="h-15 w-full dark:grayscale grayscale-0 app-sidebar-logo-default">
-                    <img src="<?= base_url() . 'default-small.svg'; ?>" alt="ADN du Web" :class="isSidebarExpanded ? 'hidden' : 'block'" class="h-20px w-full dark:grayscale grayscale-0 app-sidebar-logo-minimize">
+                    <img src="<?= base_url() . 'logo-adn-small.png'; ?>" alt="ADN du Web" :class="isSidebarExpanded ? 'hidden' : 'block'" class="h-20px w-full dark:grayscale grayscale-0 app-sidebar-logo-minimize">
                 </a>
             </div>
             <div class="flex-1 flex flex-col overflow-y-auto dark:bg-slate-800 bg-gray-900">

@@ -278,7 +278,7 @@ class UsersController extends AdminController
                 $validation = service('validation');
 
                 $validation->setRules([
-                    'currentGroup[]' => 'required'
+                    'currentGroup' => 'required'
                 ]);
 
                 if (!$validation->run($data)) {
@@ -292,11 +292,11 @@ class UsersController extends AdminController
                 }
 
 
-                if (!is_array($data['currentGroup[]']))
-                    $data['currentGroup[]'] = [$data['currentGroup[]']];
+                if (!is_array($data['currentGroup']))
+                    $data['currentGroup'] = [$data['currentGroup']];
 
                 // Save the user's groups
-                $user->syncGroups(...($data['currentGroup[]'] ?? []));
+                $user->syncGroups(...($data['currentGroup'] ?? []));
 
 
                 if ($this->request->isHtmx()) {
@@ -333,7 +333,7 @@ class UsersController extends AdminController
         $user = new User();
 
         $rules = config('Users')->validation;
-        $rules['currentGroup[]'] = 'required';
+        $rules['currentGroup'] = 'required';
         $rules['new_password'] = 'required|strong_password';
         $rules['pass_confirm'] = 'required|matches[new_password]';
         $rules = array_merge($rules, $user->validationRules('meta'));
@@ -390,12 +390,12 @@ class UsersController extends AdminController
             }
         }
 
-        if (!is_array($data['currentGroup[]']))
-            $data['currentGroup[]'] = [$data['currentGroup[]']];
+        if (!is_array($data['currentGroup']))
+            $data['currentGroup'] = [$data['currentGroup']];
 
         // Save the user's groups if the user has right permissions
         if (auth()->user()->can('users.edit')) {
-            $user->syncGroups(...($data['currentGroup[]'] ?? []));
+            $user->syncGroups(...($data['currentGroup'] ?? []));
         }
 
         Events::trigger('userCreated', $user);
@@ -455,13 +455,12 @@ class UsersController extends AdminController
         /** @var User|null $user */
         $user = $users->find($id);
 
-        $data = $this->request->getPost();
-
+        $data = $this->request->getRawInput();
+      
         if (isset($data['permissions']) && !is_array($data['permissions']))
             $data['permissions'] = [$data['permissions']];
 
         $user->syncPermissions(...($data['permissions'] ?? []));
-
         $permissions = setting('AuthGroups.permissions');
         if (is_array($permissions)) {
             ksort($permissions);
@@ -487,7 +486,7 @@ class UsersController extends AdminController
         $user = $users->find($id);
 
         // print_r($this->request->getJSON(true)); exit;
-        $data = $this->request->getPost();
+        $data = $this->request->getRawInput();
 
         $user->syncPermissions(...($data['permissions'] ?? []));
 
@@ -724,7 +723,7 @@ class UsersController extends AdminController
                 'title' => 'Information',
                 'namedRoute' => ['user-only-information', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg' => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-                'permission' => 'admin.view',
+                'permission' => 'admin.access',
                 'weight' => 1
             ]);
             $sidebar->menu('sidebar_user')->collection('content')->addItem($item);
@@ -733,7 +732,7 @@ class UsersController extends AdminController
                 'title' => 'Capabilities',
                 'namedRoute' => ['user-only-capabilities', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg' => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-                'permission' => 'admin.view',
+                'permission' => 'admin.access',
                 'weight' => 2
             ]);
             $sidebar->menu('sidebar_user')->collection('content')->addItem($item);
@@ -742,7 +741,7 @@ class UsersController extends AdminController
                 'title' => 'Change password',
                 'namedRoute' => ['user-only-change-password', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg' => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-                'permission' => 'admin.view',
+                'permission' => 'admin.access',
                 'weight' => 3
             ]);
             $sidebar->menu('sidebar_user')->collection('content')->addItem($item);
@@ -751,7 +750,7 @@ class UsersController extends AdminController
                 'title' => 'Two Factor',
                 'namedRoute' => ['user-only-two-factor', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg' => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-                'permission' => 'admin.view',
+                'permission' => 'admin.access',
                 'weight' => 3
             ]);
             $sidebar->menu('sidebar_user')->collection('content')->addItem($item);
@@ -760,7 +759,7 @@ class UsersController extends AdminController
                 'title' => 'History',
                 'namedRoute' => ['user-only-history', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg' => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-                'permission' => 'admin.view',
+                'permission' => 'admin.access',
                 'weight' => 4
             ]);
             $sidebar->menu('sidebar_user')->collection('content')->addItem($item);
@@ -769,7 +768,7 @@ class UsersController extends AdminController
                 'title' => 'Browser',
                 'namedRoute' => ['user-only-browser', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg' => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-                'permission' => 'admin.view',
+                'permission' => 'admin.access',
                 'weight' => 4
             ]);
             $sidebar->menu('sidebar_user')->collection('content')->addItem($item);
@@ -778,7 +777,7 @@ class UsersController extends AdminController
                 'title' => 'Delete',
                 'namedRoute' => ['settings-email', (isset($segments[3])) ? $segments[3] : null],
                 'fontIconSvg' => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 text-red-800', true),
-                'permission' => 'admin.view',
+                'permission' => 'admin.access',
                 'weight' => 5
             ]);
             $sidebar->menu('sidebar_user')->collection('content')->addItem($item);

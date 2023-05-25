@@ -3,12 +3,7 @@
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Général</h3>
 
-        <?php ''; // print_r($userCurrent); 
-        ?>
-
-        fabrice
-
-    <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 ml-2 sm:col-span-4 md:mr-3">
+        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 ml-2 sm:col-span-4 md:mr-3">
             <!-- Photo File Input -->
             <input type="file" class="hidden" x-ref="photo" name="photo" x-on:change="
                         photoName = $refs.photo.files[0].name;
@@ -29,7 +24,7 @@
             <div class="text-center">
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                        <img src="<?= service('storage')->getFileUrl($userCurrent->photo_profile, ['size' => 'image300x300']); ?>"
+                    <img src="<?= service('storage')->getFileUrl($userCurrent->photo_profile, ['size' => 'image300x300']); ?>"
                         class="w-40 h-40 m-auto rounded-full shadow" />
                 </div>
                 <!-- New Profile Photo Preview -->
@@ -55,7 +50,7 @@
                     'type' => 'text',
                     'label' => lang('Form.users.first_name'),
                     'name' => 'first_name',
-                    'value' =>  old('first_name', $userCurrent->first_name)
+                    'value' => old('first_name', $userCurrent->first_name)
                 ]); ?>
 
             </div>
@@ -64,7 +59,7 @@
                     'type' => 'text',
                     'label' => lang('Form.users.last_name'),
                     'name' => 'last_name',
-                    'value' =>  old('last_name', $userCurrent->last_name)
+                    'value' => old('last_name', $userCurrent->last_name)
                 ]); ?>
             </div>
         </div>
@@ -76,7 +71,7 @@
                     'type' => 'email',
                     'label' => lang('Form.users.email'),
                     'name' => 'email',
-                    'value' =>  old('email', $userCurrent->email),
+                    'value' => old('email', $userCurrent->email),
                     'description' => lang('Form.users.TheUsersWillHaveToRverifyTheirEmailAddress')
                 ]); ?>
 

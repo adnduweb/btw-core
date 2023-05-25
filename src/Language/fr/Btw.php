@@ -50,6 +50,7 @@ return [
         'resourcesDeletedAll' => "Les {0} ont été supprimés.",
         'resourcesUpdatedActive' => "Les {0} ont été mise à jour.",
         'resourcesUpdatedDesactive' => "Les {0} ont été mise à jour.",
+        'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
         
     ],
     'sidebar' => [
@@ -82,7 +83,7 @@ return [
     'delete'         => 'Supprimer',
     'edit'           => 'Modifier',
 
-    'notAuthorized' => 'You do not have the correct permissions.',
+    'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
     'notAuthorizedDebug' => 'You do not have the correct permissions : {0}.',
     'unknownAction' => 'Did not recognize the action you requested.',
     'MagicLinkInfo' => 'Nous vous enverrons un e-mail avec un lien sur lequel cliquer pour vous connecter.',

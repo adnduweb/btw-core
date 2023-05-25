@@ -1,4 +1,5 @@
 <div id="capabilities" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
+
     <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6" x-data="{
 	selectAll: false,
 	toggleAllCheckboxes() {

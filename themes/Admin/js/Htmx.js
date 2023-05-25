@@ -959,7 +959,6 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
     htmx.on("htmx:responseError", function (evt) {
       if (doudou.env == "production") {
         // const jsonResponse = JSON.parse(evt.detail.xhr.responseText);
-
         let event = new CustomEvent("notify", {
           bubbles: true,
           cancelable: true,
@@ -972,6 +971,7 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
         document.dispatchEvent(event);
       }
     });
+
   },
 
   getCSRFToken: function () {

@@ -222,6 +222,8 @@ class Setup extends BaseCommand
         $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/logo-adn.png');
         $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/logo-adn-grey.png');
         $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-blanc.png', APPPATH . '../public/logo-adn-blanc.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-small.png', APPPATH . '../public/logo-adn-small.png');
+        
 
         //Build
         $publisher->copyDirectory(BTPATH . '../manifest.json', APPPATH . '../public/manifest.json');

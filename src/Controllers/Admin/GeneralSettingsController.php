@@ -60,10 +60,10 @@ class GeneralSettingsController extends AdminController
     {
         if (!auth()->user()->can('admin.settings')) {
             if ($this->request->isHtmx()) {
-                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+                return $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.notAuthorized')]);
             } else {
-                alertHtmx('danger', lang('Btw.notAuthorized'));
-                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+                alertHtmx('danger', lang('Btw.message.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:errorPermisssion', lang('Btw.message.notAuthorized'));
             }
         }
 
@@ -233,10 +233,10 @@ class GeneralSettingsController extends AdminController
     {
         if (!auth()->user()->can('admin.settings')) {
             if ($this->request->isHtmx()) {
-                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+                return $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.notAuthorized')]);
             } else {
-                alertHtmx('danger', lang('Btw.notAuthorized'));
-                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+                alertHtmx('danger', lang('Btw.message.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:errorPermisssion', lang('Btw.message.notAuthorized'));
             }
         }
 
@@ -324,10 +324,10 @@ class GeneralSettingsController extends AdminController
 
         if (!auth()->user()->can('admin.settings')) {
             if ($this->request->isHtmx()) {
-                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+                return $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.notAuthorized')]);
             } else {
-                alertHtmx('danger', lang('Btw.notAuthorized'));
-                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+                alertHtmx('danger', lang('Btw.message.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:errorPermisssion', lang('Btw.message.notAuthorized'));
             }
         }
 
@@ -373,10 +373,10 @@ class GeneralSettingsController extends AdminController
 
         if (!auth()->user()->can('admin.settings')) {
             if ($this->request->isHtmx()) {
-                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+                return $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.notAuthorized')]);
             } else {
-                alertHtmx('danger', lang('Btw.notAuthorized'));
-                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+                alertHtmx('danger', lang('Btw.message.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:errorPermisssion', lang('Btw.message.notAuthorized'));
             }
         }
 
@@ -410,10 +410,10 @@ class GeneralSettingsController extends AdminController
 
         if (!auth()->user()->can('admin.settings')) {
             if ($this->request->isHtmx()) {
-                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+                return $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.notAuthorized')]);
             } else {
-                alertHtmx('danger', lang('Btw.notAuthorized'));
-                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+                alertHtmx('danger', lang('Btw.message.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:errorPermisssion', lang('Btw.message.notAuthorized'));
             }
         }
 
@@ -488,10 +488,10 @@ class GeneralSettingsController extends AdminController
 
         if (!auth()->user()->can('admin.settings')) {
             if ($this->request->isHtmx()) {
-                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+                return $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.notAuthorized')]);
             } else {
-                alertHtmx('danger', lang('Btw.notAuthorized'));
-                return redirect()->to(ADMIN_AREA)->with('htmx:error', lang('Btw.notAuthorized'));
+                alertHtmx('danger', lang('Btw.message.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:errorPermisssion', lang('Btw.message.notAuthorized'));
             }
         }
 
