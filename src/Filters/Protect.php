@@ -36,18 +36,17 @@ class Protect implements FilterInterface
     {
         helper(['auth', 'setting']);
 
-        $current = (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token');
+        $current = (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token');
 
         /** @var Session $authenticator */
         $authenticator = auth('session')->getAuthenticator();
 
         if ($authenticator->loggedIn()) {
             // echo 'fgsdfgsdfg'; exit;
-            if (in_array((string)$current, [route_to('login'), route_to('magic-link'), route_to('verify-magic-link')])) {
+            if (in_array((string) $current, [route_to('login'), route_to('magic-link'), route_to('verify-magic-link')])) {
                 return redirect()->route('dashboard');
             }
         }
-
     }
 
     /**

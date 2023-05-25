@@ -27,6 +27,12 @@ class AdditionalUserFields extends Migration
                 'null'       => true,
                 'after'      => 'last_name',
             ],
+            'photo_profile' => [
+                'type'       => 'varchar',
+                'constraint' => 255,
+                'null'       => true,
+                'after'      => 'avatar',
+            ],
             'email_verified_at' => [
                 'type' => 'datetime',
                 'null' => false,

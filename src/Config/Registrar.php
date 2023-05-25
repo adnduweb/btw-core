@@ -11,7 +11,7 @@ use Btw\Core\View\ErrorModalDecorator;
 use Btw\Core\Validation\UserRules;
 use CodeIgniter\Shield\Authentication\Passwords\ValidationRules as PasswordRules;
 use CodeIgniter\Shield\Filters\ChainAuth;
-use CodeIgniter\Shield\Filters\SessionAuth;
+use Btw\Core\Filters\SessionAuthOverride;
 use CodeIgniter\Shield\Filters\TokenAuth;
 use ReflectionClass;
 use ReflectionProperty;
@@ -33,7 +33,7 @@ class Registrar
 
         return [
             'aliases' => [
-                'session' => SessionAuth::class,
+                'session' => SessionAuthOverride::class,
                 'tokens'  => TokenAuth::class,
                 'chain'   => ChainAuth::class,
                 'admin'   => Admin::class,

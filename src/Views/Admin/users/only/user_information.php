@@ -11,13 +11,13 @@
 
         <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
-                <?= form_open(route_to('user-information'), [
+                <?= form_open_multipart(route_to('user-information'), [
                     'id' => 'kt_users_form_information', 'hx-post' => route_to('user-information'), 'hx-target' => '#general', 'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loadinginformation",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= '' //csrf_field() ?>
                 <input type="hidden" name="section" value="general" />
-                <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_information'); ?>
+                <?= $this->include('Btw\Core\Views\Admin\users\only\cells\form_cell_information'); ?>
                 <?= form_close(); ?>
             </div>
 

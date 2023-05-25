@@ -99,9 +99,7 @@ class ProfileController extends AdminController
 
 
                     $storage = service('storage');
-
                     $result = $storage->store($file, 'attachments/' . date('Y/m'));
-
                     $context = 'user:' . user_id();
                     service('settings')->set('Users.photoProfile', $result, $context);
                 }

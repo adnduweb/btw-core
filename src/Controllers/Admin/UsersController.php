@@ -180,8 +180,48 @@ class UsersController extends AdminController
         switch ($this->request->getVar('section')) {
             case 'general':
 
-                $data = $this->request->getPost();
+                if (!auth()->user()->can('users.edit')) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
+                    return view($this->viewPrefix . 'cells\form_cell_information', [
+                        'userCurrent' => $user,
+                    ]);
+                }
+
                 $validation = service('validation');
+                $file = $this->request->getFile('photo') ?? null;
+                if ($file) {
+
+                    $validationRule = [
+                        'photo' => [
+                            'label' => 'Image File',
+                            'rules' => [
+                                'uploaded[photo]',
+                                'is_image[photo]',
+                                'mime_in[photo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
+                                'max_size[photo,1000]',
+                                'max_dims[photo,1024,768]',
+                            ],
+                        ],
+                    ];
+                    if (!$this->validate($validationRule)) {
+                        $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $this->validator->getErrors()]);
+                        $this->response->setReswap('innerHTML show:#general:top');
+                        return view($this->viewPrefix . 'cells\form_cell_information', [
+                            'userCurrent' => $user,
+                            'validation' => $this->validator->getErrors()
+                        ]);
+                    }
+
+
+                    $storage = service('storage');
+                    $result = $storage->store($file, 'attachments/' . date('Y/m'));
+                    $user->photo_profile = $result;
+                }
+
+
+
+                $data = $this->request->getPost();
+     
 
                 $validation->setRules([
                     'email' => 'required|valid_email|unique_email[' . $user->id . ']',

@@ -58,7 +58,15 @@ class LoginController extends ShieldLogin
             return redirect()->route('auth-action-show')->withCookies();
         }
 
-        return redirect()->to(config('Auth')->loginRedirect())->withCookies();
+        if(session()->get('redirect_url')){
+            $redirect = session()->get('redirect_url');
+            session()->remove('redirect_url');
+        }
+        else{
+            $redirect = config('Auth')->loginRedirect();
+        }
+
+        return redirect()->to($redirect)->withCookies();
     }
 
         /**
