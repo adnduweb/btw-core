@@ -61,3 +61,17 @@ https://stackoverflow.com/questions/75424519/sending-a-value-from-jquery-to-alpi
 https://codepen.io/yuxufm/pen/YzLoxvE => add/delete clone
 https://stackoverflow.com/questions/69197458/dynamically-add-new-rows-to-the-table => pareil mais en mieux
 https://pastebin.com/kupzmyx3 -> CRSF
+https://forum.codeigniter.com/showthread.php?tid=87720 -> envoi un mail aux nouveaux comptes
+https://forum.codeigniter.com/showthread.php?tid=87719 -> information supplémentaires (adresses)
+https://forum.codeigniter.com/showthread.php?tid=87702 -> Tableau des permissisons
+
+## Jointure
+
+$db      = \Config\Database::connect();
+$builder = $db->table('payments p');
+$builder->select('*');
+$builder->join('flats f', 'f.flat_id = p.flat_id', 'left');
+$builder->join('users u', 'u.user_id = f.owner_id', 'left');
+$builder->groupBy('name');
+$query = $builder->get();
+$data['table_joined'] = $query->getResult(); 
