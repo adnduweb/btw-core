@@ -32,6 +32,7 @@
         "datatables.net-dt": "^1.13.4",
         "datatables.net-responsive": "^2.4.1",
         "dropzone": "^6.0.0-beta.2",
+        "echarts": "^5.4.2",
         "flowbite": "^1.6.3",
         "flowbite-datepicker": "^1.2.2",
         "htmx.org": "^1.9.2",

@@ -114,6 +114,9 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     // Tokens
     $routes->get('tokens/manage', 'TokensController::index', ['as' => 'tokens-manage']);
     $routes->match(['get', 'post'], 'tokens/create', 'TokensController::create', ['as' => 'tokens-create']);
+
+    //Stats
+    $routes->get('charts-hx', 'WidgetsController::chart_view_hx', ['as' => 'charts-hx']);
 });
 
 

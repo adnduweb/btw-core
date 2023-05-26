@@ -21,6 +21,9 @@ import Datatable from "datatables.net";
 window.datatable = Datatable;
 import "datatables.net-responsive";
 
+import * as echarts from 'echarts';
+window.echarts = echarts;
+
 // import tippy from 'tippy.js';
 import "tippy.js/dist/tippy.css";
 
