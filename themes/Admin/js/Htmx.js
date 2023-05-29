@@ -851,101 +851,39 @@ htmx.defineExtension("debug", {
   });
 })();
 
+htmx.defineExtension('echarts', {
+  transformResponse: function (text, xhr, elt) {
+      // parse json data
+      var data = JSON.parse(text);
+    
+
+      // fetch echart element
+      var option = data;
+      var chartContainer = document.getElementById("charts");
+      var chart = window.echarts.getInstanceByDom(chartContainer);
+      
+      console.log(chartContainer);
+      console.log(window.echarts);
+      // clean up options and update chart
+      delete data.id;
+      chart.setOption(option);
+
+  }
+});
+
 //https://gist.github.com/kongondo/515b80d15f8034edeb686d46752df4ec
 
 const UpdateProcessWireFrontendContentUsingHtmxDemo = {
-  initHTMXXRequestedWithXMLHttpRequest: function () {
-    document.body.addEventListener("htmx:configRequest", (event) => {
-      // @note: ADD THIS!!! if not using hx-include='token input'
-      const csrf_token =
-        UpdateProcessWireFrontendContentUsingHtmxDemo.getCSRFToken();
-      // event.detail.headers[csrf_token.name] = csrf_token.value
-      // add XMLHttpRequest to header to work with $config->ajax
-      // event.detail.headers["X-Requested-With"] = "XMLHttpRequest"
-      // event.detail.headers['csrf_token.name'] = document.querySelector('name[csrf_token_name]');
-    });
-  },
-
+ 
   listenToHTMXRequests: function () {
     document.body.addEventListener("htmx:beforeSwap", function (evt) {
-      if (evt.detail.xhr.status === 404) {
-        // alert the user when a 404 occurs (maybe use a nicer mechanism than alert())
-        alert("Error: Could Not Find Resource");
-      } else if (evt.detail.xhr.status === 422) {
-        // allow 422 responses to swap as we are using this as a signal that
-        // a form was submitted with bad data and want to rerender with the
-        // errors
-        //
-        // set isError to false to avoid error logging in console
-        evt.detail.shouldSwap = true;
-        evt.detail.isError = false;
-      } else if (evt.detail.xhr.status === 418) {
-        // if the response code 418 (I'm a teapot) is returned, retarget the
-        // content of the response to the element with the id `teapot`
-        evt.detail.shouldSwap = true;
-        evt.detail.target = htmx.find("#teapot");
-      } else if (evt.detail.xhr.status === 403) {
-        // if the response code 418 (I'm a teapot) is returned, retarget the
-        // content of the response to the element with the id `teapot`
-        // confirm("This page has expired.\nWould you like to refresh the page?") && window.location.reload()
-      }
     });
 
     // after settle
     htmx.on("htmx:afterSettle", function (event) {
       let contentType = event.detail.xhr.getResponseHeader("content-type");
 
-      if (contentType == "application/json; charset=UTF-8") {
-        // console.log(event.detail.xhr.getResponseHeader('content-type'));
-        //  console.log(event.detail);
-        let response = JSON.parse(event.detail.xhr.response);
-        // console.log(event.detail.xhr);
-        // jqXHR.responseJSON
-
-        let eventDetail = { type: "error", text: "Server encountered error" };
-
-        if (response.messages.success) {
-          eventDetail = {
-            type: "success",
-            text: response.messages.success,
-          };
-        }
-
-        if (response.messages.errors) {
-          let textContent = "";
-          let obj = response.messages.errors;
-
-          if (Object.keys(obj).length > 0) {
-            Object.keys(obj).forEach((element, index) => {
-              // current DOM element
-              // console.log(element, obj[element]);
-              textContent += "<p>" + obj[element] + "</p>";
-            });
-          }
-          eventDetail = {
-            type: "error",
-            text: textContent,
-          };
-        }
-
-        // RUN POST SETTLE OPS
-        // @note: hidden element
-        // const noticeElement = document.getElementById("location_notice")
-        // let eventDetail = { type: "error", text: "Server encountered error" }
-        // // get the notice and notice type from the hidden element
-        // if (noticeElement) {
-        //     eventDetail = {
-        //         type: noticeElement.dataset.noticeType,
-        //         text: noticeElement.value,
-        //     }
-        // }
-        const eventName = "notice";
-
-        UpdateProcessWireFrontendContentUsingHtmxDemo.dispatchCustomEvent(
-          eventName,
-          eventDetail
-        );
-      }
+    
     });
 
     htmx.on("htmx:afterSwap", function (evt) {
@@ -997,19 +935,6 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
   },
 };
 
-/**
- * DOM ready
- *
- */
-document.addEventListener("DOMContentLoaded", function (event) {
-  if (typeof htmx !== "undefined") {
-    // init htmx with X-Requested-With
-    UpdateProcessWireFrontendContentUsingHtmxDemo.initHTMXXRequestedWithXMLHttpRequest();
-    // listen to htmx requests
-
-    UpdateProcessWireFrontendContentUsingHtmxDemo.listenToHTMXRequests();
-  }
-});
 
 // htmx.logger = function(elt, event, data) {
 //     if(console) {

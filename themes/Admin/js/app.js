@@ -375,7 +375,7 @@ function updateOnlineStatus(event) {
   let texte = navigator.onLine ? "Vous êtes déconnecté du reseau" : "Vous êtes connecté du reseau";
   let type = navigator.onLine ? "success" : "error";
 
-  console.log("Event: " + event.type, " Status: " + condition);
+//   console.log("Event: " + event.type, " Status: " + condition);
 
   if (event.type != undefined) {
     document.dispatchEvent(

@@ -12,7 +12,7 @@
 namespace Btw\Core\Controllers\Admin;
 
 use Btw\Core\Controllers\AdminController;
-use Bonfire\Dashboard\CellManager;
+use Btw\Core\Cells\CellManager;
 
 /**
  * Class Dashboard
@@ -32,6 +32,8 @@ class DashboardController extends AdminController
         // Add the page title
         service('viewMeta')->setTitle('My Site');
 
-        echo $this->render($this->viewPrefix . 'dashboard');
+        return $this->render($this->viewPrefix . 'dashboard', [
+            'cells' => new CellManager(),
+        ]);
     }
 }
