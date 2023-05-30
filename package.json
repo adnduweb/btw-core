@@ -37,6 +37,7 @@
         "flowbite-datepicker": "^1.2.2",
         "htmx.org": "^1.9.2",
         "jquery": "^3.6.4",
+        "sortablejs": "^1.15.0",
         "sweetalert2": "^11.4.8",
         "tinymce": "^6.4.0",
         "tippy.js": "^6.3.7",

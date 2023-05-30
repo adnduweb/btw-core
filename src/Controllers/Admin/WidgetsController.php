@@ -46,13 +46,13 @@ class WidgetsController extends AdminController
 
         if ($period == 'week') {
             $data = [
-                'xAxisData' => ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks'],
-                'seriesData' =>  [5, 45, 36, 150, 24, 12]
+                'xAxis' => ['data' => ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks']],
+                'series' => ['data' => [200, 45, 36, 150, 24, 12]]
             ];
         } else {
             $data = [
-                'xAxisData' => ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks'],
-                'seriesData' =>  [5, 20, 36, 10, 10, 20]
+                'xAxis' => ['data' => ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks']],
+                'series' => ['data' => [165, 20, 36, 10, 10, 20]]
             ];
         }
 
@@ -64,7 +64,7 @@ class WidgetsController extends AdminController
 
     }
 
-        /**
+    /**
      * Displays the stat blocks in the admin dashboard.
      */
     public function chart_view_hx_update()
@@ -85,13 +85,13 @@ class WidgetsController extends AdminController
 
         if ($period == 'week') {
             $data = [
-                'xAxisData' => ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks'],
-                'seriesData' =>  [5, 45, 36, 150, 24, 12]
+                'xAxis' => ['data' => ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks']],
+                'series' => ['data' => [5, 45, 36, 150, 24, 12]]
             ];
         } else {
             $data = [
-                'xAxisData' => ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks'],
-                'seriesData' =>  [5, 20, 36, 10, 10, 20]
+                'xAxis' => ['data' => ['shirt', 'cardigan', 'chiffon', 'pants', 'heels', 'socks']],
+                'series' => ['data' => [5, 20, 36, 10, 32, 20]]
             ];
         }
 
