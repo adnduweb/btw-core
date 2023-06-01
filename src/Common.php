@@ -6,6 +6,17 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Config\View;
 
 
+if (!function_exists('newUUID')) {
+    function newUUID()
+    {
+        if (function_exists('com_create_guid') === true) {
+            return trim(com_create_guid(), '{}');
+        }
+        return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+    }
+}
+
+
 if (!function_exists('view_fragment')) {
     /**
      * Grabs the current RendererInterface-compatible class

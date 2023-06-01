@@ -5,6 +5,9 @@
 .svg-white svg path {
   @apply fill-white;
 }
+.svg-white svg {
+  @apply text-white;
+}
 
 [x-cloak] {
   @apply hidden;

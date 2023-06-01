@@ -21,7 +21,11 @@ import Datatable from "datatables.net";
 window.datatable = Datatable;
 import "datatables.net-responsive";
 
-import * as echarts from 'echarts';
+// Default SortableJS
+import Sortable from 'sortablejs';
+window.Sortable = Sortable;
+
+import * as echarts from "echarts";
 window.echarts = echarts;
 
 // import tippy from 'tippy.js';
@@ -372,10 +376,12 @@ if (typeof doudou != undefined) {
 
 function updateOnlineStatus(event) {
   let condition = navigator.onLine ? "online" : "offline";
-  let texte = navigator.onLine ? "Vous êtes déconnecté du reseau" : "Vous êtes connecté du reseau";
+  let texte = navigator.onLine
+    ? "Vous êtes déconnecté du reseau"
+    : "Vous êtes connecté du reseau";
   let type = navigator.onLine ? "success" : "error";
 
-//   console.log("Event: " + event.type, " Status: " + condition);
+  //   console.log("Event: " + event.type, " Status: " + condition);
 
   if (event.type != undefined) {
     document.dispatchEvent(
@@ -393,3 +399,19 @@ window.addEventListener("online", updateOnlineStatus);
 window.addEventListener("offline", updateOnlineStatus);
 
 updateOnlineStatus({}); //set initial status
+
+htmx.defineExtension("echarts", {
+  transformResponse: function (text, xhr, elt) {
+      // parse json data 
+    var data = JSON.parse(text);
+
+    // fetch echart element
+    var option = data;
+    var chartContainer = document.getElementById(data.id);
+    var chart = echarts.init(chartContainer);
+
+    delete data.id;
+    chart.setOption(option);
+    return text;
+  },
+});

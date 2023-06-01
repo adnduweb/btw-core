@@ -851,26 +851,6 @@ htmx.defineExtension("debug", {
   });
 })();
 
-htmx.defineExtension('echarts', {
-  transformResponse: function (text, xhr, elt) {
-      // parse json data
-      var data = JSON.parse(text);
-    
-
-      // fetch echart element
-      var option = data;
-      var chartContainer = document.getElementById("charts");
-      var chart = window.echarts.getInstanceByDom(chartContainer);
-      
-      console.log(chartContainer);
-      console.log(window.echarts);
-      // clean up options and update chart
-      delete data.id;
-      chart.setOption(option);
-
-  }
-});
-
 //https://gist.github.com/kongondo/515b80d15f8034edeb686d46752df4ec
 
 const UpdateProcessWireFrontendContentUsingHtmxDemo = {

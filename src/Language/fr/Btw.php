@@ -69,6 +69,11 @@ return [
         'userCreate' => 'Creer un nouvel utilisateur',
         
     ],
+
+    'modules' => [
+        'customers' => 'Clients',
+        
+    ],
     
     'resourceNotFound'     => 'Unable to find the {0}.',
     'resourceSaved'        => 'The {0} has been saved.',

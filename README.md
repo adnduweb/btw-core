@@ -31,6 +31,9 @@ Installer le package
     php spark serve
     npm run dev
 
+    composer dump-autoload --optimize --no-dev --classmap-authoritative
+    
+
 
 # Inspirations
 https://demo.cartify.dev/admin/settings
