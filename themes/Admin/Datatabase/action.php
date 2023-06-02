@@ -1,4 +1,5 @@
 <?php if (isset($actions) && $actions->getAll() == true) : ?>
+    <?php $identifiant = isset($row->uuid) ? $row->getUUIDIdentifier() : $row->getIdentifier();  ?>
     <td class="text-end">
         <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
             <div @click="open = ! open" class="">
@@ -15,7 +16,7 @@
                     <?php endif ?>
 
                     <?php if ($actions->delete()) : ?>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700 text-red-700" href="#" data-id="<?= $row->getIdentifier(); ?>" data-kt-datatable-filter="delete_row"><?= ucfirst(lang('Btw.general.delete')); ?></a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700 text-red-700" href="#" data-identifier="<?= $identifiant; ?>" data-kt-datatable-filter="delete_row"><?= ucfirst(lang('Btw.general.delete')); ?></a>
                     <?php endif ?>
 
                 </div>

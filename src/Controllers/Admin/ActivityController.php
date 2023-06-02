@@ -125,7 +125,7 @@ class ActivityController extends AdminController
     {
 
         $model = model(ActivityModel::class);
-        $model->select('id, event_type, event_access, event_method, source, source_id, user_id, event, summary, properties, created_at')
+        $model->select('id as identifier, event_type, event_access, event_method, source, source_id, user_id, event, summary, properties, created_at')
         ->orderBy('created_at DESC');
 
         return DataTable::of($model)
@@ -185,21 +185,18 @@ class ActivityController extends AdminController
 
         if ($this->request->is('delete')) {
 
-            $response = json_decode($this->request->getBody());
-            // print_r($response); exit;
-            if (!is_array($response->id))
-                return false;
+            $data = $this->request->getRawInput();
+
+            if (!is_array($data['identifier']))
+                $data['identifier'] = [$data['identifier']];
 
             $model = model(ActivityModel::class);
 
-
-            //print_r($rawInput['id']); exit;
             $isNatif = false;
-            foreach ($response->id as $key => $id) {
-
-                $model->delete(['id' => $id]);
+            foreach ($data['identifier'] as $identifier) {
+                $model->where('id', $identifier)->delete();
             }
-            $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['activity'])]);
+            $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['customers'])]);
             $this->response->triggerClientEvent('reloadTable');
         }
         return $this->respondNoContent();

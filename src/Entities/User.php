@@ -15,7 +15,7 @@ class User extends ShieldUser
      * @return int
      */
     public function getIdentifier(){
-        return $this->attributes['id'] ?? null; 
+        return $this->attributes['identifier'] ?? null; 
     }
 
      /**
@@ -24,7 +24,7 @@ class User extends ShieldUser
      * @return string
      */
     public function getUrlEditAdmin(){
-       return route_to('user-only-information', $this->attributes['id']);
+       return route_to('user-only-information', $this->attributes['identifier']);
     }
 
      /**

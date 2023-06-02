@@ -73,7 +73,7 @@ class UsersController extends AdminController
     {
 
         $model = model(UserModel::class);
-        $model->select('users.id, username, last_name, first_name, secret, active, users.created_at')->join('auth_identities', 'auth_identities.user_id = users.id')->where(['type' => 'email_password', 'deleted_at' => null]);
+        $model->select('users.id as identifier, username, last_name, first_name, secret, active, users.created_at')->join('auth_identities', 'auth_identities.user_id = users.id')->where(['type' => 'email_password', 'deleted_at' => null]);
 
         return DataTable::of($model)
             ->add('select', function ($row) {
@@ -95,16 +95,16 @@ class UsersController extends AdminController
                 return view('Themes\Admin\Datatabase\switch', [
                     'row' => $row,
                     'type' => 'user',
-                    'hxGet' => route_to('user-active-table', $row->id),
+                    'hxGet' => route_to('user-active-table', $row->identifier),
                     'hxSwap' => "none"
                 ]);
             })
             ->add('type', function ($row) {
-                $userCurrent = model(UserModel::class)->getAuthGroupsUsers($row->id);
+                $userCurrent = model(UserModel::class)->getAuthGroupsUsers($row->identifier);
                 return ucfirst(implode(', ', $userCurrent));
             }, 'last')
             ->add('2fa', function ($row) {
-                $actions = setting()->get('Auth.actions', 'user:' . $row->id);
+                $actions = setting()->get('Auth.actions', 'user:' . $row->identifier);
                 return (!empty($actions['login'])) ? '<span class="inline-flex items-center rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-800">' . lang('Btw.yes') . '</span>' : '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.no') . '</span>';
             }, 'last')
             ->format('created_at', function ($value) {
@@ -221,7 +221,7 @@ class UsersController extends AdminController
 
 
                 $data = $this->request->getPost();
-     
+
 
                 $validation->setRules([
                     'email' => 'required|valid_email|unique_email[' . $user->id . ']',
@@ -456,7 +456,7 @@ class UsersController extends AdminController
         $user = $users->find($id);
 
         $data = $this->request->getRawInput();
-      
+
         if (isset($data['permissions']) && !is_array($data['permissions']))
             $data['permissions'] = [$data['permissions']];
 
@@ -667,32 +667,33 @@ class UsersController extends AdminController
 
         if ($this->request->is('delete')) {
 
-            $response = json_decode($this->request->getBody());
+            $data = $this->request->getRawInput();
             // print_r($response); exit;
-            if (!is_array($response->id))
-                return false;
+            if (!is_array($data['identifier']))
+                $data['identifier'] = [$data['identifier']];
 
             $model = model(UserModel::class);
 
 
-            //print_r($rawInput['id']); exit;
             $isNatif = false;
-            foreach ($response->id as $key => $id) {
+            foreach ($data['identifier'] as $key => $identifier) {
 
-                if ($id == Auth()->user()->id) {
-                    // print_r($response); exit;
-                    $this->response->triggerClientEvent('Messages', ['level' => 'info', 'message' => 'Here Is A Message']);
+                if ($identifier == Auth()->user()->id) {
+                    $isNatif = true;
+
                     $this->response->triggerClientEvent('reloadTable');
-                    alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
-                    return $this->respond(['messagehtml' => alertHtmx('error', lang('Btw.resourcesNotSaved', ['users']))], 200);
-
-                    // return $this->response->triggerClientEvent('showMessage', ['level' => 'info', 'message' => 'Here Is A Message']);
-
+                    $this->response->setReswap('none');
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.resourcesNotDeletedOnlyUser', ['users'])]);
+   
+                } else {
+                    $model->delete(['id' => $identifier]);
                 }
-                $model->delete(['id' => $id]);
             }
-            alertHtmx('success', lang('Btw.resourcesSaved', ['users']));
-            return $this->respond(['messagehtml' => alertHtmx('error', lang('Btw.resourcesSaved', ['users']))], 200);
+
+            if ($isNatif == false) {
+                $this->response->triggerClientEvent('test', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['users'])]);
+                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['users'])]);
+            }
         }
         return $this->respondNoContent();
     }

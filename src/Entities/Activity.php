@@ -20,7 +20,7 @@ class Activity extends Entity
      * @return int
      */
     public function getIdentifier(){
-        return $this->attributes['id'] ?? null; 
+        return $this->attributes['identifier'] ?? null; 
     }
 
      /**
@@ -29,6 +29,6 @@ class Activity extends Entity
      * @return string
      */
     public function getUrlEditAdmin(){
-       return route_to('log-system-information', $this->attributes['id']);
+       return route_to('log-system-information', $this->attributes['identifier']);
     }
 }

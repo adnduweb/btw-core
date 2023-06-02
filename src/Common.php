@@ -618,3 +618,32 @@ if (!function_exists('buildPermissionsTable')) {
         return $pTableHeader . $pTableBody . $pTableFooter;
     }
 }
+
+if (!function_exists('passwdGen')) {
+    /**
+     * Génaration d'un mot hexadecimal aléatoire.
+     *
+     * @param integer $length
+     * @param string  $flag
+     *
+     * @return string
+     */
+    function passwdGen($length = 8, $flag = 'ALPHANUMERIC')
+    {
+        switch ($flag) {
+            case 'NUMERIC':
+                $str = '0123456789';
+                break;
+            case 'NO_NUMERIC':
+                $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                break;
+            default:
+                $str = 'abcdefghijkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                break;
+        }
+        for ($i = 0, $passwd = ''; $i < $length; $i++) {
+            $passwd .= substr($str, mt_rand(0, strlen($str) - 1), 1);
+        }
+        return $passwd;
+    }
+}

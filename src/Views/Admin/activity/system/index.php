@@ -107,43 +107,43 @@
                 columnDefs: [
                     <?php $i = 0;
                     foreach ($columns as $column): ?>
-                                <?php
-                                switch ($column['name']) {
-                                    case 'selection':
-                                        echo "{";
-                                        echo "data: 'select',";
-                                        echo "targets: 0,";
-                                        echo "orderable: false,";
-                                        echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
-                                        if (isset($column['responsivePriority'])):
-                                            echo "responsivePriority: " . $column['responsivePriority'];
-                                        endif;
-                                        echo "},";
-                                        break;
-                                    case 'action':
-                                        echo "{";
-                                        echo "data: 'action',";
-                                        echo "targets: -1,";
-                                        echo "orderable: false,";
-                                        echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                        if (isset($column['responsivePriority'])):
-                                            echo "responsivePriority: " . $column['responsivePriority'];
-                                        endif;
-                                        echo "}";
-                                        break;
-                                    default:
-                                        echo "{";
-                                        echo "data: '" . $column['name'] . "',";
-                                        echo "targets: $i, ";
-                                        echo "orderable: " . $column['orderable'] . ",";
-                                        echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                        if (isset($column['responsivePriority'])):
-                                            echo "responsivePriority: " . $column['responsivePriority'] . ", ";
-                                        endif;
-                                        echo "},";
-                                }
-                                ?>
-                            <?php $i++;
+                                    <?php
+                                    switch ($column['name']) {
+                                        case 'selection':
+                                            echo "{";
+                                            echo "data: 'select',";
+                                            echo "targets: 0,";
+                                            echo "orderable: false,";
+                                            echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
+                                            if (isset($column['responsivePriority'])):
+                                                echo "responsivePriority: " . $column['responsivePriority'];
+                                            endif;
+                                            echo "},";
+                                            break;
+                                        case 'action':
+                                            echo "{";
+                                            echo "data: 'action',";
+                                            echo "targets: -1,";
+                                            echo "orderable: false,";
+                                            echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+                                            if (isset($column['responsivePriority'])):
+                                                echo "responsivePriority: " . $column['responsivePriority'];
+                                            endif;
+                                            echo "}";
+                                            break;
+                                        default:
+                                            echo "{";
+                                            echo "data: '" . $column['name'] . "',";
+                                            echo "targets: $i, ";
+                                            echo "orderable: " . $column['orderable'] . ",";
+                                            echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+                                            if (isset($column['responsivePriority'])):
+                                                echo "responsivePriority: " . $column['responsivePriority'] . ", ";
+                                            endif;
+                                            echo "},";
+                                    }
+                                    ?>
+                                <?php $i++;
                     endforeach; ?>
                 ],
                 // Use DataTables' initComplete callback to tell htmx to reprocess any htmx attributes in the table
@@ -276,7 +276,7 @@
 
                     // Get user name
                     const userName = parent.querySelectorAll('td')[1].innerText;
-                    var id = $(this).data('id');
+                    var id = $(this).data('identifier');
 
                     Swal.fire({
                         text: "Are you sure you want to delete dd " + userName + "?",
@@ -293,8 +293,10 @@
                         if (result.value) {
 
                             const packets = {
-                                id: [id],
+                                identifier: [id],
                                 token: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
+                                htmx: true,
+                                action: 'delete'
                             };
 
                             htmx.ajax('DELETE', '<?= route_to('logs-system-delete') ?>', { values: packets, extensions: "json-enc" }).then(() => {
@@ -346,10 +348,9 @@
 
             // Deleted selected rows
             deleteSelected.addEventListener('click', function () {
-                const ids = [];
+                const identifiers = [];
                 var dtRow = Ci4DataTables["kt_table_system-table"].rows('.selected').data().map(function (t, e) {
-                    console.log(t.id);
-                    ids.push(t.id);
+                    identifiers.push(t.identifier);
                 });
 
                 Swal.fire({
@@ -366,8 +367,10 @@
                 }).then(function (result) {
                     if (result.value) {
                         const packets = {
-                            id: ids,
-                            token: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
+                            'identifier[]': identifiers,
+                            'token': $('meta[name="X-CSRF-TOKEN"]').attr('content'),
+                            'htmx': true,
+                            'action': 'deleteAll'
                         };
 
                         htmx.ajax('DELETE', '<?= route_to('logs-system-delete') ?>', { values: packets, extensions: "json-enc" }).then(() => {

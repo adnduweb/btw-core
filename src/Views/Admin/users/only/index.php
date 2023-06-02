@@ -1,12 +1,16 @@
 <?= $this->extend('Themes\Admin\master') ?>
-<?= $this->section('title') ?> <?= lang('Btw.users.usersList'); ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?>
+<?= lang('Btw.users.usersList'); ?>
+<?= $this->endSection() ?>
 <?= $this->section('main') ?>
 
-<x-page-head> <?= lang('Btw.users.usersList'); ?> </x-page-head>
+<x-page-head>
+    <?= lang('Btw.users.usersList'); ?>
+</x-page-head>
 
 <x-admin-box>
 
-<?= $this->setData(['add' => ['href' => route_to('user-only-create'), 'titre' => lang('btw.users.addUser') ], 'actions' => $actions])->include('Themes\Admin\Datatabase\_headerTable'); ?>
+    <?= $this->setData(['add' => ['href' => route_to('user-only-create'), 'titre' => lang('btw.users.addUser')], 'actions' => $actions])->include('Themes\Admin\Datatabase\_headerTable'); ?>
 
     <div class="row justify-content-md-center">
 
@@ -22,7 +26,7 @@
 
 <?php $this->section('scripts') ?>
 <script type="module">
-    var KTUsersList = function() {
+    var KTUsersList = function () {
         // Define shared variables
         var table = document.getElementById('kt_table_users');
         var datatable;
@@ -32,7 +36,7 @@
         var selectedCount;
 
         // Private functions
-        var initPermissionTable = function() {
+        var initPermissionTable = function () {
             // Set date data order
 
             // Init datatable --- more info on datatables: https://datatables.net/manual/
@@ -64,7 +68,7 @@
                 "lengthChange": true,
                 "stateSave": true,
                 'rows': {
-                    beforeTemplate: function(row, data, index) {
+                    beforeTemplate: function (row, data, index) {
 
                         if (data.active == '0') {
                             row.addClass('notactive');
@@ -72,61 +76,61 @@
                         row.addClass(' text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
                     }
                 },
-                createdRow: function(row, data, dataIndex) {
+                createdRow: function (row, data, dataIndex) {
                     $(row).addClass(' text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
                 },
 
                 columnDefs: [
                     <?php $i = 0;
-                    foreach ($columns as $column) : ?>
-                        <?php
-                        switch ($column['name']) {
-                            case 'selection':
-                                echo "{";
-                                echo "data: 'select',";
-                                echo "targets: 0,";
-                                echo "orderable: false,";
-                                echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
-                                if (isset($column['responsivePriority'])):
-                                    echo "responsivePriority: " . $column['responsivePriority'];
-                                endif;
-                                echo "},";
-                                break;
-                            case 'action':
-                                echo "{";
-                                echo "data: 'action',";
-                                echo "targets: -1,";
-                                echo "orderable: false,";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                if (isset($column['responsivePriority'])):
-                                    echo "responsivePriority: " . $column['responsivePriority'];
-                                endif;
-                                echo "}";
-                                break;
-                            default:
-                                echo "{";
-                                echo "data: '" . $column['name'] . "',";
-                                echo "targets: $i, ";
-                                echo "orderable: " . $column['orderable'] . ",";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                if (isset($column['responsivePriority'])):
-                                    echo "responsivePriority: " . $column['responsivePriority'] . ", ";
-                                endif;
-                                echo "createdCell: function(td, cellData, rowData, row, col) {";
-                                if (!isset($column['notClick'])):
-                                    echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/users/edit/' + rowData.id + '/information\")');";
-                                endif;
-                                echo "}";
-                                echo "},";
-                        }
-                        ?>
-                    <?php $i++;
+                    foreach ($columns as $column): ?>
+                            <?php
+                            switch ($column['name']) {
+                                case 'selection':
+                                    echo "{";
+                                    echo "data: 'select',";
+                                    echo "targets: 0,";
+                                    echo "orderable: false,";
+                                    echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
+                                    if (isset($column['responsivePriority'])):
+                                        echo "responsivePriority: " . $column['responsivePriority'];
+                                    endif;
+                                    echo "},";
+                                    break;
+                                case 'action':
+                                    echo "{";
+                                    echo "data: 'action',";
+                                    echo "targets: -1,";
+                                    echo "orderable: false,";
+                                    echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+                                    if (isset($column['responsivePriority'])):
+                                        echo "responsivePriority: " . $column['responsivePriority'];
+                                    endif;
+                                    echo "}";
+                                    break;
+                                default:
+                                    echo "{";
+                                    echo "data: '" . $column['name'] . "',";
+                                    echo "targets: $i, ";
+                                    echo "orderable: " . $column['orderable'] . ",";
+                                    echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+                                    if (isset($column['responsivePriority'])):
+                                        echo "responsivePriority: " . $column['responsivePriority'] . ", ";
+                                    endif;
+                                    echo "createdCell: function(td, cellData, rowData, row, col) {";
+                                    if (!isset($column['notClick'])):
+                                        echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/users/edit/' + rowData.id + '/information\")');";
+                                    endif;
+                                    echo "}";
+                                    echo "},";
+                            }
+                            ?>
+                        <?php $i++;
                     endforeach; ?>
                 ],
                 // Use DataTables' initComplete callback to tell htmx to reprocess any htmx attributes in the table
                 // DataTables docs: https://datatables.net/reference/option/initComplete
                 // htmx docs: https://htmx.org/api/#process AND https://htmx.org/docs/#3rd-party
-                "initComplete": function(settings, json) {
+                "initComplete": function (settings, json) {
                     htmx.process(table);
                 },
             });
@@ -135,14 +139,14 @@
             // Add an event listener that updates the table whenever an htmx request completes
             // DataTables docs: https://datatables.net/reference/api/ajax.reload()
             // htmx docs: https://htmx.org/events/#htmx:afterRequest
-            document.body.addEventListener('reloadTable', function(evt) {
-                Ci4DataTables["kt_table_users-table"].ajax.reload(function() {
+            document.body.addEventListener('reloadTable', function (evt) {
+                Ci4DataTables["kt_table_users-table"].ajax.reload(function () {
                     htmx.process('table');
                 }, false)
             });
 
             // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
-            window.Ci4DataTables["kt_table_users-table"].on('draw', function(jqXHR, settings) {
+            window.Ci4DataTables["kt_table_users-table"].on('draw', function (jqXHR, settings) {
                 initToggleToolbar();
                 handleDeleteRows();
                 toggleToolbars();
@@ -183,7 +187,7 @@
         // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
         var handleSearchDatatable = () => {
             const filterSearch = document.querySelector('[data-kt-datatable-filter="search"]');
-            filterSearch.addEventListener('change', function(e) {
+            filterSearch.addEventListener('change', function (e) {
                 Ci4DataTables["kt_table_users-table"].search(e.target.value).draw();
             });
         }
@@ -196,7 +200,7 @@
             const selectOptions = filterForm.querySelectorAll('select');
 
             // Filter datatable on submit
-            filterButton.addEventListener('click', function() {
+            filterButton.addEventListener('click', function () {
                 var filterString = '';
 
                 // Get filter values
@@ -221,7 +225,7 @@
             const resetButton = document.querySelector('[data-kt-datatable-filter="reset"]');
 
             // Reset datatable
-            resetButton.addEventListener('click', function() {
+            resetButton.addEventListener('click', function () {
                 // Select filter options
                 const filterForm = document.querySelector('[data-kt-datatable-filter="form"]');
                 const selectOptions = filterForm.querySelectorAll('select');
@@ -245,7 +249,7 @@
 
             deleteButtons.forEach(d => {
                 // Delete button on click
-                d.addEventListener('click', function(e) {
+                d.addEventListener('click', function (e) {
                     e.preventDefault();
 
                     // Select parent row
@@ -254,7 +258,7 @@
                     // Get user name
                     const userName = parent.querySelectorAll('td')[1].querySelectorAll('span')[0].innerText;
 
-                    var id = $(this).data('id');
+                    var id = $(this).data('identifier');
 
                     // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
 
@@ -276,24 +280,19 @@
                             confirmButton: "inline-flex items-center justify-center px-4 py-2 text-sm border border-transparent rounded-md font-medium focus:outline-none focus:ring disabled:opacity-25 disabled:cursor-not-allowed transition bg-red-600 text-white hover:bg-red-500 focus:border-red-700 focus:ring-red-200 active:bg-red-600",
                             cancelButton: "inline-flex items-center justify-center px-4 py-2 text-sm border border-transparent rounded-md font-medium focus:outline-none focus:ring disabled:opacity-25 disabled:cursor-not-allowed transition bg-blue-100 text-blue-700 hover:bg-blue-200 focus:border-blue-300 focus:ring-blue-200 active:bg-blue-300 ml-2"
                         }
-                    }).then(function(result) {
+                    }).then(function (result) {
                         if (result.value) {
 
                             const packets = {
-                                id: [id],
+                                identifier: id,
                                 token: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
+                                htmx: false,
+                                action: 'delete'
                             };
 
-                            axios.delete("<?= route_to('users-delete') ?>", {
-                                    data: packets
-                                })
-                                .then(response => {
-                                    var alerts = document.querySelector('#alerts-wrapper');
-                                    alerts.insertAdjacentHTML("beforeend", response.data.messagehtml);
-                                    Ci4DataTables["kt_table_users-table"].ajax.reload();
-
-                                })
-                                .catch(error => {});
+                            htmx.ajax('DELETE', '<?= route_to('users-delete') ?>', { values: packets }).then(() => {
+                                console.log('Content deleted successfully!');
+                            });
 
                         } else if (result.dismiss === 'cancel') {
 
@@ -328,8 +327,8 @@
             // Toggle delete selected toolbar
             checkboxes.forEach(c => {
                 // Checkbox on click event
-                c.addEventListener('click', function() {
-                    setTimeout(function() {
+                c.addEventListener('click', function () {
+                    setTimeout(function () {
                         toggleToolbars();
                     }, 50);
                 });
@@ -337,10 +336,10 @@
 
 
             // Deleted selected rows
-            deleteSelected.addEventListener('click', function() {
-                const ids = [];
-                var dtRow = Ci4DataTables["kt_table_users-table"].rows('.selected').data().map(function(t, e) {
-                    ids.push(t.id);
+            deleteSelected.addEventListener('click', function () {
+                const identifiers = [];
+                var dtRow = Ci4DataTables["kt_table_users-table"].rows('.selected').data().map(function (t, e) {
+                    identifiers.push(t.identifier);
                 });
 
                 Swal.fire({
@@ -354,22 +353,20 @@
                         confirmButton: "inline-flex items-center justify-center px-4 py-2 text-sm border border-transparent rounded-md font-medium focus:outline-none focus:ring disabled:opacity-25 disabled:cursor-not-allowed transition bg-red-600 text-white hover:bg-red-500 focus:border-red-700 focus:ring-red-200 active:bg-red-600",
                         cancelButton: "inline-flex items-center justify-center px-4 py-2 text-sm border border-transparent rounded-md font-medium focus:outline-none focus:ring disabled:opacity-25 disabled:cursor-not-allowed transition bg-blue-100 text-blue-700 hover:bg-blue-200 focus:border-blue-300 focus:ring-blue-200 active:bg-blue-300 ml-2"
                     }
-                }).then(function(result) {
+                }).then(function (result) {
                     if (result.value) {
+
                         const packets = {
-                            id: ids,
-                            token: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
+                            'identifier[]': identifiers,
+                            'token': $('meta[name="X-CSRF-TOKEN"]').attr('content'),
+                            'htmx': true,
+                            'action': 'deleteALL'
                         };
 
-                        axios.delete("<?= route_to('users-delete') ?>", {
-                                data: packets
-                            })
-                            .then(response => {
-                                const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
-                                headerCheckbox.checked = false;
-                                Ci4DataTables["kt_table_users-table"].ajax.reload();
-                            })
-                            .catch(error => {});
+                        htmx.ajax('DELETE', '<?= route_to('users-delete') ?>', { values: packets, }).then(() => {
+                            console.log('Content deleted successfully!');
+                        });
+
                     }
                 });
             });
@@ -412,7 +409,7 @@
 
         return {
             // Public functions  
-            init: function() {
+            init: function () {
                 if (!table) {
                     return;
                 }

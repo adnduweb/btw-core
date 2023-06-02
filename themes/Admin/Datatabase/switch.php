@@ -6,7 +6,7 @@
 ] ; ?>
 
 
-<?php if ((isset($type) && $type == 'user' && user_id() == $row->id)) :
+<?php if ((isset($type) && $type == 'user' && user_id() == $row->getIdentifier())) :
     $params['disabled'] = true ;
 endif; ?>
 

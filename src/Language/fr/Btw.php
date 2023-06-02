@@ -51,6 +51,7 @@ return [
         'resourcesUpdatedActive' => "Les {0} ont été mise à jour.",
         'resourcesUpdatedDesactive' => "Les {0} ont été mise à jour.",
         'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
+        'resourcesNotDeletedOnlyUser' => 'Vous ne pouvez pas supprimer votre propore compte'
         
     ],
     'sidebar' => [
