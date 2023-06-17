@@ -99,6 +99,11 @@ return [
         'active' => 'Activer',
         'SelectNewPhoto' => 'Sélectionner une photo', 
         'search' => 'Rechercher',
+        'nom' => 'Nom',
+        'prenom' => 'Prénom',
+        'email' => 'Email',
+        'typeCustomer' => 'Type de clients',
+        'bio' => 'Biographie',
 
     ],
     'ShieldOAuthLang' => [
