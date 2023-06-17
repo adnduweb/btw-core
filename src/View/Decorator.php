@@ -16,44 +16,8 @@ class Decorator implements ViewDecoratorInterface
     public static function decorate(string $html): string
     {
 
-        # Check whether vite is running or manifest is ready.
-        if (env('VITE_AUTO_INJECTING') && Vite::routeIsNotExluded()) {
-
-            if (Vite::isReady() === false) {
-                throw new \Exception('CodeIgniter Vite package is installed, but not initialized. did you run "php spark vite:init" ?');
-            }
-
-            if (Theme::current() == 'Admin' || Theme::current() == 'Auth') {
-                # Get generated tags.
-                $tags = Vite::tags();
-
-                // var_dump($tags['js']);
-                // exit;
-
-                $jsTags  = $tags['js'];
-
-                # now inject css
-                if (!empty($tags['css'])) {
-                    $cssTags = $tags['css'];
-
-                    if (strpos($html, "\n\t$cssTags\n") === false) {
-                        $html = str_replace('</head>', "\n\t$cssTags\n</head>", $html);
-                    }
-
-                    if (strpos($html, "\n\t$jsTags\n") === false) {
-                        $html = str_replace('</main>', "\n\t$jsTags\n</main>", $html);
-                    }
-                } else {
-                    if (strpos($html, "\n\t$jsTags\n") === false) {
-                        $html = str_replace('</head>', "\n\t$jsTags\n</head>", $html);
-                    }
-                }
-            }
-
-            //message ajax not htmx
-            $html = self::message($html);
-        }
-
+        //message ajax not htmx
+        $html = self::message($html);
         $components = self::factory();
 
         return $components->render($html);
@@ -114,9 +78,11 @@ class Decorator implements ViewDecoratorInterface
             }
             if (strpos($html, alertHtmx($type, $templateVarMessage)) === false) {
                 $html = str_replace(
-                    '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">', 
-                    '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">' . alertHtmx($type, $templateVarMessage), $html);
-            } 
+                    '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">',
+                    '<div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50">' . alertHtmx($type, $templateVarMessage),
+                    $html
+                );
+            }
         }
         return $html;
     }

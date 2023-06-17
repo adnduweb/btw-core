@@ -16,6 +16,56 @@ if (!function_exists('newUUID')) {
     }
 }
 
+if (!function_exists('vite')) {
+    function vite(array $paths)
+    {
+
+        $manifest = FCPATH . 'manifest.json';
+
+        $result = [
+            'js' => null,
+            'css' => null
+        ];
+
+        $html = '';
+
+        # Check if vite is running.
+        $entryFile = env('VITE_ORIGIN') . '/' . env('VITE_RESOURCES_DIR') . '/' . env('VITE_ENTRY_FILE');
+
+        $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
+        $html .= $result['js'];
+
+        # If vite isn't running, then return the bundled resources.
+        if (empty($result['js']) && is_file($manifest)) {
+            # Get the manifest content.
+            $manifest = file_get_contents($manifest);
+            # You look much pretty as a php object =).
+            $manifest = json_decode($manifest);
+
+            # Now, we will get all js files and css from the manifest.
+            foreach ($manifest as $file) {
+                // print_r($file);exit; 
+                # Check extension
+                $fileExtension = substr($file->file, -3, 3);
+
+                # Generate js tag.
+                if ($fileExtension === '.js' && isset($file->isEntry) && $file->isEntry === true && (!isset($file->isDynamicEntry) || $file->isDynamicEntry !== true)) {
+                    $result['js'] .= '<script type="module" src="/' . $file->file . '"></script>' . "\n";
+                    $html .= $result['js'];
+                }
+
+                if (!empty($file->css)) {
+                    foreach ($file->css as $cssFile) {
+                        $result['css'] .= '<link rel="stylesheet" href="/' . $cssFile . '" />' . "\n";
+                        $html .= $result['css'];
+                    }
+                }
+            }
+        }
+
+        return $html;
+    }
+}
 
 if (!function_exists('view_fragment')) {
     /**
@@ -116,6 +166,16 @@ if (!function_exists('app_date')) {
         return $date->format($format);
     }
 }
+
+if (!function_exists('app_datesql')) {
+
+    function app_datesql($date): string
+    {
+        list($d, $m, $y) = explode('/', $date);
+        return $y . '/' . $m . '/' . $d;
+    }
+}
+
 
 if (!function_exists('render')) {
     /**

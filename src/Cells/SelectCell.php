@@ -25,6 +25,8 @@ class SelectCell
     protected $hxInclude;
     protected $hxTrigger;
     protected $hxSwap;
+    protected $ktData;
+    protected $placeholder;
 
     /**
      * A view cell that displays the list of available filters.
@@ -52,23 +54,49 @@ class SelectCell
         $this->hxSwap = (isset($params['hxSwap'])) ? 'hx-swap="' . $params['hxSwap'] . '"' : false;
         $this->class = (isset($params['class'])) ? $params['class'] : false;
         $this->label = (isset($params['label'])) ? $params['label'] : false;
+        $this->ktData = (isset($params['ktData'])) ? $params['ktData'] : false;
+        $this->placeholder = (isset($params['placeholder'])) ? $params['placeholder'] : null;
+
 
 
         $html = "";
         if ($this->label == true)
             $html = '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . '</label>';
-        $html .= '<select name="' . $params['name'] . '" class="' . $this->class . ' appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 dark:border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900 ease-linear transition-all duration-150" 
-        ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxTarget . '  ' . $this->hxInclude . '  ' . $this->hxTrigger . '  ' . $this->hxSwap . ' >';
+        $html .= '<select name="' . $params['name'] . '" class="' . $this->class . ' appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150" 
+        ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxTarget . '  ' . $this->hxInclude . '  ' . $this->hxTrigger . '  ' . $this->hxSwap . ' ' . $this->ktData . ' data-kt-form-select >';
         $i = 0;
-        $html .= '<option value="0">' . lang('Form.general.choisissezVotreValeur') . '</option>';
+        $placeHoler = $this->placeholder ?? lang('Form.general.choisissezVotreValeur'); 
+        $html .= '<option value="0">' . $placeHoler . '</option>';
 
         if (isset($params['options']) && count($params['options'])):
 
             foreach ($params['options'] as $key => $val):
                 $apinejs = isset($params['alpinejs']) ? $params['alpinejs'][$i] : '';
-                $newSelected = ($params['selected'] === (string) $val) ? ' selected="selected" ' : '';
-                $html .= '<option value="' . $val . '" ' . $apinejs . ' ' . $newSelected . '>';
-                $html .= !isset($params['byKey']) ? $key : $val;
+
+                // if(!isset($params['byKey']) || $params['byKey'] == false ){
+                //     $newSelected =  $val;
+                // }else{
+                //     $newSelected = $key;
+                // }
+
+                //  var_dump($params['selected']); exit;
+
+
+
+                if (!isset($params['byKey']) || $params['byKey'] == false) {
+                    $value = isset($val['name']) ? $val['name'] : $val;
+                    $newSelected = ($params['selected'] === $value) ? ' selected="selected" ' : '';
+                    $valueOption = $value;
+                } else {
+                    $value = isset($val['name']) ? $val['name'] : $val;
+                    $newSelected = ($params['selected'] == $key) ? ' selected="selected" ' : '';
+                    $valueOption = $key;
+                }
+
+                
+                $html .= '<option value="' . $valueOption . '" ' . $apinejs . ' ' . $newSelected . '>';
+                // $html .= !isset($params['byKey']) || $params['byKey'] == false ? $key : ucfirst($val);
+                $html .= ucfirst($value);
                 $html .= '</option>';
                 $i++;
             endforeach;

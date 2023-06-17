@@ -73,9 +73,19 @@ return [
 
     'modules' => [
         'customers' => 'Clients',
-        
     ],
+
+     'tabs' => [
+        'general' => 'Général',
+        'listAdresses' => 'Liste des adresses',
+        'listContact' => 'Liste des contacts',
+        'infoTechniques' => 'Informations techniques',
+        'listProjets' => 'Liste des projets',
+        'accesWeb' => 'Accès Web'
+    ],
+
     
+    'intitulecustomer'     => 'Modification client',
     'resourceNotFound'     => 'Unable to find the {0}.',
     'resourceSaved'        => 'The {0} has been saved.',
     'resourcesSaved'       => 'The {0} changes has been successfully saved.',
