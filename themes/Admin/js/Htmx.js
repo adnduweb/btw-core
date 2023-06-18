@@ -862,8 +862,8 @@ htmx.defineExtension('echarts', {
       var chartContainer = document.getElementById("charts");
       var chart = window.echarts.getInstanceByDom(chartContainer);
       
-      console.log(chartContainer);
-      console.log(window.echarts);
+      // console.log(chartContainer);
+      // console.log(window.echarts);
       // clean up options and update chart
       delete data.id;
       chart.setOption(option);

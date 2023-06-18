@@ -158,5 +158,14 @@
     "to": "de",
     "of": "à",
     "ShowingNoRecords": "pas d'enregistrement",
-    "NoDataAvailableInTable": "Aucune donnée disponible"
+    "NoDataAvailableInTable": "Aucune donnée disponible", 
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "Last 7 Days": "Les 7 derniers jours",
+    "Last 30 Days": "Les 30 derniers jours",
+    "This Month": "Ce mois-ci",
+    "Last Month": "Le dernier mois",
+    "appliquer": "Appliquer",
+    "annuler": "Annuler",
+    "custom": "Personnalisé"
 }

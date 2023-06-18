@@ -89,7 +89,8 @@ class SelectCell
                     $valueOption = $value;
                 } else {
                     $value = isset($val['name']) ? $val['name'] : $val;
-                    $newSelected = ($params['selected'] == $key) ? ' selected="selected" ' : '';
+                    $newSelected = ((!empty($params['selected'])) && $params['selected'] == $key) ? ' selected="selected" ' : '';
+                    $newSelected = (empty($params['selected']) && $params['default'] ==  $key) ? ' selected="selected" ' : $newSelected;
                     $valueOption = $key;
                 }
 

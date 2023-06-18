@@ -1,27 +1,199 @@
 //This is you main entry file, Be creative =)
-window.Ci4DataTables = window.Ci4DataTables || {};
 
+import "../css/app.css";
+
+window.Ci4DataTables = window.Ci4DataTables || {};
+const html = document.querySelector("html");
+
+import _ from "lodash";
+window._ = _;
+
+// Jquery
+//with include vite transfer code to export default
 import $ from "jquery";
 window.jQuery = window.$ = $;
 
+import intlTelInput from "intl-tel-input";
+window.intlTelInput = intlTelInput;
+import "intl-tel-input/build/css/intlTelInput.css";
+
+const phoneintl = document.querySelectorAll(".phoneintl");
+const country = document.querySelector('[name="country"]');
+
+if (country) {
+  country.addEventListener("change", function (e) {
+    console.info(country.value);
+
+    if (phoneintl) {
+      phoneintl.forEach(function (e) {
+        const iti = intlTelInput(e, {
+          initialCountry: country.value,
+          autoPlaceholder: "polite",
+          utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+        });
+
+        e.addEventListener("countrychange", function () {
+          // do something with iti.getSelectedCountryData()
+          console.log(iti.getSelectedCountryData().iso2);
+
+          var country = document.querySelector('[name="country"]');
+
+          if (country) {
+            country.value = iti.getSelectedCountryData().iso2.toUpperCase();
+            console.info(country.value);
+          }
+        });
+
+        e.addEventListener("open:countrydropdown", function () {
+          // triggered when the user opens the dropdown
+        });
+
+        e.addEventListener("close:countrydropdown", function () {
+          // triggered when the user closes the dropdown
+        });
+      });
+    }
+  });
+}
+
+if (phoneintl) {
+  phoneintl.forEach(function (e) {
+    const iti = intlTelInput(e, {
+      initialCountry: "fr",
+      autoPlaceholder: "polite",
+      utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+    });
+
+    e.addEventListener("countrychange", function () {
+      // do something with iti.getSelectedCountryData()
+      console.log(iti.getSelectedCountryData().iso2);
+
+      var country = document.querySelector('[name="country"]');
+
+      if (country) {
+        country.value = iti.getSelectedCountryData().iso2.toUpperCase();
+        console.info(country.value);
+      }
+    });
+
+    e.addEventListener("open:countrydropdown", function () {
+      // triggered when the user opens the dropdown
+    });
+
+    e.addEventListener("close:countrydropdown", function () {
+      // triggered when the user closes the dropdown
+    });
+  });
+}
+
+// const moment = require('moment');
+// import * as moment from 'moment';
+// import  * as fr 'moment/locale/fr';
+// window.moment = moment();
+// console.log(moment.locale()); // en
+// console.log(momentfr);
+// console.log(moment.locale()); // fr
+// console.log(moment()); // fr
+
+moment.locale(html.getAttribute("lang"));
+//  console.log(moment().format('MMMM Do YYYY, h:mm:ss a')); // works fine in here only
+
+// Flowbite
+import "flowbite";
+import "flowbite-datepicker";
+
 // ES6 Modules or TypeScript
+// Swal
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 window.Swal = Swal;
 
-import Datepicker from "flowbite-datepicker/Datepicker";
-import DateRangePicker from "flowbite-datepicker/DateRangePicker";
-window.datepicker = Datepicker;
-window.dateRangePicker = DateRangePicker;
+// SortableJS
+import Sortable from "sortablejs";
+window.Sortable = Sortable;
 
+// Axios
 import axios from "axios";
 window.axios = axios;
 
+// daterangepicker
+import daterangepicker from "daterangepicker";
+window.daterangepicker = daterangepicker;
+
+import Alpine from "alpinejs";
+import persist from "@alpinejs/persist";
+import focus from "@alpinejs/focus";
+import morph from "@alpinejs/morph";
+import Clipboard from "@ryangjchandler/alpine-clipboard";
+import Tooltip from "@ryangjchandler/alpine-tooltip";
+import collapse from "@alpinejs/collapse";
+import mask from "@alpinejs/mask";
+
+// console.log(Alpine.version);
+window.Alpine = Alpine;
+
+Alpine.plugin(focus);
+Alpine.plugin(morph);
+Alpine.plugin(persist);
+Alpine.plugin(Tooltip);
+Alpine.plugin(mask);
+Alpine.plugin(
+  Clipboard.configure({
+    onCopy: () => {
+      console.log("Copied!");
+    },
+  })
+);
+Alpine.plugin(collapse);
+
+// Datepicker
+// import Datepicker from "flowbite-datepicker/Datepicker";
+// import DateRangePicker from "flowbite-datepicker/DateRangePicker";
+// import LocaleFR from "../../../node_modules/flowbite-datepicker/js/i18n/locales/fr.js";
+// window.datepicker = Datepicker;
+// window.dateRangePicker = DateRangePicker;
+// window.LocaleFR = LocaleFR;
+
+// function dataPicker() {
+//     document.addEventListener("DOMContentLoaded", function() {
+//         // Datepicker.locales.fr = LocaleFR.fr;
+//         document
+//             .querySelectorAll("[daterangepicker]")
+//             .forEach(function(datepickerEl) {
+//                 // var dateRangePicker = new daterangepicker(datepickerEl, {
+//                 //     weekStart: 1,
+//                 //     language: "fr",
+//                 // });
+
+//                 console.log(datepickerEl);
+//                 console.log(datepickerEl.getAttribute('id'));
+
+//                 $('#' + datepickerEl.getAttribute('id')).daterangepicker({
+//                     timePicker: true,
+//                     startDate: moment().startOf("hour"),
+//                     endDate: moment().startOf("hour").add(32, "hour"),
+//                     locale: {
+//                         format: "M/DD hh:mm A"
+//                     }
+//                 });
+
+//             });
+//     });
+// }
+
+// dataPicker();
+// document.body.addEventListener('htmx:afterOnLoad', function(evt) {
+//     console.log('faf');
+//     dataPicker();
+// });
+
+// Datatables
 import Datatable from "datatables.net";
 window.datatable = Datatable;
 import "datatables.net-responsive";
 
-import * as echarts from 'echarts';
+// Echarts
+import * as echarts from "echarts";
 window.echarts = echarts;
 
 // import tippy from 'tippy.js';
@@ -216,7 +388,13 @@ DataTable.ext.renderer.pageButton.bootstrap = function (
             )
             .appendTo(container);
 
-          settings.oApi._fnBindAction(node, { action: button }, clickHandler);
+          settings.oApi._fnBindAction(
+            node,
+            {
+              action: button,
+            },
+            clickHandler
+          );
 
           counter++;
         }
@@ -248,26 +426,13 @@ DataTable.ext.renderer.pageButton.bootstrap = function (
   }
 };
 
-import "../css/app.css";
 import "../js/ktapp.js";
 import "../js/util.js";
-import "../js/alpine.js";
-import "../js/htmx.js";
+import * as SetAlpine from "./alpine.js";
+SetAlpine.SettingAlpine();
 
-// import htmx from 'htmx.org';
-// general config
-// htmx.config.useTemplateFragments = true;
-// window.Htmx = htmx;
-// console.log('fabrice2');
-// console.log(htmx);
-// import "../js/htmx.js";
-// $(document).on('click', '.group-checkable', function() {
-// if ($(this).parent().parent().parent().hasClass('selected')) {
-//     $(this).parent().parent().parent().removeClass('selected');
-// } else {
-//     $(this).parent().parent().parent().addClass('selected');
-// }
-// const groupCheckable = table.querySelector('.group-checkable');
+Alpine.start();
+import "../js/htmx.js";
 
 /**
  * Select All checkbox for data tables
@@ -372,10 +537,12 @@ if (typeof doudou != undefined) {
 
 function updateOnlineStatus(event) {
   let condition = navigator.onLine ? "online" : "offline";
-  let texte = navigator.onLine ? "Vous êtes déconnecté du reseau" : "Vous êtes connecté du reseau";
+  let texte = navigator.onLine
+    ? "Vous êtes déconnecté du reseau"
+    : "Vous êtes connecté du reseau";
   let type = navigator.onLine ? "success" : "error";
 
-//   console.log("Event: " + event.type, " Status: " + condition);
+  //   console.log("Event: " + event.type, " Status: " + condition);
 
   if (event.type != undefined) {
     document.dispatchEvent(
@@ -393,3 +560,17 @@ window.addEventListener("online", updateOnlineStatus);
 window.addEventListener("offline", updateOnlineStatus);
 
 updateOnlineStatus({}); //set initial status
+
+// document.body.addEventListener("scripts", function(evt) {
+//     console.log(evt);
+//     Datepicker.locales.fr = LocaleFR.fr;
+//     document
+//         .querySelectorAll("[daterangepicker]")
+//         .forEach(function(datepickerEl) {
+//             var dateRangePicker = new DateRangePicker(datepickerEl, {
+//                 weekStart: 1,
+//                 language: "fr",
+//             });
+//             console.log(dateRangePicker);
+//         });
+// });

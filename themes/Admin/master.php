@@ -10,6 +10,8 @@
     <?= $viewMeta->render('meta') ?>
     <?= $viewMeta->render('title') ?>
     <?= csrf_meta() ?>
+    <?= asset_link('admin/css/app.css', 'css') ?>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
@@ -17,10 +19,13 @@
     <?= $viewJavascript->render(); ?>
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
 
+    <?=  vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
+
 </head>
 
 <!-- debug, loading-states, json-enc, event-header -->
-<body hx-ext="morph, ajax-header" hx-history="false" hx-headers='{"X-Theme": "admin"}' 
+
+<body hx-ext="morph, ajax-header" hx-history="false" hx-headers='{"X-Theme": "admin"}'
     class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }">
 
     <!-- Main content -->
@@ -29,14 +34,9 @@
             x-data="{isSidebarExpanded: <?= (service('settings')->get('Btw.isSidebarExpanded', 'user:' . user_id()) == true) ? 'true' : 'false'; ?>}">
 
             <x-sidebar />
-            <?= '' //$this->include('_sidebar') ?>
-
 
             <div class="flex w-0 flex-1 flex-col overflow-hidden">
                 <?= $this->include('_header') ?>
-
-                <?= ''; //$this->include('_stats') 
-                ?>
 
                 <div class="progress">
                     <div class="indeterminate"></div>
@@ -68,12 +68,11 @@
 
         <?= $this->include('_modalsLogout') ?>
 
-
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-        <script src="https://unpkg.com/hyperscript.org@0.9.7" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+        <script src="https://unpkg.com/hyperscript.org@0.9.8" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.3.x/dist/index.js"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script> -->
         <?= $this->renderSection('scriptsUrl') ?>
 
     </main>
@@ -83,6 +82,7 @@
     <?= $this->renderSection('scripts') ?>
     <?= $viewMeta->render('script') ?>
     <?= $viewMeta->render('rawScripts') ?>
+
 
 </body>
 
