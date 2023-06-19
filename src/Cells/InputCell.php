@@ -103,13 +103,13 @@ class InputCell
 
             if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))):
                 // print_r($params['validation']); exit;
-                $html = '<div class="invalid-feedback block text-red-600">';
+                $html = '<div class="invalid-feedback block text-red-600 text-sm">';
                 $html .= service('validation')->getError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']));
                 $html .= '</div>';
             endif;
         } else {
             if (service('validation')->hasError($params['name'])):
-                $html = '<div class="invalid-feedback block text-red-600">';
+                $html = '<div class="invalid-feedback block text-red-600 text-sm">';
                 $html .= service('validation')->getError($params['name']);
                 $html .= '</div>';
             endif;

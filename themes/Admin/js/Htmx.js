@@ -851,39 +851,48 @@ htmx.defineExtension("debug", {
   });
 })();
 
-htmx.defineExtension('echarts', {
+// Disable Submit Button
+htmx.defineExtension("disable-element", {
+  onEvent: function (name, evt) {
+    let elt = evt.detail.elt;
+    let target = elt.getAttribute("hx-disable-element");
+    let targetElement = target == "self" ? elt : document.querySelector(target);
+
+    if (name === "htmx:beforeRequest" && targetElement) {
+      targetElement.disabled = true;
+    } else if (name == "htmx:afterRequest" && targetElement) {
+      targetElement.disabled = false;
+    }
+  },
+});
+
+htmx.defineExtension("echarts", {
   transformResponse: function (text, xhr, elt) {
-      // parse json data
-      var data = JSON.parse(text);
-    
+    // parse json data
+    var data = JSON.parse(text);
 
-      // fetch echart element
-      var option = data;
-      var chartContainer = document.getElementById("charts");
-      var chart = window.echarts.getInstanceByDom(chartContainer);
-      
-      // console.log(chartContainer);
-      // console.log(window.echarts);
-      // clean up options and update chart
-      delete data.id;
-      chart.setOption(option);
+    // fetch echart element
+    var option = data;
+    var chartContainer = document.getElementById("charts");
+    var chart = window.echarts.getInstanceByDom(chartContainer);
 
-  }
+    // console.log(chartContainer);
+    // console.log(window.echarts);
+    // clean up options and update chart
+    delete data.id;
+    chart.setOption(option);
+  },
 });
 
 //https://gist.github.com/kongondo/515b80d15f8034edeb686d46752df4ec
 
 const UpdateProcessWireFrontendContentUsingHtmxDemo = {
- 
   listenToHTMXRequests: function () {
-    document.body.addEventListener("htmx:beforeSwap", function (evt) {
-    });
+    document.body.addEventListener("htmx:beforeSwap", function (evt) {});
 
     // after settle
     htmx.on("htmx:afterSettle", function (event) {
       let contentType = event.detail.xhr.getResponseHeader("content-type");
-
-    
     });
 
     htmx.on("htmx:afterSwap", function (evt) {
@@ -909,7 +918,6 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
         document.dispatchEvent(event);
       }
     });
-
   },
 
   getCSRFToken: function () {
@@ -934,7 +942,6 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
     }
   },
 };
-
 
 // htmx.logger = function(elt, event, data) {
 //     if(console) {
