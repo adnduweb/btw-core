@@ -57,6 +57,7 @@ https://windstatic.com/
 https://vemto.app/blog/how-to-create-an-image-upload-viewer-with-alpinejs
 https://alpinejs.dev/component/date-range-picker
 https://github.com/anggadarkprince/ci4-services
+https://codebase-frontend-library.github.io/codebase-4/docs/8-alpinejs-components/alpinejs-modals/
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604

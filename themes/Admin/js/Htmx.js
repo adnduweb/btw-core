@@ -884,6 +884,52 @@ htmx.defineExtension("echarts", {
   },
 });
 
+htmx.defineExtension("reset-on-success", {
+  onEvent: function (name, event) {
+    if (name !== "htmx:beforeSwap") return;
+    if (event.detail.isError) return;
+
+    const triggeringElt = event.detail.requestConfig.elt;
+    console.log(triggeringElt);
+    console.log("triggeringElt1");
+    if (
+      !triggeringElt.closest('[hx-reset-on-success="true"]') &&
+      !triggeringElt.closest("[data-hx-reset-on-success]")
+    )
+      return;
+    console.log("triggeringElt");
+    console.log(triggeringElt.tagName);
+    switch (triggeringElt.tagName) {
+      case "INPUT":
+        triggeringElt.value = "";
+      case "TEXTAREA":
+        // triggeringElt.value = triggeringElt.defaultValue;
+        triggeringElt.value = "";
+        break;
+      case "SELECT":
+        //too much work
+        break;
+      case "FORM":
+        triggeringElt.reset();
+        break;
+    }
+  },
+});
+
+htmx.on("htmx:afterSettle", function (evt) {
+	window.getPhoneintl;
+});
+
+document.body.addEventListener("resetmodal", function (event) {
+  htmx.on("htmx:afterRequest", function (evt) {
+    console.log(evt);
+    console.log(evt.detail);
+
+    var allInputs = evt.target.querySelectorAll("input");
+    allInputs.forEach((singleInput) => (singleInput.value = ""));
+  });
+});
+
 //https://gist.github.com/kongondo/515b80d15f8034edeb686d46752df4ec
 
 const UpdateProcessWireFrontendContentUsingHtmxDemo = {
@@ -942,6 +988,11 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
     }
   },
 };
+
+htmx.onLoad(function(content) {
+	console.log(content);
+	console.log(window);
+});
 
 // htmx.logger = function(elt, event, data) {
 //     if(console) {

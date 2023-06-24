@@ -17,74 +17,82 @@ import intlTelInput from "intl-tel-input";
 window.intlTelInput = intlTelInput;
 import "intl-tel-input/build/css/intlTelInput.css";
 
-const phoneintl = document.querySelectorAll(".phoneintl");
-const country = document.querySelector('[name="country"]');
+// const phoneintl = document.querySelectorAll(".phoneintl");
+// const country = document.querySelector('[name="country"]');
 
-if (country) {
-  country.addEventListener("change", function (e) {
-    console.info(country.value);
+function getPhoneintl() {
+  const phoneintl = document.querySelectorAll(".phoneintl");
+  const country = document.querySelector('[name="country"]');
+  if (country) {
+    country.addEventListener("change", function (e) {
+      console.info(country.value);
 
-    if (phoneintl) {
-      phoneintl.forEach(function (e) {
-        const iti = intlTelInput(e, {
-          initialCountry: country.value,
-          autoPlaceholder: "polite",
-          utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+      if (phoneintl) {
+        phoneintl.forEach(function (e) {
+          const iti = intlTelInput(e, {
+            initialCountry: country.value,
+            autoPlaceholder: "polite",
+            utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+          });
+
+          e.addEventListener("countrychange", function () {
+            // do something with iti.getSelectedCountryData()
+            //  console.log(iti.getSelectedCountryData().iso2);
+
+            var country = document.querySelector('[name="country"]');
+
+            if (country) {
+              country.value = iti.getSelectedCountryData().iso2.toUpperCase();
+              /// console.info(country.value);
+            }
+          });
+
+          e.addEventListener("open:countrydropdown", function () {
+            // triggered when the user opens the dropdown
+          });
+
+          e.addEventListener("close:countrydropdown", function () {
+            // triggered when the user closes the dropdown
+          });
         });
-
-        e.addEventListener("countrychange", function () {
-          // do something with iti.getSelectedCountryData()
-          console.log(iti.getSelectedCountryData().iso2);
-
-          var country = document.querySelector('[name="country"]');
-
-          if (country) {
-            country.value = iti.getSelectedCountryData().iso2.toUpperCase();
-            console.info(country.value);
-          }
-        });
-
-        e.addEventListener("open:countrydropdown", function () {
-          // triggered when the user opens the dropdown
-        });
-
-        e.addEventListener("close:countrydropdown", function () {
-          // triggered when the user closes the dropdown
-        });
-      });
-    }
-  });
-}
-
-if (phoneintl) {
-  phoneintl.forEach(function (e) {
-    const iti = intlTelInput(e, {
-      initialCountry: "fr",
-      autoPlaceholder: "polite",
-      utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
-    });
-
-    e.addEventListener("countrychange", function () {
-      // do something with iti.getSelectedCountryData()
-      console.log(iti.getSelectedCountryData().iso2);
-
-      var country = document.querySelector('[name="country"]');
-
-      if (country) {
-        country.value = iti.getSelectedCountryData().iso2.toUpperCase();
-        console.info(country.value);
       }
     });
+  }
 
-    e.addEventListener("open:countrydropdown", function () {
-      // triggered when the user opens the dropdown
-    });
+  if (phoneintl) {
+    phoneintl.forEach(function (e) {
+      const iti = intlTelInput(e, {
+        initialCountry: "fr",
+        autoPlaceholder: "polite",
+        utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+      });
 
-    e.addEventListener("close:countrydropdown", function () {
-      // triggered when the user closes the dropdown
+      e.addEventListener("countrychange", function () {
+        // do something with iti.getSelectedCountryData()
+        //   console.log(iti.getSelectedCountryData().iso2);
+
+        var country = document.querySelector('[name="country"]');
+
+        if (country) {
+          country.value = iti.getSelectedCountryData().iso2.toUpperCase();
+          // console.info(country.value);
+        }
+      });
+
+      e.addEventListener("open:countrydropdown", function () {
+        // triggered when the user opens the dropdown
+      });
+
+      e.addEventListener("close:countrydropdown", function () {
+        // triggered when the user closes the dropdown
+      });
     });
-  });
+  }
 }
+
+window.getPhoneintl = getPhoneintl();
+
+console.log(window);
 
 // const moment = require('moment');
 // import * as moment from 'moment';
@@ -472,8 +480,8 @@ document.body.addEventListener("showMessage", function (evt) {
     var contentRead = evt.detail.content;
     var content = "<ul>";
     Object.keys(contentRead).forEach((item) => {
-      console.log(item); // key
-      console.log(contentRead[item]); // value
+      //   console.log(item); // key
+      //   console.log(contentRead[item]); // value
       content += "<li>" + contentRead[item] + "</li>";
     });
     content += "</ul>";
@@ -561,16 +569,16 @@ window.addEventListener("offline", updateOnlineStatus);
 
 updateOnlineStatus({}); //set initial status
 
-// document.body.addEventListener("scripts", function(evt) {
-//     console.log(evt);
-//     Datepicker.locales.fr = LocaleFR.fr;
-//     document
-//         .querySelectorAll("[daterangepicker]")
-//         .forEach(function(datepickerEl) {
-//             var dateRangePicker = new DateRangePicker(datepickerEl, {
-//                 weekStart: 1,
-//                 language: "fr",
-//             });
-//             console.log(dateRangePicker);
-//         });
+// document.body.addEventListener("resetmodal", function (evt) {
+//   console.log(evt);
+//   console.log(evt.target);
+
+//   var allInputs = evt.target.querySelectorAll("input");
+//   console.log(allInputs);
+//   allInputs.forEach((singleInput) => (singleInput.value = ""));
+//   console.log(evt.target.querySelector("#alias"));
+//   console.log(evt.target.querySelector("#alias").value);
+//   evt.target.querySelector("#alias").value = "";
+
+//   //   evt.targe.input.value = "";
 // });

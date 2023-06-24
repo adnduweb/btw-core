@@ -11,7 +11,7 @@
         remove(notification) {
             this.notifications = this.notifications.filter(i => i.id !== notification.id)
         },
-    }" @notify.window="add($event)" class="fixed top-0 z-10 right-0 flex w-full max-w-lg flex-col space-y-4 pr-4 pb-4 sm:justify-start" role="status" aria-live="polite">
+    }" @notify.window="add($event)" class="fixed top-0 z-50 right-0 flex w-full max-w-lg flex-col space-y-4 pr-4 pb-4 sm:justify-start" role="status" aria-live="polite">
         <!-- Notification -->
         <template x-for="notification in notifications" :key="notification.id">
             <div x-data="{

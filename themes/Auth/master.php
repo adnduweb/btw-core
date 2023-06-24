@@ -1,11 +1,13 @@
 <!doctype html>
-<html lang="en"><head>
+<html dir="ltr" data-theme="retro" lang="<?= service('language')->getLocale(); ?>">
+    <head>
     <?= $viewMeta->render('title') ?>
     <?= csrf_meta() ?>
     <?= $viewMeta->render('meta') ?>
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
     <?= $viewJavascript->renderLangJson('admin/js/language/'.service('request')->getLocale().'.json'); ?>
+    <?=  vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
 </head>
 <body class="bg-gray-100">
 

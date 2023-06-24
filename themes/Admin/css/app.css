@@ -1002,3 +1002,6 @@ td.selection {
 .htmx-indicator {
   transition: opacity 300ms ease-in;
 }
+.iti{
+  @apply !block
+}
