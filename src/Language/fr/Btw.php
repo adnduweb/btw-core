@@ -19,7 +19,9 @@ return [
         'PasswordValidators' => 'Validateurs de mots de passe',
         'Email' => 'Email',
         'MailSettings' => 'Réglages des mails',
-        'OtherInformation' => 'Autres informations'
+        'OtherInformation' => 'Autres informations',
+        'listAddress' => 'Liste des adresses',
+        'listAllAdressCustomer' => 'Retrouvez toutes les adresses de ce client',
     ],
     'general' => [
         'settings' => 'réglages',
@@ -115,6 +117,7 @@ return [
     'name' => 'Role',
     'description' => 'description',
     'save' => 'Sauvegarder',
+    'close' => 'Fermer',
     'Dashboard' => 'Tableau de bord',
     'Logs' => 'Audits Logs',
     'systemLogs' => 'System Logs',
@@ -122,6 +125,7 @@ return [
     'active' => 'Activer', 
     'desactive' => 'Désactiver', 
     'search' => 'Rechercher', 
+    'AddAdresses' => 'Ajouter une adresse',
     
     'You are currently selecting' => 'Vous avez sélectionné',
     'rows' => 'ligne(s)', 

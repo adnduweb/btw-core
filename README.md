@@ -58,6 +58,8 @@ https://vemto.app/blog/how-to-create-an-image-upload-viewer-with-alpinejs
 https://alpinejs.dev/component/date-range-picker
 https://github.com/anggadarkprince/ci4-services
 https://codebase-frontend-library.github.io/codebase-4/docs/8-alpinejs-components/alpinejs-modals/
+https://dev.to/mithicher/color-picker-with-alpinejs-and-tailwindcss-1bnn
+https://www.raymondcamden.com/2022/07/29/building-related-selects-in-alpinejs -> selectbox/selectbox https://github.com/alpinejs/alpine/discussions/2865 - toasts
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604
@@ -68,6 +70,7 @@ https://pastebin.com/kupzmyx3 -> CRSF
 https://forum.codeigniter.com/showthread.php?tid=87720 -> envoi un mail aux nouveaux comptes
 https://forum.codeigniter.com/showthread.php?tid=87719 -> information supplémentaires (adresses)
 https://forum.codeigniter.com/showthread.php?tid=87702 -> Tableau des permissisons
+https://dev.to/mtownsend5512/creating-powerful-tabs-with-alpine-js-in-less-than-5-minutes-367d-> tabs ??? 
 
 ## Jointure
 

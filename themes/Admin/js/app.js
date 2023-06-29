@@ -13,6 +13,7 @@ window._ = _;
 import $ from "jquery";
 window.jQuery = window.$ = $;
 
+
 import intlTelInput from "intl-tel-input";
 window.intlTelInput = intlTelInput;
 import "intl-tel-input/build/css/intlTelInput.css";
@@ -20,29 +21,44 @@ import "intl-tel-input/build/css/intlTelInput.css";
 // const phoneintl = document.querySelectorAll(".phoneintl");
 // const country = document.querySelector('[name="country"]');
 
-function getPhoneintl() {
+export const SettingPhoneIntl = () => {
   const phoneintl = document.querySelectorAll(".phoneintl");
   const country = document.querySelector('[name="country"]');
+
   if (country) {
     country.addEventListener("change", function (e) {
-      console.info(country.value);
+      //console.info(country.value);
+      // iti.destroy();
 
       if (phoneintl) {
         phoneintl.forEach(function (e) {
-          const iti = intlTelInput(e, {
+          // iti.destroy();
+          var iti = intlTelInput(e, {
+            // separateDialCode: true,
             initialCountry: country.value,
-            autoPlaceholder: "polite",
-            utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+            allowDropdown: false,
+            localizedCountries: country.value,
+            autoPlaceholder: "aggressive",
+            placeholderNumberType: "FIXED_LINE",
+            nationalMode: false,
+
+            // utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+            utilsScript:
+              "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
           });
+
+          iti.setCountry(country.value);
 
           e.addEventListener("countrychange", function () {
             // do something with iti.getSelectedCountryData()
             //  console.log(iti.getSelectedCountryData().iso2);
+            // iti.selectCountry(country.value);
 
             var country = document.querySelector('[name="country"]');
 
             if (country) {
-              country.value = iti.getSelectedCountryData().iso2.toUpperCase();
+              // country.value = iti.getSelectedCountryData().iso2.toUpperCase();
+              country.value = iti.getSelectedCountryData().dialCode;
               /// console.info(country.value);
             }
           });
@@ -61,10 +77,18 @@ function getPhoneintl() {
 
   if (phoneintl) {
     phoneintl.forEach(function (e) {
-      const iti = intlTelInput(e, {
-        initialCountry: "fr",
-        autoPlaceholder: "polite",
-        utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+      var iti = intlTelInput(e, {
+        initialCountry: country.value ?? "US",
+        // separateDialCode: true,
+        allowDropdown: false,
+        localizedCountries: country.value,
+        autoPlaceholder: "aggressive",
+        placeholderNumberType: "FIXED_LINE",
+        nationalMode: false,
+
+        // utilsScript: "/intl-tel-input/js/utils.js?1684676252775",
+        utilsScript:
+          "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
       });
 
       e.addEventListener("countrychange", function () {
@@ -75,6 +99,7 @@ function getPhoneintl() {
 
         if (country) {
           country.value = iti.getSelectedCountryData().iso2.toUpperCase();
+          // console.info("fafa");
           // console.info(country.value);
         }
       });
@@ -87,12 +112,23 @@ function getPhoneintl() {
         // triggered when the user closes the dropdown
       });
     });
+
+    //   input.addEventListener('telchange', function(e) {
+    //     console.log(e.detail.valid); // Boolean: Validation status of the number
+    //     console.log(e.detail.validNumber); // Returns internationally formatted number if number is valid and empty string if invalid
+    //     console.log(e.detail.number); // Returns the user entered number, maybe auto-formatted internationally
+    //     console.log(e.detail.country); // Returns the phone country iso2
+    //     console.log(e.detail.countryName); // Returns the phone country name
+    //     console.log(e.detail.dialCode); // Returns the dial code
+    // });
   }
-}
+};
 
-window.getPhoneintl = getPhoneintl();
+export default SettingPhoneIntl;
 
-console.log(window);
+SettingPhoneIntl();
+
+// console.log(window);
 
 // const moment = require('moment');
 // import * as moment from 'moment';
@@ -436,11 +472,21 @@ DataTable.ext.renderer.pageButton.bootstrap = function (
 
 import "../js/ktapp.js";
 import "../js/util.js";
-import * as SetAlpine from "./alpine.js";
+import * as SetAlpine from "./Alpine.js";
 SetAlpine.SettingAlpine();
 
 Alpine.start();
 import "../js/htmx.js";
+
+import * as SetBVSelect from "./bvselect.js";
+SetBVSelect.SettingBVSelect();
+
+htmx.on("htmx:afterSettle", function (evt) {
+  SettingPhoneIntl();
+  SetBVSelect.SettingBVSelect();
+});
+
+
 
 /**
  * Select All checkbox for data tables
@@ -582,3 +628,32 @@ updateOnlineStatus({}); //set initial status
 
 //   //   evt.targe.input.value = "";
 // });
+
+function select2Alpine() {
+  this.select2 = $(this.$refs.select).select2();
+  this.select2.on("select2:select", (event) => {
+    this.selectedCity = event.target.value;
+  });
+  this.$watch("selectedCity", (value) => {
+    this.select2.val(value).trigger("change");
+  });
+}
+
+/***
+ * 
+ * Modal Delete
+ */
+
+window.dispatchEvent(
+	new CustomEvent('deletemodalcomponent', {detail: {
+    showDeleteModal : false,
+    title: "my-modal", 
+    message: "my-modal",
+     id: '8'}, 
+     'bubbles': true})
+  )
+
+  document.body.addEventListener("deletemodalcomponent", function (evt) {
+
+	// console.log(evt);
+  });

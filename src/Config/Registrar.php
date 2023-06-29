@@ -9,6 +9,7 @@ use Btw\Core\View\ShieldOAuth;
 use Btw\Core\View\Decorator;
 use Btw\Core\View\ErrorModalDecorator;
 use Btw\Core\Validation\UserRules;
+use Btw\Core\Validation\ExpressRules;
 use CodeIgniter\Shield\Authentication\Passwords\ValidationRules as PasswordRules;
 use CodeIgniter\Shield\Filters\ChainAuth;
 use Btw\Core\Filters\SessionAuthOverride;
@@ -73,6 +74,7 @@ class Registrar
             'ruleSets' => [
                 PasswordRules::class,
                 UserRules::class,
+                ExpressRules::class,
             ],
             'users' => [
                 'email'      => 'required|valid_email|unique_email[{id}]',

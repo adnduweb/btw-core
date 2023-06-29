@@ -890,15 +890,13 @@ htmx.defineExtension("reset-on-success", {
     if (event.detail.isError) return;
 
     const triggeringElt = event.detail.requestConfig.elt;
-    console.log(triggeringElt);
-    console.log("triggeringElt1");
+  
     if (
       !triggeringElt.closest('[hx-reset-on-success="true"]') &&
       !triggeringElt.closest("[data-hx-reset-on-success]")
     )
       return;
-    console.log("triggeringElt");
-    console.log(triggeringElt.tagName);
+
     switch (triggeringElt.tagName) {
       case "INPUT":
         triggeringElt.value = "";
@@ -920,15 +918,18 @@ htmx.on("htmx:afterSettle", function (evt) {
 	window.getPhoneintl;
 });
 
-document.body.addEventListener("resetmodal", function (event) {
-  htmx.on("htmx:afterRequest", function (evt) {
-    console.log(evt);
-    console.log(evt.detail);
+// document.body.addEventListener("resetmodal", function (event) {
+//   console.log(event);
+//   htmx.on("htmx:afterRequest", function (evt) {
+//     // console.log(evt);
+//     console.log('fafa');
+//      console.log(evt.detail);
+//      console.log('fafa2');
 
-    var allInputs = evt.target.querySelectorAll("input");
-    allInputs.forEach((singleInput) => (singleInput.value = ""));
-  });
-});
+//     var allInputs = evt.target.querySelectorAll("input.field");
+//     allInputs.forEach((singleInput) => (singleInput.value = ""));
+//   });
+// });
 
 //https://gist.github.com/kongondo/515b80d15f8034edeb686d46752df4ec
 
@@ -990,9 +991,25 @@ const UpdateProcessWireFrontendContentUsingHtmxDemo = {
 };
 
 htmx.onLoad(function(content) {
-	console.log(content);
-	console.log(window);
+	// console.log(content);
+	// console.log(window);
 });
+
+
+// API
+// htmx.logAll()
+// htmx.logError() // new method, default
+// htmx.logNone()
+
+// // htmx.js
+// if (htmx.logger && !ignoreEventForLogging(eventName)) {
+//     logDebug(elt, eventName, detail);
+// }
+// if (detail.error) {
+//     logError(detail.error);
+// }
+
+
 
 // htmx.logger = function(elt, event, data) {
 //     if(console) {

@@ -1,8 +1,9 @@
-<textarea id="<?= $params['name']; ?>" ci4:key="ckEditor" name="<?= $params['name']; ?>" x-data x-init="
-        ClassicEditor.create( document.querySelector('#<?= $params['name']; ?>'))
+<textarea id="<?= $params['name']; ?>"  x-data="{ value: '<?=  $params['value'] ; ?>' }" name="<?= $params['name']; ?>" x-init="
+        ClassicEditor.create( $refs.<?= $params['name']; ?> )
          .then( function( editor ){
                  editor.model.document.on( 'change:data', () => {
-                    $dispatch( 'input', editor.getData() )
+                    //$dispatch( 'input', editor.getData() )
+                    value = editor.getData();
                  });
                  // On reinit, destroy the old instance and create a new one
                  document.body.addEventListener('reinit', function (ev) {
@@ -13,10 +14,10 @@
                      .catch(error => {
                          console.log(error);
                      });
-                  ClassicEditor.create( document.querySelector('#<?= $params['name']; ?>'));
+                  ClassicEditor.create( $refs.<?= $params['name']; ?> );
              });
          })
          .catch( error => {
              console.error( error );
          } );
-     " x-ref="ckEditor" class="hidden"> <?=  $params['value'] ; ?></textarea>
+     " x-model="value"  x-ref="<?= $params['name']; ?>" class="hidden"> <?=  $params['value'] ; ?></textarea>

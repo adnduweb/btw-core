@@ -19,14 +19,14 @@
     <?= $viewJavascript->render(); ?>
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
 
-    <?=  vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
+    <?= vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
 
 </head>
 
 <!-- debug, loading-states, json-enc, event-header -->
 
 <body hx-ext="morph, ajax-header" hx-history="false" hx-headers='{"X-Theme": "admin"}'
-    class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false }" @keydown.escape="showModal = false">
+    class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false, showDeleteModal: false }" @keydown.escape="showModal = false">
 
     <!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
@@ -51,6 +51,7 @@
         <div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50"></div>
 
         <?= $this->renderSection('modals') ?>
+        <?= $this->include('components/modal-delete') ?>
 
         <!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
         <div class="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">
@@ -69,7 +70,8 @@
         <?= $this->include('_modalsLogout') ?>
 
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
         <script src="https://unpkg.com/hyperscript.org@0.9.8" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.3.x/dist/index.js"></script>

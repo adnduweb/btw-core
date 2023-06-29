@@ -104,7 +104,24 @@ return [
         'email' => 'Email',
         'typeCustomer' => 'Type de clients',
         'bio' => 'Biographie',
+        'lastname' => 'Nom',
+        'firstname' => 'Prénom',
 
+    ],
+    'address' => [
+        'address_principal' => 'Adresse principale',
+        'alias' => "Nom de l'adresse",
+        'address1' => 'Adresse',
+        'postcode' => 'Code postal',
+        'city' => 'Ville',
+        'company' => 'Société',
+        'vat_number' => 'TVA intra-communautaire',
+        'country' => 'Pays',
+        'phone' => 'Téléphone',
+        'phone_mobile' => 'Mobile'
+    ],
+    'modal' => [
+        'Ajouter/Modifier une adresse' => 'Ajouter/Modifier une adresse'
     ],
     'ShieldOAuthLang' => [
         'allow_login' => 'Autoriser la connexion',
