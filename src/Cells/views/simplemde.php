@@ -2,7 +2,7 @@
         value: '<?= $params['value']; ?>',
         init() {
 
-            let editor = new SimpleMDE({ element: this.$refs.editor })
+            let editor = new EasyMDE({ element: this.$refs.editor })
             editor.codemirror.refresh();
             editor.value(this.value)
  

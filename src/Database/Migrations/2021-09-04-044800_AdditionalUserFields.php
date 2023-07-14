@@ -35,6 +35,7 @@ class AdditionalUserFields extends Migration
             ],
             'email_verified_at' => [
                 'type' => 'datetime',
+                'after'      => 'photo_profile',
                 'null' => false,
             ]
         ]);

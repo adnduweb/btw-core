@@ -23,9 +23,9 @@ class InputCell
 
     public function renderList($params)
     {
-        if (!isset($params['label'])) {
-            throw new RuntimeException('You must provide the Filter view cell with the model to use.');
-        }
+        // if (!isset($params['label'])) {
+        //     throw new RuntimeException('You must provide the Filter view cell with the model to use.');
+        // }
 
         $this->min = (isset($params['min'])) ? 'min="' . $params['min'] : '';
         $this->step = (isset($params['step'])) ? 'step="' . $params['step'] : '';

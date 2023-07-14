@@ -118,6 +118,9 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     //Stats
     $routes->get('charts-hx', 'WidgetsController::chart_view_hx', ['as' => 'charts-hx']);
     $routes->get('charts-hx-update', 'WidgetsController::chart_view_hx_update', ['as' => 'charts-hx-update']);
+
+    $routes->post('system-auth-pass-modal', 'ProfileController::authPassModal', ['as' => 'system-auth-pass-modal']);
+    
     
 });
 

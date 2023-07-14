@@ -22,6 +22,8 @@ return [
         'OtherInformation' => 'Autres informations',
         'listAddress' => 'Liste des adresses',
         'listAllAdressCustomer' => 'Retrouvez toutes les adresses de ce client',
+        'listContact' => "Liste des contacts",
+        'listAllContactCustomer' => 'Retrouvez tous les contacts de ce client',
     ],
     'general' => [
         'settings' => 'réglages',
@@ -53,7 +55,8 @@ return [
         'resourcesUpdatedActive' => "Les {0} ont été mise à jour.",
         'resourcesUpdatedDesactive' => "Les {0} ont été mise à jour.",
         'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
-        'resourcesNotDeletedOnlyUser' => 'Vous ne pouvez pas supprimer votre propore compte'
+        'resourcesNotDeletedOnlyUser' => 'Vous ne pouvez pas supprimer votre propore compte',
+        'errorMdp' => 'Erreur de mot de passe'
         
     ],
     'sidebar' => [
@@ -126,6 +129,7 @@ return [
     'desactive' => 'Désactiver', 
     'search' => 'Rechercher', 
     'AddAdresses' => 'Ajouter une adresse',
+    'AddContact' => 'Ajouter un contact',
     
     'You are currently selecting' => 'Vous avez sélectionné',
     'rows' => 'ligne(s)', 

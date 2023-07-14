@@ -171,18 +171,21 @@ class PublicDisk implements FileSystem
             return false;
         }
 
+    //@todo Add image par defaut
+        if (empty($media->full_path))
+            return false;
+
         if (($fileName = @file_get_contents($media->full_path)) === FALSE)
             return false;
 
         $file = new \CodeIgniter\Files\File($media->full_path);
 
-        if(!empty($options) && is_array($options)){
-            if(isset($options['size'])){
+        if (!empty($options) && is_array($options)) {
+            if (isset($options['size'])) {
                 $sizeImg = config('storage')->sizeImg[$options['size']];
                 $new_file_url = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->file_url);
                 return $new_file_url;
             }
-
         }
 
         return $media->getFileUrl();

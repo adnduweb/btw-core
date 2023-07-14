@@ -81,6 +81,14 @@ module.exports = {
 			backgroundSize: {
 				full: "100%",
 			},
+			keyframes: {
+				buzz: {
+				  '0%': { transform: 'scale(.99)' },
+				  '25%': { transform: 'scale(1.01)' },
+				  '50%': { transform: 'scale(.99)' },
+				  '75%': { transform: 'scale(1.01)' },
+				},
+			  },
 		},
 		animation: {
 			none: 'none',
@@ -90,6 +98,7 @@ module.exports = {
 			bounce: 'bounce 1s infinite',
 			'slide-in-right': 'slide-in-right .3s ease-in',
 			'slide-in-left': 'slide-in-left .3s ease-in',
+			'buzz': 'buzz .2s ease-in-out',
 		  },
 		  aspectRatio: {
 			auto: 'auto',

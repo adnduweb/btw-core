@@ -662,7 +662,7 @@ if (!function_exists('buildPermissionsTable')) {
         ksort($grouped);
 
         // Now that we have the array, lets build the HTML table
-        foreach ($grouped as $key => $value):
+        foreach ($grouped as $key => $value) :
 
 
             $pTableBody .= PHP_EOL . '<tr>' . PHP_EOL;
@@ -713,5 +713,29 @@ if (!function_exists('passwdGen')) {
         {
             return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
         }
+    }
+}
+
+if (!function_exists('getExcerpt')) {
+    /**
+     * Get excerpt from string
+     *
+     * @param String $str String to get an excerpt from
+     * @param Integer $startPos Position int string to start excerpt from
+     * @param Integer $maxLength Maximum length the excerpt may be
+     * @return String excerpt
+     */
+    function getExcerpt($str, $startPos = 0, $maxLength = 100)
+    {
+        if (strlen($str) > $maxLength) {
+            $excerpt = substr($str, $startPos, $maxLength - 3);
+            $lastSpace = strrpos($excerpt, ' ');
+            $excerpt = substr($excerpt, 0, $lastSpace);
+            $excerpt .= '...';
+        } else {
+            $excerpt = $str;
+        }
+
+        return $excerpt;
     }
 }

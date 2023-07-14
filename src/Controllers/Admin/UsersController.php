@@ -495,12 +495,13 @@ class UsersController extends AdminController
             ksort($permissions);
         }
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
         return view($this->viewPrefix . 'cells\form_cell_capabilities_tr', [
             'permissions' => $permissions,
             'user' => $user,
             'menu' => service('menus')->menu('sidebar_user'),
             'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+        ]);
     }
 
 
@@ -537,20 +538,24 @@ class UsersController extends AdminController
         ]);
 
         if (!$validation->run($data)) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
+            $this->response->setReswap('innerHTML show:#general:top');
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Form validation failed.');
+            ]);
             ;
         }
 
         //On vérifie que le mote d epasse en cours est connu 
         $validCreds = auth()->check(['password' => $data['current_password'], 'email' => $user->email]);
         if (!$validCreds->isOK()) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.errorMdp', [lang('Btw.general.users')])]);
+            $this->response->setReswap('innerHTML show:#general:top');
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');
+            ]);
             ;
         }
 
@@ -566,9 +571,10 @@ class UsersController extends AdminController
             model(UserIdentityModel::class)->save($identity);
         }
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
         return view($this->viewPrefix . 'cells\form_cell_changepassword', [
             'user' => $user
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+        ]);
     }
 
 
@@ -599,9 +605,10 @@ class UsersController extends AdminController
         $context = 'user:' . $id;
         service('settings')->set('Auth.actions', $actions, $context);
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
         return view($this->viewPrefix . 'cells\form_cell_two_factor', [
             'user' => $user,
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+        ]);
     }
 
     public function history(int $id)

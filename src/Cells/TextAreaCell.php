@@ -142,15 +142,15 @@ class TextAreaCell
 
         switch ($this->wysiwyg) {
             case 'ckeditor':
-                $meta->addScript(['src' => 'https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js']);
+                // $meta->addScript(['src' => 'https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js']);
                 break;
             case 'quilljs':
                 $meta->addStyle(['rel' => 'stylesheet', 'href' => 'https://cdn.quilljs.com/1.3.6/quill.snow.css']);
                 $meta->addScript(['src' => 'https://cdn.quilljs.com/1.3.6/quill.js']);
                 break;
             case 'simplemde':
-                $meta->addStyle(['rel' => 'stylesheet', 'href' => 'https://cdn.jsdelivr.net/simplemde/1.11/simplemde.min.css']);
-                $meta->addScript(['src' => 'https://cdn.jsdelivr.net/simplemde/1.11/simplemde.min.js']);
+                 $meta->addStyle(['rel' => 'stylesheet', 'href' => 'https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css']);
+                // $meta->addScript(['src' => 'https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js']);
 
                 break;
             default:

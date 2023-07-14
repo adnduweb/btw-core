@@ -995,6 +995,11 @@ htmx.onLoad(function(content) {
 	// console.log(window);
 });
 
+   // activates any alpine directives in new content loaded by htmx
+//    htmx.onLoad((elt) => {
+//     Alpine.initTree(elt)
+// })
+
 
 // API
 // htmx.logAll()

@@ -128,7 +128,11 @@ trait ActivitysTrait
         }
 
         $activity = [
-            'source' => get_class($this),
+            'event_type' => 'query',
+            'event_access' => uri_string(),
+            'event_method' => request()->getMethod(),
+            'source' => '\\' .get_class($this),
+            'source_id' => $data['id'],
             'event' => 'delete',
             'summary' => ($data['purge']) ? 'purge' : 'soft',
             'properties' => json_encode($data),

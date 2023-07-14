@@ -171,7 +171,7 @@ export const SettingAlpine = () => {
         let todaylang = _LANG_.today;
         var yesterdaLang = _LANG_.yesterday;
 
-        console.log(todaylang);
+        // console.log(todaylang);
        
         $(this.$refs.picker).daterangepicker(
           {

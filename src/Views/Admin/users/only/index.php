@@ -118,7 +118,9 @@
                                     endif;
                                     echo "createdCell: function(td, cellData, rowData, row, col) {";
                                     if (!isset($column['notClick'])):
-                                        echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/users/edit/' + rowData.id + '/information\")');";
+                                        // echo "td.setAttribute('x-on:click', 'location.replace(\"/admin1198009422/users/edit/' + rowData.id + '/information\")');";
+                                        echo "td.setAttribute('hx-get', '/admin1198009422/users/edit/' + rowData.identifier + '/information');
+                                            td.setAttribute('hx-trigger', 'click');td.setAttribute('hx-target', 'body');td.setAttribute('hx-push-url', 'true');";
                                     endif;
                                     echo "}";
                                     echo "},";

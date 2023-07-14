@@ -21,8 +21,9 @@
                 <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
                     'label' => lang('Form.settings.RememberUsersForHowLong'),
                     'name' => 'rememberLength',
-                    'options' => $rememberOptions,
-                    'selected' =>  old('rememberLength', setting('Auth.sessionConfig')['rememberLength']),
+                    'options' => array_flip($rememberOptions),
+                    'byKey' => true,
+                    'selected' =>  old('rememberLength', setting('Auth.sessionConfig')['rememberLength']), 
                     'description' => lang('Form.settings.IfCheckedWillSendCodeViaEmail'),
                 ]); ?>
 

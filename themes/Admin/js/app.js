@@ -13,7 +13,6 @@ window._ = _;
 import $ from "jquery";
 window.jQuery = window.$ = $;
 
-
 import intlTelInput from "intl-tel-input";
 window.intlTelInput = intlTelInput;
 import "intl-tel-input/build/css/intlTelInput.css";
@@ -163,6 +162,12 @@ window.axios = axios;
 // daterangepicker
 import daterangepicker from "daterangepicker";
 window.daterangepicker = daterangepicker;
+
+import EasyMDE from "easymde";
+window.EasyMDE = EasyMDE;
+
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+window.ClassicEditor = ClassicEditor;
 
 import Alpine from "alpinejs";
 import persist from "@alpinejs/persist";
@@ -486,8 +491,6 @@ htmx.on("htmx:afterSettle", function (evt) {
   SetBVSelect.SettingBVSelect();
 });
 
-
-
 /**
  * Select All checkbox for data tables
  * using plain javascript
@@ -640,20 +643,48 @@ function select2Alpine() {
 }
 
 /***
- * 
+ *
  * Modal Delete
  */
 
 window.dispatchEvent(
-	new CustomEvent('deletemodalcomponent', {detail: {
-    showDeleteModal : false,
-    title: "my-modal", 
-    message: "my-modal",
-     id: '8'}, 
-     'bubbles': true})
-  )
+  new CustomEvent("deletemodalcomponent", {
+    detail: {
+      showDeleteModal: false,
+      title: "my-modal",
+      message: "my-modal",
+      id: "8",
+    },
+    bubbles: true,
+  })
+);
 
-  document.body.addEventListener("deletemodalcomponent", function (evt) {
+window.dispatchEvent(
+  new CustomEvent("authdisplaydatamodalcomponent", {
+    detail: {
+      showAuthDisplayDataModal: false,
+      title: "my-modal",
+      message: "my-modal",
+      id: "8",
+    },
+    bubbles: true,
+  })
+);
 
-	// console.log(evt);
-  });
+
+document.body.addEventListener("deletemodalcomponent", function (evt) {
+  // console.log(evt);
+});
+
+window.dispatchEvent(
+  new CustomEvent("modalcomponent", {
+    detail: {
+      showModal: false,
+    },
+    bubbles: true,
+  })
+);
+
+document.body.addEventListener("modalcomponent", function (evt) {
+  console.log(evt);
+});

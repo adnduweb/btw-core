@@ -7,7 +7,6 @@
                  });
                  // On reinit, destroy the old instance and create a new one
                  document.body.addEventListener('reinit', function (ev) {
-                 console.log('fafa');
                  console.log(ev);
                  editor.setData('');
                  editor.destroy()
@@ -20,4 +19,4 @@
          .catch( error => {
              console.error( error );
          } );
-     " x-model="value"  x-ref="<?= $params['name']; ?>" class="hidden"> <?=  $params['value'] ; ?></textarea>
+     " x-model="value"  x-ref="<?= $params['name']; ?>" class="hidden"><?=  $params['value'] ; ?></textarea>

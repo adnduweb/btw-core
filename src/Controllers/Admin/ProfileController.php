@@ -442,7 +442,7 @@ class ProfileController extends AdminController
 
     public function changeLangue()
     {
-        $context = 'user:' . user_id();
+        $context = 'user:' . user_id(); 
         service('settings')->set('Btw.language_bo', $this->request->getGet('changeLanguageBO'), $context);
         return redirect()->hxLocation(str_replace(base_url(), '', $this->request->getCurrentUrl()));
     }
@@ -460,6 +460,25 @@ class ProfileController extends AdminController
         }
 
         $this->response->triggerClientEvent('updateSidebarExpanded');
+    }
+
+
+    /**
+     * Déscative les informations sensible par le mot de passe
+     */
+    public function authPassModal(...$params){
+
+        $validCreds = auth()->check(['password' => request()->getPost('password'), 'email' => Auth()->user()->email]);
+        if (!$validCreds->isOK()) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.Erreur de mot de passe en cours')]);
+            $this->response->setReswap('none');
+            return;
+        }
+
+        session()->set(request()->getPost('module') . '_' . request()->getPost('identifier'), time());        
+        $this->response->triggerClientEvent(request()->getPost('actionHtmx'), time(), 'receive');
+        $this->response->setReswap('innerHTML show:#general:top');
+        $this->response->triggerClientEvent('closemodal');
     }
 
 

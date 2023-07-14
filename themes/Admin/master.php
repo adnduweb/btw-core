@@ -1,12 +1,9 @@
 <!doctype html>
-<html dir="ltr" data-theme="retro" lang="<?= service('language')->getLocale(); ?>"
-    class="h-full <?= detectBrowser(); ?>" x-cloak
-    x-data="{theme: localStorage.getItem('_X_theme') || localStorage.setItem('_X_theme', 'system')}"
-    x-init="$watch('theme', val => localStorage.setItem('_X_theme', val))"
-    x-bind:class="{'dark': theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
+<html dir="ltr" data-theme="retro" lang="<?= service('language')->getLocale(); ?>" class="h-full <?= detectBrowser(); ?>" x-cloak x-data="{theme: localStorage.getItem('_X_theme') || localStorage.setItem('_X_theme', 'system')}" x-init="$watch('theme', val => localStorage.setItem('_X_theme', val))" x-bind:class="{'dark': theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
 
 <head>
 
+    <meta name="htmx-config" content='{"historyCacheSize": 0, "refreshOnHistoryMiss": false}'>
     <?= $viewMeta->render('meta') ?>
     <?= $viewMeta->render('title') ?>
     <?= csrf_meta() ?>
@@ -21,24 +18,37 @@
 
     <?= vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
 
+    <style>
+        .htmx-indicator {
+            opacity: 0;
+            transition: opacity 500ms ease-in;
+        }
+
+        .htmx-request .htmx-indicator {
+            opacity: 1
+        }
+
+        .htmx-request.htmx-indicator {
+            opacity: 1
+        }
+    </style>
+
 </head>
 
 <!-- debug, loading-states, json-enc, event-header -->
 
-<body hx-ext="morph, ajax-header" hx-history="false" hx-headers='{"X-Theme": "admin"}'
-    class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false, showDeleteModal: false }" @keydown.escape="showModal = false">
+<body hx-ext="morph, ajax-header" hx-history="false" hx-headers='{"X-Theme": "admin"}' hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
 
-    <!-- Main content -->
+<!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
-        <div class="flex h-screen overflow-hidden bg-base-100"
-            x-data="{isSidebarExpanded: <?= (service('settings')->get('Btw.isSidebarExpanded', 'user:' . user_id()) == true) ? 'true' : 'false'; ?>}">
+        <div class="flex h-screen overflow-hidden bg-base-100" x-data="{isSidebarExpanded: <?= (service('settings')->get('Btw.isSidebarExpanded', 'user:' . user_id()) == true) ? 'true' : 'false'; ?>}">
 
             <x-sidebar />
 
             <div class="flex w-0 flex-1 flex-col overflow-hidden">
                 <?= $this->include('_header') ?>
 
-                <div class="progress">
+                <div id="progress" class="progress">
                     <div class="indeterminate"></div>
                 </div>
                 <main class="relative flex-1 overflow-y-auto px-4 md:px-8 py-6 dark:bg-gray-900">
@@ -52,14 +62,13 @@
 
         <?= $this->renderSection('modals') ?>
         <?= $this->include('components/modal-delete') ?>
+        <?= $this->include('components/modal-auth-display-data') ?>
 
         <!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
         <div class="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">
             <div>
-                <a title="Buy me a beer" href="#" target="_blank"
-                    class="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12">
-                    <img class="object-cover object-center w-full h-full rounded-full"
-                        src="https://i.pinimg.com/originals/60/fd/e8/60fde811b6be57094e0abc69d9c2622a.jpg" />
+                <a title="Buy me a beer" href="#" target="_blank" class="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12">
+                    <img class="object-cover object-center w-full h-full rounded-full" src="https://i.pinimg.com/originals/60/fd/e8/60fde811b6be57094e0abc69d9c2622a.jpg" />
                 </a>
             </div>
         </div>
@@ -70,8 +79,7 @@
         <?= $this->include('_modalsLogout') ?>
 
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
         <script src="https://unpkg.com/hyperscript.org@0.9.8" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.3.x/dist/index.js"></script>
