@@ -57,7 +57,7 @@
                                             'name' => $field['name'],
                                             'byKey' => $field['byKey'] ?? false,
                                             'options' => $field['items'],
-                                            'placeholder' => 'Type de client',
+                                            'placeholder' =>  $field['placeholder'] ?? 'Choisissez',
                                             'selected' => old($field['name'], 'prospects'),
                                             'ktData' => 'data-kt-datatable-filter-custom="' . $field['name'] . '" data-kt-datatable-filter'
                                         ]);

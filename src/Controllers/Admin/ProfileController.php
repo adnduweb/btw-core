@@ -83,8 +83,8 @@ class ProfileController extends AdminController
                                 'uploaded[photo]',
                                 'is_image[photo]',
                                 'mime_in[photo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
-                                'max_size[photo,1000]',
-                                'max_dims[photo,1024,768]',
+                                'max_size[photo,2000]',
+                                'max_dims[photo,2000,2000]',
                             ],
                         ],
                     ];

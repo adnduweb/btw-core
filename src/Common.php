@@ -739,3 +739,52 @@ if (!function_exists('getExcerpt')) {
         return $excerpt;
     }
 }
+
+if (!function_exists('addTime')) {
+    // $time - unix time or date in any format accepted by strtotime() e.g. 2020-02-29
+    // $days, $months, $years - values to add
+    // returns new date in format 2021-02-28
+    function addTime($time, $days, $months, $years)
+    {
+        // Convert unix time to date format
+        if (is_numeric($time)) {
+            $time = date('Y-m-d', $time);
+        }
+
+        try {
+            $date_time = new DateTime($time);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
+
+        if ($days) {
+            $date_time->add(new DateInterval('P' . $days . 'D'));
+        }
+
+        // Preserve day number
+        if ($months or $years) {
+            $old_day = $date_time->format('d');
+        }
+
+        if ($months) {
+            $date_time->add(new DateInterval('P' . $months . 'M'));
+        }
+
+        if ($years) {
+            $date_time->add(new DateInterval('P' . $years . 'Y'));
+        }
+
+        // Patch for adding months or years
+        if ($months or $years) {
+            $new_day = $date_time->format("d");
+
+            // The day is changed - set the last day of the previous month
+            if ($old_day != $new_day) {
+                $date_time->sub(new DateInterval('P' . $new_day . 'D'));
+            }
+        }
+        // You can chage returned format here
+        return $date_time->format('Y-m-d');
+    }
+}

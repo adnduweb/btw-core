@@ -5,7 +5,7 @@ namespace Btw\Core\Models;
 use Btw\Core\Entities\User;
 use CodeIgniter\Shield\Models\UserModel as ShieldUsers;
 use Faker\Generator;
-use Btw\Core\Traits\ActivitysTrait;
+use Btw\Core\Traits\ActivitiesTrait;
 
 /**
  * This User model is ready for your customization.
@@ -15,7 +15,7 @@ use Btw\Core\Traits\ActivitysTrait;
 class UserModel extends ShieldUsers
 {
 
-    use ActivitysTrait;
+    use ActivitiesTrait;
 	protected $afterInsert = ['activityInsert'];
 	protected $afterUpdate = ['activityUpdate'];
 	protected $afterDelete = ['activityDelete'];

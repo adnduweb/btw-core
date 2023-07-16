@@ -13,7 +13,7 @@
     <?= $viewMeta->render('style') ?>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-    <?= $viewJavascript->render(); ?>
+   
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
 
     <?= vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
@@ -37,7 +37,7 @@
 
 <!-- debug, loading-states, json-enc, event-header -->
 
-<body hx-ext="morph, ajax-header" hx-history="false" hx-headers='{"X-Theme": "admin"}' hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
+<body hx-ext="morph, ajax-header head-support" hx-history="false" hx-headers='{"X-Theme": "admin"}' hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
 
 <!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
@@ -78,6 +78,7 @@
 
         <?= $this->include('_modalsLogout') ?>
 
+        <?= $viewJavascript->render(); ?>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
         <script src="https://unpkg.com/hyperscript.org@0.9.8" crossorigin="anonymous"></script>

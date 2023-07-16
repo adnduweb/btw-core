@@ -88,7 +88,7 @@
                 'order': [
                     [1, 'asc']
                 ],
-                "pageLength": 10,
+                "pageLength": 50,
                 "lengthChange": true,
                 "stateSave": true,
                 'rows': {

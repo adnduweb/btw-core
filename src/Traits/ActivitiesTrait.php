@@ -5,7 +5,7 @@ namespace Btw\Core\Traits;
 use Btw\Core\Models\ActivityModel;
 
 // CLASS
-trait ActivitysTrait
+trait ActivitiesTrait
 {
     /**
      * Takes an array of model $returnTypes

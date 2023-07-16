@@ -82,7 +82,7 @@ class Activitys
     public function save(): self
     {
         $audits = new ActivityModel();
-        if (!preg_match('/(logs|sessions|visits|activity_log)/i', uri_string())) {
+        if (!preg_match('/(logs|sessions|visits|activity_log|css|js)/i', uri_string())) {
             $audits->insert([
                 'event_type' => 'access',
                 'event_access' => uri_string(),
