@@ -120,7 +120,18 @@
                                         break;
 
                                     default:
-                                    // silent;
+                                    ?>
+                                        <div
+                                            class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
+
+                                            <button type="button" class="w-full flex justify-start"
+                                                data-kt-datatable-action-custom="<?= $action; ?>">
+                                                <span>
+                                                    <?= lang('Btw.general.' . $action); ?>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <?php
                                 }
                                 ?>
 

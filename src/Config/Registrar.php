@@ -5,6 +5,7 @@ namespace Btw\Core\Config;
 use Btw\Core\Filters\Admin;
 use Btw\Core\Filters\Protect;
 use Btw\Core\Filters\VisitsFilter;
+use Btw\Core\Filters\BlockIpFilter;
 use Btw\Core\View\ShieldOAuth;
 use Btw\Core\View\Decorator;
 use Btw\Core\View\ErrorModalDecorator;
@@ -40,6 +41,7 @@ class Registrar
                 'admin'   => Admin::class,
                 'protect'   => Protect::class,
                 'visits' => VisitsFilter::class,
+                'blockIP' => BlockIpFilter::class,
             ],
             'globals' => [
                 // 'before' => [

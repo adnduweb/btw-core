@@ -9,7 +9,7 @@ $routes->get('attachments/(:any)', '\Btw\Core\Controllers\AssetController::rende
 
 
 // Authentication Routes that override Shield's
-$routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth'], static function ($routes) {
+$routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth', 'filter' => 'blockIP' ], static function ($routes) {
     $routes->get('register', 'RegisterController::registerView');
     $routes->post('register', 'RegisterController::registerAction');
     $routes->get('login', 'LoginController::loginView', ['as' => 'login']);
@@ -120,13 +120,10 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->get('charts-hx-update', 'WidgetsController::chart_view_hx_update', ['as' => 'charts-hx-update']);
 
     $routes->post('system-auth-pass-modal', 'ProfileController::authPassModal', ['as' => 'system-auth-pass-modal']);
-    
-    
 });
 
-
 // Clear cache
-$routes->get('/clear-cache', static function() {
+$routes->get('/clear-cache', static function () {
     command('Btwcache:clear');
     service('cache')->delete('twig');
     return "Cache is cleared";

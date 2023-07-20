@@ -1,5 +1,4 @@
 export const SettingAlpine = () => {
-
   //Prefix alpine special attributes to pass W3C validation
   // Alpine.prefix('data-x-')
   document.addEventListener("alpine:init", () => {
@@ -161,10 +160,9 @@ export const SettingAlpine = () => {
     }));
 
     Alpine.data("initDatePickerRange", () => ({
-      value: ["02/01/2022", "02/05/2022"],
-     
-      init() {
+      // value: ["02/01/2022", "02/05/2022"],
 
+      init() {
         // moment.locale('fr');
         // console.log(moment().format('MMMM Do YYYY, h:mm:ss a')); // works fine in here only
         // console.log(moment());
@@ -172,25 +170,26 @@ export const SettingAlpine = () => {
         var yesterdaLang = _LANG_.yesterday;
 
         // console.log(todaylang);
-       
+
         $(this.$refs.picker).daterangepicker(
           {
-            startDate: this.value[0],
-            endDate: this.value[1],
+            autoUpdateInput: $(this).attr('data-kt-datatable-autoupdateinput') ?? false,
+            // startDate: this.value[0],
+            // endDate: this.value[1],
             locale: {
-                applyLabel: _LANG_.appliquer,
-                format: moment.localeData().longDateFormat('L'),
-                cancelLabel: _LANG_.annuler,
-                weekLabel: 'W',
-                customRangeLabel: _LANG_.custom,
-                daysOfWeek: moment.weekdaysMin(),
-                monthNames: moment.monthsShort(),
-                firstDay: moment.localeData().firstDayOfWeek()
+              applyLabel: _LANG_.appliquer,
+              format: moment.localeData().longDateFormat("L"),
+              cancelLabel: _LANG_.annuler,
+              weekLabel: "W",
+              customRangeLabel: _LANG_.custom,
+              daysOfWeek: moment.weekdaysMin(),
+              monthNames: moment.monthsShort(),
+              firstDay: moment.localeData().firstDayOfWeek(),
             },
-          
+
             ranges: {
-                todaylang: [moment(), moment()],
-                yesterdaLang: [
+              todaylang: [moment(), moment()],
+              yesterdaLang: [
                 moment().subtract(1, "days"),
                 moment().subtract(1, "days"),
               ],
@@ -205,121 +204,120 @@ export const SettingAlpine = () => {
                 moment().subtract(1, "month").endOf("month"),
               ],
             },
-          },
-          (start, end) => {
-            this.value[0] = start.format("DD/MM/YYYY");
-            this.value[1] = end.format("DD/MM/YYYY");
           }
+          // (start, end) => {
+          //   this.value[0] = start.format("DD/MM/YYYY");
+          //   this.value[1] = end.format("DD/MM/YYYY");
+          // }
         );
 
-        this.$watch("value", () => {
-          $(this.$refs.picker)
-            .data("daterangepicker")
-            .setStartDate(this.value[0]);
-          $(this.$refs.picker)
-            .data("daterangepicker")
-            .setEndDate(this.value[1]);
-        });
+        // this.$watch("value", () => {
+        //   $(this.$refs.picker)
+        //     .data("daterangepicker")
+        //     .setStartDate(this.value[0]);
+        //   $(this.$refs.picker)
+        //     .data("daterangepicker")
+        //     .setEndDate(this.value[1]);
+        // });
       },
     }));
 
-
     Alpine.data("select", (config) => ({
-          data: config.data,
-          emptyOptionsMessage: config.emptyOptionsMessage ?? 'No results match your search.',
-          focusedOptionIndex: null,
-          name: config.name,
-          open: true,
-          options: {},
-          placeholder: config.placeholder ?? 'Select an option',
-          search: '',
-          value: config.value,
+      data: config.data,
+      emptyOptionsMessage:
+        config.emptyOptionsMessage ?? "No results match your search.",
+      focusedOptionIndex: null,
+      name: config.name,
+      open: true,
+      options: {},
+      placeholder: config.placeholder ?? "Select an option",
+      search: "",
+      value: config.value,
 
-          closeListbox: function () {
-              this.open = false
+      closeListbox: function () {
+        this.open = false;
 
-              this.focusedOptionIndex = null
+        this.focusedOptionIndex = null;
 
-              this.search = ''
-          },
+        this.search = "";
+      },
 
-          focusNextOption: function () {
-              if (this.focusedOptionIndex === null) return this.focusedOptionIndex = Object.keys(this.options).length - 1
+      focusNextOption: function () {
+        if (this.focusedOptionIndex === null)
+          return (this.focusedOptionIndex =
+            Object.keys(this.options).length - 1);
 
-              if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length) return
+        if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length)
+          return;
 
-              this.focusedOptionIndex++
+        this.focusedOptionIndex++;
 
-              this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
-                  block: "center",
-              })
-          },
+        this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+          block: "center",
+        });
+      },
 
-          focusPreviousOption: function () {
-              if (this.focusedOptionIndex === null) return this.focusedOptionIndex = 0
+      focusPreviousOption: function () {
+        if (this.focusedOptionIndex === null)
+          return (this.focusedOptionIndex = 0);
 
-              if (this.focusedOptionIndex <= 0) return
+        if (this.focusedOptionIndex <= 0) return;
 
-              this.focusedOptionIndex--
+        this.focusedOptionIndex--;
 
-              this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
-                  block: "center",
-              })
-          },
+        this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+          block: "center",
+        });
+      },
 
-          init: function () {
-              this.options = this.data
+      init: function () {
+        this.options = this.data;
 
-              if (!(this.value in this.options)) this.value = null
+        if (!(this.value in this.options)) this.value = null;
 
-              this.$watch('search', ((value) => {
-                  if (!this.open || !value) return this.options = this.data
+        this.$watch("search", (value) => {
+          if (!this.open || !value) return (this.options = this.data);
 
-                  this.options = Object.keys(this.data)
-                      .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
-                      .reduce((options, key) => {
-                          options[key] = this.data[key]
-                          return options
-                      }, {})
-              }))
-          },
+          this.options = Object.keys(this.data)
+            .filter((key) =>
+              this.data[key].toLowerCase().includes(value.toLowerCase())
+            )
+            .reduce((options, key) => {
+              options[key] = this.data[key];
+              return options;
+            }, {});
+        });
+      },
 
-          selectOption: function () {
-              if (!this.open) return this.toggleListboxVisibility()
+      selectOption: function () {
+        if (!this.open) return this.toggleListboxVisibility();
 
-              this.value = Object.keys(this.options)[this.focusedOptionIndex]
+        this.value = Object.keys(this.options)[this.focusedOptionIndex];
 
-              this.closeListbox()
-          },
+        this.closeListbox();
+      },
 
-          toggleListboxVisibility: function () {
-              if (this.open) return this.closeListbox()
+      toggleListboxVisibility: function () {
+        if (this.open) return this.closeListbox();
 
-              this.focusedOptionIndex = Object.keys(this.options).indexOf(this.value)
+        this.focusedOptionIndex = Object.keys(this.options).indexOf(this.value);
 
-              if (this.focusedOptionIndex < 0) this.focusedOptionIndex = 0
+        if (this.focusedOptionIndex < 0) this.focusedOptionIndex = 0;
 
-              this.open = true
+        this.open = true;
 
-              this.$nextTick(() => {
-                  this.$refs.search.focus()
+        this.$nextTick(() => {
+          this.$refs.search.focus();
 
-                  this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
-                      block: "center"
-                  })
-              })
-          },
-      
-  }));
-
-
-
-
+          this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+            block: "center",
+          });
+        });
+      },
+    }));
   });
-
 };
 export default SettingAlpine;
-
 
 // Alpine.morph(el, newHtml, {
 //     updating(el, toEl, childrenOnly, skip) {

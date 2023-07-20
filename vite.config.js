@@ -22,7 +22,8 @@ export default defineConfig(() => {
 				// 	util: `./${env.VITE_RESOURCES_DIR}/js/util.js`,
 				// 	app: `./${env.VITE_RESOURCES_DIR}/${env.VITE_ENTRY_FILE}`,
 				// }
-				input: `./${env.VITE_RESOURCES_DIR}/${env.VITE_ENTRY_FILE}`
+				input: `./${env.VITE_RESOURCES_DIR}/${env.VITE_ENTRY_FILE}`,
+				 jquery: "$"
 			},
 		},
 
@@ -36,6 +37,9 @@ export default defineConfig(() => {
 			alias: {
 				"@": path.resolve(__dirname, `./${env.VITE_RESOURCES_DIR}`),
 				'$': 'jQuery',
+				'$.fn': 'jQuery',
+				// moment: path.resolve(__dirname, 'node_modules/moment'),
+				daterangepicker: path.resolve(__dirname, 'node_modules/daterangepicker/daterangepicker.js'),
 			},
 		},
 	};

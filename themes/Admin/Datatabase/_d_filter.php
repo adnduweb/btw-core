@@ -30,7 +30,7 @@
                             </svg>
                         </div>
                         <input id="daterange" x-ref="picker" autocomplete="off" datepicker-format="dd/mm/yyyy"
-                            data-kt-datatable-filter-input data-kt-datatable-filter data-kt-datatable-filter-date="daterange"
+                            data-kt-datatable-filter-input data-kt-datatable-filter data-kt-datatable-filter-date="daterange" data-kt-datatable-autoupdateinput="false"
                             name="daterange" type="text"
                             class="daterange bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Select date start">
