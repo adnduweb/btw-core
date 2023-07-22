@@ -195,47 +195,6 @@ Alpine.plugin(
 );
 Alpine.plugin(collapse);
 
-// Datepicker
-// import Datepicker from "flowbite-datepicker/Datepicker";
-// import DateRangePicker from "flowbite-datepicker/DateRangePicker";
-// import LocaleFR from "../../../node_modules/flowbite-datepicker/js/i18n/locales/fr.js";
-// window.datepicker = Datepicker;
-// window.dateRangePicker = DateRangePicker;
-// window.LocaleFR = LocaleFR;
-
-// function dataPicker() {
-//     document.addEventListener("DOMContentLoaded", function() {
-//         // Datepicker.locales.fr = LocaleFR.fr;
-//         document
-//             .querySelectorAll("[daterangepicker]")
-//             .forEach(function(datepickerEl) {
-//                 // var dateRangePicker = new daterangepicker(datepickerEl, {
-//                 //     weekStart: 1,
-//                 //     language: "fr",
-//                 // });
-
-//                 console.log(datepickerEl);
-//                 console.log(datepickerEl.getAttribute('id'));
-
-//                 $('#' + datepickerEl.getAttribute('id')).daterangepicker({
-//                     timePicker: true,
-//                     startDate: moment().startOf("hour"),
-//                     endDate: moment().startOf("hour").add(32, "hour"),
-//                     locale: {
-//                         format: "M/DD hh:mm A"
-//                     }
-//                 });
-
-//             });
-//     });
-// }
-
-// dataPicker();
-// document.body.addEventListener('htmx:afterOnLoad', function(evt) {
-//     console.log('faf');
-//     dataPicker();
-// });
-
 // Datatables
 import Datatable from "datatables.net";
 window.datatable = Datatable;

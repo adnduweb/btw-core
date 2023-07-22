@@ -19,6 +19,7 @@ use CodeIgniter\Shield\Models\LoginModel;
 use Btw\Core\Models\SessionModel;
 use CodeIgniter\Shield\Models\UserIdentityModel;
 use ReflectionException;
+use Btw\Core\Libraries\WebSocket;
 
 
 class ProfileController extends AdminController
@@ -384,8 +385,7 @@ class ProfileController extends AdminController
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');
-            ;
+            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');;
         }
 
 
@@ -442,7 +442,7 @@ class ProfileController extends AdminController
 
     public function changeLangue()
     {
-        $context = 'user:' . user_id(); 
+        $context = 'user:' . user_id();
         service('settings')->set('Btw.language_bo', $this->request->getGet('changeLanguageBO'), $context);
         return redirect()->hxLocation(str_replace(base_url(), '', $this->request->getCurrentUrl()));
     }
@@ -466,7 +466,8 @@ class ProfileController extends AdminController
     /**
      * Déscative les informations sensible par le mot de passe
      */
-    public function authPassModal(...$params){
+    public function authPassModal(...$params)
+    {
 
         $validCreds = auth()->check(['password' => request()->getPost('password'), 'email' => Auth()->user()->email]);
         if (!$validCreds->isOK()) {
@@ -475,11 +476,181 @@ class ProfileController extends AdminController
             return;
         }
 
-        session()->set(request()->getPost('module') . '_' . request()->getPost('identifier'), time());        
+        session()->set(request()->getPost('module') . '_' . request()->getPost('identifier'), time());
         $this->response->triggerClientEvent(request()->getPost('actionHtmx'), time(), 'receive');
         $this->response->setReswap('innerHTML show:#general:top');
         $this->response->triggerClientEvent('closemodal');
     }
+
+    public function updateNotification()
+    {
+
+
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true
+        );
+        $pusher = new \Pusher\Pusher(
+            '5c03f2a7361ff4d0c885',
+            'ed1e434e50b9adedbddb',
+            '1639072',
+            $options
+        );
+
+        $data['message'] = 'hello worldzw';
+        $pusher->trigger('my-channel', 'my-event', $data);
+
+
+
+        // $server = \Ratchet\Server\IoServer::factory(
+        //     new \Ratchet\Http\HttpServer(
+        //         new \Ratchet\WebSocket\WsServer(
+        //             new WebSocket()
+        //         )
+        //     ),
+        //     8080
+        // );
+
+        // $server->run();
+    }
+
+    // $data = [
+    //             'message' => 'Message du serveur via SSE à ' . date('H:i:s')
+    //         ];
+
+    //         echo "data: " . json_encode($data) . "\n\n";
+
+    // header("Content-Type: text/event-stream");
+    // header("Cache-Control: no-cache");
+    // header("Connection: keep-alive");
+
+    // $counter = rand(1, 10); // a random counter
+
+    // while (1) { // 1 is always true, so repeat the while loop forever (aka event-loop)
+    //     $curDate = date(DATE_ISO8601);
+    //     echo "event: ping\n", 'data: {"time": "' . $curDate . '"}', "\n\n";
+
+    //     // Send a simple message at random intervals.
+    //     $counter--;
+
+    //     if (!$counter) {
+    //         echo 'data: This is a message at time ' . $curDate, "\n\n";
+    //         $counter = rand(1, 10); // reset random counter
+    //     }
+
+    //     // flush the output buffer and send echoed messages to the browser
+    //     while (ob_get_level() > 0) {
+    //         ob_end_flush();
+    //     }
+
+    //     flush();
+
+    //     // break the loop if the client aborted the connection (closed the page)
+    //     if (connection_aborted()) {
+    //         break;
+    //     }
+
+    //     // sleep for 1 second before running the loop again
+    //     sleep(1);
+    // }
+
+
+
+    // // Définit le type de contenu SSE
+    // header('Content-Type: text/event-stream');
+    // header('Cache-Control: no-cache');
+
+    // // Envoie un message toutes les 5 secondes
+    // while (true) {
+    //     $data = [
+    //         'message' => 'Message du serveur via SSE à ' . date('H:i:s')
+    //     ];
+
+    //     echo "data: " . json_encode($data) . "\n\n";
+    //     ob_flush();
+    //     flush();
+    //     sleep(5);
+    // }
+
+    //   // Empêcher la mise en cache de la réponse SSE
+    //   header('Cache-Control: no-cache');
+    //   header('Content-Type: text/event-stream');
+    //   header('Connection: keep-alive');
+    //   header('Access-Control-Allow-Origin: *');
+
+    //   // Initialiser le compteur
+    //   $counter = 0;
+
+    //   while (true) {
+    //       // Générer une nouvelle valeur pour le compteur
+    //       $counter++;
+
+    //       // Envoyer la mise à jour du compteur au client
+    //       echo "data: $counter\n\n";
+
+    //       // Forcer le vidage du tampon de sortie
+    //       ob_flush();
+    //       flush();
+
+    //       // Attendre 1 seconde avant d'envoyer la prochaine mise à jour
+    //       sleep(1);
+    //   }
+    // }
+
+
+    // header("Content-Type: text/event-stream");
+    // header("Cache-Control: no-cache");
+    // header("Connection: keep-alive");
+
+    // while (true) {
+    //     echo "id: 12" . PHP_EOL;
+    //     echo "event: time\n";
+    //     echo "data: " . date('F j, Y g:i:s A ', time()) . PHP_EOL;
+    //     echo PHP_EOL;
+
+    //     ob_flush();
+    //     flush();
+
+    //     if (connection_aborted()) break;
+
+    //     sleep(1);
+    // };
+
+    // header("Content-Type: text/event-stream");
+    // header("Cache-Control: no-cache");
+    // header("Connection: keep-alive");
+
+    // $counter = rand(1, 10); // a random counter
+
+    // while (1) { // 1 is always true, so repeat the while loop forever (aka event-loop)
+    // 	$curDate = date(DATE_ISO8601);
+    // 	echo "event: ping\n", 'data: {"time": "' . $curDate . '"}', "\n\n";
+
+    // 	// Send a simple message at random intervals.
+    // 	$counter--;
+
+    // 	if (!$counter) {
+    // 		echo 'data: This is a message at time ' . $curDate, "\n\n";
+    // 		$counter = rand(1, 10); // reset random counter
+    // 	}
+
+    // 	// flush the output buffer and send echoed messages to the browser
+    // 	while(ob_get_level() > 0) {
+    // 		ob_end_flush();
+    // 	}
+
+    // 	flush();
+
+    // 	// break the loop if the client aborted the connection (closed the page)
+    // 	if(connection_aborted()) {
+    // 		break;
+    // 	}
+
+    // 	// sleep for 1 second before running the loop again
+    // 	sleep(1);
+    // }
+
+    // }
 
 
 

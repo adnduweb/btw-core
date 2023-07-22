@@ -13,7 +13,7 @@
     <?= $viewMeta->render('style') ?>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-   
+
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
 
     <?= vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
@@ -33,13 +33,29 @@
         }
     </style>
 
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('5c03f2a7361ff4d0c885', {
+            cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            console.log(JSON.stringify(data));
+        });
+    </script>
+
+
 </head>
 
 <!-- debug, loading-states, json-enc, event-header -->
 
 <body hx-ext="morph, ajax-header head-support" hx-history="false" hx-headers='{"X-Theme": "admin"}' hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
 
-<!-- Main content -->
+    <!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
         <div class="flex h-screen overflow-hidden bg-base-100" x-data="{isSidebarExpanded: <?= (service('settings')->get('Btw.isSidebarExpanded', 'user:' . user_id()) == true) ? 'true' : 'false'; ?>}">
 
@@ -93,8 +109,6 @@
     <?= $this->renderSection('scripts') ?>
     <?= $viewMeta->render('script') ?>
     <?= $viewMeta->render('rawScripts') ?>
-
-
 </body>
 
 </html>

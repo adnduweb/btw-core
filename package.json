@@ -39,7 +39,7 @@
         "echarts": "^5.4.2",
         "flowbite": "^1.6.3",
         "flowbite-datepicker": "^1.2.2",
-        "htmx.org": "^1.9.2",
+        "htmx.org": "^1.9.3",
         "hyperscript.org": "^0.9.8",
         "intl-tel-input": "^18.1.6",
         "jquery": "^3.6.4",

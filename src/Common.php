@@ -788,3 +788,38 @@ if (!function_exists('addTime')) {
         return $date_time->format('Y-m-d');
     }
 }
+
+if (!function_exists('nameController')) {
+    function nameController()
+    {
+        $namespace = service('router')->controllerName();
+        $handle = explode('\\', $namespace);
+        $controller = end($handle);
+        $name = strtolower(str_replace('Controller', '', $controller));
+
+        return ucfirst($name);
+    }
+}
+
+
+if (!function_exists('getNameCustomer')) {
+    function getNameCustomer(int $customer_id)
+    {
+        $customer = model(CustomerModel::class)->find($customer_id);
+        if ($customer) {
+            return  $customer->lastname . ' ' . $customer->firstname;
+        }
+    }
+}
+
+
+
+if (!function_exists('getUUIDByID')) {
+    function getUUIDByID(int $id, object $models)
+    {
+        if (!$model = $models->select('uuid')->where('id', $id)->first()) {
+            throw new PageNotFoundException('Incorrect mdoel uuid.');
+        }
+        return $model->uuid;
+    }
+}

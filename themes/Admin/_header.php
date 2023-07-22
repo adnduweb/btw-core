@@ -37,7 +37,24 @@
                 <span class="sr-only">Open notification page</span>
                 <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"></path>
-                </svg> </a>
+                </svg>
+            </a>
+
+
+            <!-- <div hx-ext="ws, debug" hx-ws="connect:wss:<?= route_to('update-notification'); ?>">
+                <div id="notifications" hx-swap-oob="beforeend">
+                    New message received
+                </div>
+            </div> -->
+
+            <!-- <div hx-ext="ws,client-side-templates">
+                <div ws-connect="<?= route_to('update-notification'); ?>" hx-target="#content" nunjucks-template="my-template">
+                </div>
+                <p id="content"></p>
+            </div> -->
+
+
+
             <!-- Livewire Component wire-end:YJGIKTtJWEEA3jMOUSny -->
             <!-- Open ticket dropdown -->
             <div wire:id="1mN9D311seLziaeEf0XO">
@@ -130,7 +147,7 @@
             </div>
 
             <!-- Profile dropdown -->
-            <div class="ml-3 relative"  hx-boost="true">
+            <div class="ml-3 relative" hx-boost="true">
                 <div class="relative" x-data="{ openlangue: false }" @click.outside="openlangue = false" @close.stop="openlangue = false">
                     <div x-on:click="openlangue = ! openlangue" class="">
                         <button type="button" class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800" aria-expanded="false" aria-haspopup="true">
@@ -143,8 +160,7 @@
                     <div x-show="openlangue" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-50 my-2 w-48 rounded-md shadow-lg origin-top-right right-0 top-full" style="display: none;" @click="open = false">
                         <div class="rounded-md ring-1 ring-black ring-opacity-5 dark:ring-slate-600 py-1 bg-white dark:bg-slate-800">
                             <?php foreach (Config('Btw')->supportedLocales as $key => $lang) { ?>
-                                <a class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700 flex" 
-                                href="<?= route_to('user-profile-language') ?>?changeLanguageBO=<?= $lang['iso_code']; ?>">
+                                <a class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700 flex" href="<?= route_to('user-profile-language') ?>?changeLanguageBO=<?= $lang['iso_code']; ?>">
                                     <?= theme()->getSVG($lang['flag'], 'flex svg-icon mr-3 w-5 h-5 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800'); ?>
                                     <span class="ml-5"><?= lang($lang['name']); ?></span>
                                 </a>

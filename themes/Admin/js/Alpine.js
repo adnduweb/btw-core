@@ -160,7 +160,7 @@ export const SettingAlpine = () => {
     }));
 
     Alpine.data("initDatePickerRange", () => ({
-      // value: ["02/01/2022", "02/05/2022"],
+      value: [moment().subtract(1, "M"), moment()],
 
       init() {
         // moment.locale('fr');
@@ -173,9 +173,14 @@ export const SettingAlpine = () => {
 
         $(this.$refs.picker).daterangepicker(
           {
-            autoUpdateInput: $(this).attr('data-kt-datatable-autoupdateinput') ?? false,
-            // startDate: this.value[0],
-            // endDate: this.value[1],
+            minYear: parseInt(
+              moment().subtract(10, "years").format("YYYY"),
+              10
+            ),
+            maxYear: parseInt(moment().add(10, "years").format("YYYY"), 10),
+            autoUpdateInput: false,
+            startDate: this.value[0],
+            endDate: this.value[1],
             locale: {
               applyLabel: _LANG_.appliquer,
               format: moment.localeData().longDateFormat("L"),
@@ -204,34 +209,42 @@ export const SettingAlpine = () => {
                 moment().subtract(1, "month").endOf("month"),
               ],
             },
+          },
+          (start, end) => {
+            this.value[0] = start.format("DD/MM/YYYY");
+            this.value[1] = end.format("DD/MM/YYYY");
           }
-          // (start, end) => {
-          //   this.value[0] = start.format("DD/MM/YYYY");
-          //   this.value[1] = end.format("DD/MM/YYYY");
-          // }
         );
 
-        // this.$watch("value", () => {
-        //   $(this.$refs.picker)
-        //     .data("daterangepicker")
-        //     .setStartDate(this.value[0]);
-        //   $(this.$refs.picker)
-        //     .data("daterangepicker")
-        //     .setEndDate(this.value[1]);
-        // });
+        this.$watch("value", () => {
+          $(this.$refs.picker)
+            .data("daterangepicker")
+            .setStartDate(this.value[0]);
+          $(this.$refs.picker)
+            .data("daterangepicker")
+            .setEndDate(this.value[1]);
+        });
       },
     }));
 
     Alpine.data("select", (config) => ({
       data: config.data,
+
       emptyOptionsMessage:
         config.emptyOptionsMessage ?? "No results match your search.",
+
       focusedOptionIndex: null,
+
       name: config.name,
-      open: true,
+
+      open: false,
+
       options: {},
+
       placeholder: config.placeholder ?? "Select an option",
+
       search: "",
+
       value: config.value,
 
       closeListbox: function () {
@@ -310,7 +323,7 @@ export const SettingAlpine = () => {
           this.$refs.search.focus();
 
           this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
-            block: "center",
+            block: "nearest",
           });
         });
       },
