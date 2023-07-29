@@ -4,10 +4,6 @@
  * @var CodeIgniter\Router\RouteCollection $routes
  */
 
-$routes->get('assets/(:any)', '\Btw\Core\Controllers\AssetController::serve/$1');
-$routes->get('attachments/(:any)', '\Btw\Core\Controllers\AssetController::renderFile/$1');
-
-
 // Authentication Routes that override Shield's
 $routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth', 'filter' => 'blockIP' ], static function ($routes) {
     $routes->get('register', 'RegisterController::registerView');
@@ -63,8 +59,6 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->get('users/update/active/(:any)', 'UsersController::activeTable/$1', ['as' => 'user-active-table']);
     $routes->match(['get', 'post'], 'users/create/', 'UsersController::create', ['as' => 'user-only-create']);
 
-
-
     // User Current
     $routes->match(['get', 'post'], 'profile', 'ProfileController::editUserCurrent', ['as' => 'user-profile-settings']);
     $routes->post('profiles', 'ProfileController::save', ['as' => 'user-settings-save']);
@@ -80,7 +74,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->get('user/update/avatar', 'ProfileController::updateAvatar', ['as' => 'user-update-avatar']);
     $routes->get('user/update/language', 'ProfileController::changeLangue', ['as' => 'user-profile-language']);
     $routes->get('user/update/sidebar-expanded', 'ProfileController::changeSidebarExpanded', ['as' => 'user-profile-sidebarexpanded']);
-
+    $routes->match(['get', 'post'], 'company', 'ProfileController::company', ['as' => 'company-display']);
 
     // Files Logs
     $routes->get('logs/files/list', 'ActivityController::logsFile', ['as' => 'logs-file']);
@@ -126,6 +120,10 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->get('update-notification', 'ProfileController::updateNotification', ['as' => 'update-notification']);
 
 });
+
+$routes->setPrioritize();
+$routes->get('assets/(:any)', '\Btw\Core\Controllers\AssetController::serve/$1');
+$routes->get('attachments/(:any)', '\Btw\Core\Controllers\AssetController::renderFile/$1', ['priority' => 1]);
 
 // Clear cache
 $routes->get('/clear-cache', static function () {

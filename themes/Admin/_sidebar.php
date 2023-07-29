@@ -21,7 +21,7 @@
                 </div>
                 <div class="mt-5 flex-1 h-0 overflow-y-auto" x-data="{ expanded: false }">
                     <nav class="px-2 py-4">
-                        <a href="<?= route_to('dashboard'); ?>" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:bg-gray-700 hover:text-gray-900 ">
+                        <a href="<?= route_to('dashboard'); ?>" class="group flex items-center px-2 py-1 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:bg-gray-700 hover:text-gray-900 ">
                             <?= theme()->getSVG('duotune/graphs/gra008.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-gray-800 group-hover:text-slate-300', true); ?>
                             <span><?= lang('Btw.Dashboard'); ?></span>
                         </a>
@@ -43,7 +43,7 @@
 
                                             <?php foreach ($collection->items() as $item) : ?>
                                                 <?php if ($item->userCanSee()) : ?>
-                                                    <a class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
+                                                    <a class="group flex items-center px-2 py-1 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
                                                         <?= $item->icon ?>
                                                         <span><?= $item->title ?></span>
                                                     </a>
@@ -75,7 +75,7 @@
             </div>
             <div class="flex-1 flex flex-col overflow-y-auto dark:bg-slate-800 bg-white">
                 <nav class="flex-1 px-2 py-4 ">
-                    <a :class="isSidebarExpanded ? '' : 'justify-center'" href="<?= route_to('dashboard'); ?>" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:bg-gray-700 hover:text-gray-900 >">
+                    <a :class="isSidebarExpanded ? '' : 'justify-center'" href="<?= route_to('dashboard'); ?>" class="group flex items-center px-2 py-1 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:bg-gray-700 hover:text-gray-900 >">
                         <?= theme()->getSVG('duotune/graphs/gra008.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-gray-800 group-hover:text-slate-300', true); ?>
                         <span :class="isSidebarExpanded ? 'block' : 'hidden'"><?= lang('Btw.Dashboard'); ?></span>
                     </a>
@@ -98,7 +98,7 @@
 
                                         <?php foreach ($collection->items() as $item) : ?>
                                             <?php if ($item->userCanSee()) : ?>
-                                                <a :class="isSidebarExpanded ? '' : 'justify-center'" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
+                                                <a :class="isSidebarExpanded ? '' : 'justify-center'" class="group flex items-center px-2 py-1 text-sm font-medium rounded-md text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 <?= (in_array((string)$currentUrl, [$item->url])) ? "bg-blue-100 text-blue-700 dark:bg-slate-900" : ""; ?> <?= url_is($item->url . '*') ? 'active' : '' ?>" href="<?= $item->url ?>">
                                                     <?= $item->icon ?>
                                                     <span :class="isSidebarExpanded ? 'block' : 'hidden'"><?= $item->title ?></span>
                                                 </a>

@@ -332,7 +332,7 @@ class UsersController extends AdminController
         $users = new UserModel();
         $user = new User();
 
-        $rules = config('Users')->validation;
+        $rules = config('Users')->validation; 
         $rules['currentGroup'] = 'required';
         $rules['new_password'] = 'required|strong_password';
         $rules['pass_confirm'] = 'required|matches[new_password]';
@@ -343,7 +343,7 @@ class UsersController extends AdminController
 
             // if (!$validation->run($data)) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
-            $this->response->setReswap('innerHTML show:#general:top');
+            $this->response->setReswap('innerHTML show:#createcustomer:top');
             return view($this->viewPrefix . 'cells\form_cell_create', [
                 'validation' => $validation,
                 'groups' => setting('AuthGroups.groups')

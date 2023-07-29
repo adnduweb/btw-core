@@ -27,6 +27,10 @@ class SelectCell
     protected $hxSwap;
     protected $ktData;
     protected $placeholder;
+    protected $classError = 'border-transparent';
+    protected $key;
+    protected $val;
+        protected $required;
 
     /**
      * A view cell that displays the list of available filters.
@@ -56,47 +60,57 @@ class SelectCell
         $this->label = (isset($params['label'])) ? $params['label'] : false;
         $this->ktData = (isset($params['ktData'])) ? $params['ktData'] : false;
         $this->placeholder = (isset($params['placeholder'])) ? $params['placeholder'] : null;
+        $this->key = (isset($params['key'])) ? $params['key'] : null;
+        $this->val = (isset($params['val'])) ? $params['val'] : null;
+         $this->required = (isset($params['required'])) ? 'required' : '';
 
 
+        if (isset($params['lang']) && $params['lang'] == true) {
+            if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))) :
+                $this->classError = "border-red-500 focus:border-red-500";
+            endif;
+        } else {
+            if (service('validation')->hasError($params['name'])) :
+                $this->classError = "border-red-500 focus:border-red-500";
+            endif;
+        }
 
         $html = "";
+        $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
         if ($this->label == true)
-            $html = '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . '</label>';
-        $html .= '<select name="' . $params['name'] . '" class="' . $this->class . ' appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150" 
+            $html = '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . ' ' . $required . ' </label>';
+        $html .= '<select name="' . $params['name'] . '" class="' . $this->class . ' appearance-none block px-4 py-3 w-full rounded-md bg-gray-100  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150 ' . $this->classError . '"  
         ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxTarget . '  ' . $this->hxInclude . '  ' . $this->hxTrigger . '  ' . $this->hxSwap . ' ' . $this->ktData . ' data-kt-form-select >';
         $i = 0;
-        $placeHoler = $this->placeholder ?? lang('Form.general.choisissezVotreValeur'); 
-        $html .= '<option value="0">' . $placeHoler . '</option>';
+        $placeHoler = $this->placeholder ?? lang('Form.general.choisissezVotreValeur');
+        $html .= '<option value="">' . $placeHoler . '</option>';
 
-        if (isset($params['options']) && count($params['options'])):
+        if (isset($params['options']) && count($params['options'])) :
 
-            foreach ($params['options'] as $key => $val):
+            foreach ($params['options'] as $key => $val) :
                 $apinejs = isset($params['alpinejs']) ? $params['alpinejs'][$i] : '';
-
-                // if(!isset($params['byKey']) || $params['byKey'] == false ){
-                //     $newSelected =  $val;
-                // }else{
-                //     $newSelected = $key;
-                // }
-
-                //  var_dump($params['selected']); exit;
-
-
 
                 if (!isset($params['byKey']) || $params['byKey'] == false) {
                     $value = isset($val['name']) ? $val['name'] : $val;
                     $newSelected = ($params['selected'] === $value) ? ' selected="selected" ' : '';
                     $valueOption = $value;
                 } else {
-                    $value = isset($val['name']) ? $val['name'] : $val;
-                    $newSelected = ((!empty($params['selected'])) && $params['selected'] == $key) ? ' selected="selected" ' : '';
-                    $newSelected = (empty($params['selected']) && $params['default'] ==  $key) ? ' selected="selected" ' : $newSelected;
-                    $valueOption = $key;
+                    if (!is_null($this->val) && !is_null($this->key)) {
+                        $value = isset($val[$this->val]) ? $val[$this->val] : $val;
+                        $newSelected = ((!empty($params['selected'])) && $params['selected'] == $val[$this->key]) ? ' selected="selected" ' : '';
+                        $valueOption = $val[$this->key];
+                    } else {
+                        $value = isset($val['name']) ? $val['name'] : $val;
+                        $newSelected = ((!empty($params['selected'])) && $params['selected'] == $key) ? ' selected="selected" ' : '';
+                        if (isset($params['default'])) {
+                            $newSelected = (empty($params['selected']) && $params['default'] ==  $key) ? ' selected="selected" ' : $newSelected;
+                        }
+                        $valueOption = $key;
+                    }
                 }
 
-                
+
                 $html .= '<option value="' . $valueOption . '" ' . $apinejs . ' ' . $newSelected . '>';
-                // $html .= !isset($params['byKey']) || $params['byKey'] == false ? $key : ucfirst($val);
                 $html .= ucfirst($value);
                 $html .= '</option>';
                 $i++;
@@ -113,16 +127,16 @@ class SelectCell
         $html = '';
         if (isset($params['lang']) && $params['lang'] == true) {
 
-            if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))):
+            if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))) :
                 // print_r($params['validation']); exit;
                 $html = '<div class="invalid-feedback block text-red-600 text-sm">';
                 $html .= service('validation')->getError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']));
                 $html .= '</div>';
             endif;
         } else {
-            if (service('validation')->hasError(uniforme($params['name']))):
+            if (service('validation')->hasError($params['name'])) :
                 $html = '<div class="invalid-feedback block text-red-600 text-sm">';
-                $html .= service('validation')->getError(uniforme($params['name']));
+                $html .= service('validation')->getError($params['name']);
                 $html .= '</div>';
             endif;
         }

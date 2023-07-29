@@ -20,6 +20,8 @@ namespace Btw\Core\Libraries\Menus;
  * @property string $iconUrl
  * @property string $title
  * @property string $url
+ * @property string $bg
+ * @property string $target
  * @property int    $weight
  */
 class MenuItem
@@ -40,6 +42,16 @@ class MenuItem
      * @var string|null
      */
     protected $url;
+
+     /**
+     * @var string|null
+     */
+    protected $bg = 'gray';
+
+     /**
+     * @var string|null
+     */
+    protected $target;
 
     /**
      * @var string|null
@@ -118,13 +130,33 @@ class MenuItem
         if (!is_array($alias))
             $alias = [$alias];
 
-            // echo '!---';
-            // print_r($alias[1]);
-            // echo '---!';
-
-
         $this->url = (isset($alias[1]) && !empty($alias[1])) ? route_to($alias[0], $alias[1]) : route_to($alias[0]);
-       //$this->url = route_to($alias[0]);
+
+        return $this;
+    }
+
+    /**
+     * Set Bg div
+     *
+     * @return $this
+     */
+    public function setBg($alias)
+    {
+
+        $this->bg = (isset($alias) && !empty($alias)) ? $alias : '';
+
+        return $this;
+    }
+
+    /**
+     * Set Bg div
+     *
+     * @return $this
+     */
+    public function setTarget($alias)
+    {
+
+        $this->target = (isset($alias) && !empty($alias)) ? 'target="' . $alias . '"' : '';
 
         return $this;
     }
@@ -173,7 +205,7 @@ class MenuItem
         return $this->title;
     }
 
-     /**
+    /**
      * @return string
      */
     public function color()
@@ -187,6 +219,22 @@ class MenuItem
     public function url()
     {
         return $this->url;
+    }
+
+      /**
+     * @return string
+     */
+    public function bg()
+    {
+        return $this->bg;
+    }
+
+      /**
+     * @return string
+     */
+    public function target()
+    {
+        return $this->target;
     }
 
     /**

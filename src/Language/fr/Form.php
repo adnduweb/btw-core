@@ -118,7 +118,10 @@ return [
         'vat_number' => 'TVA intra-communautaire',
         'country' => 'Pays',
         'phone' => 'Téléphone',
-        'phone_mobile' => 'Mobile'
+        'phone_mobile' => 'Mobile',
+        'lastname' => 'Nom',
+        'siret' => 'Siret',
+        'ape' => 'Code ape'
     ],
     'modal' => [
         'Ajouter/Modifier une adresse' => 'Ajouter/Modifier une adresse'

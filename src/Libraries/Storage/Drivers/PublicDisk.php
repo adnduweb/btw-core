@@ -78,11 +78,11 @@ class PublicDisk implements FileSystem
             $fileType = $content->getMimeType();
             $fileSize = $content->getSize();
         }
+        $companyPdf = $options['company_pdf'] ?? '';
 
         $this->makeDirectory($this->basePath . $path);
 
         $result = $content->move($this->basePath . $path, $fileName, $overwrite);
-
 
         // Diffrente taille
         if ($sizeImg = config('storage')->sizeImg) {
@@ -94,7 +94,11 @@ class PublicDisk implements FileSystem
             }
         }
 
-
+        if ($companyPdf) {
+            service('image')->withFile($this->basePath . $path . $fileName)
+                ->fit(250, 200, 'center')
+                ->save(ROOTPATH . 'public/logo-company' . $fileName);
+        }
 
         if ($result) {
             $mode = $options['mode'] ?? $this->mode;
@@ -103,7 +107,7 @@ class PublicDisk implements FileSystem
 
         if ($result !== false) {
             $data = [
-                'id' => '2',
+                // 'id' => '2',
                 'disk' => $this->disk,
                 'type' => $fileType,
                 'size' => $fileSize,
@@ -121,7 +125,6 @@ class PublicDisk implements FileSystem
                 // return redirect()->back()->withInput()->with('errors', model(MediaModel::class)->errors());
                 throw new RuntimeException('Cannot get the pending login User.');
             }
-
 
 
             return $mediaId;
@@ -171,7 +174,7 @@ class PublicDisk implements FileSystem
             return false;
         }
 
-    //@todo Add image par defaut
+        //@todo Add image par defaut
         if (empty($media->full_path))
             return false;
 
@@ -189,6 +192,34 @@ class PublicDisk implements FileSystem
         }
 
         return $media->getFileUrl();
+    }
+
+    public function getFileBaseUrl($idFile, $options = [])
+    {
+
+        if (is_null($idFile))
+            return false;
+
+        $media = model(MediaModel::class)->find($idFile);
+
+        if ($media === false) {
+            return false;
+        }
+
+        // echo 'fgsfdgsdf'; exit;
+
+        //@todo Add image par defaut
+        if (empty($media->full_path))
+            return false;
+
+        if (($fileName = @file_get_contents($media->full_path)) === FALSE)
+            return false;
+
+        $file = new \CodeIgniter\Files\File($media->full_path);
+
+        if ($file) {
+            return ROOTPATH . 'public/logo-company' . $media->file_name;
+        }
     }
 
     /**

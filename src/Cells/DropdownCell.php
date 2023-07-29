@@ -17,21 +17,21 @@ class DropdownCell
 {
 
     protected $options;
-    protected $xOnClick;
     protected $class;
     protected $label;
-    protected $xChange;
-    protected $hxGet;
-    protected $hxTarget;
-    protected $hxInclude;
-    protected $hxTrigger;
-    protected $hxSwap;
     protected $ktData;
     protected $placeholder;
     protected $dataSelect;
     protected $identifier;
     protected $valueSelect;
     protected $value;
+    protected $name;
+    protected $classError = 'border-transparent';
+    protected $key;
+    protected $val;
+    protected $addButton;
+     protected $required;
+
 
     /**
      * A view cell that displays the list of available filters.
@@ -46,17 +46,7 @@ class DropdownCell
             throw new RuntimeException('You must provide the Select view cell with the options to use.');
         }
 
-        if (!isset($params['value'])) {
-            throw new RuntimeException('You must provide the Select view cell with the selected to use.');
-        }
-
-        $this->xOnClick = (isset($params['xOnClick'])) ? 'x-on:click="' . $params['xOnClick'] . '"' : false;
-        $this->xChange = (isset($params['change'])) ? '@change="' . $params['change'] . '"' : false;
-        $this->hxGet = (isset($params['hxGet'])) ? 'hx-get="' . $params['hxGet'] . '"' : false;
-        $this->hxTarget = (isset($params['hxTarget'])) ? 'hx-target="' . $params['hxTarget'] . '"' : false;
-        $this->hxInclude = (isset($params['hxInclude'])) ? 'hx-include="' . $params['hxInclude'] . '"' : false;
-        $this->hxTrigger = (isset($params['hxTrigger'])) ? 'hx-trigger="' . $params['hxTrigger'] . '"' : false;
-        $this->hxSwap = (isset($params['hxSwap'])) ? 'hx-swap="' . $params['hxSwap'] . '"' : false;
+      
         $this->class = (isset($params['class'])) ? $params['class'] : false;
         $this->label = (isset($params['label'])) ? $params['label'] : false;
         $this->ktData = (isset($params['ktData'])) ? $params['ktData'] : false;
@@ -65,60 +55,70 @@ class DropdownCell
         $this->identifier = (isset($params['identifier'])) ? $params['identifier'] : null;
         $this->valueSelect = (isset($params['valueSelect'])) ? $params['valueSelect'] : null;
         $this->value = (isset($params['value'])) ? $params['value'] : null;
+        $this->name = (isset($params['name'])) ? $params['name'] : null;
+        $this->key = (isset($params['key'])) ? $params['key'] : null;
+        $this->val = (isset($params['val'])) ? $params['val'] : null;
+        $this->addButton = (isset($params['addButton'])) ? $params['addButton'] : null;
+         $this->required = (isset($params['required'])) ? 'required' : '';
         
 
-        // print_r($this->options); exit;
-        // print_r(end($this->options)); exit;
 
-        if (!empty($this->options)) {
-            foreach ($this->options as $option) {
-                $this->dataSelect .= "'" . str_replace('-', '_', $option->{$this->identifier}) . "': '" . $option->{$this->valueSelect} . "'";
-                $this->dataSelect .= ", ";
-            }
+        if (isset($params['lang']) && $params['lang'] == true) {
+            if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))) :
+                $this->classError = "border-red-500 focus:border-red-500";
+            endif;
+        } else {
+            if (service('validation')->hasError($params['name'])) :
+                $this->classError = "border-red-500 focus:border-red-500";
+            endif;
         }
-        $this->dataSelect = substr($this->dataSelect,0,-2);
-        $this->value = str_replace('-', '_', $this->value);
-
-        // au: 'Australia', be: 'Belgium', cn: 'China', fr: 'France', de: 'Germany', it: 'Italy', mx: 'Mexico', es: 'Spain', tr: 'Turkey', gb: 'United Kingdom', 'us': 'United States'
-        // print_r($this->dataSelect); exit;
-
 
         $html = "";
+        $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
+        $html .= "<div x-data=\"initSelect2Alpine()\" x-init=\"init()\">";
         if ($this->label == true)
-            $html = '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . '</label>';
-        $html .= "<div x-data=\"select({ data: { " . $this->dataSelect . " }, emptyOptionsMessage: 'No countries match your search.', name: 'country', placeholder: 'Select a country' })\" x-init=\"init()\" @click.away=\"closeListbox()\" @keydown.escape=\"closeListbox()\" class=\"relative\">
-                <span class=\"inline-block w-full rounded-md shadow-sm\">
-                    <button type=\"button\" x-ref=\"button\" @click=\"toggleListboxVisibility()\" :aria-expanded=\"open\" aria-haspopup=\"listbox\" class=\"relative z-0 w-full py-2 pl-3 pr-10 text-left transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md cursor-default focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5\">
-                        <span x-show=\"! open\" x-text=\"'".$this->value."' in options ? options['".$this->value."'] : placeholder\" :class=\"{ 'text-gray-500': ! (value in options) }\" class=\"block truncate\"></span>
+            $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . '  ' . $required . ' ' .  $this->addButton . '</label>';
+        $html .= '<select data-allow-clear="true" data-hide-search="false" x-ref="select" data-placeholder="' . $this->placeholder . '" name="' . $params['name'] . '" class="' . $this->class . ' kt-select2 appearance-none block px-4 py-3 w-full rounded-md bg-gray-100  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150 ' . $this->classError . '"  
+        ' . $this->ktData . ' data-kt-form-select >';
+        $i = 0;
+        $placeHoler = $this->placeholder ?? lang('Form.general.choisissezVotreValeur');
+        $html .= '<option value="">' . $placeHoler . '</option>';
 
-                        <input x-ref=\"search\" x-show=\"open\" x-model=\"search\" name=\"country\" :value=\"value\" @keydown.enter.stop.prevent=\"selectOption()\" @keydown.arrow-up.prevent=\"focusPreviousOption()\" @keydown.arrow-down.prevent=\"focusNextOption()\" type=\"search\" class=\"w-full h-full form-control focus:outline-none\" />
+        //print_r($params['options']);exit;
 
-                        <span class=\"absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none\">
-                            <svg class=\"w-5 h-5 text-gray-400\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\">
-                                <path d=\"M7 7l3-3 3 3m0 6l-3 3-3-3\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>
-                            </svg>
-                        </span>
-                    </button>
-                </span>
+        if (isset($params['options']) && count($params['options'])) :
 
-                <div x-show=\"open\" x-transition:leave=\"transition ease-in duration-100\" x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\" x-cloak class=\"absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg\">
-                    <ul x-ref=\"listbox\" @keydown.enter.stop.prevent=\"selectOption()\" @keydown.arrow-up.prevent=\"focusPreviousOption()\" @keydown.arrow-down.prevent=\"focusNextOption()\" role=\"listbox\" :aria-activedescendant=\"focusedOptionIndex ? name + 'Option' + focusedOptionIndex : null\" tabindex=\"-1\" class=\"py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-60 focus:outline-none sm:text-sm sm:leading-5\">
-                        <template x-for=\"(key, index) in Object.keys(options)\" :key=\"index\">
-                            <li :id=\"name + 'Option' + focusedOptionIndex\" @click=\"selectOption()\" @mouseenter=\"focusedOptionIndex = index\" @mouseleave=\"focusedOptionIndex = null\" role=\"option\" :aria-selected=\"focusedOptionIndex === index\" :class=\"{ 'text-white bg-indigo-600': index === focusedOptionIndex, 'text-gray-900': index !== focusedOptionIndex }\" class=\"relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9\">
-                                <span x-text=\"Object.values(options)[index]\" :class=\"{ 'font-semibold': index === focusedOptionIndex, 'font-normal': index !== focusedOptionIndex }\" class=\"block font-normal truncate\"></span>
+            foreach ($params['options'] as $key => $val) :
+            
+                // Not key
+                if (!isset($params['byKey']) || $params['byKey'] == false) {
+                    $value = isset($val['nameoption']) ? $val['nameoption'] : $val;
+                    $newSelected = ($params['selected'] === $value) ? ' selected="selected" ' : '';
+                    $valueOption = $value;
+                } else {
+                    // Par key
+                    if (!is_null($this->val) && !is_null($this->key)) {
+                        $value = isset($val[$this->val]) ? $val[$this->val] : $val;
+                        $newSelected = ((!empty($params['selected'])) && $params['selected'] == $val[$this->key]) ? ' selected="selected" ' : '';
+                        $valueOption = $val[$this->key];
+                    } else {
+                        $value = isset($val[$this->val]) ? $val[$this->val] : $val;
+                        $newSelected = ((!empty($params['selected'])) && $params['selected'] == $key) ? ' selected="selected" ' : '';
+                        $newSelected = (empty($params['selected']) && $params['default'] ==  $key) ? ' selected="selected" ' : $newSelected;
+                        $valueOption = $key;
+                    }
+                }
 
-                                <span x-show=\"key === value\" :class=\"{ 'text-white': index === focusedOptionIndex, 'text-indigo-600': index !== focusedOptionIndex }\" class=\"absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600\">
-                                    <svg class=\"w-5 h-5\" viewBox=\"0 0 20 20\" fill=\"currentColor\">
-                                        <path fill-rule=\"evenodd\" d=\"M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z\" clip-rule=\"evenodd\" />
-                                    </svg>
-                                </span>
-                            </li>
-                        </template>
 
-                        <div x-show=\"! Object.keys(options).length\" x-text=\"emptyOptionsMessage\" class=\"px-3 py-2 text-gray-900 cursor-default select-none\"></div>
-                    </ul>
-                </div>";
+                $html .= '<option value="' . $valueOption . '" ' . $newSelected . '>';
+                $html .= ucfirst($value);
+                $html .= '</option>';
+                $i++;
+            endforeach;
+        endif;
+        $html .= '</select>';
         $html .= $this->getValidation($params);
+        $html .= '</div>';
         return $html;
     }
 

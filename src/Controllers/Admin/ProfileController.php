@@ -15,6 +15,8 @@ use Btw\Core\Controllers\AdminController;
 use Btw\Core\Libraries\Menus\MenuItem;
 use Btw\Core\Entities\User;
 use Btw\Core\Models\UserModel;
+use Btw\Core\Entities\Company;
+use Btw\Core\Models\CompanyModel;
 use CodeIgniter\Shield\Models\LoginModel;
 use Btw\Core\Models\SessionModel;
 use CodeIgniter\Shield\Models\UserIdentityModel;
@@ -439,6 +441,87 @@ class ProfileController extends AdminController
         ]);
     }
 
+    /**
+     * Display Company
+     */
+    public function company()
+    {
+
+        $companies = model(CompanyModel::class);
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+
+        if ($user === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user']));
+        }
+
+        $company = $companies->find(Auth()->user()->company_id);
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'profile_company', [
+                'user' => $user,
+                'company' => $company,
+                'menu' => service('menus')->menu('sidebar_user_profile'),
+                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            ]);
+        }
+
+        $data = $this->request->getPost();
+        $company->fill($data);
+
+        $file = $this->request->getFile('photo') ?? null;
+        if ($file) {
+
+            $validationRule = [
+                'photo' => [
+                    'label' => 'Image File',
+                    'rules' => [
+                        'uploaded[photo]',
+                        'is_image[photo]',
+                        'mime_in[photo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
+                        'max_size[photo,2000]',
+                        'max_dims[photo,2000,2000]',
+                    ],
+                ],
+            ];
+            if (!$this->validate($validationRule)) {
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $this->validator->getErrors()]);
+                $this->response->setReswap('innerHTML show:#general:top');
+                return view($this->viewPrefix . 'cells\form_cell_company', [
+                    'user' => $user,
+                    'company' => $company,
+                ]);
+            }
+
+
+            $storage = service('storage');
+            $result = $storage->store($file, 'attachments/' . date('Y/m'), ['company_pdf' => true]);
+            $company->logo = $result;
+        }
+
+
+       
+      
+        // Try saving basic details
+        try {
+            if (!$companies->save($company, true)) {
+                log_message('error', 'Company errors', $companies->errors());
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $companies->errors()]);
+            }
+        } catch (\Exception $e) {
+            log_message('debug', 'SAVING Company: ' . $e->getMessage());
+        }
+
+
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
+        return view($this->viewPrefix . 'cells\form_cell_company', [
+            'user' => $user,
+            'company' => $company,
+        ]);
+    }
+
 
     public function changeLangue()
     {
@@ -724,13 +807,25 @@ class ProfileController extends AdminController
         ]);
         $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
 
+        if (Auth()->user()->main_account == true) {
+            $item = new MenuItem([
+                'title' => lang('Btw.sidebar.company'),
+                'namedRoute' => 'company-display',
+                'fontIconSvg' => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+                'permission' => 'admin.view.profile',
+                'weight' => 5
+            ]);
+            $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
+        }
+
+
         $item = new MenuItem([
             'title' => 'Delete',
             'namedRoute' => 'settings-email',
             'fontIconSvg' => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 text-red-800', true),
             'permission' => 'admin.view.profile',
             'color' => 'text-red-800',
-            'weight' => 5
+            'weight' => 6
         ]);
         $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
     }

@@ -8,32 +8,21 @@ use RuntimeException;
 class SwitchCell
 {
     protected $label;
-
     protected $name;
-
     protected $value;
-
     protected $checkedNew;
-
     protected $xOnClick;
-
     protected $xChange;
-
     protected $xInput;
-
     protected $class;
-
     protected $xOn;
-
     protected $xNotData;
-
     /** HTMX get */
     protected $hxGet;
-
     /** HTMX swap */
     protected $hxSwap;
-
     protected $disabled;
+      protected $required;
 
     public function renderList($params)
     {
@@ -64,6 +53,7 @@ class SwitchCell
         $this->hxSwap = (isset($params['hxSwap'])) ? 'hx-swap="' . $params['hxSwap'] . '"' : '';
         $this->disabled = (isset($params['disabled']) && $params['disabled'] == true) ? 'disabled="disabled"' : false;
         $disabledClass = (isset($params['disabled']) && $params['disabled'] == true) ? 'bg-gray-100 dark:bg-gray-300' : 'bg-gray-400 dark:bg-gray-700';
+         $this->required = (isset($params['required'])) ? 'required' : '';
 
         $html .= '<div class="flex items-center ' . $this->class . '">';
         $html .= '<button ' . $this->disabled . ' type="button" class="button-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-100" ' . $this->xNotData . '  role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \' ' . $disabledClass . ' \': ' . $this->xOn . ',\'bg-slate-100\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxSwap . ' >';
@@ -97,8 +87,9 @@ class SwitchCell
     public function getLabel($params)
     {
         $html = "";
-        $html .= '<label @click="$refs.toggle.click(); $refs.toggle.focus()" :id="$id(\'toggle-label\')" class="text-gray-900 dark:text-white font-medium ml-3">';
-        $html .= $params['label'];
+         $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
+        $html .= '<label @click="$refs.toggle.click(); $refs.toggle.focus()" :id="$id(\'toggle-label\')" class="text-sm text-gray-900 dark:text-white font-medium ml-3">';
+        $html .= $params['label'] . ' ' .  $required;
         $html .= '</label>';
 
         return $html;

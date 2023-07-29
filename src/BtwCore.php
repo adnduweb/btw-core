@@ -134,7 +134,6 @@ class BtwCore
         // Top "icon" menu for notifications, account, etc.
         $menus->createMenu('iconbar');
 
-        // print_r($menus); exit;
     }
 
 
@@ -152,8 +151,6 @@ class BtwCore
 
         $map = directory_map(VENDORPATH . 'adnduweb', 1);
 
-        //    print_r($map); exit;
-
         foreach ($map as $row) {
             if (substr($row, -1) !== DIRECTORY_SEPARATOR) {
                 continue;
@@ -164,9 +161,6 @@ class BtwCore
                 continue;
             }
 
-            // echo $name; exit;
-
-            // $modules["Btw\\{$name}"] = __DIR__ . "/{$name}";
             $key = str_replace('btw-', '', $name);
             if ($key == 'core')
                 $modules["btw\Core"] = VENDORPATH . "adnduweb/{$name}/src";
@@ -175,9 +169,7 @@ class BtwCore
         }
 
         cache()->save('btw-modules-search', $modules);
-        // }
-
-        //  print_r($modules); exit;
+ 
 
         // save instances of our module configs
         foreach ($modules as $namespace => $dir) {
@@ -222,8 +214,6 @@ class BtwCore
                     if (in_array($name, $excluded, true)) {
                         continue;
                     }
-
-                    // $modules["{$namespace}\\{$name}"] = "{$dir}/{$name}";
 
                     $key = str_replace('btw-', '', $name);
                     if ($key == 'core')

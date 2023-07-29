@@ -818,8 +818,38 @@ if (!function_exists('getUUIDByID')) {
     function getUUIDByID(int $id, object $models)
     {
         if (!$model = $models->select('uuid')->where('id', $id)->first()) {
-            throw new PageNotFoundException('Incorrect mdoel uuid.');
+            throw new \Exception('Incorrect model uuid.');
         }
         return $model->uuid;
+    }
+}
+
+if (!function_exists('getIDByUUID')) {
+    function getIDByUUID(string $uuid, object $models, $sep = '-')
+    {
+        if ($sep != '-')
+            $uuid = str_replace($sep, '-', $uuid);
+        if (!$model = $models->select('id')->where('uuid', $uuid)->first()) {
+            throw new \Exception('Incorrect model id.');
+        }
+        return $model->getIdentifier();
+    }
+}
+
+
+if (!function_exists('formatLanguage')) {
+    function formatLanguage(DateTime $dt, string $format, string $language = 'en')
+    {
+        // format the date according to your preferences
+        // the 3 params are [ DateTime object, ICU date scheme, string locale ]
+        $dateFormatted =
+            IntlDateFormatter::formatObject(
+                $dt,
+                $format, //'eee d MMMM y à HH:mm',
+                $language
+            );
+
+        // test :
+        echo ucwords($dateFormatted);
     }
 }

@@ -239,7 +239,7 @@ class GroupsController extends AdminController
     public function toggle(string $perm)
     {
 
-        $data = $this->request->getPost();
+        $data = $this->request->getRawInput();
 
         $groups = new Groups();
         $group  = $groups->info($data['alias']);
@@ -249,7 +249,7 @@ class GroupsController extends AdminController
 
         if (isset($data['permissions']) && !is_array($data['permissions']))
             $data['permissions'] = [$data['permissions']];
-
+            
         $group->setPermissions($data['permissions'] ?? []);
 
 
@@ -260,6 +260,8 @@ class GroupsController extends AdminController
 
         $matrix = setting('AuthGroups.matrix');
 
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', ['groups'])]);
+
         return view($this->viewPrefix . 'cells\form_cell_capabilities_row', [
             'alias' => $data['alias'],
             'permission'   => $perm,
@@ -267,7 +269,7 @@ class GroupsController extends AdminController
             'matrix' => array_flip($matrix[$data['alias']]),
             'menu' => service('menus')->menu('sidebar_user_current'),
             'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
-        ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['groups']));
+        ]);
     }
 
     /**

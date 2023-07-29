@@ -15,8 +15,9 @@
     <div class="card-toolbar-only">
 
         <!--begin::Toolbar-->
-        <div class="d-flex justify-content-end" data-kt-datatable-toolbar="only">
+        <div class="flex flex-row-reverse" data-kt-datatable-toolbar="only" hx-boost="true">
 
+            <?= (isset($settings)) ? $this->setData($settings)->include('Themes\Admin\Datatabase\_b_settings') : ''; ?>
             <?= (isset($add)) ? $this->setData($add)->include('Themes\Admin\Datatabase\_b_add') : ''; ?>
 
             <?= (isset($filter)) ? $this->include('Themes\Admin\Datatabase\_b_filter') : ''; ?>

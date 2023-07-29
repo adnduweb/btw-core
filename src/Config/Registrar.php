@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Btw\Core\Config;
 
 use Btw\Core\Filters\Admin;
@@ -159,6 +161,6 @@ class Registrar
 
 
 // This is hacky but will ensure all
-// Bonfire namespaces have been registered
+// BTW namespaces have been registered
 // with the system and are found automatically.
 Registrar::registerNamespaces();

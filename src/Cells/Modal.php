@@ -24,6 +24,8 @@ class Modal
             throw new RuntimeException('You must provide the Filter view cell with the model to use.');
         }
 
+        // print_r($params); exit;
+
         return view('Btw\Core\Cells\views\modal', ['params' => $params]);
        
     }

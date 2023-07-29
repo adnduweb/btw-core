@@ -25,11 +25,8 @@ class MediaSeeder extends Seeder
 		}
 
 		service('settings')->set('Storage.perPage', 8);
-
 		service('settings')->set('Storage.filesFormat', 'cards');
-
 		service('settings')->set('Storage.filesSort', 'filename');
-
 		service('settings')->set('Storage.filesOrder', 'asc');
 	}
 }

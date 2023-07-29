@@ -60,6 +60,7 @@ return [
         
     ],
     'sidebar' => [
+        'general' => 'Général',
         'LoginAndRegistration' => 'Connexion et enregistrement',
         'passwords' => 'Mots de passe',
         'update' => 'Mise à jour',

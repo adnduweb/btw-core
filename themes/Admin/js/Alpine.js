@@ -159,6 +159,19 @@ export const SettingAlpine = () => {
       },
     }));
 
+    Alpine.data("initSelect2Alpine", () => ({
+      selectedCity: "",
+      init() {
+        this.select2 = $(this.$refs.select).select2();
+        this.select2.on("select2:select", (event) => {
+          this.selectedCity = event.target.value;
+        });
+        this.$watch("selectedCity", (value) => {
+          this.select2.val(value).trigger("change");
+        });
+      },
+    }));
+
     Alpine.data("initDatePickerRange", () => ({
       value: [moment().subtract(1, "M"), moment()],
 

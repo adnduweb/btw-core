@@ -5,7 +5,7 @@
             <div x-cloak x-show="<?= $params['type']; ?>" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity backdrop-blur-sm bg-gray-500 bg-opacity-40" aria-hidden="true">
             </div>
 
-            <div x-cloak x-show="<?= $params['type']; ?>" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block w-full max-w-xl my-20 text-left transition-all transform bg-white dark:bg-gray-800 rounded-lg shadow-xl 2xl:max-w-2xl" x-on:click.outside="$el.classList.add('animate-buzz'); setTimeout(() => $el.classList.remove('animate-buzz'), 500)" data-loading-states>
+            <div x-cloak x-show="<?= $params['type']; ?>" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block w-full  my-20 text-left transition-all transform bg-white dark:bg-gray-800 rounded-lg shadow-xl <?= isset($params['containerFull'] ) ? 'max-w-7xl'  : 'max-w-2xl' ; ?>" x-on:click.outside="$el.classList.add('animate-buzz'); setTimeout(() => $el.classList.remove('animate-buzz'), 500)" data-loading-states>
                 <div class="flex items-center justify-between space-x-4  p-8 bg-gray-50 rounded-t-md">
                     <h1 class="text-xl font-medium text-gray-800 ">
                         <?= $params['title']; ?>
@@ -18,11 +18,10 @@
                     </button>
                 </div>
 
-                <div id="<?= $params['identifier']; ?>" hx-trigger="load">
-                    <?= $params['view']; ?>
+                <div id="<?= $params['identifier']; ?>" class="<?= $params['identifier']; ?>" hx-trigger="load">
+                    <?= view($params['view'], $params); ?>
                 </div>
 
-                <?= form_close(); ?>
             </div>
         </div>
     </div>

@@ -95,10 +95,8 @@ class AssetController extends Controller
             ->setContentType($mimeType)
             ->setBody($fileName)
             ->send();
+       // print_r($segments); exit;
 
-
-        print_r($segments); exit;
     }
-       
-
+    
 }

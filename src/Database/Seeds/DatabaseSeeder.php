@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
         
         $this->call('Btw\Core\Database\Seeds\BtwSeeder');
         $this->call('Btw\Core\Database\Seeds\MediaSeeder');
+        $this->call('Btw\Core\Database\Seeds\CurrenciesSeeder');
+        $this->call('Btw\Core\Database\Seeds\TaxesSeeder');        
+        $this->call('Btw\Core\Database\Seeds\CompanySeeder');    
 
     }
 }
