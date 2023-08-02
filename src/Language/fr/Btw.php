@@ -69,6 +69,7 @@ return [
         'TwoFactoAuthentification' => 'Authentification à deux facteurs', 
         'historyLogin' => 'Historique de connexion',
         'historyBrowser' => 'Navigateur session',
+        'company' => "Entreprise",
     ],
     'users' => [
         'addUser' => 'Créer un utilisateur',

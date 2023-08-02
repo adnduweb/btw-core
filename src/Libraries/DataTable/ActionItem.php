@@ -49,6 +49,16 @@ class ActionItem
 
     protected $actionsAllFalse = [];
 
+    /**
+     * @var array|null
+     */
+    protected $custom = [];
+
+    /**
+     * @var string|null
+     */
+    protected $module;
+
 
     public function __construct(?array $actions = null, ?object $objectRows = null)
     {
@@ -58,10 +68,16 @@ class ActionItem
         }
 
         foreach ($actions as $key) {
-            $method = 'set' . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->{$method}($key, $objectRows);
+            if (!is_array($key)) {
+                $method = 'set' . ucfirst($key);
+                if (method_exists($this, $method)) {
+                    $this->{$method}($key, $objectRows);
+                }
             }
+        }
+
+        if (isset($actions['custom'])) {
+            $this->setCustom($actions['custom'], $objectRows);
         }
     }
 
@@ -153,6 +169,41 @@ class ActionItem
     }
 
     /**
+     * @return $this
+     */
+    public function setCustom(array $custom, object $objectRows)
+    {
+
+        if (!auth()->user()->can(self::getController() . '.edit')) {
+            $this->custom = true;
+        }
+
+        if (!is_array($custom))
+            return false;
+
+            foreach($custom as $cus){
+
+                $this->custom['list'][] = $cus;
+                
+            }
+
+            $handle = explode('\\', get_class($objectRows));
+            $this->custom['module'] = $this->module = end($handle);
+
+
+        // print_r($this->custom);
+        // print_r($objectRows);
+        // exit;
+        // $this->custom = true;
+
+        if (get_class($objectRows) == 'Btw\Core\Entities\User' && (auth()->user()->inGroup('admin') && $objectRows->inGroup('superadmin'))) {
+            $this->actionsAllFalse['custom'] =  $this->custom = false;
+        }
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function edit()
@@ -182,6 +233,14 @@ class ActionItem
     public function desactive()
     {
         return $this->desactive;
+    }
+
+     /**
+     * @return array
+     */
+    public function custom()
+    {
+        return $this->custom;
     }
 
     public function __get(string $key)

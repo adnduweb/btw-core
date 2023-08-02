@@ -115,7 +115,7 @@ class ProfileController extends AdminController
                 $validation->setRules([
                     'email' => 'required|valid_email|unique_email[' . auth()->id() . ']',
                     'first_name' => 'permit_empty|string|min_length[3]',
-                    'last_name' => 'permit_empty|string|min_length[3]',
+                    'last_name' => 'permit_empty|string|min_length[3]', 
                 ]);
 
                 if (!$validation->run($data)) {

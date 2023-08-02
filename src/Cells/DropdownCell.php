@@ -84,13 +84,12 @@ class DropdownCell
         $placeHoler = $this->placeholder ?? lang('Form.general.choisissezVotreValeur');
         $html .= '<option value="">' . $placeHoler . '</option>';
 
-        //print_r($params['options']);exit;
 
         if (isset($params['options']) && count($params['options'])) :
 
             foreach ($params['options'] as $key => $val) :
             
-                // Not key
+                // Not key 
                 if (!isset($params['byKey']) || $params['byKey'] == false) {
                     $value = isset($val['nameoption']) ? $val['nameoption'] : $val;
                     $newSelected = ($params['selected'] === $value) ? ' selected="selected" ' : '';

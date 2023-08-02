@@ -81,5 +81,8 @@ class Btw extends BaseConfig
 
     public array $cellsDashboard = [
         'Btw\Core\Controllers\Admin\WidgetsController::chart_view_hx'
+
     ];
+    
+    public array $cellsearch = [];
 }

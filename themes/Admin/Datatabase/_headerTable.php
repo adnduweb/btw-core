@@ -3,7 +3,7 @@
     <div class="flex-1 pr-4">
         <!--begin::Search-->
         <div class="relative md:w-1/3">
-            <input type="text" data-kt-datatable-filter="search" class="w-full pl-10 pr-4 py-2 border-gray-300 dark:border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 dark:text-gray-400 dark:bg-gray-700 font-medium" placeholder="<?= lang('Btw.search'); ?>" aria-label="Search" aria-describedby="button-addon1" />
+            <input type="search" data-kt-datatable-filter="search" class="w-full pl-10 pr-4 py-2 border-gray-300 dark:border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 dark:text-gray-400 dark:bg-gray-700 font-medium" placeholder="<?= lang('Btw.search'); ?>" aria-label="Search" aria-describedby="button-addon1" />
             <div class="absolute top-0 left-0 inline-flex items-center p-2">
                 <?= service('theme')->getSVG('duotone/General/Search.svg', "svg-icon svg-icon-1 position-absolute ms-2"); ?>
             </div>

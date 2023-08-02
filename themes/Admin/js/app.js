@@ -647,3 +647,9 @@ window.dispatchEvent(
 document.body.addEventListener("modalcomponent", function(evt) {
     console.log(evt);
 });
+
+document.getElementById('search-field').addEventListener('keypress', function(event) {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+    }
+});

@@ -46,6 +46,10 @@
         channel.bind('my-event', function(data) {
             console.log(JSON.stringify(data));
         });
+
+        // document.addEventListener('htmx:configRequest', (event) => {
+        //     event.detail.headers['X-CSRFToken'] = '<?= csrf_hash(); ?>';
+        // })
     </script>
 
 

@@ -60,8 +60,8 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
+        <div class="flex flex-wrap -mx-3 mb-2">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
                 <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
                     'type' => 'email',
@@ -70,7 +70,14 @@
                     'value' => old('email', $userCurrent->email),
                     'description' => lang('Form.users.TheUsersWillHaveToRverifyTheirEmailAddress')
                 ]); ?>
-
+            </div>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                    'type' => 'text',
+                    'label' => lang('Form.users.currency'),
+                    'name' => 'currency',
+                    'value' => old('currency', setting('Site.currency')),
+                ]); ?>
             </div>
         </div>
 

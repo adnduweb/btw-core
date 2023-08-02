@@ -16,20 +16,18 @@
         </button>
     </header>
     <div class="flex-1 px-4 flex justify-between">
-        <div class="flex-1 flex">
-            <form class="w-full flex md:ml-0" action="#" method="GET">
-                <label for="search-field" class="sr-only">
-                    <?= lang('Btw.general.search'); ?>
-                </label>
-                <div class="relative w-full text-slate-400 focus-within:text-slate-600 dark:focus-within:text-slate-300">
-                    <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <input id="search-field" type="search" name="search" class="block w-full h-full pl-8 pr-3 py-2 border-transparent bg-transparent text-slate-900 placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:ring-0 focus:border-transparent sm:text-sm dark:text-slate-100 dark:placeholder-slate-400 dark:focus:placeholder-slate-500" placeholder="<?= lang('Form.general.search'); ?>" kl_vkbd_parsed="true">
+        <div class="flex-1 flex" hx-boost="true">
+            <label for="search-field" class="sr-only">
+                <?= lang('Btw.general.search'); ?>
+            </label>
+            <div class="relative w-full text-slate-400 focus-within:text-slate-600 dark:focus-within:text-slate-300">
+                <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z" clip-rule="evenodd"></path>
+                    </svg>
                 </div>
-            </form>
+                <input hx-post="<?= route_to('search-all-admin'); ?>" hx-trigger="keyup changed delay:1000ms, search" hx-target="body" hx-swap="innerHTML" id="search-field" type="search" name="search" class="block w-full h-full pl-8 pr-3 py-2 border-transparent bg-transparent text-slate-900 placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:ring-0 focus:border-transparent sm:text-sm dark:text-slate-100 dark:placeholder-slate-400 dark:focus:placeholder-slate-500" placeholder="<?= lang('Form.general.search'); ?>" kl_vkbd_parsed="true">
+            </div>
         </div>
         <div class="ml-4 flex items-center md:ml-6">
             <!-- Notification -->
