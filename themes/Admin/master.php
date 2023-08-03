@@ -7,7 +7,6 @@
     <?= $viewMeta->render('meta') ?>
     <?= $viewMeta->render('title') ?>
     <?= csrf_meta() ?>
-    <?= asset_link('admin/css/app.css', 'css') ?>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
@@ -57,7 +56,7 @@
 
 <!-- debug, loading-states, json-enc, event-header -->
 
-<body hx-ext="morph, ajax-header head-support" hx-history="false" hx-headers='{"X-Theme": "admin"}' hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
+<body hx-ext="morph, ajax-header head-support" hx-history="false" hx-headers='{"X-Theme": "admin"}' hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100 <?= uniforme(request()->getUserAgent()->getBrowser()); ?>" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
 
     <!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
@@ -81,8 +80,8 @@
         <div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50"></div>
 
         <?= $this->renderSection('modals') ?>
-        <?= $this->include('components/modal-delete') ?>
-        <?= $this->include('components/modal-auth-display-data') ?>
+        <?= $this->include('Components/modal-delete') ?>
+        <?= $this->include('Components/modal-auth-display-data') ?>
 
         <!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
         <div class="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">

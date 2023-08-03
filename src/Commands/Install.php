@@ -68,7 +68,7 @@ class Install extends BaseCommand
     private array $supportedFrameworks = ['none', 'react', 'vue', 'svelte'];
 
     private $path;
-    
+
     private array $configFiles = [
         // 'Btw\Core\Assets\Config\Assets',
         //'Btw\Core\Config\Auth',
@@ -120,7 +120,6 @@ class Install extends BaseCommand
             CLI::write('run: npm install && npm run dev');
             CLI::write('Suivre le processus d\'installation du package');
             CLI::write('run: npm install && npm run dev');
-            
         }
 
         CLI::newLine();
@@ -193,14 +192,14 @@ class Install extends BaseCommand
         if ($port !== '3306') {
             $this->updateEnvFile('# database.default.port = 3306', "database.default.port = {$port}");
         }
-        
     }
 
-    private function setSession(){
+    private function setSession()
+    {
 
         CLI::write('Generating session', 'yellow');
         $this->updateEnvFile("# session.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'", "session.sessionDriver = 'Btw\Core\Session\Handlers\DatabaseHandler'");
-        $this->updateEnvFile("# session.sessionCookieName = 'ci_session'", "session.sessionCookieName = 'adn_".rand()."'");
+        $this->updateEnvFile("# session.sessionCookieName = 'ci_session'", "session.sessionCookieName = 'adn_" . rand() . "'");
         $this->updateEnvFile("# session.sessionExpiration = 7200", "session.sessionExpiration = 86400");
         $this->updateEnvFile("# session.sessionSavePath = null", "session.sessionSavePath = 'sessions'");
         $this->updateEnvFile("# session.sessionMatchIP = false", "session.sessionMatchIP = true");
@@ -210,20 +209,20 @@ class Install extends BaseCommand
         CLI::newLine();
     }
 
-    private function setCookie(){
+    private function setCookie()
+    {
         CLI::write('Generating Cookie', 'yellow');
         $this->updateEnvFile("# security.csrfProtection = 'cookie'", "security.csrfProtection = 'session'");
         $this->updateEnvFile("# security.tokenRandomize = false", "security.tokenRandomize = false");
         $this->updateEnvFile("# security.tokenName = 'csrf_token_name'", "security.tokenName = 'x-csrfToken'");
         $this->updateEnvFile("# security.headerName = 'X-CSRF-TOKEN'", "security.headerName = 'X-CSRF-TOKEN'");
-        $this->updateEnvFile("# security.cookieName = 'csrf_cookie_name'", "security.cookieName = 'adn_".rand()."'");
+        $this->updateEnvFile("# security.cookieName = 'csrf_cookie_name'", "security.cookieName = 'adn_" . rand() . "'");
         $this->updateEnvFile("# security.expires = 7200", "security.expires = 7200");
         $this->updateEnvFile("# security.regenerate = true", "security.regenerate = false");
         $this->updateEnvFile("# security.redirect = true", "security.redirect = true");
         $this->updateEnvFile("# security.samesite = 'Lax'", "security.samesite = 'Lax'");
         CLI::write('Cookie saved to .env file', 'green');
         CLI::newLine();
-
     }
 
 
@@ -282,6 +281,8 @@ class Install extends BaseCommand
         $lastName  = CLI::prompt('Last name?');
         $username  = CLI::prompt('Username?');
         $password  = CLI::prompt('Password?');
+        $company_id  = CLI::prompt('Id de la company');
+        $main_account  = CLI::prompt('Compte principal?', ['0', '1']);
 
         $users = model(UserModel::class);
 
@@ -289,6 +290,8 @@ class Install extends BaseCommand
             'first_name' => $firstName,
             'last_name'  => $lastName,
             'username'   => $username,
+            'company_id'   => $company_id,
+            'main_account'   => $main_account,
         ]);
         $users->save($user);
 
@@ -314,63 +317,63 @@ class Install extends BaseCommand
         write_file(ROOTPATH . '.env', $env);
     }
 
-   /**
-	 * Set vite configs in .env file
-	 * 
-	 * @return void
-	 */
-	private function updateEnvFileVite()
-	{
-		CLI::write('Updating .env file...', 'yellow');
+    /**
+     * Set vite configs in .env file
+     * 
+     * @return void
+     */
+    private function updateEnvFileVite()
+    {
+        CLI::write('Updating .env file...', 'yellow');
 
-		# Get the env file.
-		$envFile = ROOTPATH . '.env';
+        # Get the env file.
+        $envFile = ROOTPATH . '.env';
 
-		# For backup.
-		$backupFile = is_file($envFile) ? 'env-BACKUP-' . time() : null;
+        # For backup.
+        $backupFile = is_file($envFile) ? 'env-BACKUP-' . time() : null;
 
-		# Does exist? if not, generate it =)
-		if (is_file($envFile)) {
-			# But first, let's take a backup.
-			copy($envFile, ROOTPATH . $backupFile);
+        # Does exist? if not, generate it =)
+        if (is_file($envFile)) {
+            # But first, let's take a backup.
+            copy($envFile, ROOTPATH . $backupFile);
 
-			# Get .env.default content
-			$content = file_get_contents($this->path . 'Config/env.default');
+            # Get .env.default content
+            $content = file_get_contents($this->path . 'Config/env.default');
 
-			# Append it.
-			file_put_contents($envFile, "\n\n$content", FILE_APPEND);
-		} else {
-			# As we said before, generate it.
-			copy($this->path . 'Config/env.default', ROOTPATH . '.env');
-		}
+            # Append it.
+            file_put_contents($envFile, "\n\n$content", FILE_APPEND);
+        } else {
+            # As we said before, generate it.
+            copy($this->path . 'Config/env.default', ROOTPATH . '.env');
+        }
 
-		# set the backup name in the current one.
-		if ($backupFile) {
-			$envContent = file_get_contents(ROOTPATH . '.env');
-			$backupUpdate = str_replace('VITE_BACKUP_FILE=', "VITE_BACKUP_FILE='$backupFile'", $envContent);
-			file_put_contents($envFile, $backupUpdate);
-		}
+        # set the backup name in the current one.
+        if ($backupFile) {
+            $envContent = file_get_contents(ROOTPATH . '.env');
+            $backupUpdate = str_replace('VITE_BACKUP_FILE=', "VITE_BACKUP_FILE='$backupFile'", $envContent);
+            file_put_contents($envFile, $backupUpdate);
+        }
 
-		# Define framework.
-		if ($this->framework !== 'none') {
-			# Get .env content.
-			$envContent = file_get_contents($envFile);
-			# Set framework.
-			$updates = str_replace("VITE_FRAMEWORK='none'", "VITE_FRAMEWORK='$this->framework'", $envContent);
+        # Define framework.
+        if ($this->framework !== 'none') {
+            # Get .env content.
+            $envContent = file_get_contents($envFile);
+            # Set framework.
+            $updates = str_replace("VITE_FRAMEWORK='none'", "VITE_FRAMEWORK='$this->framework'", $envContent);
 
-			file_put_contents($envFile, $updates);
+            file_put_contents($envFile, $updates);
 
-			# React entry file (main.jsx).
-			if ($this->framework === 'react') {
-				$envContent = file_get_contents($envFile);
-				$updates = str_replace("VITE_ENTRY_FILE='main.js'", "VITE_ENTRY_FILE='main.jsx'", $envContent);
-				file_put_contents($envFile, $updates);
-			}
-		}
+            # React entry file (main.jsx).
+            if ($this->framework === 'react') {
+                $envContent = file_get_contents($envFile);
+                $updates = str_replace("VITE_ENTRY_FILE='main.js'", "VITE_ENTRY_FILE='main.jsx'", $envContent);
+                file_put_contents($envFile, $updates);
+            }
+        }
 
-		# env updated.
-		CLI::newLine();
-		CLI::write('.env file updated ✅', 'green');
-		CLI::newLine();
-	}
+        # env updated.
+        CLI::newLine();
+        CLI::write('.env file updated ✅', 'green');
+        CLI::newLine();
+    }
 }

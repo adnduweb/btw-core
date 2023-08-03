@@ -1,6 +1,6 @@
 <?php
 
-namespace Btw\Core\Libraries;
+namespace Btw\Core\Exceptions;
 
 use Btw\Core\Debug\BaseExceptionHandler;
 use Btw\Core\Debug\ExceptionHandlerInterface;
@@ -8,12 +8,12 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Throwable;
 
-class MyExceptionHandler extends BaseExceptionHandler implements ExceptionHandlerInterface
+class notFoundExceptionHandler extends BaseExceptionHandler implements ExceptionHandlerInterface
 {
     // You can override the view path.
     protected ?string $viewPath = BTPATH . 'Views/Errors/html/';
 
-    protected $code = 403;
+    protected $code = 404;
 
     public function handle(
         Throwable $exception,
