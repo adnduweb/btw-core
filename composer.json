@@ -21,7 +21,8 @@
 		"codeigniter4/translations": "^4.3",
 		"greenlion/php-sql-parser": "^4.6",
 		"twig/twig": "^3.4.3",
-		"ramsey/uuid": "^4.7"
+		"ramsey/uuid": "^4.7",
+		"giggsey/libphonenumber-for-php": "^8.13",
 	},
 	"require-dev": {
 		"codeigniter/coding-standard": "^1.1",
