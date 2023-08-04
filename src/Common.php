@@ -901,3 +901,15 @@ if (!function_exists('detectAgent')) {
         return $htmlClass;
     }
 }
+
+
+
+if (!function_exists('getNameCurrency')) {
+    function getNameCurrency(int $id)
+    {
+        if (!$model = model(\Btw\Core\Models\CurrencyModel::class)->select('name')->where('id', $id)->first()) {
+            throw new \Exception('Incorrect model id.');
+        }
+        return $model->name;
+    }
+}

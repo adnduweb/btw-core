@@ -37,17 +37,17 @@ if (!function_exists('format_money')) {
             return false;
 
         switch (strtolower($currency)) {
-            case 'usd':
+            case 5:
                 return "$" . number_format($amount, 2, ".", ",");
                 break;
-            case 'eur':
+            case 3:
                 return number_format($amount, 2, ",", " ") . " €";
                 break;
             case 2:
                 return number_format($amount, 2, ",", " ") . " €";
                 break;
             default:
-                return 'erreur';
+                return number_format($amount, 2, ",", " ") . " €";
         }
     }
 }

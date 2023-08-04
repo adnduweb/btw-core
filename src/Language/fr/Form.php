@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Doudou.
  *
@@ -7,7 +8,7 @@
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
-return [ 
+return [
     'activity' => [
         'Activity' => 'Activité',
         'delete_selected' => 'Supprimer sélectionné',
@@ -66,8 +67,8 @@ return [
         'TheseRulesDetermineHowSecurePassword' => 'Ces règles déterminent le degré de sécurité d\'un mot de passe',
         'ThisSpecifiesTheDefaultEmailAddressAndNnameThatWillBeUsedWhenSendingAnEmail' => "Ceci spécifie l'adresse électronique et le nom par défaut qui seront utilisés lors de l'envoi d'un courrier électronique.",
         'SelectTheProtocolUsedWhenSendingMailSMTP' => "Sélectionnez le protocole utilisé pour l'envoi de courrier. Le scénario le plus courant est l'utilisation du protocole SMTP.",
-        'MailIsOnlyAvailableOnLinuxServers' => "Mail n'est disponible que sur les serveurs Linux. Il n'y a pas d'options", 
-        'Force2FACheckAfterLogin' => "Forcer le contrôle 2FA après la connexion", 
+        'MailIsOnlyAvailableOnLinuxServers' => "Mail n'est disponible que sur les serveurs Linux. Il n'y a pas d'options",
+        'Force2FACheckAfterLogin' => "Forcer le contrôle 2FA après la connexion",
         'Force2FACheckAfterLoginDesc' => "Si la case est cochée, un code sera envoyé par courrier électronique pour confirmation.",
     ],
     'general' => [
@@ -97,7 +98,7 @@ return [
         'descriptionLong' => 'Description longue',
         'permalink' => 'Lien',
         'active' => 'Activer',
-        'SelectNewPhoto' => 'Sélectionner une photo', 
+        'SelectNewPhoto' => 'Sélectionner une photo',
         'search' => 'Rechercher',
         'nom' => 'Nom',
         'prenom' => 'Prénom',
@@ -106,6 +107,8 @@ return [
         'bio' => 'Biographie',
         'lastname' => 'Nom',
         'firstname' => 'Prénom',
+        'listCurrencies'  => "Liste des devises",
+        'selectCurrencies'  => "Sélectionner votre devise des devises"
 
     ],
     'address' => [
@@ -185,7 +188,7 @@ return [
         'LastUpdated' => 'Mis à jour pour la dernière fois',
         'UsersList' => 'Liste des utilisateurs',
         'changeRole' => 'Modifier le rôle',
-        'passwordLength' => 'Longueur du mot de passe', 
+        'passwordLength' => 'Longueur du mot de passe',
         'TwoFactoAuthentification' => 'Authentification à deux facteurs',
         'username' => 'Identifiant',
     ]
