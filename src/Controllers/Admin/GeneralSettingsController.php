@@ -120,6 +120,8 @@ class GeneralSettingsController extends AdminController
 
                 setting('Site.siteName', $data['siteName']);
                 setting('Site.siteOnline', $data['siteOnline'] ?? 0);
+                setting('Site.ipAllowed', trim($data['ipAllowed']) ?? '');
+                
 
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [ 'siteOnline' => setting('Site.siteOnline')]);

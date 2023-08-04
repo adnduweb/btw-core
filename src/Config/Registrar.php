@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Btw\Core\Config;
 
 use Btw\Core\Filters\Admin;
-use Btw\Core\Filters\Protect;
+// use Btw\Core\Filters\Protect;
+use Btw\Core\Filters\OnlineCheckFilter;
 use Btw\Core\Filters\VisitsFilter;
-use Btw\Core\Filters\BlockIpFilter;
+// use Btw\Core\Filters\BlockIpFilter;
 use Btw\Core\View\ShieldOAuth;
 use Btw\Core\View\Decorator;
 use Btw\Core\View\ErrorModalDecorator;
@@ -41,15 +42,17 @@ class Registrar
                 'tokens'  => TokenAuth::class,
                 'chain'   => ChainAuth::class,
                 'admin'   => Admin::class,
-                'protect'   => Protect::class,
+                // 'protect'   => Protect::class,
+                'online'   => OnlineCheckFilter::class,
                 'visits' => VisitsFilter::class,
-                'blockIP' => BlockIpFilter::class,
+                // 'blockIP' => BlockIpFilter::class, 
             ],
             'globals' => [
                 // 'before' => [
                 //     'csrf' => ['except' => ['api/record/[0-9]+']],
                 // ],
                 'before' => [
+                    'online' => ['except' => ['site-offline', ADMIN_AREA . '*', 'login*']],
                     'csrf' => ['except' => ['api/record/[0-9]+']],
                     // 'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
                 ],
@@ -58,9 +61,9 @@ class Registrar
                 ]),
             ],
             'filters' => [
-                'protect' => [
-                    'before' => ['*'],
-                ],
+                // 'protect' => [
+                //     'before' => ['*'],
+                // ],
                 'session' => [
                     'before' => [ADMIN_AREA . '*'],
                 ],

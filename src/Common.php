@@ -235,6 +235,24 @@ if (!function_exists('viewBtw')) {
         return $renderer->setData($data, 'raw')->render($view, $options, $saveData);
     }
 }
+if (!function_exists('getIp')) {
+    function getIp()
+    {
+        //whether ip is from the share internet  
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        //whether ip is from the proxy  
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        //whether ip is from the remote address  
+        else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
+}
 
 if (!function_exists('site_offline')) {
     /**
@@ -242,6 +260,14 @@ if (!function_exists('site_offline')) {
      */
     function site_offline(): bool
     {
+        $ipAllowed = setting('Site.ipAllowed');
+        $ipAllowedIps = explode(';', $ipAllowed);
+
+        if (!empty($ipAllowedIps)) {
+            if (in_array(request()->getIPAddress(), $ipAllowedIps)) {
+                return false;
+            }
+        }
         return empty(setting('Site.siteOnline'));
     }
 }
@@ -851,5 +877,27 @@ if (!function_exists('formatLanguage')) {
 
         // test :
         echo ucwords($dateFormatted);
+    }
+}
+
+if (!function_exists('detectAgent')) {
+    function detectAgent()
+    {
+        $agent = request()->getUserAgent();
+        $htmlClass = '';
+
+        if ($agent->isBrowser()) {
+            $htmlClass .= uniforme($agent->getBrowser()) .  ' ';
+            $htmlClass .= uniforme($agent->getBrowser() . ' ' . $agent->getVersion());
+        } elseif ($agent->isRobot()) {
+            $htmlClass .= uniforme($agent->getRobot());
+        } elseif ($agent->isMobile()) {
+            $htmlClass .= uniforme($agent->getMobile());
+        } else {
+            $htmlClass .= 'Unidentified User Agent';
+        }
+
+        $htmlClass .= ' ' . uniforme($agent->getPlatform());
+        return $htmlClass;
     }
 }

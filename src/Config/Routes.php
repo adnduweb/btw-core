@@ -5,7 +5,7 @@
  */
 
 // Authentication Routes that override Shield's
-$routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth', 'filter' => 'blockIP' ], static function ($routes) {
+$routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth'], static function ($routes) {
     $routes->get('register', 'RegisterController::registerView');
     $routes->post('register', 'RegisterController::registerAction');
     $routes->get('login', 'LoginController::loginView', ['as' => 'login']);
@@ -127,6 +127,22 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
 $routes->setPrioritize();
 $routes->get('assets/(:any)', '\Btw\Core\Controllers\AssetController::serve/$1');
 $routes->get('attachments/(:any)', '\Btw\Core\Controllers\AssetController::renderFile/$1', ['priority' => 1]);
+
+/**
+ * @var CodeIgniter\Router\RouteCollection $routes
+ */
+$routes->get('site-offline', static function () {
+    helper('setting');
+
+    // If it's not offline, but they've refreshed the page
+    // take to the site home page.
+    if (! site_offline()) {
+        return redirect()->to('/');
+    }
+
+    return view(config('Site')->siteOfflineView);
+});
+
 
 // Clear cache
 $routes->get('/clear-cache', static function () {

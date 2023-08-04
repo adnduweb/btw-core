@@ -15,17 +15,32 @@
         </div>
 
         <!-- Site Online? -->
-        <div class="row">
+        <div x-data="{ allow_ip: <?= old('siteOnline', setting('Site.siteOnline')) ? 'true' : 'false' ?>}">
+            <div class="w-full mb-6 md:mb-0">
+                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+                    'type' => 'text',
+                    'label' => lang('Btw.siteOnline'),
+                    'name' => 'siteOnline',
+                    'value' => '1',
+                    'checked' => (old('siteOnline', setting('Site.siteOnline') ?? false)),
+                    'description' => lang('Form.general.siteOnlineDesc'),
+                    'xNotData' => "true",
+                    'xOn' => "allow_ip",
+                    'xChange' => "allow_ip = ! allow_ip"
+                ]); ?>
+            </div>
 
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
-                'type' => 'text',
-                'label' => lang('Btw.siteOnline'),
-                'name' => 'siteOnline',
-                'value' => '1',
-                'checked' => (old('siteOnline', setting('Site.siteOnline') ?? false)),
-                'description' => lang('Form.general.siteOnlineDesc'),
-            ]); ?>
 
+
+            <div x-show="allow_ip == false" class="w-full mt-6 mb-6 md:mb-0">
+                <?php echo view_cell('Btw\Core\Cells\TextAreaCell::renderList', [
+                    'label' => lang('Btw.IpAllowed'),
+                    'name' =>  'ipAllowed',
+                    'value' => (old('siteOnline', setting('Site.ipAllowed') ?? false)),
+                    'description' => lang('Form.general.IpAllowed'),
+                ]); ?>
+                <div id="ipAllowedResult"></div>
+            </div>
         </div>
 
     </div>
@@ -34,3 +49,14 @@
         <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinggeneral" />
     </div>
 </div>
+
+<script type="module">
+    $.getJSON('https://api.ipify.org?format=json', function(data) {
+        const dialog = document.getElementById('ipAllowedResult')
+        if(ipAllowedResult){
+            dialog.innerHTML = '<span class="inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800">Votre addresse ip : ' + data.ip +'</span>';
+        }
+        
+        
+    });
+</script>

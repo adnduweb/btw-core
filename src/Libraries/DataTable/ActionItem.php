@@ -180,7 +180,8 @@ class ActionItem
 
         if (!is_array($custom))
             return false;
-
+            
+            $this->custom = ['list'];
             foreach($custom as $cus){
 
                 $this->custom['list'][] = $cus;

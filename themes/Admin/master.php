@@ -56,7 +56,7 @@
 
 <!-- debug, loading-states, json-enc, event-header -->
 
-<body hx-ext="morph, ajax-header head-support" hx-history="false" hx-headers='{"X-Theme": "admin"}' hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100 <?= uniforme(request()->getUserAgent()->getBrowser()); ?>" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
+<body hx-ext="morph, ajax-header head-support" hx-history="false" hx-headers='{"X-Theme": "admin"}' hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100 <?= detectAgent(); ?>" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
 
     <!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">

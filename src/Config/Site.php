@@ -42,4 +42,15 @@ class Site extends BaseConfig
      * The view file that is displayed when the site is offline.
      */
     public $siteOfflineView = 'Themes\App\site_offline';
+
+     /**
+     * --------------------------------------------------------------------------
+     * List address IP
+     * --------------------------------------------------------------------------
+     *
+     * List address IP
+     */
+    public $ipAllowed;
+
+    
 }

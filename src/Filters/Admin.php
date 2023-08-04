@@ -38,29 +38,15 @@ class Admin implements FilterInterface
             return redirect()->to('/')->with('error', lang('Btw.notAuthorized'));
         }
 
+        /** @var Session $authenticator */
+        $authenticator = auth('session')->getAuthenticator();
 
-        //http://localhost:8080/admin1198009422/users
-
-
-        //        // On controle les permissions
-        // $controllerName = service('router')->controllerName();
-        // $handle = explode('\\', $controllerName);
-        // $end = end($handle);
-        // $controller = strtolower(str_replace('Controller', '', $end));
-        // $methodName = service('router')->methodName();
-
-        // if ($request->isHtmx()) {
-        //     // echo $controller . '.' . $methodName; exit;
-        //     if (!auth('session')->user()->can($controller . '.' . $methodName)) {
-        //        response()->triggerClientEvent('showMessage', ['type' => 'danger', 'content' => lang('Btw.notAuthorizedDebug', [$controller . '(' . $controller . '.' . $methodName . ')'])]);
-        //        return redirect()->route('dashboard');
-        //     }
-        // } else {
-        //    // echo $controller . '.' . $methodName; exit;
-        //     if (!auth('session')->user()->can($controller . '.' . $methodName)) {
-        //         return redirect()->route('dashboard')->with('error', lang('Btw.notAuthorized'));
-        //     }
-        // }
+        if ($authenticator->loggedIn()) {
+            // echo 'fgsdfgsdfg'; exit;
+            if (in_array((string) $current, [route_to('login'), route_to('magic-link'), route_to('verify-magic-link')])) {
+                return redirect()->route('dashboard');
+            }
+        }
 
         // Restrict an IP address to no more than 1 request
         // per second across the entire site.
@@ -82,10 +68,6 @@ class Admin implements FilterInterface
             }
         }
 
-
-        // print_r($controller);
-        // print_r($methodName);
-        // exit;
     }
 
     /**

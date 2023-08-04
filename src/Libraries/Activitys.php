@@ -82,27 +82,31 @@ class Activitys
     public function save(): self
     {
         $audits = new ActivityModel();
-        if (!preg_match('/(logs|sessions|visits|activity_log|css|js)/i', uri_string())) {
-            $audits->insert([
-                'event_type' => 'access',
-                'event_access' => uri_string(),
-                'event_method' => request()->getMethod(),
-                'properties' => json_encode([
-                    'host' => site_url('/', false),
-                    'path' => uri_string(true),
-                    'query' => request()->getUri()->getQuery(),
-                    'ip' => request()->getIPAddress(),
-                    'platform' => request()->getUserAgent()->getPlatform(),
-                    'browser' => request()->getUserAgent()->getBrowser(),
-                    'is_mobile' => request()->getUserAgent()->isMobile(),
-                ]),
-                'source_id' => 0,
-                'source' => service('router')->controllerName(),
-                'event' => 'access',
-                'summary' => 0,
-                'user_id' => Auth()->User()->id ?? null,
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
+        // Look in Admin
+        $current = (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token');
+        if (in_array((string) $current, [ADMIN_AREA])) {
+            if (!preg_match('/(logs|sessions|visits|activity_log|css|js)/i', uri_string())) {
+                $audits->insert([
+                    'event_type' => 'access',
+                    'event_access' => uri_string(),
+                    'event_method' => request()->getMethod(),
+                    'properties' => json_encode([
+                        'host' => site_url('/', false),
+                        'path' => uri_string(true),
+                        'query' => request()->getUri()->getQuery(),
+                        'ip' => request()->getIPAddress(),
+                        'platform' => request()->getUserAgent()->getPlatform(),
+                        'browser' => request()->getUserAgent()->getBrowser(),
+                        'is_mobile' => request()->getUserAgent()->isMobile(),
+                    ]),
+                    'source_id' => 0,
+                    'source' => service('router')->controllerName(),
+                    'event' => 'access',
+                    'summary' => 0,
+                    'user_id' => Auth()->User()->id ?? null,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            }
         }
 
         if (!empty($this->queue)) {
