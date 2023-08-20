@@ -70,6 +70,7 @@ return [
         'historyLogin' => 'Historique de connexion',
         'historyBrowser' => 'Navigateur session',
         'company' => "Entreprise",
+        'majdebug' => 'Mise à jour & debug'
     ],
     'users' => [
         'addUser' => 'Créer un utilisateur',
