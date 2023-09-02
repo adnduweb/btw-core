@@ -2,16 +2,16 @@
 
 <?php $this->section('main') ?>
 
-<x-page-head>Groups </x-page-head>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.general.groups')]) ?>
 
-<x-admin-box>
+<divs class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 
     <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
         <?php if (isset($menu)) : ?>
             <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\sidebar'); ?>
         <?php endif ?>
-        
-        <div class=" <?php if (isset($menu)) : ?> space-y-6 sm:px-6 lg:col-span-9 lg:px-0  <?php else: ?> space-y-6 sm:px-6 lg:col-span-12 lg:px-0 <?php endif ?>">
+
+        <div class=" <?php if (isset($menu)) : ?> space-y-6 sm:px-6 lg:col-span-9 lg:px-0  <?php else : ?> space-y-6 sm:px-6 lg:col-span-12 lg:px-0 <?php endif ?>">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
                 <?= form_open(route_to('group-add'), [
                     'id' => 'kt_groups_form_information', 'hx-post' => route_to('group-add'), 'hx-target' => '#informations',  'hx-swap' => 'morph:outerHTML',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loadinginformation",
@@ -26,5 +26,5 @@
         </div>
     </div>
 
-</x-admin-box>
+</divs>
 <?php $this->endSection() ?>

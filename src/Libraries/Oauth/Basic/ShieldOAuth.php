@@ -71,7 +71,7 @@ class ShieldOAuth
     public function makeOAuthButton(string $forPage = 'login'): string
     {
         $Button = '';
-        $current = (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token');
+        $current = (string)current_url(true);
 
         $active_by = lang('ShieldOAuthLang.login_by');
         if ($forPage === 'register') {

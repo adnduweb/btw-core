@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Btw\Core\Config;
 
-use Btw\Core\Filters\Admin;
-// use Btw\Core\Filters\Protect;
+use Btw\Core\Filters\AdminFilter;
+ use Btw\Core\Filters\ProtectFilter;
 use Btw\Core\Filters\OnlineCheckFilter;
 use Btw\Core\Filters\VisitsFilter;
 // use Btw\Core\Filters\BlockIpFilter;
 use Btw\Core\View\ShieldOAuth;
 use Btw\Core\View\Decorator;
 use Btw\Core\View\ErrorModalDecorator;
+use Btw\Core\View\ToolbarDecorator;
 use Btw\Core\Validation\UserRules;
 use Btw\Core\Validation\ExpressRules;
 use CodeIgniter\Shield\Authentication\Passwords\ValidationRules as PasswordRules;
@@ -41,8 +42,8 @@ class Registrar
                 'session' => SessionAuthOverride::class,
                 'tokens'  => TokenAuth::class,
                 'chain'   => ChainAuth::class,
-                'admin'   => Admin::class,
-                // 'protect'   => Protect::class,
+                'admin'   => AdminFilter::class,
+                'protect'   => ProtectFilter::class,
                 'online'   => OnlineCheckFilter::class,
                 'visits' => VisitsFilter::class,
                 // 'blockIP' => BlockIpFilter::class, 
@@ -51,19 +52,19 @@ class Registrar
                 // 'before' => [
                 //     'csrf' => ['except' => ['api/record/[0-9]+']],
                 // ],
-                'before' => [
+                'before' => array_merge_recursive($props['globals']['before'], [
                     'online' => ['except' => ['site-offline', ADMIN_AREA . '*', 'login*']],
                     'csrf' => ['except' => ['api/record/[0-9]+']],
-                    // 'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
-                ],
-                'after' => array_merge($props['globals']['after'], [
+                    //'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
+                ]),
+                'after' => array_merge_recursive($props['globals']['after'], [
                     'visits'
                 ]),
             ],
             'filters' => [
-                // 'protect' => [
-                //     'before' => ['*'],
-                // ],
+                'protect' => [
+                    'before' => ['*'],
+                ],
                 'session' => [
                     'before' => [ADMIN_AREA . '*'],
                 ],
@@ -98,6 +99,7 @@ class Registrar
             'decorators' => [
                 ShieldOAuth::class,
                 Decorator::class,
+                ToolbarDecorator::class,
                 ErrorModalDecorator::class,
             ],
         ];

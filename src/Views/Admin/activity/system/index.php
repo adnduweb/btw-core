@@ -1,4 +1,4 @@
-<?= $this->extend('Themes\Admin\master') ?>
+<?= $this->extend(config('Auth')->views['layout']) ?>
 
 <?= $this->section('title') ?>
 <?= lang('Btw.general.LogsSystemList'); ?>
@@ -6,13 +6,16 @@
 
 <?= $this->section('main') ?>
 
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.general.LogsSystemList')]) ?>
 
-<x-page-head>
-    <?= lang('Btw.general.LogsSystemList'); ?>
-</x-page-head>
-<x-admin-box>
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 
-    <?= $this->setData(['actions' => $actions])->include('Themes\Admin\Datatabase\_headerTable'); ?>
+
+<?= view_cell('Btw\Core\Cells\Datatable\DatatableHeaderTable', [
+        'add' => [],
+        'actions' => $actions
+    ])
+    ?>
 
     <div class="row justify-content-md-center">
 
@@ -22,7 +25,7 @@
 
     </div>
 
-</x-admin-box>
+</div> 
 
 <?= $this->endSection() ?>
 

@@ -41,7 +41,7 @@
     <?php endif ?>
 
     <div class="px-4 py-3 text-right sm:px-6 ">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingmodalgroups" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingmodalgroups"]) ?>
     </div>
 
 </div>

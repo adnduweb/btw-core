@@ -1,4 +1,4 @@
-<div x-show="$store.openmodal" x-on:keydown.escape.prevent.stop="$dispatch('closemodal');" role="dialog"
+<div x-cloak x-show="$store.openmodal" x-on:keydown.escape.prevent.stop="$dispatch('closemodal');" role="dialog"
     aria-modal="true" class="fixed inset-0 overflow-y-auto">
     <!-- Overlay -->
     <div x-show="$store.openmodal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>

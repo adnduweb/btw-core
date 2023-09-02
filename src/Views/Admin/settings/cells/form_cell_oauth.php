@@ -3,7 +3,7 @@
 
 
         <div class="row mb-3">
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('ShieldOAuthLang.allow_login'),
                 'name' => 'allow_login',
                 'value' => '1',
@@ -12,7 +12,7 @@
         </div>
 
         <div class="row mb-3">
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('ShieldOAuthLang.allow_register'),
                 'name' => 'allow_register',
                 'value' => '1',
@@ -26,7 +26,7 @@
         <div x-data="{allow_login_google: <?= old('allow_login_google', setting('ShieldOAuthConfig.allow_login_google')) ? 'true' : 'false' ?>}">
 
             <div class="row mb-3">
-                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                     'label' => lang('ShieldOAuthLang.allow_login_google'),
                     'name' => 'allow_login_google',
                     'value' => '1',
@@ -42,7 +42,7 @@
             <div class="row" x-show="allow_login_google != false">
 
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('ShieldOAuthLang.client_id'),
                     'name' => 'google_client_id',
@@ -50,7 +50,7 @@
                 ]); ?>
 
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('ShieldOAuthLang.client_secret'),
                     'name' => 'google_client_secret',
@@ -63,7 +63,7 @@
         <div x-data="{allow_login_github: <?= old('allow_login_github', setting('ShieldOAuthConfig.allow_login_github')) ? true : 'false' ?>}">
             <div class="row mb-3">
 
-                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                     'label' => lang('ShieldOAuthLang.allow_login_github'),
                     'name' => 'allow_login_github',
                     'value' => '1',
@@ -78,14 +78,14 @@
             <!-- Site Name -->
             <div class="row" x-show="allow_login_github != false">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('ShieldOAuthLang.client_id'),
                     'name' => 'github_client_id',
                     'value' => old('github_client_id', setting('ShieldOAuthConfig.github_client_id'))
                 ]); ?>
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('ShieldOAuthLang.client_secret'),
                     'name' => 'github_client_secret',
@@ -97,7 +97,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingoauth" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingoauth"]) ?>
     </div>
 
 </div>

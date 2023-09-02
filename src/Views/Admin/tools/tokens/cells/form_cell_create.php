@@ -5,7 +5,7 @@
 
         <!-- Site Name -->
         <div class="row">
-            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                 'type' => 'text',
                 'label' => lang('Btw.NameTokens'),
                 'name' => 'siteName',

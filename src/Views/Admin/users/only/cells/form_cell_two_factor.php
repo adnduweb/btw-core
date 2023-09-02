@@ -6,7 +6,7 @@
 
         <div class="row mb-3">
             
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('Btw.Force 2FA check after login?'),
                 'name' => 'email2FA',
                 'value' => 'Btw\Core\Authentication\Actions\Email2FA',
@@ -18,7 +18,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingtwofactor" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingtwofactor"]) ?>
     </div>
 
 </div>

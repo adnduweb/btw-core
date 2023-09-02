@@ -1,4 +1,4 @@
-<?= $this->extend('Themes\Admin\master') ?>
+<?= $this->extend(config('Auth')->views['layout']) ?>
 <?= $this->section('title') ?>
 <?= lang('Btw.users.userCreate'); ?>
 <?= $this->endSection() ?>

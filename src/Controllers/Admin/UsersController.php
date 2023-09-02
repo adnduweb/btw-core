@@ -78,21 +78,21 @@ class UsersController extends AdminController
         return DataTable::of($model)
             ->add('select', function ($row) {
                 $row = new User((array) $row);
-                return view('Themes\Admin\Datatabase\select', ['row' => $row]);
+                return view_cell('Btw\Core\Cells\Datatable\DatatableSelect', ['row' => $row]);
             }, 'first')
             // ->hide('id')
             ->edit('username', function ($row) {
                 $row = new User((array) $row);
-                return view('Themes\Admin\Datatabase\username', ['row' => $row]);
+                return view_cell('Btw\Core\Cells\Datatable\DatatableUsername', ['row' => $row]);
             })
             ->hide('last_name')
             ->hide('first_name')
             ->edit('secret', function ($row) {
-                return view('Themes\Admin\Datatabase\email', ['row' => $row]);
+                return view_cell('Btw\Core\Cells\Datatable\DatatableEmail', ['row' => $row]);
             })
             ->edit('active', function ($row) {
                 $row = new User((array) $row);
-                return view('Themes\Admin\Datatabase\switch', [
+                return view_cell('Btw\Core\Cells\Datatable\DatatableSwitch', [
                     'row' => $row,
                     'type' => 'user',
                     'hxGet' => route_to('user-active-table', $row->identifier),
@@ -112,7 +112,10 @@ class UsersController extends AdminController
             })
             ->add('action', function ($row) {
                 $row = new User((array) $row);
-                return view('Themes\Admin\Datatabase\action', ['row' => $row, 'actions' => DataTable::actions(self::$actions, $row)]);
+                return view_cell('Btw\Core\Cells\Datatable\DatatableAction', [
+                    'row' => $row,
+                    'actions' => DataTable::actions(self::$actions, $row)
+                ]);
             }, 'last')
             ->toJson(true);
     }
@@ -169,11 +172,11 @@ class UsersController extends AdminController
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'user_information', [
-                'userCurrent' => $user,
+                'user' => $user,
                 'currentGroup' => array_flip($user->getGroups()),
                 'groups' => setting('AuthGroups.groups'),
                 'menu' => service('menus')->menu('sidebar_user'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
 
@@ -266,9 +269,9 @@ class UsersController extends AdminController
                 }
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
-                    'userCurrent' => $user,
+                    'user' => $user,
                     'menu' => service('menus')->menu('sidebar_user'),
-                    'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                    'currentUrl' => (string)current_url(true)
                 ]);
 
                 break;
@@ -441,7 +444,7 @@ class UsersController extends AdminController
                 'permissionsMatrix' => $permissionsMatrix,
                 'user' => $user,
                 'menu' => service('menus')->menu('sidebar_user'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
     }
@@ -471,7 +474,7 @@ class UsersController extends AdminController
             'rowPermission' => [$perm, $permissions[$perm]],
             'user' => $user,
             'menu' => service('menus')->menu('sidebar_user'),
-            'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            'currentUrl' => (string)current_url(true)
         ]);
     }
 
@@ -500,7 +503,7 @@ class UsersController extends AdminController
             'permissions' => $permissions,
             'user' => $user,
             'menu' => service('menus')->menu('sidebar_user'),
-            'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            'currentUrl' => (string)current_url(true)
         ]);
     }
 
@@ -524,7 +527,7 @@ class UsersController extends AdminController
             return $this->render($this->viewPrefix . 'user_change_password', [
                 'user' => $user,
                 'menu' => service('menus')->menu('sidebar_user'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
 
@@ -593,7 +596,7 @@ class UsersController extends AdminController
             return $this->render($this->viewPrefix . 'user_two_factor', [
                 'user' => $user,
                 'menu' => service('menus')->menu('sidebar_user'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
 
@@ -631,7 +634,7 @@ class UsersController extends AdminController
                 'user' => $user,
                 'logins' => $logins,
                 'menu' => service('menus')->menu('sidebar_user'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
     }
@@ -657,7 +660,7 @@ class UsersController extends AdminController
                 'user' => $user,
                 'sessions' => $sessions,
                 'menu' => service('menus')->menu('sidebar_user'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
     }

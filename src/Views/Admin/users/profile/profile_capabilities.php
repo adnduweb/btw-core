@@ -2,13 +2,12 @@
 
 <?php $this->section('main') ?>
 
-<x-page-head> <?= lang('Btw.general.editProfile'); ?> </x-page-head>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.general.editProfile')]) ?>
 
-<x-admin-box>
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 
     <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
-    <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\sidebar'); ?>
-
+        <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\sidebar'); ?>
         <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
                 <?= form_open(route_to('user-profile-settings'), [
@@ -20,9 +19,7 @@
                 <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_capabilities'); ?>
                 <?= form_close(); ?>
             </div>
-
         </div>
     </div>
-
-</x-admin-box>
+</div>
 <?php $this->endSection() ?>

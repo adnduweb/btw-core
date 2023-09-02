@@ -2,10 +2,9 @@
 
 <?php $this->section('main') ?>
 
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.general.settings')]) ?>
 
-<x-page-head>Settings </x-page-head>
-
-<x-admin-box>
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 
     <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
         <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\sidebar'); ?>
@@ -16,7 +15,8 @@
                     'id' => 'kt_users_form_avatar', 'hx-post' => route_to('settings-avatar'), 'hx-target' => '#avatar', 'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loadingavatar",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
-                <?= ''; //csrf_field() ?>
+                <?= ''; //csrf_field() 
+                ?>
                 <input type="hidden" name="section" value="avatar" />
                 <?= $this->include('Btw\Core\Views\Admin\settings\cells\form_cell_avatar'); ?>
                 <?= form_close(); ?>
@@ -24,7 +24,9 @@
 
         </div>
 
-</x-admin-box>
+    </div>
+</div>
+
 <?php $this->endSection() ?>
 
 

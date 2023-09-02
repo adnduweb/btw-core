@@ -1,4 +1,4 @@
-<div id="general" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
+<div id="company" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
     <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">
@@ -40,7 +40,7 @@
         <div class="flex flex-wrap -mx-3 mb-4">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.address.lastname'),
                     'name' => 'lastname',
@@ -51,7 +51,7 @@
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.address.firstname'),
                     'name' => 'firstname',
@@ -63,7 +63,7 @@
         </div>
 
         <div class="w-full mb-6 md:mb-4">
-            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                 'type' => 'text',
                 'label' => lang('Form.address.address1'),
                 'name' => 'address1',
@@ -75,7 +75,7 @@
         <div class="flex flex-wrap -mx-3 mb-4">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.address.postcode'),
                     'name' => 'postcode',
@@ -86,7 +86,7 @@
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.address.city'),
                     'name' => 'city',
@@ -100,7 +100,7 @@
         <div class="flex flex-wrap -mx-3 mb-4">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.address.company'),
                     'name' => 'company',
@@ -111,7 +111,7 @@
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.address.vat_number'),
                     'name' => 'vat_number',
@@ -125,7 +125,7 @@
         <div class="flex flex-wrap -mx-3 mb-4">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.address.siret'),
                     'name' => 'siret',
@@ -136,7 +136,7 @@
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.address.ape'),
                     'name' => 'ape',
@@ -151,7 +151,7 @@
         <!-- Site Name -->
         <div class="w-full mb-6 md:mb-4">
 
-            <?= view_cell('Btw\Core\Cells\DropdownCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\DropdownCell::renderList', [
                 'label' => lang('Form.address.country'),
                 'name' => 'country',
                 'placeholder' => lang('Form.address.selectCountry'),
@@ -169,7 +169,7 @@
         <div class="flex flex-wrap -mx-3 mb-4">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'tel',
                     'label' => lang('Form.address.phone'),
                     'name' => 'phone',
@@ -181,7 +181,7 @@
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'tel',
                     'label' => lang('Form.address.phone_mobile'),
                     'name' => 'phone_mobile',
@@ -195,7 +195,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingcompany" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingcompany"]) ?>
     </div>
 
 </div>

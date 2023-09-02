@@ -83,7 +83,7 @@ class Activitys
     {
         $audits = new ActivityModel();
         // Look in Admin
-        $current = (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token');
+        $current = (string)current_url(true);
         if (in_array((string) $current, [ADMIN_AREA])) {
             if (!preg_match('/(logs|sessions|visits|activity_log|css|js)/i', uri_string())) {
                 $audits->insert([

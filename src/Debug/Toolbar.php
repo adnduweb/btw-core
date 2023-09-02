@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
 use Config\Services;
+use Config\Toolbar as ToolbarConfig;
 use Kint\Kint;
 use Btw\Core\HTTP\IncomingRequest;
 use Btw\Core\HTTP\Response;
@@ -36,7 +37,7 @@ class Toolbar extends BaseToolbar
                 return;
             }
 
-            $toolbar = Services::toolbar(config(self::class));
+            $toolbar = Services::toolbar(config(ToolbarConfig::class));
             $stats   = $app->getPerformanceStats();
             $data    = $toolbar->run(
                 $stats['startTime'],

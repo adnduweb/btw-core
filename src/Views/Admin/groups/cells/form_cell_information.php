@@ -3,7 +3,7 @@
 
         <div class="col-span-6 sm:col-span-4">
 
-            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                 'type' => 'text',
                 'label' => lang('Btw.title'),
                 'name' => 'title',
@@ -13,7 +13,7 @@
 
 
         <div class="col-span-6 sm:col-span-4">
-            <?= view_cell('Btw\Core\Cells\TextAreaCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\TextAreaCell::renderList', [
                 'label' => lang('Btw.description'),
                 'name' => 'description',
                 'value' =>   esc(old('description', $group['description'] ?? null)),

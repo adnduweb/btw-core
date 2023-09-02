@@ -30,7 +30,7 @@
 
     <td class="relative border-dashed border-t border-gray-300 w-56">
         <div class="flex">
-            <?= $this->setVar('group', $group)->include('Themes\Admin\Components\row-delete'); ?>
+            <?= view_cell('Btw\Core\Cells\Core\AdminDeleteModal', ['group' => $group]) ?>
         </div>
     </td>
 

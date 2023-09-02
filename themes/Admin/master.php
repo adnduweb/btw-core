@@ -1,5 +1,5 @@
 <!doctype html>
-<html dir="ltr" data-theme="retro" lang="<?= service('language')->getLocale(); ?>" class="h-full <?= detectBrowser(); ?>" x-cloak x-data="{theme: localStorage.getItem('_X_theme') || localStorage.setItem('_X_theme', 'system')}" x-init="$watch('theme', val => localStorage.setItem('_X_theme', val))" x-bind:class="{'dark': theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
+<html dir="ltr" data-theme="retro" lang="<?= service('language')->getLocale(); ?>" class="h-full <?= detectBrowser(); ?>" x-data="{theme: localStorage.getItem('_X_theme') || localStorage.setItem('_X_theme', 'system')}" x-init="$watch('theme', val => localStorage.setItem('_X_theme', val))" x-bind:class="{'dark': theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
 
 <head>
 
@@ -46,9 +46,6 @@
             console.log(JSON.stringify(data));
         });
 
-        // document.addEventListener('htmx:configRequest', (event) => {
-        //     event.detail.headers['X-CSRFToken'] = '<?= csrf_hash(); ?>';
-        // })
     </script>
 
 
@@ -62,7 +59,7 @@
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
         <div class="flex h-screen overflow-hidden bg-base-100" x-data="{isSidebarExpanded: <?= (service('settings')->get('Btw.isSidebarExpanded', 'user:' . user_id()) == true) ? 'true' : 'false'; ?>}">
 
-            <x-sidebar />
+            <?= view_cell('Btw\Core\Cells\Core\AdminSidebar'); ?>
 
             <div class="flex w-0 flex-1 flex-col overflow-hidden">
                 <?= $this->include('_header') ?>
@@ -80,8 +77,8 @@
         <div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50"></div>
 
         <?= $this->renderSection('modals') ?>
-        <?= $this->include('Components/modal-delete') ?>
-        <?= $this->include('Components/modal-auth-display-data') ?>
+        <?= $this->include('partials/modal-delete') ?>
+        <?= $this->include('partials/modal-auth-display-data') ?>
 
         <!-- BUY ME A BEER AND HELP SUPPORT OPEN-SOURCE RESOURCES -->
         <div class="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">

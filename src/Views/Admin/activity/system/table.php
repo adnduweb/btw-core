@@ -1,5 +1,5 @@
 <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow overflow-y-auto relative">
-    <?= $this->include('Themes\Admin\Datatabase\_rowSelectedTable'); ?>
+   <?= view_cell('Btw\Core\Cells\Datatable\DatatableRowSelectedTable') ?>
     <table class="border-collapse table-auto w-full whitespace-no-wrap  bg-white dark:bg-gray-800 table-striped relative" id="kt_table_system" hx-boost="false">
         <thead>
             <tr class="bg-indigo-100 sticky top-0 border-b border-gray-200 px-6 py-4 text-gray-600 dark:bg-gray-700 dark:text-gray-300 font-bold tracking-wider uppercase text-xs">

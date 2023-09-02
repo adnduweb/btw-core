@@ -43,7 +43,7 @@ class TokensController extends AdminController
             return $this->render($this->viewPrefix . 'token-manage', [
                 'tokens'  => Auth()->user()->accessTokens(),
                 'menu' => service('menus')->menu('sidebar_token'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
     }
@@ -63,7 +63,7 @@ class TokensController extends AdminController
         if (!$this->request->is('post')) {
             return $this->render($this->viewPrefix . 'token-create', [
                 'menu' => service('menus')->menu('sidebar_token'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
     }

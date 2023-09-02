@@ -10,7 +10,7 @@
 
             <div class="ml-4 mt-2 flex-shrink-0">
                 <div class="flex items-center">
-                    <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+                    <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                         'type' => 'text',
                         'label' => lang('Btw.active'),
                         'name' => 'active',
@@ -29,7 +29,7 @@
         <div class="flex flex-wrap -mx-3 mb-2">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.users.first_name'),
                     'name' => 'first_name',
@@ -39,7 +39,7 @@
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.users.last_name'),
                     'name' => 'last_name',
@@ -52,7 +52,7 @@
         <div class="flex flex-wrap -mx-3 mb-2">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.users.username'),
                     'name' => 'username',
@@ -62,7 +62,7 @@
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'email',
                     'label' => lang('Form.users.email'),
                     'name' => 'email',
@@ -79,7 +79,7 @@
         <div x-data="{ show: true }" class="w-full relative mb-6">
             <div class="relative">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'password',
                     'label' => lang('Form.users.newPassword'),
                     'name' => 'new_password',
@@ -94,7 +94,7 @@
         <div x-data="{ show: true }" class="w-full relative mb-6">
             <div class="w-full ">
                 <div class="relative">
-                    <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                    <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                         'type' => 'password',
                         'label' => lang('Form.users.confirmPassword'),
                         'name' => 'pass_confirm',
@@ -135,18 +135,18 @@
         </div>
         <div class="flex -mx-2 mb-2">
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Form.users.LOWERCASE'), 'name' => 'charsLower', 'value' => "", 'checked' => true, 'disabled' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\CheckBoxCell::renderList', ['label' => lang('Form.users.LOWERCASE'), 'name' => 'charsLower', 'value' => "", 'checked' => true, 'disabled' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Form.users.UPPERCASE'), 'name' => 'charsUpper', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\CheckBoxCell::renderList', ['label' => lang('Form.users.UPPERCASE'), 'name' => 'charsUpper', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
         </div>
         <div class="flex -mx-2">
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Form.users.NUMBERS'), 'name' => 'charsNumeric', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\CheckBoxCell::renderList', ['label' => lang('Form.users.NUMBERS'), 'name' => 'charsNumeric', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Form.users.SYMBOLS'), 'name' => 'charsSymbols', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\CheckBoxCell::renderList', ['label' => lang('Form.users.SYMBOLS'), 'name' => 'charsSymbols', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
         </div>
 

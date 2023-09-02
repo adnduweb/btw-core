@@ -132,7 +132,7 @@ class ActivityController extends AdminController
             ->setSearchableColumns(['event_access', 'event_method', 'user_id'])
             ->add('select', function ($row) {
                 $row = new Activity((array) $row);
-                return view('Themes\Admin\Datatabase\select', ['row' => $row]);
+                return view_cell('Btw\Core\Cells\Datatable\DatatableSelect', ['row' => $row]);
             }, 'first')
             // ->hide('id')
             ->format('created_at', function ($value) {
@@ -169,7 +169,10 @@ class ActivityController extends AdminController
             })
             ->add('action', function ($row) {
                 $row = new Activity((array) $row);
-                return view('Themes\Admin\Datatabase\action', ['row' => $row, 'actions' => DataTable::actions(self::$actions, $row)]);
+                return view_cell('Btw\Core\Cells\Datatable\DatatableAction', [
+                    'row' => $row,
+                    'actions' => DataTable::actions(self::$actions, $row)
+                ]);
             }, 'last')
             ->toJson(true);
     }
@@ -196,7 +199,7 @@ class ActivityController extends AdminController
             foreach ($data['identifier'] as $identifier) {
                 $model->where('id', $identifier)->delete();
             }
-            $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['customers'])]);
+            $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['log system'])]);
             $this->response->triggerClientEvent('reloadTable');
         }
         return $this->respondNoContent();

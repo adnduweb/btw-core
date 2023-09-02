@@ -1,11 +1,11 @@
 <?= $this->extend(config('Auth')->views['layout']) ?>
 
 <?php $this->section('main') ?>
-<x-page-head>
-    <x-module-title><i class="fas fa-user"></i> Permissions</x-module-title>
-</x-page-head>
 
-<x-admin-box>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.general.Permissions')]) ?>
+
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
+
 
     <div class="row justify-content-md-center">
 
@@ -15,7 +15,7 @@
 
     </div>
 
-</x-admin-box>
+</div>
 <?php $this->endSection() ?>
 
 <?php $this->section('scripts') ?>

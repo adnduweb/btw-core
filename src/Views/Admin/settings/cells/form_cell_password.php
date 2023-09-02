@@ -6,7 +6,7 @@
         <!-- Site Name -->
         <div class="row">
 
-        <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+        <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                 'type' => 'number',
                 'label' => lang('Form.settings.minimumPasswordLength'),
                 'name' => 'minimumPasswordLength',
@@ -27,13 +27,13 @@
             <div class="form-group col-6 col-sm-4">
 
                 <!-- Composition Validator -->
-                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [ 'label' => lang('Form.settings.CompositionValidator'), 'name' => 'validators[]', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\CompositionValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\CompositionValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [ 'label' => lang('Form.settings.CompositionValidator'), 'name' => 'validators[]', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\CompositionValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\CompositionValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
                 <!-- Nothing Personal Validator -->
-                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [ 'label' => lang('Form.settings.NothingPersonalValidator'), 'name' => 'validators[]', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [ 'label' => lang('Form.settings.NothingPersonalValidator'), 'name' => 'validators[]', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
                 <!-- Dictionary Validator -->
-                <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [ 'label' => lang('Form.settings.NothingCompositionValidator'), 'name' => 'validators[]', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [ 'label' => lang('Form.settings.NothingCompositionValidator'), 'name' => 'validators[]', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\DictionaryValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
                  <!-- Pwned Validator -->
-                 <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [ 'label' => lang('Form.settings.DictionaryValidator'), 'name' => 'validators[]', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\PwnedValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\PwnedValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
+                 <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [ 'label' => lang('Form.settings.DictionaryValidator'), 'name' => 'validators[]', 'value' => 'CodeIgniter\Shield\Authentication\Passwords\PwnedValidator' ,'checked' => (in_array('CodeIgniter\Shield\Authentication\Passwords\PwnedValidator', old('validators', setting('Auth.passwordValidators')), true)),'class' => "mb-3"]); ?>
             </div>
             <div class="col-6 px-4">
                 <ul class="text-muted small text-sm text-gray-500  dark:text-gray-300">
@@ -47,7 +47,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingpassword" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingpassword"]) ?>
     </div>
 
 </div>

@@ -5,11 +5,9 @@
 <?= $this->section('main') ?>
 
 
-<x-page-head>
-    <h2>tokencreate</h2>
-</x-page-head>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.general.tokens_create')]) ?>
 
-<x-admin-box>
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 
     <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
         <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\sidebar'); ?>
@@ -27,6 +25,6 @@
             </div>
 
         </div>
-
-</x-admin-box>
+    </div>
+</div>
 <?php $this->endSection() ?>

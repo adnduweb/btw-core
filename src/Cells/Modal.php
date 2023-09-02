@@ -26,7 +26,7 @@ class Modal
 
         // print_r($params); exit;
 
-        return view('Btw\Core\Cells\views\modal', ['params' => $params]);
+        return view('Btw\Core\Cells\Views\display_modal_cell', ['params' => $params]);
        
     }
 }

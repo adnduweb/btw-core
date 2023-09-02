@@ -77,6 +77,7 @@ class VisitsFilter implements FilterInterface
             throw new RuntimeException('The user_id() function must be available to track by user ID.'); // @codeCoverageIgnore
         }
 
+        return;
         // Use the Request to create a Visit
         $visit = $this->model->makeFromRequest($request);
 

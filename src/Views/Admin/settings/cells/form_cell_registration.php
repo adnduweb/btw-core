@@ -6,7 +6,7 @@
 
         <div class="row mb-3">
 
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('Form.settings.AllowUsersToRegister'),
                 'name' => 'allowRegistration',
                 'value' => '1',
@@ -18,7 +18,7 @@
 
         <div class="row mb-3">
 
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('Form.settings.ForceEmailVerificationAfterRegistration'),
                 'name' => 'emailActivation',
                 'value' => 'Btw\Core\Authentication\Actions\EmailActivator',
@@ -36,7 +36,7 @@
                     <label class="form-label mb-10 dark:text-gray-300"><?= lang('Form.settings.DefaultUserGroup'); ?>:</label>
                     <?php foreach ($groups as $group => $info) : ?>
                         <div class="form-check ml-4 mb-2 mt-2 ">
-                            <?= view_cell('Btw\Core\Cells\RadioCell::renderList', ['label' => esc(ucfirst($info['title'])), 'name' => 'defaultGroup', 'value' => $group, 'checked' => ($group === $defaultGroup)]); ?>
+                            <?= view_cell('Btw\Core\Cells\Forms\RadioCell::renderList', ['label' => esc(ucfirst($info['title'])), 'name' => 'defaultGroup', 'value' => $group, 'checked' => ($group === $defaultGroup)]); ?>
                         </div>
                     <?php endforeach ?>
 
@@ -48,7 +48,7 @@
         <?php endif ?>
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingregistration" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingregistration"]) ?>
     </div>
 
 </div>

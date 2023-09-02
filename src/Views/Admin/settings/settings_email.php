@@ -2,10 +2,9 @@
 
 <?php $this->section('main') ?>
 
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.general.settings')]) ?>
 
-<x-page-head>Settings </x-page-head>
-
-<x-admin-box>
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 
     <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
         <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\sidebar'); ?>
@@ -24,5 +23,5 @@
 
         </div>
 
-</x-admin-box>
+</div>
 </div <?php $this->endSection() ?>

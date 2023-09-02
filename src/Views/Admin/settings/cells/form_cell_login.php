@@ -4,7 +4,7 @@
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200"><?= lang('Btw.cellh3.login'); ?></h3>
 
         <div class="row mb-3">
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('Form.settings.AllowUsersToBeRemembered'),
                 'name' => 'allowRemember',
                 'value' => '1',
@@ -18,7 +18,7 @@
         <div class="row mb-3" x-show="remember">
             <div class="form-group col-12 col-sm-4">
 
-                <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
                     'label' => lang('Form.settings.RememberUsersForHowLong'),
                     'name' => 'rememberLength',
                     'options' => array_flip($rememberOptions),
@@ -32,7 +32,7 @@
 
         <div class="row mb-3">
 
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('Form.settings.Force2FACheckAfterLogin'),
                 'name' => 'email2FA',
                 'value' => 'Btw\Core\Authentication\Actions\Email2FA',
@@ -44,6 +44,6 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinglogin" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadinglogin"]) ?>
     </div>
 </div>

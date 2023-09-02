@@ -253,24 +253,18 @@ class ActionItem
 
     public static function getController()
     {
-
         $controllerName = service('router')->controllerName();
         $handle = explode('\\', $controllerName);
         $end = end($handle);
         $controller = strtolower(str_replace('Controller', '', $end));
         return $controller;
     }
+    
     public function getAll()
     {
-        // echo count(self::$actions); 
-        // echo ' -- ';
-        // print_r($this->actionsAllFalse); 
-        // echo ' -- ';
-        // echo count($this->actionsAllFalse); 
         if (count(self::$actions) == count($this->actionsAllFalse)) {
             return false;
         }
-        // echo 'ffffffff';
         return true;
     }
 }

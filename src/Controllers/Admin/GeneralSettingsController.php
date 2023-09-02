@@ -96,12 +96,12 @@ class GeneralSettingsController extends AdminController
                 'dateFormat' => setting('App.dateFormat') ?: 'M j, Y',
                 'timeFormat' => setting('App.timeFormat') ?: 'g:i A',
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => request()->getUri()->getPath()
             ]);
         }
 
         switch ($this->request->getVar('section')) {
-            case 'general':
+            case 'generalsetting':
 
                 $data = $this->request->getPost();
                 $validation = service('validation');
@@ -112,7 +112,7 @@ class GeneralSettingsController extends AdminController
 
                 if (!$validation->run($data)) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
-                    $this->response->setReswap('innerHTML show:#general:top');
+                    $this->response->setReswap('innerHTML show:#information:top');
                     return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [
                         'validation' => $validation
                     ]);
@@ -124,6 +124,7 @@ class GeneralSettingsController extends AdminController
                 
 
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
+                $this->response->setReswap('innerHTML show:#information:top');
                 return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [ 'siteOnline' => setting('Site.siteOnline')]);
 
                 break;
@@ -249,7 +250,7 @@ class GeneralSettingsController extends AdminController
                 'defaultGroup' => setting('AuthGroups.defaultGroup'),
                 'groups' => setting('AuthGroups.groups'),
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => request()->getUri()->getPath()
             ]);
         }
         switch ($this->request->getVar('section')) {
@@ -337,7 +338,7 @@ class GeneralSettingsController extends AdminController
 
             return $this->render($this->viewPrefix . 'settings_passwords', [
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => request()->getUri()->getPath()
             ]);
         }
 
@@ -386,7 +387,7 @@ class GeneralSettingsController extends AdminController
 
             return $this->render($this->viewPrefix . 'settings_avatar', [
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => request()->getUri()->getPath()
             ]);
         }
 
@@ -425,7 +426,7 @@ class GeneralSettingsController extends AdminController
                 'config' => config('Email'),
                 'activeTab' => setting('Email.protocol') ?? 'smtp',
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => request()->getUri()->getPath()
             ]);
         }
 
@@ -501,7 +502,7 @@ class GeneralSettingsController extends AdminController
 
             return $this->render($this->viewPrefix . 'settings_oauth', [
                 'menu' => service('menus')->menu('sidebar_on'),
-                'currentUrl' => (string) current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => request()->getUri()->getPath()
             ]);
         }
 

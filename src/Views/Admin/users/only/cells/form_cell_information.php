@@ -24,7 +24,7 @@
             <div class="text-center">
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="<?= service('storage')->getFileUrl($userCurrent->photo_profile, ['size' => 'image300x300']); ?>"
+                    <img src="<?= service('storage')->getFileUrl($user->photo_profile, ['size' => 'image300x300']); ?>"
                         class="w-40 h-40 m-auto rounded-full shadow" />
                 </div>
                 <!-- New Profile Photo Preview -->
@@ -46,20 +46,20 @@
         <!-- Site Name -->
         <div class="flex flex-wrap -mx-3 mb-2">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.users.first_name'),
                     'name' => 'first_name',
-                    'value' => old('first_name', $userCurrent->first_name)
+                    'value' => old('first_name', $user->first_name)
                 ]); ?>
 
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'text',
                     'label' => lang('Form.users.last_name'),
                     'name' => 'last_name',
-                    'value' => old('last_name', $userCurrent->last_name)
+                    'value' => old('last_name', $user->last_name)
                 ]); ?>
             </div>
         </div>
@@ -67,11 +67,11 @@
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3">
 
-                <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                     'type' => 'email',
                     'label' => lang('Form.users.email'),
                     'name' => 'email',
-                    'value' => old('email', $userCurrent->email),
+                    'value' => old('email', $user->email),
                     'description' => lang('Form.users.TheUsersWillHaveToRverifyTheirEmailAddress')
                 ]); ?>
 
@@ -81,7 +81,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadinginformation" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadinginformation"]) ?>
     </div>
 
 </div>

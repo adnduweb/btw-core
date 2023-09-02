@@ -5,10 +5,11 @@
 <?= $this->section('main') ?>
 
 
-<x-page-head tAdd='<?=  lang('Btw.AddBouton', ['rôle']); ?>' lAdd='group-add'> <?= lang('Btw.roles'); ?> </x-page-head>
-<x-admin-box collapse=true>
-<?= $this->include('Btw\Core\Views\Admin\groups\table'); ?>
-</x-admin-box>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.roles'), 'add' => ['href' => 'group-add', 'text' => lang('Btw.AddBouton', ['rôle'])]]) ?>
+
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
+    <?= $this->include('Btw\Core\Views\Admin\groups\table'); ?>
+</div>
 
 <?= $this->endSection() ?>
 

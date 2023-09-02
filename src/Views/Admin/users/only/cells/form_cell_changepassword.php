@@ -3,15 +3,11 @@
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Change paswword</h3>
 
-
-
-        <?php ''; // print_r($userCurrent); 
-        ?>
         <div class="flex flex-wrap  mb-6">
             <div x-data="{ show: true }" class="w-full relative mb-6">
 
                 <div class="relative">
-                    <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                    <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                         'type' => 'password',
                         'label' => lang('Btw.Current password'),
                         'name' => 'current_password',
@@ -24,7 +20,7 @@
             <div x-data="{ show: true }" class="w-full relative mb-6">
                 <div class="relative">
 
-                    <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                    <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                         'type' => 'password',
                         'label' => lang('Btw.New password'),
                         'name' => 'new_password',
@@ -39,7 +35,7 @@
             <div x-data="{ show: true }" class="w-full relative mb-6">
                 <div class="w-full ">
                     <div class="relative">
-                        <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                        <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                             'type' => 'password',
                             'label' => lang('Btw.Confirm password'),
                             'name' => 'pass_confirm',
@@ -74,25 +70,25 @@
         </div>
         <div class="flex -mx-2 mb-2">
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Btw.LOWERCASE'), 'name' => 'charsLower', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\CheckBoxCell::renderList', ['label' => lang('Btw.LOWERCASE'), 'name' => 'charsLower', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Btw.UPPERCASE'), 'name' => 'charsUpper', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\CheckBoxCell::renderList', ['label' => lang('Btw.UPPERCASE'), 'name' => 'charsUpper', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
         </div>
         <div class="flex -mx-2">
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Btw.NUMBERS'), 'name' => 'charsNumeric', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\CheckBoxCell::renderList', ['label' => lang('Btw.NUMBERS'), 'name' => 'charsNumeric', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
             <div class="w-1/2 px-2">
-                <?= view_cell('Btw\Core\Cells\CheckBoxCell::renderList', ['label' => lang('Btw.SYMBOLS'), 'name' => 'charsSymbols', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
+                <?= view_cell('Btw\Core\Cells\Forms\CheckBoxCell::renderList', ['label' => lang('Btw.SYMBOLS'), 'name' => 'charsSymbols', 'value' => "", 'checked' => true, 'xInput' => "generatePassword()", 'class' => "align-middle"]); ?>
             </div>
         </div>
 
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingchangepassword" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingchangepassword"]) ?>
     </div>
 
 </div>

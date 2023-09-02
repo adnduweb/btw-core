@@ -3,15 +3,19 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview"
+        "dev:admin": "vite --config vite.admin.config.js",
+        "dev:front": "vite --config vite.front.config.js",
+        "build:front": "vite build --config vite.front.config.js",
+        "build:admin": "vite build --config vite.admin.config.js",
+        "dev": "npm run dev:admin & npm run dev:front",
+        "build": "npm run build:front && npm run build:admin"
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.9",
         "autoprefixer": "^10.4.13",
         "postcss": "^8.4.21",
         "sass": "^1.62.0",
+        "select2": "^4.1.0-rc.0",
         "tailwindcss": "^3.3.2",
         "vite": "^2.9.13"
     },

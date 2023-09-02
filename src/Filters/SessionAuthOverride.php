@@ -71,7 +71,7 @@ class SessionAuthOverride implements FilterInterface
         }
 
         if (!$authenticator->loggedIn()) {
-            $current = (string)current_url(true)->setHost('')->setScheme('');
+            $current = (string)current_url(true);
             if (!in_array((string)$current, [route_to('action.logout')])){
                 session()->set('redirect_url', $current);
             }

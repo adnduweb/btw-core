@@ -9,7 +9,7 @@ class SearchManager
      */
     public function render()
     {
-        $cellClasses = setting('Btw.cellsearch');
+        $cellClasses = setting('Search.cellsearch');
 
         if (! count($cellClasses)) {
             return;
@@ -18,6 +18,8 @@ class SearchManager
         foreach ($cellClasses as $alias) {
             [$class, $method] = explode('::', $alias);
             $class            = new $class();
+
+            //var_dump($class->{$method}()); exit;
 
             echo (string) $class->{$method}();
         }

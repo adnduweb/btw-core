@@ -5,12 +5,10 @@
 <?= $this->section('main') ?>
 
 
-<x-page-head> 
-        <h2>System Info</h2>
-    </x-page-head>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' =>   lang('Btw.general.systemInfo')]) ?>
 
-    <x-admin-box>
-
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
+<div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow overflow-y-auto relative pt-5" hx-boost="false">
         <fieldset class="px-4 py-5 sm:px-6 ">
             <legend class="text-base font-semibold leading-6 text-gray-900">Server Information</legend>
 
@@ -64,8 +62,8 @@
             <legend class="text-base font-semibold leading-6 text-gray-900">Filesystem</legend>
 
             <div class="col-12 col-sm-6">
-                <table class="table table-striped">
-                    <tbody>
+            <table class="min-w-full divide-y divide-gray-300">
+                    <tbody class="divide-y divide-gray-200">
                         <tr scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">
                             <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500" colspan="3"><i class="far fa-file"></i> .env</td>
                             <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">
@@ -87,7 +85,7 @@
                             </td>
                         </tr>
                     <?php foreach (get_dir_file_info(WRITEPATH, true) as $folder => $info) : ?>
-                        <tr>
+                        <tr class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">
                             <?php if (is_dir(WRITEPATH . $folder)) : ?>
                                 <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500" colspan="3">
                                     <i class="fas fa-minus"></i>
@@ -118,5 +116,6 @@
                 </table>
             </div>
         </fieldset>
-    </x-admin-box>
+                                </div>
+    </div>
 <?php $this->endSection() ?>

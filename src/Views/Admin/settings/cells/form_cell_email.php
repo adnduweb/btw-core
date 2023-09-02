@@ -7,7 +7,7 @@
 
         <div class="row mb-3">
 
-            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                 'type' => 'text',
                 'label' => lang('Form.general.Name'),
                 'name' => 'fromName',
@@ -19,7 +19,7 @@
 
         <div class="row mb-3">
 
-            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                 'type' => 'text',
                 'label' => lang('Form.general.fromEmail'),
                 'name' => 'fromEmail',
@@ -38,7 +38,7 @@
             <div class="row mb-3">
                 <div class="form-group col-12 col-sm-6 col-md-3">
 
-                    <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
+                    <?= view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
                         'label' => lang('Form.general.protocol'),
                         'name' => 'protocol',
                         'options' => ['smtp' => 'smtp', 'mail' => 'mail', 'sendmail' => 'sendmail'],
@@ -61,7 +61,7 @@
                 <div id="mail-settings" x-show="openTab === 'sendmail'" style="display: none;" x-transition>
                     <div class="row mb-3">
 
-                        <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                        <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                             'type' => 'text',
                             'label' => lang('Form.general.mailPath'),
                             'name' => 'mailPath',
@@ -78,7 +78,7 @@
 
                         <div class="form-group col-12 col-sm-6">
 
-                            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                                 'type' => 'text',
                                 'label' => lang('Form.general.SMTPHost'),
                                 'name' => 'SMTPHost',
@@ -89,7 +89,7 @@
                         <!-- Port -->
                         <div class="form-group col-12 col-sm-3">
 
-                            <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
+                            <?= view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
                                 'label' => lang('Form.general.SMTPPort'),
                                 'name' => 'SMTPPort',
                                 'options' =>  ['25' => '25', '587' => '587', '465' => '465',  '2525' => '2525',  'other' => 'other'],
@@ -104,7 +104,7 @@
 
                         <div class="form-group col-12 col-sm-3" x-show="open">
 
-                            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                                 'type' => 'text',
                                 'label' => lang('Form.general.Other'),
                                 'name' => 'SMTPPortOther',
@@ -118,7 +118,7 @@
                         <!-- Username -->
                         <div class="form-group col-12 col-sm-6">
 
-                            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                                 'type' => 'text',
                                 'label' => lang('Form.general.Username'),
                                 'name' => 'SMTPUser',
@@ -132,7 +132,7 @@
                         <!-- Password -->
                         <div class="form-group col-12 col-sm-6">
 
-                            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                                 'type' => 'text',
                                 'label' => lang('Form.general.Password'),
                                 'name' => 'SMTPPass',
@@ -146,7 +146,7 @@
                         <!-- Crypto -->
                         <div class="form-group col-12 col-sm-6">
 
-                            <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
+                            <?= view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
                                 'label' => lang('Form.general.SMTPCrypto'),
                                 'name' => 'SMTPCrypto',
                                 'options' =>  ['tls' => 'tls', 'ssl' => 'ssl'],
@@ -160,7 +160,7 @@
                         <!-- Timeout -->
                         <div class="form-group col-12 col-sm-3">
 
-                            <?= view_cell('Btw\Core\Cells\InputCell::renderList', [
+                            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                                 'type' => 'text',
                                 'label' => lang('Form.settings.Timeout (in seconds)'),
                                 'name' => 'SMTPTimeout',
@@ -172,7 +172,7 @@
                         <!-- Timeout -->
                         <div class="form-group col-12 col-sm-3">
 
-                            <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
+                            <?= view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
                                 'label' => lang('Form.settings.Persistant Connection?'),
                                 'name' => 'SMTPKeepAlive',
                                 'options' =>  ['0' => '0', '1' => '1'],
@@ -190,7 +190,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingemail" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingemail"]) ?>
     </div>
 
 </div>

@@ -7,7 +7,7 @@
         <div class="row mb-3">
             <div class="form-group col-12 col-sm-4">
 
-                <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
                     'label' => lang('Form.settings.DisplayInitialsBasedOn'),
                     'name' => 'avatarNameBasis',
                     'options' => ['name' => 'Full Name', 'username' => 'Username'],
@@ -20,7 +20,7 @@
         <!-- Use Gravatar -->
         <div class="row mb-3">
 
-            <?= view_cell('Btw\Core\Cells\SwitchCell::renderList', [
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('Form.settings.UseGravatarForAvatars'),
                 'name' => 'useGravatar',
                 'value' => '1',
@@ -37,7 +37,7 @@
 
         <div class="row mb-3" x-show="useGravatar != false">
             <div class="form-group col-12 col-sm-4">
-                <?= view_cell('Btw\Core\Cells\SelectCell::renderList', [
+                <?= view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
                     'label' => lang('Form.settings.GravatarForDefaultStyle'),
                     'name' => 'gravatarDefault',
                     'options' => [
@@ -58,7 +58,7 @@
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
-        <x-button-save type="submit" text="<?= lang('Btw.save'); ?>" loading="loadingavatar" />
+        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.save'), 'loading' => "loadingavatar"]) ?>
     </div>
 
 </div>

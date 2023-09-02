@@ -1,20 +1,20 @@
 <div class='flex mb-5' hx-ext="echarts" _="on htmx:afterOnLoad take .text-indigo-600 for event.target">
-    <?= $this->setData([
-        'period' => 'week',
-        'route' => route_to('charts-hx-update'),
-        'selected' => true,
-        'type' => 'page_views',
-        'label' => 'Last Week'
-    ])->include('Themes\Admin\Components\chart_filter'); ?>
+<?= view_cell('Btw\Core\Cells\Charts\AdminChartFilter', [
+    'period' => 'week',
+    'route' => route_to('charts-hx-update'),
+    'selected' => true,
+    'type' => 'page_views',
+    'label' => 'Last Week'
+  ]) ?>
 
-    <?= $this->setData([
-        'period' => 'month',
-        'route' => route_to('charts-hx-update'),
-        'selected' => false,
-        'type' => 'page_views',
-        'label' => 'Last Month'
-    ])->include('Themes\Admin\Components\chart_filter'); ?>
-
+<?= view_cell('Btw\Core\Cells\Charts\AdminChartFilter', [
+    'period' => 'month',
+    'route' => route_to('charts-hx-update'),
+    'selected' => false,
+    'type' => 'page_views',
+    'label' => 'Last Month'
+  ]) ?>
+  
 </div>
 
 <!-- <div hx-get="<?= route_to('charts-hx'); ?>" hx-swap="innerHTML" hx-target="#charts"></div> -->

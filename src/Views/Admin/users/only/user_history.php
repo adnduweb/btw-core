@@ -2,9 +2,9 @@
 
 <?php $this->section('main') ?>
 
-<x-page-head> User <?= $user->last_name; ?> <?= $user->first_name; ?> </x-page-head>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' =>   lang('Btw.general.edit') . ' : ' . ucfirst($user->last_name) . ' ' . ucfirst($user->first_name) ]) ?>
 
-<x-admin-box>
+<div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 
 <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
 <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\sidebar'); ?>
@@ -24,5 +24,5 @@
         </div>
     </div>
 
-</x-admin-box>
+</div>
 <?php $this->endSection() ?>

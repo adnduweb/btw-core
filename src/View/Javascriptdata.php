@@ -16,8 +16,8 @@ class Javascriptdata
 
         $this->token = getAdminToken(service('router')->controllerName() . (isset(Auth()->user()->id) ?? null) . (isset(Auth()->user()->last_login_at) ?? null));
 
-        $this->base[] = ['base_url' => site_url(),];
-        $this->base[] = ['current_url' => current_url()];
+        $this->base[] = ['base_url' => config('app')->baseURL];
+        $this->base[] = ['current_url' =>  (string) current_url(true)];
         $this->base[] = ['areaAdmin' => env('app.areaAdmin')];
         $this->base[] = ['uri' => service('request')->getUri()->getPath()];
         $this->base[] = ['basePath' => '\/'];
@@ -38,7 +38,7 @@ class Javascriptdata
             $this->base[] = ['id_group' => json_encode($id_group)];
             $this->base[] = ['activer_multilangue' => service('settings')->get('App.language_bo', 'multilangue')];
             $this->base[] = ['tokenHashPage' => $this->token];
-            $this->base[] = ['System' => json_encode(['sendMailAccountManager' => site_url(route_to('send-mail-account-manager')), 'ajax' => site_url(route_to('ajax'))])];
+            //$this->base[] = ['System' => json_encode(['sendMailAccountManager' => site_url(route_to('send-mail-account-manager')), 'ajax' => site_url(route_to('ajax'))])];
         }
     }
 

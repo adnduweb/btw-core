@@ -162,7 +162,7 @@ class GroupsController extends AdminController
                 'group' => setting('AuthGroups.groups')[$alias],
                 'pageTitleDefault' => ucfirst(lang('Core.EditGroupsAndPermission') . ' : ' . ucfirst($alias)),
                 'menu' => service('menus')->menu('sidebar_group'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
 
@@ -195,7 +195,7 @@ class GroupsController extends AdminController
             'group' => $groupConfig[$post['alias']],
             'pageTitleDefault' => ucfirst(lang('Core.EditGroupsAndPermission') . ' : ' . ucfirst($alias)),
             'menu' => service('menus')->menu('sidebar_group'),
-            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            'currentUrl' => (string)current_url(true)
         ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['groups']));
     }
 
@@ -221,6 +221,9 @@ class GroupsController extends AdminController
 
         $matrix = setting('AuthGroups.matrix');
 
+        // print_r($permissions);
+        // print_r($matrix); exit;
+
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'group_capabilities', [
@@ -228,7 +231,7 @@ class GroupsController extends AdminController
                 'permissions'   => $permissions,
                 'matrix' => (isset($matrix[$alias])) ? array_flip($matrix[$alias]) : false,
                 'menu' => service('menus')->menu('sidebar_group'),
-                'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+                'currentUrl' => (string)current_url(true)
             ]);
         }
     }
@@ -268,7 +271,7 @@ class GroupsController extends AdminController
             'description'   => $permissions[$perm],
             'matrix' => array_flip($matrix[$data['alias']]),
             'menu' => service('menus')->menu('sidebar_user_current'),
-            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            'currentUrl' => (string)current_url(true)
         ]);
     }
 
@@ -304,7 +307,7 @@ class GroupsController extends AdminController
             'alias'   => $data['alias'],
             'matrix' => array_flip($matrix[$data['alias']]),
             'menu' => service('menus')->menu('sidebar_user_current'),
-            'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+            'currentUrl' => (string)current_url(true)
         ]) . alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
     }
 
