@@ -213,7 +213,7 @@ class Install extends BaseCommand
     {
         CLI::write('Generating Cookie', 'yellow');
         $this->updateEnvFile("# security.csrfProtection = 'cookie'", "security.csrfProtection = 'session'");
-        $this->updateEnvFile("# security.tokenRandomize = false", "security.tokenRandomize = false");
+        $this->updateEnvFile("# security.tokenRandomize = false", "security.tokenRandomize = true");
         $this->updateEnvFile("# security.tokenName = 'csrf_token_name'", "security.tokenName = 'x-csrfToken'");
         $this->updateEnvFile("# security.headerName = 'X-CSRF-TOKEN'", "security.headerName = 'X-CSRF-TOKEN'");
         $this->updateEnvFile("# security.cookieName = 'csrf_cookie_name'", "security.cookieName = 'adn_" . rand() . "'");

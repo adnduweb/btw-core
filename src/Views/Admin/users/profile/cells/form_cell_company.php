@@ -158,6 +158,7 @@
                 'options' => \Btw\Core\Libraries\Data::getCountriesList(),
                 'byKey' => true,
                 'val' => "name",
+                'default' => 'FR',
                 'required' => true,
                 'class' => "select2-country",
                 'selected' => old('country', $company->country)
@@ -187,7 +188,7 @@
                     'name' => 'phone_mobile',
                     'value' => old('phone_mobile', $company->phone_mobile),
                     'lang' => false,
-                    'class' => 'phoneintl'
+                    'class' => 'phoneintl' 
                 ]); ?>
 
             </div>

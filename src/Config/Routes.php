@@ -74,7 +74,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->get('user/update/avatar', 'ProfileController::updateAvatar', ['as' => 'user-update-avatar']);
     $routes->get('user/update/language', 'ProfileController::changeLangue', ['as' => 'user-profile-language']);
     $routes->get('user/update/sidebar-expanded', 'ProfileController::changeSidebarExpanded', ['as' => 'user-profile-sidebarexpanded']);
-    $routes->match(['get', 'post'], 'company', 'ProfileController::company', ['as' => 'company-display']);
+    $routes->match(['get', 'post'], 'profile/company', 'ProfileController::company', ['as' => 'company-display']);
     $routes->match(['get', 'post'], 'profile/maj-debug', 'ProfileController::majDebug', ['as' => 'user-majdebug']);
 
     // Files Logs

@@ -102,7 +102,7 @@ class DropdownCell
                         $value = isset($val[$this->val]) ? $val[$this->val] : $val;
                         $newSelected = ((!empty($params['selected'])) && $params['selected'] == $key) ? ' selected="selected" ' : '';
                         $newSelected = (empty($params['selected']) && $params['default'] ==  $key) ? ' selected="selected" ' : $newSelected;
-                        $newSelected = (empty($params['selected']) && $key ==  request()->getPost($this->name)) ? ' selected="selected" ' : '';
+                        $newSelected = (empty($params['selected']) && $key ==  request()->getPost($this->name)) ? ' selected="selected" ' : $newSelected;
                        
                         $valueOption = $key;
                     }

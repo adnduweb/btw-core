@@ -173,7 +173,7 @@
                 <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
                     <div @click="open = ! open" class="">
                         <button hx-get="<?= route_to('user-update-avatar'); ?>" hx-trigger="updateAvatar from:body" type="button" class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800" aria-expanded="false" aria-haspopup="true">
-                            <?= $this->setVar('auth', auth())->include('partials/headers/renderAvatar'); ?>
+                            <?= view_cell('Btw\Core\Cells\Core\AdminAvatar',['auth' => auth()]); ?>
                         </button>
                     </div>
 

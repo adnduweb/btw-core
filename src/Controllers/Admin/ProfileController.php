@@ -196,9 +196,7 @@ class ProfileController extends AdminController
 
     public function updateAvatar()
     {
-        return view('Themes\Admin\partials\headers\renderAvatar', [
-            'auth' => auth()
-        ]);
+        return view_cell('Btw\Core\Cells\Core\AdminAvatar',['auth' => auth()]);
     }
 
     public function updateGroup(int $id)

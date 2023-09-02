@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Btw\Core\Config;
 
 use Btw\Core\Filters\AdminFilter;
- use Btw\Core\Filters\ProtectFilter;
+use Btw\Core\Filters\ProtectFilter;
 use Btw\Core\Filters\OnlineCheckFilter;
 use Btw\Core\Filters\VisitsFilter;
 // use Btw\Core\Filters\BlockIpFilter;
@@ -73,6 +73,10 @@ class Registrar
                     'after' => [ADMIN_AREA . '*'],
                 ],
             ],
+            'methods' => [
+                'get'  => ['csrf'],
+                'post' => ['csrf']
+            ]
         ];
     }
 
