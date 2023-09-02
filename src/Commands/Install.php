@@ -73,7 +73,7 @@ class Install extends BaseCommand
         // 'Btw\Core\Assets\Config\Assets',
         //'Btw\Core\Config\Auth',
         //'Btw\Core\Config\AuthGroups',
-        'Btw\Core\Config\Btw',
+        // 'Btw\Core\Config\Btw',
         //'Btw\Core\Config\Site',
         //'Btw\Core\Config\Themes',
         //'Btw\Core\Consent\Config\Consent',
@@ -247,12 +247,12 @@ class Install extends BaseCommand
         $publisher = new Publisher();
         $publisher->copyDirectory($source, $destination);
         $publisher->copyDirectory(BTPATH . '../package.json', APPPATH . '../package.json');
-        $publisher->copyDirectory(BTPATH . '../vite.config.js', APPPATH . '../vite.config.js');
+        $publisher->copyDirectory(BTPATH . '../vite.config.js', APPPATH . '../vite.admin.config.js');
         $publisher->copyDirectory(BTPATH . '../tailwind.config.js', APPPATH . '../tailwind.config.js');
 
         //logo
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/logo-adn.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/logo-adn-grey.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/admin/logo-adn.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/logo-adn-grey.png');
     }
 
     private function setEncryptionKey()
