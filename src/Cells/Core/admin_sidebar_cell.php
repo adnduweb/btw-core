@@ -68,7 +68,7 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:flex flex-col lg:inset-y-0 transition-all duration-300 ease-in-out" :class="isSidebarExpanded ? 'w-64' : 'w-20'">
         <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 dark:border-gray-800">
-            <div class="flex items-center flex-shrink-0 px-4 dark:bg-slate-800 bg-gray-900 " :class="isSidebarExpanded ? '' : 'pt-5'">
+            <div class="flex items-center flex-shrink-0 px-4 dark:bg-slate-800 bg-gray-900 " :class="isSidebarExpanded ? '' : 'pt-5 pb-5'">
                 <a href="<?= site_url(ADMIN_AREA); ?>" class="flex items-center">
                     <img src="<?= base_url() . 'logo-adn-blanc.png'; ?>" alt="ADN du Web" :class="isSidebarExpanded ? 'block' : 'hidden'" class="h-15 w-56 dark:grayscale grayscale-0 app-sidebar-logo-default">
                     <img x-cloak src="<?= base_url() . 'logo-adn-small.png'; ?>" alt="ADN du Web" :class="isSidebarExpanded ? 'hidden' : 'block'" class="h-20px w-full dark:grayscale grayscale-0 app-sidebar-logo-minimize">
