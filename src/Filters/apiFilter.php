@@ -10,7 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
  
-class AuthFilter implements FilterInterface
+class apiFilter implements FilterInterface
 {
     
     /**

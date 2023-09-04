@@ -732,13 +732,12 @@ if (!function_exists('passwdGen')) {
         }
         return $passwd;
     }
+}
 
-
-    if (!function_exists('retirelignesvident')) {
-        function retirelignesvident($string)
-        {
-            return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
-        }
+if (!function_exists('retirelignesvident')) {
+    function retirelignesvident($string)
+    {
+        return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
     }
 }
 

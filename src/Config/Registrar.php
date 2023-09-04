@@ -7,8 +7,8 @@ namespace Btw\Core\Config;
 use Btw\Core\Filters\AdminFilter;
 use Btw\Core\Filters\ProtectFilter;
 use Btw\Core\Filters\OnlineCheckFilter;
+use Btw\Core\Filters\HtmxFilter;
 use Btw\Core\Filters\VisitsFilter;
-// use Btw\Core\Filters\BlockIpFilter;
 use Btw\Core\View\ShieldOAuth;
 use Btw\Core\View\Decorator;
 use Btw\Core\View\ErrorModalDecorator;
@@ -46,15 +46,14 @@ class Registrar
                 'protect'   => ProtectFilter::class,
                 'online'   => OnlineCheckFilter::class,
                 'visits' => VisitsFilter::class,
-                // 'blockIP' => BlockIpFilter::class, 
+                'htmx' => HtmxFilter::class,
+                
             ],
             'globals' => [
-                // 'before' => [
-                //     'csrf' => ['except' => ['api/record/[0-9]+']],
-                // ],
                 'before' => array_merge_recursive($props['globals']['before'], [
                     'online' => ['except' => ['site-offline', ADMIN_AREA . '*', 'login*']],
                     'csrf' => ['except' => ['api/record/[0-9]+']],
+                    'htmx'
                     //'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
                 ]),
                 'after' => array_merge_recursive($props['globals']['after'], [

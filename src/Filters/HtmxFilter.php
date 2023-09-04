@@ -15,11 +15,8 @@ use Btw\Core\Exceptions\notAuthorized;
  *
  * Email/Password-based authentication for web applications.
  */
-class BlockIpFilter implements FilterInterface
+class HtmxFilter implements FilterInterface
 {
-
-
-    public $blockIps = ['whitelist-ip-1', 'whitelist-ip-2', '127.0.0.1', '::1'];
 
     /**
      * Do whatever processing this filter needs to do.
@@ -37,18 +34,10 @@ class BlockIpFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-      
-        if (!in_array($request->getIPAddress(), $this->blockIps)) {
-            //throw new HttpException(403, "You are restricted to access the site.", null);
-            // abort(403, "You are restricted to access the site.");
-            // echo $request->getIPAddress(); exit;
-            //return response()->setStatusCode(403, 'You are restricted to access the site.');
-            //throw new \Exception('cool', 403);
-            //throw new \Exception('Some message goes here');
-            //throw new \Exception('You are restricted to access the site', 403); 
-           // throw new class ('You are restricted to access the site', 403) extends \Exception implements \CodeIgniter\Exceptions\HTTPExceptionInterface {}; 
-            throw notAuthorized::forSite();
-            //return response()->setStatusCode(403, 'Nope. Not here.');
+
+        if ($request->isHtmx() && response()->getStatusCode() == '302') {
+
+            echo 'Bouh'; exit;
         }
     }
 

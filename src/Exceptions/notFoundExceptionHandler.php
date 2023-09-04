@@ -2,8 +2,8 @@
 
 namespace Btw\Core\Exceptions;
 
-use Btw\Core\Debug\BaseExceptionHandler;
-use Btw\Core\Debug\ExceptionHandlerInterface;
+use CodeIgniter\Debug\BaseExceptionHandler;
+use CodeIgniter\Debug\ExceptionHandlerInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Throwable;
@@ -36,8 +36,14 @@ class notFoundExceptionHandler extends BaseExceptionHandler implements Exception
                 $statusCode
             );
         }
+        $allSegments = $request->getUri()->getSegments();
+        if ($allSegments[0] == ADMIN_AREA){
+            $this->render($exception, $statusCode, $this->viewPath . "error_admin_{$statusCode}.php");
+        }else{
+            $this->render($exception, $statusCode, $this->viewPath . "error_front_{$statusCode}.php");
+        }
 
-        $this->render($exception, $statusCode, $this->viewPath . "error_{$statusCode}.php");
+        
         exit($exitCode);
     }
 

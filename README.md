@@ -59,7 +59,9 @@ https://alpinejs.dev/component/date-range-picker
 https://github.com/anggadarkprince/ci4-services
 https://codebase-frontend-library.github.io/codebase-4/docs/8-alpinejs-components/alpinejs-modals/
 https://dev.to/mithicher/color-picker-with-alpinejs-and-tailwindcss-1bnn
-https://www.raymondcamden.com/2022/07/29/building-related-selects-in-alpinejs -> selectbox/selectbox https://github.com/alpinejs/alpine/discussions/2865 - toasts
+https://www.raymondcamden.com/2022/07/29/building-related-selects-in-alpinejs -> selectbox/selectbox 
+https://github.com/alpinejs/alpine/discussions/2865 - toasts
+https://github.com/kenjis/ci4-album
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604
