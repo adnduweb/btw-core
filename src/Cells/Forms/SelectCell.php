@@ -30,7 +30,8 @@ class SelectCell
     protected $classError = 'border-transparent';
     protected $key;
     protected $val;
-        protected $required;
+    protected $disabled = false;
+    protected $required;
 
     /**
      * A view cell that displays the list of available filters.
@@ -62,7 +63,8 @@ class SelectCell
         $this->placeholder = (isset($params['placeholder'])) ? $params['placeholder'] : null;
         $this->key = (isset($params['key'])) ? $params['key'] : null;
         $this->val = (isset($params['val'])) ? $params['val'] : null;
-         $this->required = (isset($params['required'])) ? 'required' : '';
+        $this->required = (isset($params['required'])) ? 'required' : '';
+        $this->disabled = (isset($params['disabled'])) ? 'disabled' : '';
 
 
         if (isset($params['lang']) && $params['lang'] == true) {
@@ -79,7 +81,7 @@ class SelectCell
         $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
         if ($this->label == true)
             $html = '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . ' ' . $required . ' </label>';
-        $html .= '<select name="' . $params['name'] . '" class="' . $this->class . ' appearance-none block px-4 py-3 w-full rounded-md bg-gray-100  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150 ' . $this->classError . '"  
+        $html .= '<select '. $this->disabled . ' name="' . $params['name'] . '" class="' . $this->class . ' appearance-none block px-4 py-3 w-full rounded-md bg-gray-100  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150 ' . $this->classError . '"  
         ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxTarget . '  ' . $this->hxInclude . '  ' . $this->hxTrigger . '  ' . $this->hxSwap . ' ' . $this->ktData . ' data-kt-form-select >';
         $i = 0;
         $placeHoler = $this->placeholder ?? lang('Form.general.choisissezVotreValeur');
