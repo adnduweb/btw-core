@@ -45,7 +45,7 @@ class MediaSeeder extends Seeder
 		$ext = $file->guessExtension();
 
 		// Diffrente taille
-		if ($sizeImg = config('storage')->sizeImg) {
+		if ($sizeImg = config('Storage')->sizeImg) {
 
 			service('image')->withFile($file->getPathName())
 					->save(($basePath .  'placeholder.webp'));

@@ -91,7 +91,7 @@ class AssetController extends Controller
         $month = $segments[1];
         $file = $segments[2];
 
-        if (($fileName = @file_get_contents(WRITEPATH . 'uploads/' .  config('storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file)) === false) {
+        if (($fileName = @file_get_contents(WRITEPATH . 'uploads/' .  config('Storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file)) === false) {
             $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
             $fileName = @file_get_contents(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
             // choose the right mime type
@@ -104,7 +104,7 @@ class AssetController extends Controller
                 ->send();
         }
 
-        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' .  config('storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file);
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' .  config('Storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file);
 
         // choose the right mime type
         $mimeType = $file->getMimeType();

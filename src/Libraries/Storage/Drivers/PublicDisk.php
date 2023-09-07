@@ -85,7 +85,7 @@ class PublicDisk implements FileSystem
         $result = $content->move($this->basePath . $path, $fileName, $overwrite);
 
         // Diffrente taille
-        if ($sizeImg = config('storage')->sizeImg) {
+        if ($sizeImg = config('Storage')->sizeImg) {
 
             foreach ($sizeImg as $item) {
                 service('image')->withFile($this->basePath . $path . $fileName)
@@ -134,7 +134,7 @@ class PublicDisk implements FileSystem
     }
 
     /**
-     * Get file from storage.
+     * Get file from Storage.
      *
      * @param null $path
      * @param array $options
@@ -156,7 +156,7 @@ class PublicDisk implements FileSystem
     }
 
     /**
-     * Get file from storage.
+     * Get file from Storage.
      *
      * @param null $path
      * @param array $options
@@ -196,7 +196,7 @@ class PublicDisk implements FileSystem
 
         if (!empty($options) && is_array($options)) {
             if (isset($options['size'])) {
-                $sizeImg = config('storage')->sizeImg[$options['size']];
+                $sizeImg = config('Storage')->sizeImg[$options['size']];
                 $new_full_path = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->full_path);
                 if (($fileName = @file_get_contents($new_full_path)) === false) {
 
