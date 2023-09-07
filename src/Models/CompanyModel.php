@@ -17,6 +17,7 @@ class CompanyModel extends Model
         'code_client',
         'country',
         'state',
+        'type_company',
         'company',
         'lastname',
         'firstname',

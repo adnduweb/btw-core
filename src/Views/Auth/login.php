@@ -38,12 +38,12 @@
 
                 <!-- Email -->
                 <div class="mb-2">
-                    <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required />
+                    <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required />
                 </div>
 
                 <!-- Password -->
                 <div class="mb-2">
-                    <input type="password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="password" inputmode="text" autocomplete="current-password" placeholder="<?= lang('Auth.password') ?>" required />
+                    <input type="password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="password" inputmode="text" autocomplete="current-password" placeholder="<?= lang('Auth.password') ?>" required />
                 </div>
 
 
@@ -55,7 +55,7 @@
 
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input type="checkbox" name="remember" class="form-check-input w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-sky-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-sky-600 dark:ring-offset-gray-800" <?php if (old('remember')) : ?> checked<?php endif ?>>
+                                <input type="checkbox" name="remember" class="form-check-input w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" <?php if (old('remember')) : ?> checked<?php endif ?>>
                             </div>
                             <div class="ml-3 text-sm">
                                 <label for="remember" class="text-gray-500 dark:text-gray-300"><?= lang('Auth.rememberMe') ?></label>
@@ -67,7 +67,7 @@
 
                     <?php if (setting('Auth.allowMagicLinkLogins')) : ?>
 
-                        <a class="text-sm font-medium text-sky-600 hover:underline dark:text-sky-500" href="<?= url_to('magic-link') ?>">
+                        <a class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500" href="<?= url_to('magic-link') ?>">
                             <?= lang('Auth.forgotPassword') ?>
                         </a>
                     <?php endif ?>
@@ -76,13 +76,13 @@
 
 
                 <div class="d-grid col-12 col-md-8 mx-auto m-3">
-                    <button type="submit" class="w-full text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800"><?= lang('Auth.login') ?></button>
+                    <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><?= lang('Auth.login') ?></button>
                 </div>
 
 
                 <?php if (setting('Auth.allowRegistration')) : ?>
                     <p class="text-sm font-light text-gray-500 dark:text-gray-400"><?= lang('Auth.needAccount') ?>
-                        <a class="font-medium text-sky-600 hover:underline dark:text-sky-500" href="<?= url_to('register') ?>"><?= lang('Auth.register') ?></a>
+                        <a class="font-medium text-blue-600 hover:underline dark:text-blue-500" href="<?= url_to('register') ?>"><?= lang('Auth.register') ?></a>
                     </p>
                 <?php endif ?>
 

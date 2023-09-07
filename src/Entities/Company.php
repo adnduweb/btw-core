@@ -20,6 +20,7 @@ class Company extends Entity
         'code_client' => null,
         'country' => 'FR',
         'state' => null,
+        'type_company' => 1,
         'company' => null,
         'lastname' => null,
         'firstname' => null,

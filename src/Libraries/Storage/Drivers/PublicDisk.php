@@ -175,19 +175,41 @@ class PublicDisk implements FileSystem
         }
 
         //@todo Add image par defaut
-        if (empty($media->full_path))
-            return false;
+        if (empty($media->full_path)) {
+            $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
+            $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
+            $new_file_url =  $urlPlaceholder;
+            return base_url($new_file_url);
+        }
 
-        if (($fileName = @file_get_contents($media->full_path)) === FALSE)
-            return false;
+
+        if (($fileName = @file_get_contents($media->full_path)) === false) {
+
+            $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
+            $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
+            $new_file_url =  $urlPlaceholder;
+            return base_url($new_file_url);
+        }
+
 
         $file = new \CodeIgniter\Files\File($media->full_path);
 
         if (!empty($options) && is_array($options)) {
             if (isset($options['size'])) {
                 $sizeImg = config('storage')->sizeImg[$options['size']];
-                $new_file_url = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->file_url);
-                return $new_file_url;
+                $new_full_path = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->full_path);
+                if (($fileName = @file_get_contents($new_full_path)) === false) {
+
+                    $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
+                    $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
+                    $new_file_url =  $urlPlaceholder;
+                    return base_url($new_file_url);
+
+                } else {
+
+                    $new_file_url = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->file_url);
+                    return $new_file_url;
+                }
             }
         }
 
@@ -205,8 +227,6 @@ class PublicDisk implements FileSystem
         if ($media === false) {
             return false;
         }
-
-        // echo 'fgsfdgsdf'; exit;
 
         //@todo Add image par defaut
         if (empty($media->full_path))

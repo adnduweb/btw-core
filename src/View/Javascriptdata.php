@@ -58,8 +58,8 @@ class Javascriptdata
         if (ENVIRONMENT == "development" || ENVIRONMENT == "testing") {
             $output .= $html;
         } else {
-            $html2 = preg_replace("/\s+/", "", $html);
-            $output .= str_replace(array('<br>', '<br />', "\n", "\r", "vardoudou"), array('', '', '', '', 'var doudou'), trim($html2));
+            // $html2 = preg_replace("/\s+/", "", $html);
+            $output .= str_replace(array('<br>', '<br />', "\n", "\r", "vardoudou"), array('', '', '', '', 'var doudou'), $html);
         }
 
         $output .= '</script> ' . "\n\t\t";

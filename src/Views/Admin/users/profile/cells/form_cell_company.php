@@ -97,6 +97,25 @@
             </div>
         </div>
 
+        <!-- Site Name -->
+        <div class="w-full mb-6 md:mb-4">
+
+            <?= view_cell('Btw\Core\Cells\Forms\DropdownCell::renderList', [
+                'label' => lang('Form.address.type_company'),
+                'name' => 'type_company',
+                'placeholder' => lang('Form.address.selectTypeCompany'),
+                'options' => \Btw\Core\Libraries\Data::getCompagniesType(),
+                'byKey' => true,
+                'key' => "id",
+                'val' => "nom_long",
+                'required' => true,
+                'default' => '1',
+                'class' => "select2-type_company",
+                'selected' => old('type_company', $company->type_company)
+            ]); ?>
+
+        </div>
+
         <div class="flex flex-wrap -mx-3 mb-4">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
@@ -188,7 +207,7 @@
                     'name' => 'phone_mobile',
                     'value' => old('phone_mobile', $company->phone_mobile),
                     'lang' => false,
-                    'class' => 'phoneintl' 
+                    'class' => 'phoneintl'
                 ]); ?>
 
             </div>

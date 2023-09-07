@@ -15,6 +15,7 @@ class CreateTableCompany extends Migration
             'code_company' => ['type' => 'VARCHAR', 'constraint' => 255],
             'country' => ['type' => 'VARCHAR', 'constraint' => 24, 'default' => 'FR'],
             'state' =>['type' => 'VARCHAR', 'constraint' => 24, 'default' => 0],
+            'type_company' => ['type' => 'INT', 'constraint' => 11, 'default' => 1],
             'company' => ['type' => 'VARCHAR', 'constraint' => 255, 'default' => 0],
             'lastname' => ['type' => 'VARCHAR', 'constraint' => 255],
             'firstname' => ['type' => 'VARCHAR', 'constraint' => 255],

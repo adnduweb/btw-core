@@ -61,7 +61,7 @@ class AssetController extends Controller
         $folder = config('Assets')->folders[array_shift($segments)];
         $path   = $folder . '/' . implode('/', $segments) . '/' . $filename;
 
-        if (! is_file($path)) {
+        if (!is_file($path)) {
             $this->response->setStatusCode(404);
 
             return;
@@ -72,20 +72,65 @@ class AssetController extends Controller
 
     public function renderFile(...$segments)
     {
-        if (count($segments) != 3){
+        if (count($segments) != 3) {
             //@todo
             //image par defaut au cas ou
             return false;
         }
 
+        //@todo
+        // list($base, $options) = explode('-', $segments[2]);
+        // print_r($options); 
+        // print_r($segments); exit;
+
+        // $year = $segments[0];
+        // $month = $segments[1];
+        // $file = $segments[2];
+
         $year = $segments[0];
         $month = $segments[1];
         $file = $segments[2];
 
-        if(($fileName = file_get_contents(WRITEPATH.'uploads/' .  config('storage')->disk . '/attachments/'.$year . '/' . $month . '/' . $file)) === FALSE)
+        if (($fileName = @file_get_contents(WRITEPATH . 'uploads/' .  config('storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file)) === false) {
+            $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
+            $fileName = @file_get_contents(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
+            // choose the right mime type
+            $mimeType = $file->getMimeType();
+
+            return $this->response
+                ->setStatusCode(200)
+                ->setContentType($mimeType)
+                ->setBody($fileName)
+                ->send();
+        }
+
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' .  config('storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file);
+
+        // choose the right mime type
+        $mimeType = $file->getMimeType();
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setContentType($mimeType)
+            ->setBody($fileName)
+            ->send();
+        // print_r($segments); exit;
+
+    }
+
+    public function renderFilePLaceholder(...$segments)
+    {
+
+        if (count($segments) != 1) {
+            return false;
+        }
+
+        $file = $segments[0];
+
+        if (($fileName = file_get_contents(WRITEPATH . 'uploads/' .  '/placeholder/' . $file)) === FALSE)
             return false;
 
-        $file = new \CodeIgniter\Files\File(WRITEPATH.'uploads/' .  config('storage')->disk . '/attachments/'.$year . '/' . $month . '/' . $file);
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' .  '/placeholder/' . $file);
 
         // choose the right mime type
         $mimeType = $file->getMimeType();
@@ -95,8 +140,7 @@ class AssetController extends Controller
             ->setContentType($mimeType)
             ->setBody($fileName)
             ->send();
-       // print_r($segments); exit;
+        // print_r($segments); exit;
 
     }
-    
 }

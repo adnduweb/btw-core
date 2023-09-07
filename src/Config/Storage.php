@@ -88,4 +88,31 @@ class Storage extends BaseConfig
         'vAlign' => 'center',
         'fontSize' => 20
     ];
+
+       //--------------------------------------------------------------------
+    // Display Preferences
+    //--------------------------------------------------------------------
+
+     /**
+     * By Page
+     */
+    public int $perPage = 8;
+
+    /**
+     * Display format for listing files.
+     * Included options are 'cards', 'list', 'select'
+     */
+    public string $filesFormat = 'cards';
+
+    /**
+     * Default sort column.
+     * See FileModel::$allowedFields for options.
+     */
+    public string $filesSort = 'file_name';
+
+    /**
+     * Default sort ordering. "asc" or "desc"
+     */
+    public string $filesOrder = 'asc';
+
 }
