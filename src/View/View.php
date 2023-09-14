@@ -72,13 +72,18 @@ class View extends BaseView
 
         $this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
 
-        if (! is_file($this->renderVars['file'])) {
+        if (!is_file($this->renderVars['file'])) {
             $this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views', empty($fileExt) ? 'php' : $fileExt);
         }
 
         // locateFile will return an empty string if the file cannot be found.
         if (empty($this->renderVars['file'])) {
-            throw ViewException::forInvalidFile($this->renderVars['view']);
+
+            if (!is_file($this->renderVars['file'])) {
+                $this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], '', empty($fileExt) ? 'php' : $fileExt);
+                // print_r($this->renderVars['file']); exit;
+            } else
+                throw ViewException::forInvalidFile($this->renderVars['view']);
         }
 
         // Make our view data available to the view.
@@ -109,7 +114,7 @@ class View extends BaseView
             $output     = $this->render($layoutView, $options, $saveData);
             // Get back current vars
             $this->renderVars = $renderVars;
-        } elseif (! empty($this->renderVars['options']['fragments']) && $this->fragmentStack === []) {
+        } elseif (!empty($this->renderVars['options']['fragments']) && $this->fragmentStack === []) {
             $output = '';
 
             foreach ($this->renderVars['options']['fragments'] as $fragmentName) {
@@ -122,7 +127,7 @@ class View extends BaseView
 
         $this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-        if (($this->debug && (! isset($options['debug']) || $options['debug'] === true))
+        if (($this->debug && (!isset($options['debug']) || $options['debug'] === true))
             && in_array(DebugToolbar::class, service('filters')->getFiltersClass()['after'], true)
             && empty($this->renderVars['options']['fragments'])
         ) {
@@ -179,7 +184,7 @@ class View extends BaseView
         $fragmentName = array_pop($this->fragmentStack);
 
         // Ensure an array exists, so we can store multiple entries for this.
-        if (! array_key_exists($fragmentName, $this->fragments)) {
+        if (!array_key_exists($fragmentName, $this->fragments)) {
             $this->fragments[$fragmentName] = [];
         }
 
@@ -193,7 +198,7 @@ class View extends BaseView
      */
     protected function renderFragment(string $fragmentName)
     {
-        if (! isset($this->fragments[$fragmentName])) {
+        if (!isset($this->fragments[$fragmentName])) {
             return '';
         }
 
@@ -209,7 +214,7 @@ class View extends BaseView
      */
     public function include(string $view, ?array $options = null, $saveData = true): string
     {
-        if ($this->fragmentStack !== [] && ! empty($this->renderVars['options']['fragments'])) {
+        if ($this->fragmentStack !== [] && !empty($this->renderVars['options']['fragments'])) {
             $options['fragments'] = $this->renderVars['options']['fragments'];
             echo $this->render($view, $options, $saveData);
 

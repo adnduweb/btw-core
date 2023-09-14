@@ -2,8 +2,8 @@
 
 namespace Btw\Core\Exceptions;
 
-use Btw\Core\Debug\BaseExceptionHandler;
-use Btw\Core\Debug\ExceptionHandlerInterface;
+use CodeIgniter\Debug\BaseExceptionHandler;
+use CodeIgniter\Debug\ExceptionHandlerInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Throwable;

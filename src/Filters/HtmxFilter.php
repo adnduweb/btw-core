@@ -35,9 +35,15 @@ class HtmxFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
 
+        // if ($request->isHtmx()) {
+        //     echo 'fdgsdfgsdfg';
+        //     exit;
+        // }
+
         if ($request->isHtmx() && response()->getStatusCode() == '302') {
 
-            echo 'Bouh'; exit;
+            echo 'Bouh';
+            exit;
         }
     }
 
@@ -51,5 +57,10 @@ class HtmxFilter implements FilterInterface
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+
+        if ($request->isHtmx() && response()->getStatusCode() == '403') {
+
+            $response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $exception->getMessage() ]);
+        }
     }
 }

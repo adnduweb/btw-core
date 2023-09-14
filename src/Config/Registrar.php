@@ -53,7 +53,6 @@ class Registrar
                 'before' => array_merge_recursive($props['globals']['before'], [
                     'online' => ['except' => ['site-offline', ADMIN_AREA . '*', 'login*']],
                     'csrf' => ['except' => ['api/record/[0-9]+']],
-                    'htmx'
                     //'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
                 ]),
                 'after' => array_merge_recursive($props['globals']['after'], [
@@ -68,6 +67,10 @@ class Registrar
                     'before' => [ADMIN_AREA . '*'],
                 ],
                 'admin' => [
+                    'before' => [ADMIN_AREA . '*'],
+                    'after' => [ADMIN_AREA . '*'],
+                ],
+                'htmx' => [
                     'before' => [ADMIN_AREA . '*'],
                     'after' => [ADMIN_AREA . '*'],
                 ],
