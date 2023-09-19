@@ -529,6 +529,6 @@ export const initHtmx = () => {
         }
     });
 
-    // htmx.logAll()   
+    // htmx.logAll()
 };
 export default initHtmx;

@@ -12,14 +12,15 @@ class AdminButtonSave extends Cell
     public string $loading;
     public $back = null;
     public $click;
+    public $class;
 
-    public function mount(string $type, string $text, string $loading, $back = null, $click = null)
+    public function mount(string $type, string $text, string $loading, $back = null, $click = null, $class = "")
     {
         $this->type = $type;
         $this->text = $text;
         $this->loading = $loading;
         $this->back = $back;
         $this->click = $click;
-
+        $this->class = $class;
     }
 }

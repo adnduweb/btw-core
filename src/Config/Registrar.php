@@ -7,7 +7,7 @@ namespace Btw\Core\Config;
 use Btw\Core\Filters\AdminFilter;
 use Btw\Core\Filters\ProtectFilter;
 use Btw\Core\Filters\OnlineCheckFilter;
-use Btw\Core\Filters\HtmxFilter;
+use Btw\Core\Filters\AjaxFilter;
 use Btw\Core\Filters\VisitsFilter;
 use Btw\Core\View\ShieldOAuth;
 use Btw\Core\View\Decorator;
@@ -46,7 +46,7 @@ class Registrar
                 'protect'   => ProtectFilter::class,
                 'online'   => OnlineCheckFilter::class,
                 'visits' => VisitsFilter::class,
-                'htmx' => HtmxFilter::class,
+                'ajax' => AjaxFilter::class,
                 
             ],
             'globals' => [
@@ -70,7 +70,7 @@ class Registrar
                     'before' => [ADMIN_AREA . '*'],
                     'after' => [ADMIN_AREA . '*'],
                 ],
-                'htmx' => [
+                'ajax' => [
                     'before' => [ADMIN_AREA . '*'],
                     'after' => [ADMIN_AREA . '*'],
                 ],

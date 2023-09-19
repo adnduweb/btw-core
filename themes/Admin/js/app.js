@@ -91,6 +91,12 @@ htmx.on("htmx:afterSettle", function(evt) {
 });
 
 
+function _getElementById(el){
+    return document.getElementById(el);
+  }
+
+window._getElementById = _getElementById();
+
 /**
  * Select All checkbox for data tables
  * using plain javascript
@@ -212,8 +218,11 @@ window.dispatchEvent(
     })
 );
 
-document.getElementById('search-field').addEventListener('keypress', function(event) {
+const searchField = document.getElementById('search-field');
+if(searchField){
+    searchField.addEventListener('keypress', function(event) {
     if (event.keyCode == 13) {
         event.preventDefault();
     }
 });
+}

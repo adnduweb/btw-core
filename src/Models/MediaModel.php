@@ -17,7 +17,7 @@ class MediaModel extends Model
     protected $returnType = Media::class;
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['disk', 'type', 'size', 'path', 'file_name', 'file_path', 'file_url', 'full_path'];
+    protected $allowedFields = ['uuid', 'disk', 'type', 'size', 'path', 'file_name', 'file_path', 'file_url', 'full_path', 'created_at', 'updated_at'];
 
     // Dates
     protected $useTimestamps = true;
@@ -35,7 +35,7 @@ class MediaModel extends Model
     // Callbacks
     protected $allowCallbacks = true;
     protected $beforeInsert = [];
-    protected $afterInsert = ['saveLang'];
+    protected $afterInsert = ['insertLang'];
     protected $beforeUpdate = [];
     protected $afterUpdate = [];
     protected $beforeFind = [];
@@ -64,39 +64,58 @@ class MediaModel extends Model
         return $this->columns;
     }
 
-    public function saveLang($params)
+    public function insertLang($params)
     {
 
-        // print_r($params);
-        // exit;
-
         $mediaLangModel = model(MediaLangModel::class);
-        // print_r($mediaLangModel->allowedFields);
-        // exit;
         $mediaLang = $mediaLangModel->find($params['id']) ?? new MediaLang();
 
-        $data['id_media_lang'] = isset($params['data']['id_media_lang']) ? $params['data']['id_media_lang'] : null;
-        $data['media_id'] = $params['id'];
-        $data['lang'] = isset($params['data']['lang']) ? $params['data']['lang'] : service('language')->getLocale();
-        $data['titre'] = isset($params['data']['titre']) ? $params['data']['titre'] : '';
-        $data['legende'] = isset($params['data']['legende']) ? $params['data']['legende'] : '';
-        $data['description'] = isset($params['data']['description']) ? $params['data']['description'] : '';
+        foreach (config('App')->supportedLocales as $lang) {
 
-        $mediaLang->fill($data);
+            $data['id_media_lang'] = isset($params['data']['id_media_lang']) ? $params['data']['id_media_lang'] : null;
+            $data['media_id'] = $params['id'];
+            $data['lang'] = $lang ?? service('language')->getLocale();
+            $data['titre'] = isset($params['data']['titre']) ? $params['data']['titre'] : '';
+            $data['legend'] = isset($params['data']['legend']) ? $params['data']['legend'] : '';
+            $data['description'] = isset($params['data']['description']) ? $params['data']['description'] : '';
 
-        //print_r($mediaLang); exit;
+            $mediaLang->fill($data);
 
-        // Try saving basic details
-        try {
-            if (!$mediaLangModel->save($mediaLang)) {
-                log_message('error', 'MEDIA ERRORS', $mediaLangModel->errors());
-                return $this->errors();
+            // Try saving basic details
+            try {
+                if (!$mediaLangModel->save($mediaLang)) {
+                    log_message('error', 'MEDIA ERRORS', $mediaLangModel->errors());
+                    return $this->errors();
+                }
+            } catch (\Exception $e) {
+                log_message('debug', 'SAVING MEDIA LANG: ' . $e->getMessage());
             }
-        } catch (\Exception $e) {
-            log_message('debug', 'SAVING MEDIA LANG: ' . $e->getMessage());
         }
 
         return $params;
-    }
 
+        // $mediaLangModel = model(MediaLangModel::class);
+        // $mediaLang = $mediaLangModel->find($params['id']) ?? new MediaLang();
+
+        // $data['id_media_lang'] = isset($params['data']['id_media_lang']) ? $params['data']['id_media_lang'] : null;
+        // $data['media_id'] = $params['id'];
+        // $data['lang'] = isset($params['data']['lang']) ? $params['data']['lang'] : service('language')->getLocale();
+        // $data['titre'] = isset($params['data']['titre']) ? $params['data']['titre'] : '';
+        // $data['legend'] = isset($params['data']['legend']) ? $params['data']['legend'] : '';
+        // $data['description'] = isset($params['data']['description']) ? $params['data']['description'] : '';
+
+        // $mediaLang->fill($data);
+
+        // // Try saving basic details
+        // try {
+        //     if (!$mediaLangModel->save($mediaLang)) {
+        //         log_message('error', 'MEDIA ERRORS', $mediaLangModel->errors());
+        //         return $this->errors();
+        //     }
+        // } catch (\Exception $e) {
+        //     log_message('debug', 'SAVING MEDIA LANG: ' . $e->getMessage());
+        // }
+
+        // return $params;
+    }
 }

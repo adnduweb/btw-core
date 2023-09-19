@@ -40,7 +40,7 @@ class MediaSeeder extends Seeder
 	public function createPlaceholder()
 	{
 
-		$basePath = WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR .  'placeholder'. DIRECTORY_SEPARATOR ;
+		$basePath = WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR .  'placeholder' . DIRECTORY_SEPARATOR;
 		$file = new \CodeIgniter\Files\File(BTPATH . 'Views/Medias/placeholder.webp');
 		$ext = $file->guessExtension();
 
@@ -48,7 +48,7 @@ class MediaSeeder extends Seeder
 		if ($sizeImg = config('Storage')->sizeImg) {
 
 			service('image')->withFile($file->getPathName())
-					->save(($basePath .  'placeholder.webp'));
+				->save(($basePath .  'placeholder.webp'));
 			$i = 0;
 			foreach ($sizeImg as $item) {
 				service('image')->withFile($file->getPathName())

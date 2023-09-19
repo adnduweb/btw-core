@@ -7,9 +7,9 @@
 // Authentication Routes that override Shield's
 $routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth'], static function ($routes) {
     $routes->get('register', 'RegisterController::registerView');
-    $routes->post('register', 'RegisterController::registerAction');
+    $routes->post('register', 'RegisterController::registerActionHtmx');
     $routes->get('login', 'LoginController::loginView', ['as' => 'login']);
-    $routes->post('login', 'LoginController::loginAction');
+    $routes->post('login', 'LoginController::loginActionHtmx');
     $routes->get('logout', 'LoginController::logoutAction', ['as' => 'logout']);
     $routes->get('login/magic-link', 'MagicLinkController::loginView', ['as' => 'magic-link']);
     $routes->post('login/magic-link', 'MagicLinkController::loginAction');
@@ -117,12 +117,11 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
 
     $routes->post('system-auth-pass-modal', 'ProfileController::authPassModal', ['as' => 'system-auth-pass-modal']);
     $routes->get('update-notification', 'ProfileController::updateNotification', ['as' => 'update-notification']);
-    
+
 
     // Seach All admin
-    
-    $routes->post('search', 'SearchController::search', ['as' => 'search-all-admin']);
 
+    $routes->post('search', 'SearchController::search', ['as' => 'search-all-admin']);
 });
 
 $routes->setPrioritize();
@@ -138,7 +137,7 @@ $routes->get('site-offline', static function () {
 
     // If it's not offline, but they've refreshed the page
     // take to the site home page.
-    if (! site_offline()) {
+    if (!site_offline()) {
         return redirect()->to('/');
     }
 

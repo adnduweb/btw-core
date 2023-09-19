@@ -12,9 +12,7 @@
     <?= $viewMeta->render('style') ?>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
-
     <?= vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
 
     <style>
@@ -45,7 +43,6 @@
         channel.bind('my-event', function(data) {
             console.log(JSON.stringify(data));
         });
-
     </script>
 
 

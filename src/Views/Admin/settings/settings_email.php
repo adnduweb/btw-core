@@ -15,7 +15,8 @@
                     'id' => 'kt_users_form_email', 'hx-post' => route_to('settings-email'), 'hx-target' => '#email', 'hx-swap' => 'none',  'hx-ext' => "loading-states",  'novalidate' => false, 'data-loading-target' => "#loadingemail",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
-                <?=''; // csrf_field() ?>
+                <?= ''; // csrf_field() 
+                ?>
                 <input type="hidden" name="section" value="email" />
                 <?= $this->include('Btw\Core\Views\Admin\settings\cells\form_cell_email'); ?>
                 <?= form_close(); ?>
@@ -23,5 +24,6 @@
 
         </div>
 
+    </div>
 </div>
-</div <?php $this->endSection() ?>
+<?php $this->endSection() ?>

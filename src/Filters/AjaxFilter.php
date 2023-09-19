@@ -15,7 +15,7 @@ use Btw\Core\Exceptions\notAuthorized;
  *
  * Email/Password-based authentication for web applications.
  */
-class HtmxFilter implements FilterInterface
+class AjaxFilter implements FilterInterface
 {
 
     /**
@@ -58,9 +58,9 @@ class HtmxFilter implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
 
-        if ($request->isHtmx() && response()->getStatusCode() == '403') {
+        // if ($request->isHtmx() && response()->getStatusCode() == '403') {
 
-            $response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $exception->getMessage() ]);
-        }
+        //     $response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $exception->getMessage() ]);
+        // }
     }
 }

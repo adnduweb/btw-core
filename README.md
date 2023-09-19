@@ -62,6 +62,7 @@ https://dev.to/mithicher/color-picker-with-alpinejs-and-tailwindcss-1bnn
 https://www.raymondcamden.com/2022/07/29/building-related-selects-in-alpinejs -> selectbox/selectbox 
 https://github.com/alpinejs/alpine/discussions/2865 - toasts
 https://github.com/kenjis/ci4-album
+https://www.builder.io/blog/htmx-vs-react
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604
@@ -84,3 +85,6 @@ $builder->join('users u', 'u.user_id = f.owner_id', 'left');
 $builder->groupBy('name');
 $query = $builder->get();
 $data['table_joined'] = $query->getResult(); 
+
+## Commands
+php spark filter:check get admin1198009422/medias

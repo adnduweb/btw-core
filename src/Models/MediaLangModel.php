@@ -14,7 +14,7 @@ class MediaLangModel extends Model
     protected $returnType       = MediaLang::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['media_id', 'lang', 'titre', 'legende', 'description'];
+    protected $allowedFields    = ['media_id', 'lang', 'titre', 'legend', 'description'];
 
     // Dates
     protected $useTimestamps = false;

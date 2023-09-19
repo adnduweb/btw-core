@@ -11,6 +11,7 @@ class CreateMediasTable extends Migration
         // medias
         $fields = [
             'id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
+            'uuid' => ['type' => 'BINARY', 'constraint' => 36, 'unique' => true],
             'disk' => ['type' => 'VARCHAR', 'constraint' => 255],
             'type' => ['type' => 'VARCHAR', 'constraint' => 255],
             'size' => ['type' => 'VARCHAR', 'constraint' => 255],
@@ -38,7 +39,7 @@ class CreateMediasTable extends Migration
             'media_id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
             'lang' => ['type' => 'CHAR', 'constraint' => 48],
             'titre' => ['type' => 'VARCHAR', 'constraint' => 255],
-            'legende' => ['type' => 'VARCHAR', 'constraint' => 255],
+            'legend' => ['type' => 'VARCHAR', 'constraint' => 255],
             'description' => ['type' => 'VARCHAR', 'constraint' => 255]
         ];
 

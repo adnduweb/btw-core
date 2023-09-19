@@ -7,6 +7,7 @@ use Btw\Core\Libraries\Storage\Exceptions\StorageException;
 use Btw\Core\Libraries\Storage\FileSystem;
 use Btw\Core\Models\MediaModel;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use Ramsey\Uuid\Uuid;
 use Exception;
 use RuntimeException;
 
@@ -77,6 +78,7 @@ class PublicDisk implements FileSystem
         if ($content instanceof UploadedFile) {
             $fileType = $content->getMimeType();
             $fileSize = $content->getSize();
+            $ext = $content->getClientExtension();
         }
         $companyPdf = $options['company_pdf'] ?? '';
 
@@ -84,30 +86,35 @@ class PublicDisk implements FileSystem
 
         $result = $content->move($this->basePath . $path, $fileName, $overwrite);
 
-        // Diffrente taille
-        if ($sizeImg = config('Storage')->sizeImg) {
-
-            foreach ($sizeImg as $item) {
-                service('image')->withFile($this->basePath . $path . $fileName)
-                    ->fit($item[0], $item[1], $item[2])
-                    ->save(($this->basePath . $path . str_replace('.' . $ext, '-' . $item[0] . 'x' . $item[1] . '.' . $ext, $fileName)));
-            }
-        }
-
-        if ($companyPdf) {
-            service('image')->withFile($this->basePath . $path . $fileName)
-                ->fit(250, 200, 'center')
-                ->save(ROOTPATH . 'public/logo-company' . $fileName);
-        }
-
         if ($result) {
             $mode = $options['mode'] ?? $this->mode;
             chmod($this->basePath . $path . $fileName, $mode);
         }
 
+        if (in_array($ext, config('Storage')->isImage)) {
+            // Diffrente taille
+            if ($sizeImg = config('Storage')->sizeImg) {
+
+                foreach ($sizeImg as $item) {
+                    service('image')->withFile($this->basePath . $path . $fileName)
+                        ->fit($item[0], $item[1], $item[2])
+                        ->save(($this->basePath . $path . str_replace('.' . $ext, '-' . $item[0] . 'x' . $item[1] . '.' . $ext, $fileName)));
+                }
+            }
+
+            if ($companyPdf) {
+                service('image')->withFile($this->basePath . $path . $fileName)
+                    ->fit(250, 200, 'center')
+                    ->save(ROOTPATH . 'public/logo-company' . $fileName);
+            }
+        }
+
+
         if ($result !== false) {
+            $myuuid = Uuid::uuid4();
             $data = [
                 // 'id' => '2',
+                'uuid' => $myuuid,
                 'disk' => $this->disk,
                 'type' => $fileType,
                 'size' => $fileSize,
@@ -204,7 +211,6 @@ class PublicDisk implements FileSystem
                     $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
                     $new_file_url =  $urlPlaceholder;
                     return base_url($new_file_url);
-
                 } else {
 
                     $new_file_url = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->file_url);

@@ -10,6 +10,7 @@ class InputCell
 
     protected $type = 'text';
     protected $label;
+    protected $placeholder;
     protected $name;
     protected $value;
     protected $min;
@@ -24,10 +25,6 @@ class InputCell
 
     public function renderList($params)
     {
-        // if (!isset($params['label'])) {
-        //     throw new RuntimeException('You must provide the Filter view cell with the model to use.');
-        // }
-
         $this->min = (isset($params['min'])) ? 'min="' . $params['min'] : '';
         $this->step = (isset($params['step'])) ? 'step="' . $params['step'] : '';
         $this->xType = (isset($params['xType'])) ? ':type="' . $params['xType'] . '"' : '';
@@ -36,6 +33,7 @@ class InputCell
         $this->required = (isset($params['required'])) ? 'required' : '';
         $this->class = (isset($params['class'])) ? $params['class'] : '';
         $this->disabled = (isset($params['disabled'])) ? 'disabled="disabled"' : '';
+        $this->placeholder = (isset($params['placeholder'])) ? 'placeholder="' . $params['placeholder'] . '"' : '';
 
         $html = $this->getLabel($params);
         $html .= '<div class="relative">';
@@ -51,6 +49,8 @@ class InputCell
 
     public function getLabel($params)
     {
+        if ($params['label'] == false)
+            return false;
         $html = "";
         $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
         if (isset($params['lang']) && $params['lang'] == true) {
@@ -77,16 +77,6 @@ class InputCell
             }
         }
 
-        // Validation 
-        // if (isset($params['lang']) && $params['lang'] == true) {
-        //     if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . uniforme($params['name']))) :
-        //         $this->classError = "border-red-500 focus:border-red-500";
-        //     endif;
-        // } else {
-        //     if (service('validation')->hasError($params['name'])) :
-        //         $this->classError = "border-red-500 focus:border-red-500";
-        //     endif;
-        // }
         if (service('validation')->hasError($params['name'])) :
             $this->classError = "border-red-500 focus:border-red-500";
         endif;
@@ -97,10 +87,10 @@ class InputCell
             $html .= '<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 bg-gray-600 rounded-l-lg text-center">';
             $html .= '<span class="h-5 w-5 text-gray-200">' . service('language')->getLocale() . '</span>';
             $html .= ' </div>';
-            $html .= '<input ' . $this->disabled . ' ' . $this->required . ' type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '" autocomplete="' . $params['type'] . '" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm pl-10 leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 ' . $this->class . ' ' . $this->classError . ' ">';
+            $html .= '<input ' . $this->disabled . ' ' . $this->required . ' type="' . $params['type'] . '" name="' . $params['name'] . '" ' . $this->placeholder . ' id="' . uniforme($params['name']) . '" autocomplete="' . $params['type'] . '" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm pl-10 leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 ' . $this->class . ' ' . $this->classError . ' ">';
             $html .= ' </div>';
         } else {
-            $html .= '<input ' . $this->disabled . ' type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 ' . $this->class . ' ' . $this->classError . ' ">';
+            $html .= '<input ' . $this->disabled . ' type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '" autocomplete="' . $params['type'] . '" ' . $this->placeholder . '  value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 ' . $this->class . ' ' . $this->classError . ' ">';
         }
 
         if (!empty($this->classError)) {

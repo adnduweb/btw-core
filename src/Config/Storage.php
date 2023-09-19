@@ -76,6 +76,8 @@ class Storage extends BaseConfig
         'image600x600' => ['600', '600', 'center']
     ];
 
+    public $isImage = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
+
     public $watermark = false;
 
     public $watermarkTexte = 'adnduweb';
@@ -89,11 +91,11 @@ class Storage extends BaseConfig
         'fontSize' => 20
     ];
 
-       //--------------------------------------------------------------------
+    //--------------------------------------------------------------------
     // Display Preferences
     //--------------------------------------------------------------------
 
-     /**
+    /**
      * By Page
      */
     public int $perPage = 8;
@@ -114,5 +116,4 @@ class Storage extends BaseConfig
      * Default sort ordering. "asc" or "desc"
      */
     public string $filesOrder = 'asc';
-
 }
