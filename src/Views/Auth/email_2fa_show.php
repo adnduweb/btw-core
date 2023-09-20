@@ -26,19 +26,18 @@
                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"><?= session('error') ?></div>
                 <?php endif ?>
 
-                <form class="space-y-4 md:space-y-6 w-96" action="<?= url_to('auth-action-handle') ?>" method="post">
-                    <?= csrf_field() ?>
-
-                    <!-- Email -->
-                    <div class="mb-2">
-                        <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" <?php /** @var \CodeIgniter\Shield\Entities\User $user */ ?> value="<?= old('email', $user->email) ?>" required />
-                    </div>
-
-                    <div class="d-grid col-8 mx-auto m-3">
-                        <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><?= lang('Auth.send') ?></button>
-                    </div>
-
-                </form>
+                <?= form_open(url_to('auth-action-handle'), [
+                    'id' => 'kt_form_auth_action_handle',
+                    'class' => 'space-y-4 md:space-y-6',
+                    'hx-post' => url_to('auth-action-handle'),
+                    'hx-target' => '#formauthactionhandle',
+                    'hx-swap' => 'none',
+                    'hx-ext' => "event-header",
+                    'novalidate' => false,
+                ]); ?>
+                <input type="hidden" name="section" value="formauthactionhandle" />
+                <?= $this->include('Btw\Core\Views\Auth\cells\form_cell_email_2fa_show'); ?>
+                <?= form_close(); ?>
             </div>
         </div>
     </div>

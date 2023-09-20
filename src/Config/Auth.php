@@ -40,7 +40,7 @@ class Auth extends ShieldAuth
         'magic-link-email'            => '\Btw\Core\Views\Auth\Email\magic_link_email',
     ];
 
-   /**
+    /**
      * --------------------------------------------------------------------
      * Customize Name of Shield Tables
      * --------------------------------------------------------------------
@@ -381,7 +381,8 @@ class Auth extends ShieldAuth
      *
      * @var class-string<UserModel>
      */
-    public string $userProvider = 'Btw\Core\Models\UserModel';
+    // public string $userProvider = 'Btw\Core\Models\UserModel';
+    public string $userProvider = UserModel::class;
 
     /**
      * Returns the URL that a user should be redirected

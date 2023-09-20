@@ -107,7 +107,7 @@ class LoginController extends ShieldLogin
 
         // If an action has been defined for login, start it up.
         if ($authenticator->hasAction()) {
-            return redirect()->route('auth-action-show')->withCookies();
+            return redirect()->hxLocation(str_replace(config('App')->baseURL, '/', route_to('auth-action-show')));
         }
 
         if (session()->get('redirect_url')) {

@@ -15,8 +15,8 @@ $routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth'], static functio
     $routes->post('login/magic-link', 'MagicLinkController::loginAction');
     $routes->get('login/verify-magic-link', 'MagicLinkController::verify', ['as' => 'verify-magic-link']);
     $routes->get('auth/a/show', 'ActionController::show', ['as' => 'auth-action-show']);
-    $routes->post('auth/a/handle', 'ActionController::handle', ['as' => 'auth-action-handle']);
-    $routes->post('auth/a/verify', 'ActionController::verify', ['as' => 'auth-action-verify']);
+    $routes->post('auth/a/handle', 'ActionController::handleHtmx', ['as' => 'auth-action-handle']);
+    $routes->match(['get', 'post'], 'auth/a/verify', 'ActionController::verifyHtmx', ['as' => 'auth-action-verify']);
 });
 
 service('auth')->routes($routes, ['except' => ['login', 'register']]);

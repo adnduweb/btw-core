@@ -15,20 +15,18 @@
 
             <p><?= lang('Auth.emailActivateBody') ?></p>
 
-            <form action="<?= site_url('auth/a/verify') ?>" method="post">
-                <?= csrf_field() ?>
-
-                <!-- Code -->
-                <div class="mb-2">
-                    <input type="text" class="form-control" name="token" placeholder="000000" inputmode="numeric"
-                        pattern="[0-9]*" autocomplete="one-time-code" value="<?= old('token') ?>" required />
-                </div>
-
-                <div class="d-grid col-8 mx-auto m-3">
-                    <button type="submit" class="btn btn-primary btn-block"><?= lang('Auth.send') ?></button>
-                </div>
-
-            </form>
+            <?= form_open(url_to('auth/a/verify'), [
+                'id' => 'kt_form_auth_a_verify',
+                'class' => 'space-y-4 md:space-y-6',
+                'hx-post' => url_to('auth/a/verify'),
+                'hx-target' => '#formauthaverify',
+                'hx-swap' => 'none',
+                'hx-ext' => "event-header",
+                'novalidate' => false,
+            ]); ?>
+            <input type="hidden" name="section" value="formauthaverify" />
+            <?= $this->include('Btw\Core\Views\Auth\cells\form_cell_email_activate_show'); ?>
+            <?= form_close(); ?>
         </div>
     </div>
 </div>

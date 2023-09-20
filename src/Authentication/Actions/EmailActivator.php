@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Btw\Core\Authentication\Actions;
 
 
-use CodeIgniter\Shield\Authentication\Actions\ActionInterface;
+use Btw\Core\Authentication\Actions\ActionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Shield\Authentication\Authenticators\Session;
+use Btw\Core\Authentication\Authenticators\Session;
 use CodeIgniter\Shield\Entities\User;
 use CodeIgniter\Shield\Entities\UserIdentity;
 use CodeIgniter\Shield\Exceptions\LogicException;
@@ -73,6 +73,16 @@ class EmailActivator implements ActionInterface
     }
 
     /**
+     * This method is unused.
+     *
+     * @return Response|string
+     */
+    public function handleHtmx(IncomingRequest $request)
+    {
+        throw new PageNotFoundException();
+    }
+
+    /**
      * Verifies the email address and code matches an
      * identity we have for that user.
      *
@@ -93,7 +103,44 @@ class EmailActivator implements ActionInterface
         $identity = $this->getIdentity($user);
 
         // No match - let them try again.
-        if (! $authenticator->checkAction($identity, $postedToken)) {
+        if (!$authenticator->checkAction($identity, $postedToken)) {
+            session()->setFlashdata('error', lang('Auth.invalidActivateToken'));
+
+            return view(setting('Auth.views')['action_email_activate_show']);
+        }
+
+        $user = $authenticator->getUser();
+
+        // Set the user active now
+        $authenticator->activateUser($user);
+
+        // Success!
+        return redirect()->to(config('Auth')->registerRedirect())
+            ->with('message', lang('Auth.registerSuccess'));
+    }
+
+    /**
+     * Verifies the email address and code matches an
+     * identity we have for that user.
+     *
+     * @return RedirectResponse|string
+     */
+    public function verifyHtmx(IncomingRequest $request)
+    {
+        /** @var Session $authenticator */
+        $authenticator = auth('session')->getAuthenticator();
+
+        $postedToken = $request->getVar('token');
+
+        $user = $authenticator->getPendingUser();
+        if ($user === null) {
+            throw new RuntimeException('Cannot get the pending login User.');
+        }
+
+        $identity = $this->getIdentity($user);
+
+        // No match - let them try again.
+        if (!$authenticator->checkAction($identity, $postedToken)) {
             session()->setFlashdata('error', lang('Auth.invalidActivateToken'));
 
             return view(setting('Auth.views')['action_email_activate_show']);

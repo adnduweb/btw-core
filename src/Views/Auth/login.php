@@ -35,7 +35,7 @@
 
             <?= form_open(url_to('login'), [
                 'id' => 'kt_form_login',
-                'class' => 'space-y-4 md:space-y-6"',
+                'class' => 'space-y-4 md:space-y-6',
                 'hx-post' => url_to('login'),
                 'hx-target' => '#formloginback',
                 'hx-swap' => 'none',

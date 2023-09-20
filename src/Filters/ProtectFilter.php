@@ -41,9 +41,20 @@ class ProtectFilter implements FilterInterface
         /** @var Session $authenticator */
         $authenticator = auth('session')->getAuthenticator();
 
+
+        if ($authenticator->isPending() == true) {
+
+            // If an action has been defined for login, start it up.
+            if ($authenticator->hasAction()) {
+                if (!in_array('/' . $request->getPath(), [route_to('auth-action-show'), route_to('auth-action-handle'), route_to('auth-action-verify')])) {
+                    return redirect()->route('auth-action-show')->withCookies();
+                }
+            }
+        }
+
         if ($authenticator->loggedIn()) {
 
-             if (in_array('/' . $request->getPath(), [route_to('login'), route_to('magic-link'), route_to('verify-magic-link')])) {
+            if (in_array('/' . $request->getPath(), [route_to('login'), route_to('magic-link'), route_to('verify-magic-link')])) {
                 return redirect()->route('dashboard');
             }
         }

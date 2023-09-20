@@ -7,7 +7,7 @@ namespace Btw\Core\Controllers\Auth;
 use App\Controllers\BaseController;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Shield\Authentication\Actions\ActionInterface;
+use Btw\Core\Authentication\Actions\ActionInterface;
 use Btw\Core\Authentication\Authenticators\Session;
 use Btw\Core\View\Themeable;
 
@@ -25,6 +25,7 @@ class ActionController extends BaseController
     public function __construct()
     {
         $this->theme = 'Auth';
+        helper(['auth', 'form', 'alertHtmx']);
     }
 
 
@@ -43,9 +44,10 @@ class ActionController extends BaseController
         // Grab our action instance if one has been set.
         $this->action = $authenticator->getAction();
 
-        if (empty($this->action) || ! $this->action instanceof ActionInterface) {
+        if (empty($this->action) || !$this->action instanceof ActionInterface) {
             throw new PageNotFoundException();
         }
+
 
         return $this->{$method}(...$params);
     }
@@ -73,6 +75,17 @@ class ActionController extends BaseController
     }
 
     /**
+     * Processes the form that was displayed in the previous form.
+     *
+     * @return Response|string
+     */
+    public function handleHtmx()
+    {
+        return $this->action->handleHtmx($this->request);
+    }
+
+
+    /**
      * This handles the response after the user takes action
      * in response to the show/handle flow. This might be
      * from clicking the 'confirm my email' action or
@@ -83,5 +96,21 @@ class ActionController extends BaseController
     public function verify()
     {
         return $this->action->verify($this->request);
+    }
+
+     /**
+     * This handles the response after the user takes action
+     * in response to the show/handle flow. This might be
+     * from clicking the 'confirm my email' action or
+     * following entering a code sent in an SMS.
+     *
+     * @return Response|string
+     */
+    public function verifyHtmx()
+    {
+        if (!request()->is('post')) {
+            return $this->action->verifyGet($this->request);
+        }
+        return $this->action->verifyHtmx($this->request);
     }
 }

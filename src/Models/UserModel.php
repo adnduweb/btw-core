@@ -16,14 +16,17 @@ class UserModel extends ShieldUsers
 {
 
     use ActivitiesTrait;
-	protected $afterInsert = ['activityInsert'];
-	protected $afterUpdate = ['activityUpdate'];
-	protected $afterDelete = ['activityDelete'];
+
+    protected $useTimestamps = true;
+    protected $afterFind     = ['fetchIdentities'];
+    protected $afterInsert   = ['saveEmailIdentity', 'activityInsert'];
+    protected $afterUpdate   = ['saveEmailIdentity', 'activityUpdate'];
+    protected $afterDelete = ['activityDelete'];
 
 
     protected $returnType    = User::class;
     protected $allowedFields = [
-       'company_id', 'username', 'status', 'status_message', 'active', 'last_active', 'deleted_at',
+        'company_id', 'username', 'status', 'status_message', 'active', 'last_active', 'deleted_at',
         'avatar', 'main_account', 'photo_profile', 'first_name', 'last_name', 'email_verified_at'
     ];
 
@@ -47,7 +50,7 @@ class UserModel extends ShieldUsers
         4 => 'created_at',
     ];
 
-    public static $orderable = ['last_name', 'first_name' , 'email', 'created_at'];
+    public static $orderable = ['last_name', 'first_name', 'email', 'created_at'];
 
     public function getColumn()
     {
@@ -90,19 +93,18 @@ class UserModel extends ShieldUsers
      */
     public function getAuthGroupsUsers(int $id): array
     {
-          $builder =  $this->db->table('auth_groups_users')
-          ->select('group')
-          ->where('user_id', $id)
-          ->orderBy('created_at', 'desc')
-          ->get()->getResultArray();
+        $builder =  $this->db->table('auth_groups_users')
+            ->select('group')
+            ->where('user_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get()->getResultArray();
 
-          $returnGroup = [];
-          if(!empty($builder)){
-            foreach($builder as $gp){
+        $returnGroup = [];
+        if (!empty($builder)) {
+            foreach ($builder as $gp) {
                 $returnGroup[] = $gp['group'];
             }
-          }
-          return $returnGroup;
-           
+        }
+        return $returnGroup;
     }
 }

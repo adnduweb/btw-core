@@ -51,7 +51,7 @@ class AdminFilter implements FilterInterface
         // Restrict an IP address to no more than 1 request
         // per second across the entire site.
         if ($request->isHtmx()) {
-           
+
             if (!$request->is('get') && ($request->is('post') || $request->is('json'))) {
                 if (service('throttler')->check(md5($request->getIPAddress()), 10, MINUTE) === false) {
                     response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.throttled', [service('throttler')->getTokenTime()])]);
@@ -59,15 +59,14 @@ class AdminFilter implements FilterInterface
                         429,
                         lang('Auth.throttled', [service('throttler')->getTokenTime()]) // message
                     )->setJson([
-                        'message' => lang('Auth.throttled'), 
-                        'time' => service('throttler')->getTokenTime(), 
+                        'message' => lang('Auth.throttled'),
+                        'time' => service('throttler')->getTokenTime(),
                         'csrf_hash' => csrf_hash(),
                         'ip' => $request->getIPAddress()
                     ]);
                 }
             }
         }
-
     }
 
     /**
@@ -116,12 +115,11 @@ class AdminFilter implements FilterInterface
 
                     break;
                 default:
-                // silent
+                    // silent
             }
 
             $body = str_replace('{CustomEvent}', '<script type="module"></script>', $response->getBody());
             return $response->setBody($body);
-
         }
 
         $body = str_replace('{CustomEvent}', '<script type="module"></script>', $response->getBody());
