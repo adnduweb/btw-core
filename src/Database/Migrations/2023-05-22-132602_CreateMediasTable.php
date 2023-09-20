@@ -47,7 +47,7 @@ class CreateMediasTable extends Migration
         $this->forge->addKey('id_media_lang', true);
         $this->forge->addKey('lang');
         $this->forge->addForeignKey('media_id', 'medias', 'id', false, 'CASCADE');
-        $this->forge->createTable('medias_translations', true);
+        $this->forge->createTable('medias_langs', true);
 
         // medias_users
         $fields = [
@@ -85,7 +85,7 @@ class CreateMediasTable extends Migration
     public function down()
     {
         $this->forge->dropTable('medias');
-        $this->forge->dropTable('medias_translations');
+        $this->forge->dropTable('medias_langs');
         $this->forge->dropTable('medias_users');
         $this->forge->dropTable('medias_downloads');
     }

@@ -244,10 +244,20 @@ class Install extends BaseCommand
         $source      = BTPATH . '../themes';
         $destination = APPPATH . '../themes';
 
+        $admin = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin';
+		if (!is_dir($admin) && !@mkdir($admin, 0775, true)) {
+			throw new \Exception('impossible de créer le dossier admin');
+		}
+
+        $front = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'front';
+		if (!is_dir($front) && !@mkdir($front, 0775, true)) {
+			throw new \Exception('impossible de créer le dossier front');
+		}
+ 
         $publisher = new Publisher();
         $publisher->copyDirectory($source, $destination);
         $publisher->copyDirectory(BTPATH . '../package.json', APPPATH . '../package.json');
-        $publisher->copyDirectory(BTPATH . '../vite.config.js', APPPATH . '../vite.admin.config.js');
+        $publisher->copyDirectory(BTPATH . '../vite.admin.config.js', APPPATH . '../vite.admin.config.js');
         $publisher->copyDirectory(BTPATH . '../tailwind.config.js', APPPATH . '../tailwind.config.js');
 
         //logo

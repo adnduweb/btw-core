@@ -8,7 +8,7 @@ use Btw\Core\Entities\MediaLang;
 class MediaLangModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'medias_translations';
+    protected $table            = 'medias_langs';
     protected $primaryKey       = 'id_media_lang';
     protected $useAutoIncrement = true;
     protected $returnType       = MediaLang::class;
