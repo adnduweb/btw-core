@@ -15,6 +15,7 @@ namespace Btw\Core\Controllers\Auth;
 
 use App\Controllers\BaseController;
 use CodeIgniter\Shield\Entities\User;
+use CodeIgniter\Shield\Models\LoginModel;
 use Btw\Core\Libraries\Oauth\Basic\ControllersInterface;
 
 class OAuthController extends BaseController implements ControllersInterface
@@ -97,7 +98,7 @@ class OAuthController extends BaseController implements ControllersInterface
                 $users->save($user);
                 // Add to default group
                 $users->addToDefaultGroup($user);
-            }else{
+            } else {
                 return redirect()->to(config('Auth')->logoutRedirect())->with('error', lang('ShieldOAuthLang.userUnknown'));
             }
         }

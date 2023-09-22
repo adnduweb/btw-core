@@ -2,10 +2,11 @@
 <html lang="en">
 
 	<head>
-        {{ viewMeta.render('title')|raw }}
-        {{ viewMeta.render('meta')|raw }}
+		{{ viewMeta.render('title')|raw }}
+		{{ viewMeta.render('meta')|raw }}
 		{{ asset_link('app/css/app.css', 'css')|raw }}
 		{% block styles %}{% endblock %}
+		{{  vite_front(['themes/App/css/app.css', 'themes/App/js/app.js'])|raw  }}
 	</head>
 
 	<body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900">
@@ -19,12 +20,9 @@
 				</main>
 			</div>
 
-			<footer class="border-top text-center p-5">
-				<div class="environment">
-					<p>Page rendered in {elapsed_time} seconds &hearts; Environment:
-						<?= ENVIRONMENT ?></p>
-				</div>
-			</footer<scriptsrc="//unpkg.com/alpinejs"defer>
+			{% include '_partials/footer.tpl' ignore missing %}
+
+			<script src="//unpkg.com/alpinejs" defer></script>
 		</body>
 	</html>
 </script>

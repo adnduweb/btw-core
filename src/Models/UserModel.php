@@ -37,7 +37,9 @@ class UserModel extends ShieldUsers
         ['name' => 'secret', 'orderable' => true, 'header' => 'Email', 'order_by_email' => 'DESC'],
         ['name' => 'active', 'orderable' => true, 'header' => 'Active', 'order_by_active' => 'DESC', 'notClick' => true],
         ['name' => 'created_at', 'orderable' => true, 'header' => 'created_at', 'order_by_email' => 'DESC'],
+        ['name' => 'last_active', 'orderable' => true, 'header' => 'last_active', 'order_by_email' => 'DESC'],
         ['name' => 'type', 'orderable' => true, 'header' => 'Type', 'order_by_type' => 'DESC'],
+        ['name' => 'status', 'orderable' => true, 'header' => 'Statut', 'order_by_statut' => 'DESC'],
         ['name' => '2fa', 'orderable' => true, 'header' => '2FA', 'order_by_2fa' => 'DESC'],
         ['name' => 'action', 'header' => 'Action', 'order_by_alias' => NULL,  'responsivePriority' => 2]
 

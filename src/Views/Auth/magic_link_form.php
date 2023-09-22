@@ -11,7 +11,7 @@
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
             <a href="/" class="h-10">
-                <img src="<?= base_url() . 'logo-adn-grey.png'; ?>" alt="Adn du web" class=" h-28 w-full" />
+                <img src="<?= base_url() . 'admin/img/logo-adn-grey.png'; ?>" alt="Adn du web" class=" h-28 w-full" />
             </a>
         </div>
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">

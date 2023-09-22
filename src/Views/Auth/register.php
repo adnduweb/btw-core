@@ -7,7 +7,7 @@
 <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
     <div>
         <a href="/login" class="h-10">
-            <img src="<?= base_url() . 'logo-adn-grey.png'; ?>" alt="Adn du web" class=" h-28 w-full" />
+            <img src="<?= base_url() . 'admin/img/logo-adn-grey.png'; ?>" alt="Adn du web" class=" h-28 w-full" />
         </a>
     </div>
     <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">

@@ -1,6 +1,7 @@
 <?php
 
 namespace Btw\Core\Controllers;
+
 use CodeIgniter\HTTP\CLIRequest;
 use Btw\Core\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
@@ -29,6 +30,5 @@ class AdminController extends BaseController
         $this->langueCurrent = service('settings')->get('Btw.language_bo', 'user:' . Auth()->user()->id) ?? 'fr';
         service('language')->setLocale($this->langueCurrent);
         setlocale(LC_TIME, service('request')->getLocale() . '_' .  service('request')->getLocale());
-        
     }
 }

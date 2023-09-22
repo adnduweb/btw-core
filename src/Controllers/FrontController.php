@@ -68,12 +68,13 @@ class FrontController extends BaseController
             'paths' => [ROOTPATH . 'themes/App', APPPATH  . 'Modules/btw-front/src/Views/Front'],
             'cache' => WRITEPATH . '/cache/twig',
             'debug' => true,
-            'functions'      => ['asset_link', 'setting', 'form']
+            'functions'      => ['asset_link', 'setting', 'form', 'vite_front']
         ];
 
         // print_r(theme()->path($this->theme));
         // exit;
-       
+
+
 
         $this->twig = new \Btw\Core\Libraries\Twig($config);
 

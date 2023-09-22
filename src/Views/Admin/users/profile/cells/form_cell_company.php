@@ -23,7 +23,7 @@
             <div class="text-center">
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="<?= service('storage')->getFileUrl($company->logo); ?>" class="w-40 h-40 m-auto rounded-full shadow" />
+                    <img src="<?= !empty($company->logo) ? service('storage')->getFileUrl($company->logo) : ''; ?>" class="w-40 h-40 m-auto rounded-full shadow" />
                 </div>
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" x-show="photoPreview" style="display: none;">

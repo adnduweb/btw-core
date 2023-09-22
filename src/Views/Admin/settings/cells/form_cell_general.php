@@ -43,6 +43,18 @@
             </div>
         </div>
 
+        <div class="row mb-3">
+
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
+                'label' => lang('Form.settings.activeMultilangue'),
+                'name' => 'activeMultilangue',
+                'value' => '1',
+                'checked' => (old('activeMultilangue', setting('Site.activeMultilangue') ?? false)),
+                'description' => lang('Form.settings.activeMultilangueDescription'),
+            ]); ?>
+
+        </div>
+
     </div>
 
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
@@ -53,10 +65,10 @@
 <script type="module">
     $.getJSON('https://api.ipify.org?format=json', function(data) {
         const dialog = document.getElementById('ipAllowedResult')
-        if(ipAllowedResult){
-            dialog.innerHTML = '<span class="inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800">Votre addresse ip : ' + data.ip +'</span>';
+        if (ipAllowedResult) {
+            dialog.innerHTML = '<span class="inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800">Votre addresse ip : ' + data.ip + '</span>';
         }
-        
-        
+
+
     });
 </script>

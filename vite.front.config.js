@@ -14,11 +14,11 @@ export default defineConfig(() => {
 		build: {
 			chunkSizeWarningLimit: 100000000,
 			emptyOutDir: false,
-			outDir: "./public/admin",
+			outDir: "./public/front",
 			assetsDir: 'build',
 			manifest: true,
 			rollupOptions: {
-				input: `./${env.VITE_RESOURCES_DIR}/${env.VITE_ENTRY_FILE_ADMIN}`,
+				input: `./${env.VITE_RESOURCES_DIR}/${env.VITE_ENTRY_FILE_FRONT}`,
 				 jquery: "$"
 			},
 		},

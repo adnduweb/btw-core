@@ -35,7 +35,7 @@ class SessionAuthOverride implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (! $request instanceof IncomingRequest) {
+        if (!$request instanceof IncomingRequest) {
             return;
         }
 
@@ -55,12 +55,12 @@ class SessionAuthOverride implements FilterInterface
             if ($user->isBanned()) {
                 $error = $user->getBanMessage() ?? lang('Auth.logOutBannedUser');
                 $authenticator->logout();
-
+                \Btw\Core\View\Theme::set_message_htmx('error', $error);
                 return redirect()->to(config('Auth')->logoutRedirect())
                     ->with('error', $error);
             }
 
-            if ($user !== null && ! $user->isActivated()) {
+            if (($user !== null && !$user->isActivated()) || $user->active == false) {
                 $authenticator->logout();
 
                 return redirect()->route('login')
@@ -72,7 +72,7 @@ class SessionAuthOverride implements FilterInterface
 
         if (!$authenticator->loggedIn()) {
             $current = (string)current_url(true);
-            if (!in_array((string)$current, [route_to('action.logout')])){
+            if (!in_array((string)$current, [route_to('action.logout')])) {
                 session()->set('redirect_url', $current);
             }
         }

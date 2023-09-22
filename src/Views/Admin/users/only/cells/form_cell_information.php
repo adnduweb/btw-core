@@ -24,19 +24,14 @@
             <div class="text-center">
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="<?= service('storage')->getFileUrl($user->photo_profile, ['size' => 'image300x300']); ?>"
-                        class="w-40 h-40 m-auto rounded-full shadow" />
+                    <img src="<?= service('storage')->getFileUrl($user->photo_profile, ['size' => 'image300x300']); ?>" class="w-40 h-40 m-auto rounded-full shadow" />
                 </div>
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" x-show="photoPreview" style="display: none;">
-                    <span class="block w-40 h-40 rounded-full m-auto shadow"
-                        x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'"
-                        style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
+                    <span class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
                     </span>
                 </div>
-                <button type="button"
-                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3"
-                    x-on:click.prevent="$refs.photo.click()">
+                <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
                     <?= lang('Form.general.SelectNewPhoto'); ?>
                 </button>
             </div>
@@ -75,6 +70,34 @@
                     'description' => lang('Form.users.TheUsersWillHaveToRverifyTheirEmailAddress')
                 ]); ?>
 
+            </div>
+        </div>
+
+        <!-- Site Online? -->
+        <div x-data="{ user_ban: <?= old('siteOnline', $user->isBanned()) ? 'true' : 'false' ?>}">
+            <div class="w-full mb-6 md:mb-0">
+                <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
+                    'type' => 'text',
+                    'label' => lang('Btw.userban'),
+                    'name' => 'userban',
+                    'value' => '1',
+                    'checked' => (old('userban', $user->isBanned() ?? false)),
+                    'description' => lang('Form.general.userbanDesc'),
+                    'xNotData' => "true",
+                    'xOn' => "user_ban",
+                    'xChange' => "user_ban = ! user_ban"
+                ]); ?>
+            </div>
+
+
+
+            <div x-show="user_ban == true" class="w-full mt-6 mb-6 md:mb-0">
+                <?php echo view_cell('Btw\Core\Cells\Forms\TextAreaCell::renderList', [
+                    'label' => lang('Btw.status_message'),
+                    'name' =>  'status_message',
+                    'value' => (old('status_message', $user->getBanMessage() ?? false)),
+                    'description' => lang('Form.general.status_message'),
+                ]); ?>
             </div>
         </div>
 

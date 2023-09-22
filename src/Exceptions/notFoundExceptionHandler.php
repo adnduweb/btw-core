@@ -24,7 +24,7 @@ class notFoundExceptionHandler extends BaseExceptionHandler implements Exception
     ): void {
 
         $response->setStatusCode($statusCode, $exception->getMessage());
-        if (! headers_sent()) {
+        if (!headers_sent()) {
             header(
                 sprintf(
                     'HTTP/%s %s %s',
@@ -37,14 +37,13 @@ class notFoundExceptionHandler extends BaseExceptionHandler implements Exception
             );
         }
         $allSegments = $request->getUri()->getSegments();
-        if ($allSegments[0] == ADMIN_AREA){
+        if (!empty($allSegments) && $allSegments[0] == ADMIN_AREA) {
             $this->render($exception, $statusCode, $this->viewPath . "error_admin_{$statusCode}.php");
-        }else{
+        } else {
             $this->render($exception, $statusCode, $this->viewPath . "error_front_{$statusCode}.php");
         }
 
-        
+
         exit($exitCode);
     }
-
 }

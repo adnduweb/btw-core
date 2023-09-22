@@ -28,7 +28,7 @@ class Metadata
      */
     public function render(string $type): string
     {
-        if (! isset($this->{$type})) {
+        if (!isset($this->{$type})) {
             throw new RuntimeException('Metadata type not found');
         }
 

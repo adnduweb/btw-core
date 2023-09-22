@@ -1,2 +1,2 @@
 <span class="sr-only">Open user menu</span>
-<?= auth()->user()->renderAvatar(32) ?>
+<?= auth()->user()->renderAvatar(32, 'avatar w-10 h-10 flex justify-center items-center p-1 rounded-full ring-2 bg-gray-400 ring-gray-300 dark:ring-gray-500') ?>

@@ -10,7 +10,7 @@
     <?= $viewMeta->render('style') ?>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
-    <?= vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
+    <?= vite_admin(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
 
     <style>
         .htmx-indicator {
@@ -43,6 +43,8 @@
                 <?= $this->renderSection('main') ?>
             </main>
         </div>
+
+        <div id="alerts-wrapper" class="fixed inset-x-0 mx-auto bottom-5  max-w-xl sm:w-full space-y-5 z-50"></div>
 
         <?= $this->include('_notifications') ?>
 

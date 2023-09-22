@@ -63,7 +63,7 @@ class VisitsFilter implements FilterInterface
             return; // @codeCoverageIgnore
         }
 
-        if (! $request instanceof IncomingRequest) {
+        if (!$request instanceof IncomingRequest) {
             throw new RuntimeException(static::class . ' requires an IncomingRequest object.');
         }
 
@@ -73,11 +73,11 @@ class VisitsFilter implements FilterInterface
         }
 
         // Verify helper function from codeigniter4/authentication-implementation
-        if (! function_exists('user_id') && config('Visits')->trackingMethod === 'user_id') {
+        if (!function_exists('user_id') && config('Visits')->trackingMethod === 'user_id') {
             throw new RuntimeException('The user_id() function must be available to track by user ID.'); // @codeCoverageIgnore
         }
 
-        return;
+
         // Use the Request to create a Visit
         $visit = $this->model->makeFromRequest($request);
 

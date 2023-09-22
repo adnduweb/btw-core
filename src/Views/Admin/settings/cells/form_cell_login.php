@@ -23,7 +23,7 @@
                     'name' => 'rememberLength',
                     'options' => array_flip($rememberOptions),
                     'byKey' => true,
-                    'selected' =>  old('rememberLength', setting('Auth.sessionConfig')['rememberLength']), 
+                    'selected' =>  old('rememberLength', setting('Auth.sessionConfig')['rememberLength']),
                     'description' => lang('Form.settings.IfCheckedWillSendCodeViaEmail'),
                 ]); ?>
 

@@ -54,7 +54,7 @@ class ProtectFilter implements FilterInterface
 
         if ($authenticator->loggedIn()) {
 
-            if (in_array('/' . $request->getPath(), [route_to('login'), route_to('magic-link'), route_to('verify-magic-link')])) {
+            if (in_array('/' . $request->getPath(), [route_to('login'), route_to('magic-link'), route_to('verify-magic-link'), route_to('auth-action-show'), route_to('auth-action-handle'), route_to('auth-action-verify')])) {
                 return redirect()->route('dashboard');
             }
         }

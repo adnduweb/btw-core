@@ -22,6 +22,7 @@ use Btw\Core\Libraries\DataTable\DataTable;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Events\Events;
 use InvalidArgumentException;
 
 
@@ -73,7 +74,7 @@ class UsersController extends AdminController
     {
 
         $model = model(UserModel::class);
-        $model->select('users.id as identifier, username, last_name, first_name, secret, active, users.created_at')->join('auth_identities', 'auth_identities.user_id = users.id')->where(['type' => 'email_password', 'deleted_at' => null]);
+        $model->select('users.id as identifier, username, last_name, first_name, secret, active, status, last_active, users.created_at')->join('auth_identities', 'auth_identities.user_id = users.id')->where(['type' => 'email_password', 'deleted_at' => null]);
 
         return DataTable::of($model)
             ->add('select', function ($row) {
@@ -103,6 +104,9 @@ class UsersController extends AdminController
                 $userCurrent = model(UserModel::class)->getAuthGroupsUsers($row->identifier);
                 return ucfirst(implode(', ', $userCurrent));
             }, 'last')
+            ->add('status', function ($row) {
+                return (!is_null($row->status)) ? '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.' . $row->status) . '</span>' : '<span class="inline-flex items-center rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-800">' . lang('Btw.active') . '</span>';
+            }, 'last')
             ->add('2fa', function ($row) {
                 $actions = setting()->get('Auth.actions', 'user:' . $row->identifier);
                 return (!empty($actions['login'])) ? '<span class="inline-flex items-center rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-800">' . lang('Btw.yes') . '</span>' : '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.no') . '</span>';
@@ -110,6 +114,9 @@ class UsersController extends AdminController
             ->format('created_at', function ($value) {
                 return Time::parse($value, setting('App.appTimezone'))->format(setting('App.dateFormat') . ' à ' . setting('App.timeFormat'));
             })
+            ->format('last_active', function ($value) {
+                return (!is_null($value)) ? Time::parse($value, setting('App.appTimezone'))->format(setting('App.dateFormat') . ' à ' . setting('App.timeFormat')) : '<span class="inline-flex items-center rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-800">' . lang('Btw.notConnected') . '</span>';
+            }, 'last')
             ->add('action', function ($row) {
                 $row = new User((array) $row);
                 return view_cell('Btw\Core\Cells\Datatable\DatatableAction', [
@@ -242,8 +249,20 @@ class UsersController extends AdminController
                     return view($this->viewPrefix . 'cells\form_cell_information', [
                         'userCurrent' => $user,
                         'validation' => $validation
-                    ]);
-                    ;
+                    ]);;
+                }
+
+                $userban = $data['userban'] ?? false;
+                $message_ban = $data['message_ban'] ?? false;
+                if ($userban == true) {
+                    if ($message_ban == true) {
+                        $user->ban($message_ban);
+                    } else {
+                        $user->ban();
+                    }
+                } else {
+                    $user->unBan();
+                    $user->status_message = null;
                 }
 
                 $user->fill($data);
@@ -290,8 +309,7 @@ class UsersController extends AdminController
                         'currentGroup' => array_flip(auth()->user()->getGroups()),
                         'groups' => setting('AuthGroups.groups'),
                         'validation' => $validation
-                    ]) . alertHtmx('danger', 'Form validation failed.');
-                    ;
+                    ]) . alertHtmx('danger', 'Form validation failed.');;
                 }
 
 
@@ -335,7 +353,7 @@ class UsersController extends AdminController
         $users = new UserModel();
         $user = new User();
 
-        $rules = config('Users')->validation; 
+        $rules = config('Users')->validation;
         $rules['currentGroup'] = 'required';
         $rules['new_password'] = 'required|strong_password';
         $rules['pass_confirm'] = 'required|matches[new_password]';
@@ -405,7 +423,6 @@ class UsersController extends AdminController
 
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
         return redirect()->hxLocation('/' . ADMIN_AREA . '/users/edit/' . $user->id . '/information');
-
     }
 
 
@@ -429,9 +446,9 @@ class UsersController extends AdminController
 
 
         $permissionsMatrix = [];
-        foreach (array_flip($group) as $key => $val):
-            if (isset($matrix[$key])):
-                foreach ($matrix[$key] as $key => $val):
+        foreach (array_flip($group) as $key => $val) :
+            if (isset($matrix[$key])) :
+                foreach ($matrix[$key] as $key => $val) :
                     $permissionsMatrix[$val] = $val;
                 endforeach;
             endif;
@@ -546,8 +563,7 @@ class UsersController extends AdminController
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]);
-            ;
+            ]);;
         }
 
         //On vérifie que le mote d epasse en cours est connu 
@@ -558,8 +574,7 @@ class UsersController extends AdminController
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]);
-            ;
+            ]);;
         }
 
 
@@ -694,14 +709,13 @@ class UsersController extends AdminController
                     $this->response->triggerClientEvent('reloadTable');
                     $this->response->setReswap('none');
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.resourcesNotDeletedOnlyUser', ['users'])]);
-   
                 } else {
                     $model->delete(['id' => $identifier]);
                 }
             }
 
             if ($isNatif == false) {
-                $this->response->triggerClientEvent('test', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['users'])]);
+                $this->response->triggerClientEvent('reloadTable');
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['users'])]);
             }
         }

@@ -43,7 +43,7 @@ class Site extends BaseConfig
      */
     public $siteOfflineView = 'Btw\Core\Views\site_offline';
 
-     /**
+    /**
      * --------------------------------------------------------------------------
      * List address IP
      * --------------------------------------------------------------------------
@@ -52,5 +52,12 @@ class Site extends BaseConfig
      */
     public $ipAllowed;
 
-    
+    /**
+     * --------------------------------------------------------------------------
+     * List address IP
+     * --------------------------------------------------------------------------
+     *
+     * List address IP
+     */
+    public $activeMultilangue = false;
 }

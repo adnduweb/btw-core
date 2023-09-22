@@ -98,7 +98,6 @@ class LoginController extends ShieldLogin
         // Attempt to login
         $result = $authenticator->remember($remember)->attempt($credentials);
         if (!$result->isOK()) {
-            // return redirect()->route('login')->withInput()->with('error', $result->reason());
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $result->reason()]);
             return view($this->viewPrefix . 'cells\form_cell_login', [
                 'validation' => $result->reason()

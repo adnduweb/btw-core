@@ -121,11 +121,13 @@ class GeneralSettingsController extends AdminController
                 setting('Site.siteName', $data['siteName']);
                 setting('Site.siteOnline', $data['siteOnline'] ?? 0);
                 setting('Site.ipAllowed', trim($data['ipAllowed']) ?? '');
-                
+                setting('Site.activeMultilangue', $data['activeMultilangue'] ?? 0);
+
+
 
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
                 $this->response->setReswap('innerHTML show:#information:top');
-                return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', [ 'siteOnline' => setting('Site.siteOnline')]);
+                return view('Btw\Core\Views\Admin\settings\cells\form_cell_general', ['siteOnline' => setting('Site.siteOnline')]);
 
                 break;
             case 'dateandtime':
@@ -268,8 +270,7 @@ class GeneralSettingsController extends AdminController
                         'groups' => setting('AuthGroups.groups'),
                         'defaultGroup' => setting('AuthGroups.defaultGroup'),
                         'validation' => $validation
-                    ]);
-                    ;
+                    ]);;
                 }
 
                 setting('Auth.allowRegistration', $data['allowRegistration'] ?? false);
@@ -353,8 +354,7 @@ class GeneralSettingsController extends AdminController
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
             return view('Btw\Core\Views\Admin\users\form_cell_password', [
                 'validation' => $validation
-            ]);
-            ;
+            ]);;
         }
 
         setting('Auth.minimumPasswordLength', (int) $data['minimumPasswordLength']);

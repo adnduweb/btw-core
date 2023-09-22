@@ -3,9 +3,9 @@
 
 <head>
 
-    <meta name="htmx-config" content='{"historyCacheSize": 0, "refreshOnHistoryMiss": false}'>
+    <meta name="htmx-config" content='{"historyCacheSize": 0, "refreshOnHistoryMiss": false, "includeIndicatorStyles": false}'>
     <?= $viewMeta->render('meta') ?>
-    <?= $viewMeta->render('title') ?>
+    <title><?= $viewMeta->title() ?></title>
     <?= csrf_meta() ?>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <?= $this->renderSection('styles') ?>
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
-    <?= vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
+    <?= vite_admin(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
 
     <style>
         .htmx-indicator {
@@ -51,7 +51,7 @@
 <!-- debug, loading-states, json-enc, event-header -->
 <!-- hx-headers='{"X-Theme": "admin"}' -->
 
-<body hx-ext="morph, ajax-header head-support" hx-history="false" hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100 <?= detectAgent(); ?>" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
+<body hx-ext="morph, ajax-header, head-support, preload" hx-history="false" hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100 <?= detectAgent(); ?>" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
 
     <!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">

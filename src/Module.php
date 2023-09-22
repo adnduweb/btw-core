@@ -26,7 +26,7 @@ class Module extends BaseModuleController
         $item    = new MenuItem([
             'title'           => 'Users',
             'namedRoute'      => 'user-list',
-            'fontIconSvg'     => theme()->getSVG('duotune/communication/com014.svg', 'svg-icon mr-3 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
+            'fontIconSvg'     => theme()->getSVG('duotune/communication/com014.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'users.view',
         ]);
         $sidebar->menu('sidebar')->collection('access')->addItem($item);
@@ -37,7 +37,7 @@ class Module extends BaseModuleController
         $item    = new MenuItem([
             'title'           => 'Groups',
             'namedRoute'      => 'groups-list',
-            'fontIconSvg'     => theme()->getSVG('duotune/general/gen049.svg', 'svg-icon mr-3 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen049.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
             'permission'      => 'groups.view',
         ]);
         $sidebar->menu('sidebar')->collection('access')->addItem($item);
@@ -47,66 +47,64 @@ class Module extends BaseModuleController
         $item    = new MenuItem([
             'title'           => 'Permissions',
             'namedRoute'      => 'permissions-list',
-            'fontIconSvg'     => theme()->getSVG('duotune/general/gen051.svg', 'svg-icon  mr-3 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
+            'fontIconSvg'     => theme()->getSVG('duotune/general/gen051.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
             'permission'      => 'admin.view',
         ]);
         $sidebar->menu('sidebar')->collection('access')->addItem($item);
 
-         // Add to the Content menu
-         $sidebar = service('menus');
-         $item    = new MenuItem([
-             'title'           => lang('Btw.Settings'),
-             'namedRoute'      => 'settings-general',
-             'fontIconSvg'     => theme()->getSVG('duotone/Code/Settings4.svg', 'svg-icon  mr-3 flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
-             'permission'      => 'admin.view',
-             'weight' => 3
-         ]);
-         $sidebar->menu('sidebar')->collection('system')->addItem($item);
+        // Add to the Content menu
+        $sidebar = service('menus');
+        $item    = new MenuItem([
+            'title'           => lang('Btw.Settings'),
+            'namedRoute'      => 'settings-general',
+            'fontIconSvg'     => theme()->getSVG('duotone/Code/Settings4.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
+            'permission'      => 'admin.view',
+            'weight' => 3
+        ]);
+        $sidebar->menu('sidebar')->collection('system')->addItem($item);
 
-          // Add to the Content menu
-          $sidebar = service('menus');
-          $item    = new MenuItem([
-              'title'           => lang('Btw.Logs'),
-              'namedRoute'      => 'logs-file',
-              'fontIconSvg'     => theme()->getSVG('duotune/text/txt009.svg', 'svg-icon mr-3 flex-shrink-0 h-4 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
-              'permission'      => 'admin.view',
-              'weight' => 1
-          ]);
-          $sidebar->menu('sidebar')->collection('system')->addItem($item);
+        // Add to the Content menu
+        $sidebar = service('menus');
+        $item    = new MenuItem([
+            'title'           => lang('Btw.Logs'),
+            'namedRoute'      => 'logs-file',
+            'fontIconSvg'     => theme()->getSVG('duotune/text/txt009.svg', 'svg-icon flex-shrink-0 h-4 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
+            'permission'      => 'admin.view',
+            'weight' => 1
+        ]);
+        $sidebar->menu('sidebar')->collection('system')->addItem($item);
 
-           // Add to the Content menu
-           $sidebar = service('menus');
-           $item    = new MenuItem([
-               'title'           => lang('Btw.systemLogs'),
-               'namedRoute'      => 'logs-system',
-               'fontIconSvg'     => theme()->getSVG('duotune/text/txt009.svg', 'svg-icon mr-3 flex-shrink-0 h-4 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
-               'permission'      => 'admin.view',
-               'weight' => 2
-           ]);
-           $sidebar->menu('sidebar')->collection('system')->addItem($item);
+        // Add to the Content menu
+        $sidebar = service('menus');
+        $item    = new MenuItem([
+            'title'           => lang('Btw.systemLogs'),
+            'namedRoute'      => 'logs-system',
+            'fontIconSvg'     => theme()->getSVG('duotune/text/txt009.svg', 'svg-icon flex-shrink-0 h-4 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
+            'permission'      => 'admin.view',
+            'weight' => 2
+        ]);
+        $sidebar->menu('sidebar')->collection('system')->addItem($item);
 
-            // Add to the Content menu
-            $sidebar = service('menus');
-            $item    = new MenuItem([
-                'title'           => lang('Btw.systemInfos'),
-                'namedRoute'      => 'sys-info',
-                'fontIconSvg'     => theme()->getSVG('duotune/text/txt009.svg', 'svg-icon mr-3 flex-shrink-0 h-4 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
-                'permission'      => 'admin.view',
-                'weight' => 1
-            ]);
-            $sidebar->menu('sidebar')->collection('tools')->addItem($item);
+        // Add to the Content menu
+        $sidebar = service('menus');
+        $item    = new MenuItem([
+            'title'           => lang('Btw.systemInfos'),
+            'namedRoute'      => 'sys-info',
+            'fontIconSvg'     => theme()->getSVG('duotune/text/txt009.svg', 'svg-icon flex-shrink-0 h-4 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
+            'permission'      => 'admin.view',
+            'weight' => 1
+        ]);
+        $sidebar->menu('sidebar')->collection('tools')->addItem($item);
 
-             // Add to the Content menu
-             $sidebar = service('menus');
-             $item    = new MenuItem([
-                 'title'           => lang('Btw.tokens'),
-                 'namedRoute'      => 'tokens-manage',
-                 'fontIconSvg'     => theme()->getSVG('duotune/technology/teh005.svg', 'svg-icon mr-3 flex-shrink-0 h-4 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
-                 'permission'      => 'admin.view',
-                 'weight' => 2
-             ]);
-             $sidebar->menu('sidebar')->collection('tools')->addItem($item);
-
-          
+        // Add to the Content menu
+        $sidebar = service('menus');
+        $item    = new MenuItem([
+            'title'           => lang('Btw.tokens'),
+            'namedRoute'      => 'tokens-manage',
+            'fontIconSvg'     => theme()->getSVG('duotune/technology/teh005.svg', 'svg-icon flex-shrink-0 h-4 w-6 dark:text-gray-200 text-gray-800 svg-white ', true),
+            'permission'      => 'admin.view',
+            'weight' => 2
+        ]);
+        $sidebar->menu('sidebar')->collection('tools')->addItem($item);
     }
 }

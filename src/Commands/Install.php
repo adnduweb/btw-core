@@ -245,15 +245,25 @@ class Install extends BaseCommand
         $destination = APPPATH . '../themes';
 
         $admin = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin';
-		if (!is_dir($admin) && !@mkdir($admin, 0775, true)) {
-			throw new \Exception('impossible de créer le dossier admin');
-		}
+        if (!is_dir($admin) && !@mkdir($admin, 0775, true)) {
+            throw new \Exception('impossible de créer le dossier admin');
+        }
+
+        $admin_img = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'img';
+        if (!is_dir($admin_img) && !@mkdir($admin_img, 0775, true)) {
+            throw new \Exception('impossible de créer le dossier admin/img');
+        }
 
         $front = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'front';
-		if (!is_dir($front) && !@mkdir($front, 0775, true)) {
-			throw new \Exception('impossible de créer le dossier front');
-		}
- 
+        if (!is_dir($front) && !@mkdir($front, 0775, true)) {
+            throw new \Exception('impossible de créer le dossier front');
+        }
+
+        $front_img = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'front' . DIRECTORY_SEPARATOR . 'img';
+        if (!is_dir($front_img) && !@mkdir($front_img, 0775, true)) {
+            throw new \Exception('impossible de créer le dossier front/img');
+        }
+
         $publisher = new Publisher();
         $publisher->copyDirectory($source, $destination);
         $publisher->copyDirectory(BTPATH . '../package.json', APPPATH . '../package.json');
@@ -261,8 +271,10 @@ class Install extends BaseCommand
         $publisher->copyDirectory(BTPATH . '../tailwind.config.js', APPPATH . '../tailwind.config.js');
 
         //logo
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/admin/logo-adn.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/logo-adn-grey.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/admin/img/logo-adn.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/img/logo-adn-grey.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-white.png', APPPATH . '../public/admin/img/logo-adn-white.png');
+        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-small.png', APPPATH . '../public/admin/img/logo-adn-small.png');
     }
 
     private function setEncryptionKey()

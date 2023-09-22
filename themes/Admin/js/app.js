@@ -7,7 +7,6 @@ const html = document.querySelector("html");
 // Jquery
 import $ from "jquery";
 import intlTelInput from "intl-tel-input";
-import * as FilePond from 'filepond';
 import "flowbite"; // Flowbite
 import "flowbite-datepicker"; // Flowbite
 import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -33,14 +32,11 @@ import * as htmx from "htmx.org";
 
 
 import "intl-tel-input/build/css/intlTelInput.css";
-import 'filepond/dist/filepond.min.css';
-import 'filepond/dist/filepond.min.css';
 import "sweetalert2/src/sweetalert2.scss";
 import "/node_modules/select2/dist/css/select2.css";
 
 window.jQuery = window.$ = $;
 window.intlTelInput = intlTelInput;
-window.FilePond = FilePond;
 window.Swal = Swal;
 window.Sortable = Sortable;
 window.axios = axios;
@@ -85,6 +81,11 @@ SetPhoneIntl.initPhoneIntl();
 import './alpine.js';
 import * as SetHtmx from "./htmx.js";
 SetHtmx.initHtmx();
+import * as SetHtmxHead from "./htmx-head-support.js";
+if(doudou.env != 'development'){
+    SetHtmxHead.initHtmx();
+}
+
 
 htmx.on("htmx:afterSettle", function(evt) {
     SetPhoneIntl.initPhoneIntl();

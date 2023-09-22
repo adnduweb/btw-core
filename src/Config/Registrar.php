@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Btw\Core\Config;
 
+
+use Btw\Core\Filters\SiteFilter;
 use Btw\Core\Filters\AdminFilter;
 use Btw\Core\Filters\ProtectFilter;
 use Btw\Core\Filters\OnlineCheckFilter;
@@ -47,10 +49,12 @@ class Registrar
                 'online'   => OnlineCheckFilter::class,
                 'visits' => VisitsFilter::class,
                 'ajax' => AjaxFilter::class,
-                
+                'site' => SiteFilter::class,
+
             ],
             'globals' => [
                 'before' => array_merge_recursive($props['globals']['before'], [
+                    'site',
                     'online' => ['except' => ['site-offline', ADMIN_AREA . '*', 'login*', 'auth*', 'register*']],
                     'csrf' => ['except' => ['api/record/[0-9]+']],
                     //'session' => ['except' => ['login*', 'register', 'auth/a/*', 'oauth*']],
@@ -69,6 +73,9 @@ class Registrar
                 'admin' => [
                     'before' => [ADMIN_AREA . '*'],
                     'after' => [ADMIN_AREA . '*'],
+                ],
+                'site' => [
+                    'before' => [ADMIN_AREA . '*'],
                 ],
                 'ajax' => [
                     'before' => [ADMIN_AREA . '*'],

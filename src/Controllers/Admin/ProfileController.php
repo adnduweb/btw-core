@@ -43,6 +43,12 @@ class ProfileController extends AdminController
      */
     public function editUserCurrent()
     {
+
+        if (!auth()->user()->can('me.edit')) {
+            theme()->set_message_htmx('error', lang('Btw.notAuthorized'));
+            return redirect()->to(ADMIN_AREA);
+        }
+
         $groups = setting('AuthGroups.groups');
         asort($groups);
 
@@ -115,7 +121,7 @@ class ProfileController extends AdminController
                 $validation->setRules([
                     'email' => 'required|valid_email|unique_email[' . auth()->id() . ']',
                     'first_name' => 'permit_empty|string|min_length[3]',
-                    'last_name' => 'permit_empty|string|min_length[3]', 
+                    'last_name' => 'permit_empty|string|min_length[3]',
                 ]);
 
                 if (!$validation->run($data)) {
@@ -196,7 +202,7 @@ class ProfileController extends AdminController
 
     public function updateAvatar()
     {
-        return view_cell('Btw\Core\Cells\Core\AdminAvatar',['auth' => auth()]);
+        return view_cell('Btw\Core\Cells\Core\AdminAvatar', ['auth' => auth()]);
     }
 
     public function updateGroup(int $id)
@@ -260,6 +266,11 @@ class ProfileController extends AdminController
 
     public function capabilities()
     {
+        if (!auth()->user()->can('admin.settings')) {
+            theme()->set_message_htmx('error', lang('Btw.notAuthorized'));
+            return redirect()->to(ADMIN_AREA);
+        }
+
         $users = model(UserModel::class);
         /** @var User|null $user */
         $user = $users->find(auth()->id());
@@ -517,7 +528,7 @@ class ProfileController extends AdminController
         ]);
     }
 
-    
+
 
     /**
      * Display Update and Debug
@@ -832,25 +843,27 @@ class ProfileController extends AdminController
             'title' => 'Information',
             'namedRoute' => 'user-profile-settings',
             'fontIconSvg' => theme()->getSVG('duotune/communication/com006.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission' => 'admin.view.profile',
+            'permission' => 'me.edit',
             'weight' => 1
         ]);
         $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
 
-        $item = new MenuItem([
-            'title' => lang('Btw.sidebar.capabilities'),
-            'namedRoute' => 'user-capabilities',
-            'fontIconSvg' => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission' => 'admin.view.profile',
-            'weight' => 2
-        ]);
-        $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
+        if (auth()->user()->can('admin.settings')) {
+            $item = new MenuItem([
+                'title' => lang('Btw.sidebar.capabilities'),
+                'namedRoute' => 'user-capabilities',
+                'fontIconSvg' => theme()->getSVG('duotune/general/gen047.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+                'permission' => 'me.edit',
+                'weight' => 2
+            ]);
+            $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
+        }
 
         $item = new MenuItem([
             'title' => lang('Btw.sidebar.changePassword'),
             'namedRoute' => 'user-change-password',
             'fontIconSvg' => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission' => 'admin.view.profile',
+            'permission' => 'me.edit',
             'weight' => 3
         ]);
         $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
@@ -859,7 +872,7 @@ class ProfileController extends AdminController
             'title' => lang('Btw.sidebar.TwoFactoAuthentification'),
             'namedRoute' => 'user-two-factor',
             'fontIconSvg' => theme()->getSVG('duotune/technology/teh004.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission' => 'admin.view.profile',
+            'permission' => 'me.edit',
             'weight' => 3
         ]);
         $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
@@ -868,7 +881,7 @@ class ProfileController extends AdminController
             'title' => lang('Btw.sidebar.historyLogin'),
             'namedRoute' => 'user-history',
             'fontIconSvg' => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission' => 'admin.view.profile',
+            'permission' => 'me.edit',
             'weight' => 4
         ]);
         $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
@@ -877,7 +890,7 @@ class ProfileController extends AdminController
             'title' => lang('Btw.sidebar.historyBrowser'),
             'namedRoute' => 'user-session-browser',
             'fontIconSvg' => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-            'permission' => 'admin.view.profile',
+            'permission' => 'me.edit',
             'weight' => 4
         ]);
         $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
@@ -887,7 +900,7 @@ class ProfileController extends AdminController
                 'title' => lang('Btw.sidebar.company'),
                 'namedRoute' => 'company-display',
                 'fontIconSvg' => theme()->getSVG('duotune/general/gen013.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
-                'permission' => 'admin.view.profile',
+                'permission' => 'me.edit',
                 'weight' => 5
             ]);
             $sidebar->menu('sidebar_user_profile')->collection('content')->addItem($item);
@@ -897,7 +910,7 @@ class ProfileController extends AdminController
             'title' => lang('Btw.sidebar.majdebug'),
             'namedRoute' => 'user-majdebug',
             'fontIconSvg' => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 text-blue-800', true),
-            'permission' => 'admin.view.profile',
+            'permission' => 'me.edit',
             'color' => 'text-blue-800',
             'weight' => 6
         ]);
@@ -908,7 +921,7 @@ class ProfileController extends AdminController
             'title' => 'Delete',
             'namedRoute' => 'settings-email',
             'fontIconSvg' => theme()->getSVG('duotune/general/gen016.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300 text-red-800', true),
-            'permission' => 'admin.view.profile',
+            'permission' => 'me.edit',
             'color' => 'text-red-800',
             'weight' => 7
         ]);
