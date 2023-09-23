@@ -1,15 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth light no-touch">
 
 	<head>
 		{{ viewMeta.render('title')|raw }}
 		{{ viewMeta.render('meta')|raw }}
-		{{ asset_link('app/css/app.css', 'css')|raw }}
+		{{ csrf_meta()|raw }}
+		{# {{ asset_link('app/css/app.css', 'css')|raw }} #}
 		{% block styles %}{% endblock %}
-		{{  vite_front(['themes/App/css/app.css', 'themes/App/js/app.js'])|raw  }}
+		{{  vite_url('front')|raw  }}
 	</head>
 
 	<body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900">
+
+		{% include '_partials/header/header-2.twig' ignore missing %}
 
 		<h1 class="text-4xl ml-[5rem] font-bold underline">
 			Hello world!
@@ -20,13 +23,14 @@
 				</main>
 			</div>
 
-			{% include '_partials/footer.tpl' ignore missing %}
+			{% include '_partials/footer.twig' ignore missing %}
 
 			<script src="//unpkg.com/alpinejs" defer></script>
 		</body>
+
 	</html>
 </script>
 
-{{ asset_link('app/js/feather.js', 'js')|raw }}
-{{ asset_link('app/js/app.js', 'js')|raw }}
+{# {{ asset_link('app/js/feather.js', 'js')|raw }}
+{{ asset_link('app/js/app.js', 'js')|raw }} #}
 {% block script %}{% endblock %}</body></html>

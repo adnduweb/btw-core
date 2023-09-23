@@ -1,0 +1,521 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito:300,400,500,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@use "~./custom-base-styles.css";
+
+
+body>div {
+    overflow-x: hidden;
+}
+
+body {
+    @apply text-black;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* admin bar fix */
+
+body.admin-bar {
+    max-height: calc(100vh - 32px);
+}
+
+::selection {
+    background: #424242;
+    color: #fff;
+    text-shadow: none;
+}
+
+::-webkit-selection {
+    background: #424242;
+    color: #fff;
+    text-shadow: none;
+}
+
+::-moz-selection {
+    background: #424242;
+    color: #fff;
+    text-shadow: none;
+}
+
+p {
+    @apply mb-5;
+}
+
+.block_strong strong{
+    @apply block
+}
+
+.item-decalage-4{
+    @apply ml-0 lg:ml-[4rem];
+}
+
+.item-decalage-8{
+    @apply ml-0 lg:ml-[8rem];
+}
+
+.item-decalage-12{
+    @apply ml-0 lg:ml-[12rem];
+}
+
+.item-decalage-16{
+    @apply ml-0 lg:ml-[16rem];
+}
+
+@font-face {
+    font-family: "Mansalva Regular";
+    font-style: normal;
+    font-weight: normal;
+    src: local("Mansalva Regular"), url("/wp-content/themes/vatadn/assets/fonts/MansalvaRegular.woff") format("woff");
+}
+
+#primary-menu.menu li.menu-item-has-children {
+    height: 100%;
+}
+
+#primary-menu.menu .menu-item-has-children a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#primary-menu.menu .menu-item-has-children ul.sub-menu li {
+    @apply pt-1 pb-1 px-3;
+}
+
+#primary-menu.menu .menu-item-has-children ul.sub-menu li:hover {
+    background-color: #ddd;
+}
+
+#primary-menu.menu .menu-item-has-children ul.sub-menu li a {
+    color: #000;
+}
+
+.slick-prev,
+.slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus {
+    color: transparent;
+    outline: none;
+    background: transparent;
+}
+
+.slick-prev:hover:before,
+.slick-prev:focus:before,
+.slick-next:hover:before,
+.slick-next:focus:before {
+    opacity: 1;
+}
+
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before {
+    opacity: 0.25;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    font-family: "slick";
+    font-size: 20px;
+    line-height: 1;
+    opacity: 0.75;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-prev {
+    left: -25px;
+}
+
+[dir="rtl"] .slick-prev {
+    right: -25px;
+    left: auto;
+}
+
+.slick-prev:before {
+    content: "←";
+}
+
+[dir="rtl"] .slick-prev:before {
+    content: "→";
+}
+
+.slick-next {
+    right: -25px;
+}
+
+[dir="rtl"] .slick-next {
+    right: auto;
+    left: -25px;
+}
+
+.slick-next:before {
+    content: "→";
+}
+
+[dir="rtl"] .slick-next:before {
+    content: "←";
+}
+
+.slick-next:before {
+    content: url(/wp-content/themes/vatadn/assets/img/next.svg);
+}
+
+.slick-prev:before {
+    content: url(/wp-content/themes/vatadn/assets/img/prev.svg);
+}
+
+
+/* Dots */
+
+.slick-dotted.slick-slider {
+    margin-bottom: 30px;
+}
+
+.slick-dots {
+    position: absolute;
+    bottom: -25px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.slick-dots li {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+
+.slick-dots li button:hover,
+.slick-dots li button:focus {
+    outline: none;
+}
+
+.slick-dots li button:hover:before,
+.slick-dots li button:focus:before {
+    opacity: 1;
+}
+
+.slick-dots li button:before {
+    font-family: "slick";
+    font-size: 23px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: "•";
+    text-align: center;
+    opacity: 0.25;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-dots li.slick-active button:before {
+    opacity: 0.75;
+    color: black;
+}
+
+.sc img {
+    /* height: calc(50vh - 100px);
+    width: auto; */
+    margin: 0 auto;
+    /* it centers any block level element */
+}
+
+.section-slick.height-full {
+    position: relative;
+    height: 92vh;
+    width: 100%;
+}
+
+.section-slick .slider-id,
+.section-slick .slider-id .slick-list {
+    height: 100%;
+}
+
+.section-slick .slick-list,
+.section-slick .slick-list .slick-track>div,
+.slick-track {
+    height: 100% !important;
+}
+
+.section-slick.height-full .slick-list .slick-slide>div,
+.section-slick.height-full .slick-list .slick-track picture {
+    height: 100vh;
+    position: relative;
+    display: block;
+}
+
+.section-slick .slick-list .slick-track picture img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.section-slick .slick-list {
+    height: 100vh;
+}
+
+.section-slick .slick-slide {
+    height: 100vh;
+}
+
+.section-slick .slider-id:before {
+    content: "";
+    position: absolute;
+    background: linear-gradient( 180deg, rgba(255, 255, 255, 0.25) 47%, rgba(255, 255, 255, 0) 100%);
+    width: 100%;
+    height: 60%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+ .slider-content{
+    position: absolute;
+ }
+
+
+.section-slick.section-slick-accueil .slider-content {
+    position: absolute;
+    right: 200px;
+    top: 290px;
+}
+
+@media screen and (max-width: 500px) {
+    .section-slick.section-slick-accueil .slider-content {
+        right: 40px;
+        top: 350px;
+    }
+}
+
+.section-slick-hisseo-la-parentalite-epanouie .slider-content {
+    @apply absolute w-full pr-10 sm:w-auto left-[2rem] bottom-[18rem]  sm:left-[8rem] sm:bottom-[26rem] md:left-[6rem] md:bottom-[8rem] xl:left-[19rem] xl:bottom-[10rem]
+}
+
+.section-slick.section-slick-fonder-une-creche .slider-content {
+    @apply absolute w-full px-10 sm:w-max right-[0rem] bottom-[8rem] sm:right-[3rem] sm:bottom-[21rem] md:top-[25rem] md:right-[10rem] xl:bottom-[9rem] xl:top-auto xl:right-[10rem] 2xl:top-[5rem] 2xl:right-[10rem] z-50
+}
+
+.section-slick.section-slick-rejoindre-notre-equipage .slider-content {
+    @apply absolute w-full px-10 sm:w-max left-[0rem] bottom-[8rem] sm:left-[3rem] sm:bottom-[21rem] md:bottom-[25rem] md:left-[10rem] xl:bottom-[5rem] xl:left-[0rem]  2xl:bottom-[25rem] 2xl:left-[10rem] z-50
+}
+
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .animate-fadeIn {
+        -webkit-animation: fadeIn 2s ease-in forwards;
+        animation: fadeIn 2s ease-in forwards;
+    }
+}
+
+.rejoingezclub .xl\:absolute {
+    bottom: -300px;
+}
+
+.cadreavis {
+    margin-left: -40px;
+}
+
+.section_une_equipe_mobilisee .bottomImage {
+    /* bottom: -90px; */
+}
+
+.section-slick-accueil .slider-content-2:before {
+    content: "";
+    background: url(/wp-content/themes/vatadn/assets/img/trait_bleu_1.svg);
+    position: absolute;
+    height: 75px;
+    width: 10px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    left: -30px;
+}
+
+@media screen and (min-width: 1440px) {
+    .ensemble_navigons:before {
+        content: "";
+        background: url(/wp-content/themes/vatadn/assets/img/trait_noir_2.svg);
+        position: absolute;
+        height: 245px;
+        width: 31px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        left: -60px;
+        top: -42px;
+    }
+}
+
+.simpleText:before {
+    content: "";
+    background: url(/wp-content/themes/vatadn/assets/img/trait_bleu_3.svg);
+    position: absolute;
+    width: 245px;
+    height: 41px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    right: 20px;
+    bottom: -42px; 
+    @apply hidden xl:block;
+}
+
+.simpleTextOrange:before {
+    content: "";
+    background: url(/wp-content/themes/vatadn/assets/img/trait_orange_1.svg);
+    position: absolute;
+    width: 222px;
+    height: 41px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    right: 120px;
+    bottom: -29px;
+    @apply hidden xl:block dark:grayscale;
+}
+
+.simpleTextBleu:before {
+    content: "";
+    background: url(/wp-content/themes/vatadn/assets/img/trait_bleu_5.svg);
+    position: absolute;
+    width: 100%;
+    height: 41px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    left: -170px;
+    bottom: -42px;
+    @apply hidden xl:block dark:grayscale;
+}
+
+.quoiNeuf span:before {
+    content: "";
+    background: url(/wp-content/themes/vatadn/assets/img/trait_bleu_4.svg);
+    position: absolute;
+    width: 245px;
+    height: 41px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    right: 90px;
+    bottom: -42px;
+    @apply dark:grayscale
+}
+
+@media screen and (min-width: 520px) {
+    .ceuxVient:before {
+        content: "";
+        background: url(/wp-content/themes/vatadn/assets/img/trait_orange_1.svg);
+        position: absolute;
+        width: 245px;
+        height: 41px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        right: 300px;
+        bottom: -42px;
+        @apply dark:grayscale
+    }
+    .section_nos_actions_phares_tiret:before {
+        content: "";
+        background: url(/wp-content/themes/vatadn/assets/img/trait_orange_1.svg);
+        position: absolute;
+        width: 245px;
+        height: 41px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        right: 480px;
+        bottom: -42px;
+        @apply dark:grayscale hidden xl:block
+    }
+
+    
+}
+
+.sidebar-menu-right {
+    background-image: url(/wp-content/themes/vatadn/assets/img/reserver_place.png);
+    @apply dark:grayscale
+}
+
+.stickymenu-on .sidebar-menu-right {
+    transform: translateX(350px);
+    transition: transform 280ms ease-out 50ms;
+}
+
+.stickymenu-on .sidebar-menu-right:before {
+    content: url(/wp-content/themes/vatadn/assets/img/prev.svg);
+    position: absolute;
+    left: 10px;
+    top: 40px;
+}
+
+.stickymenu-on .sidebar-menu-right:hover {
+    transform: translateX(0px);
+    transition: transform 280ms ease-out 50ms;
+}
+
+@media screen and (max-width: 520px) {
+    .sidebar-menu-right {
+        display: none;
+    }
+}
+
+.fixed-nav-next {
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+}

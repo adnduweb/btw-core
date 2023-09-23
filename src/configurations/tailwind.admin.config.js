@@ -17,7 +17,7 @@ module.exports = {
     "./vendor/adnduweb/btw-core/src/Views/**/*.php",
     "./vendor/adnduweb/btw-core/themes/**/**/*.php",
     "./vendor/adnduweb/btw-core/themes/**/**/**/*.php",
-    "./node_modules/flowbite/**/*.js",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
@@ -88,6 +88,10 @@ module.exports = {
           "75%": { transform: "scale(1.01)" },
         },
       },
+      backgroundImage: {
+        'int-flag': "url('../img/flags.png')",
+        'int-flag2': "url('../img/flags-texture.png')",
+      }
     },
     animation: {
       none: "none",

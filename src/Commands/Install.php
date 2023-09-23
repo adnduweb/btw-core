@@ -241,7 +241,7 @@ class Install extends BaseCommand
 
     private function publishThemes()
     {
-        $source      = BTPATH . '../themes';
+        $source      = BTPATH . 'configurarions/themes';
         $destination = APPPATH . '../themes';
 
         $admin = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin';
@@ -266,15 +266,19 @@ class Install extends BaseCommand
 
         $publisher = new Publisher();
         $publisher->copyDirectory($source, $destination);
-        $publisher->copyDirectory(BTPATH . '../package.json', APPPATH . '../package.json');
-        $publisher->copyDirectory(BTPATH . '../vite.admin.config.js', APPPATH . '../vite.admin.config.js');
-        $publisher->copyDirectory(BTPATH . '../tailwind.config.js', APPPATH . '../tailwind.config.js');
+        $publisher->copyDirectory(BTPATH . 'configurations/package.json', APPPATH . '../package.json');
+        $publisher->copyDirectory(BTPATH . 'configurations/vite.admin.config.js', APPPATH . '../vite.admin.config.js');
+        $publisher->copyDirectory(BTPATH . 'configurations/vite.front.config.js', APPPATH . '../vite.front.config.js');
+        $publisher->copyDirectory(BTPATH . 'configurations/tailwind.admin.config.js', APPPATH . '../tailwind.admin.config.js');
+        $publisher->copyDirectory(BTPATH . 'configurations/tailwind.front.config.js', APPPATH . '../tailwind.front.config.js');
 
         //logo
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/admin/img/logo-adn.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/img/logo-adn-grey.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-white.png', APPPATH . '../public/admin/img/logo-adn-white.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-small.png', APPPATH . '../public/admin/img/logo-adn-small.png');
+        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn.png', APPPATH . '../public/admin/img/logo-adn.png');
+        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/img/logo-adn-grey.png');
+        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-white.png', APPPATH . '../public/admin/img/logo-adn-white.png');
+        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-small.png', APPPATH . '../public/admin/img/logo-adn-small.png');
+        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/flags.png', APPPATH . '../public/admin/img/flags.png');
+        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/flags@2x.png', APPPATH . '../public/admin/img/flags@2x.png');
     }
 
     private function setEncryptionKey()

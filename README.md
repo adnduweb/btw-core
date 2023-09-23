@@ -23,9 +23,8 @@ Installer le package
 
     php spark btw:install
     php spark btw:install -- continue
-    php spark vite:init
+    php spark db:seed Btw\\Core\\Database\\Seeds\\DatabaseSeeder
     npm install
-    npx tailwindcss init -p
 
 # Lancement de l'application
     php spark serve
@@ -74,6 +73,10 @@ https://forum.codeigniter.com/showthread.php?tid=87720 -> envoi un mail aux nouv
 https://forum.codeigniter.com/showthread.php?tid=87719 -> information supplémentaires (adresses)
 https://forum.codeigniter.com/showthread.php?tid=87702 -> Tableau des permissisons
 https://dev.to/mtownsend5512/creating-powerful-tabs-with-alpine-js-in-less-than-5-minutes-367d-> tabs ??? 
+https://github.com/dginanjar/codeigniter-vite
+
+## Front
+https://codepen.io/vixxofsweden/pen/xxGGYOE || https://medium.com/swlh/building-a-css-only-responsive-multi-level-mega-menu-ee0a3781cc3f ->menu
 
 ## Jointure
 

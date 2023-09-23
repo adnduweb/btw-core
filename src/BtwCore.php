@@ -114,6 +114,11 @@ class BtwCore
 
         // Sidebar menu
         $menus->createMenu('sidebar');
+
+        $menus->menu('sidebar')
+            ->createCollection('front', 'Front')
+            ->setCollapsible();
+
         $menus->menu('sidebar')
             ->createCollection('content', 'Content')
             ->setCollapsible();
@@ -133,7 +138,6 @@ class BtwCore
 
         // Top "icon" menu for notifications, account, etc.
         $menus->createMenu('iconbar');
-
     }
 
 
@@ -169,7 +173,7 @@ class BtwCore
         }
 
         cache()->save('btw-modules-search', $modules);
- 
+
 
         // save instances of our module configs
         foreach ($modules as $namespace => $dir) {

@@ -16,105 +16,188 @@ if (!function_exists('newUUID')) {
     }
 }
 
-if (!function_exists('vite_admin')) {
-    function vite_admin(array $paths)
+// if (!function_exists('vite_admin')) {
+//     function vite_admin(array $paths)
+//     {
+
+//         $manifest = FCPATH . 'admin/manifest.json';
+
+//         $result = [
+//             'js' => null,
+//             'css' => null
+//         ];
+
+//         $html = '';
+
+//         # Check if vite is running.
+//         $entryFile = env('VITE_ORIGIN_ADMIN') . '/' . env('VITE_RESOURCES_DIR') . '/' . env('VITE_ENTRY_FILE_ADMIN');
+
+//         $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
+//         $html .= $result['js'];
+
+//         # If vite isn't running, then return the bundled resources.
+//         if (empty($result['js']) && is_file($manifest)) {
+//             # Get the manifest content.
+//             $manifest = file_get_contents($manifest);
+//             # You look much pretty as a php object =).
+//             $manifest = json_decode($manifest);
+
+//             # Now, we will get all js files and css from the manifest.
+//             foreach ($manifest as $file) {
+//                 // print_r($file);exit; 
+//                 # Check extension
+//                 $fileExtension = substr($file->file, -3, 3);
+
+//                 # Generate js tag.
+//                 if ($fileExtension === '.js' && isset($file->isEntry) && $file->isEntry === true && (!isset($file->isDynamicEntry) || $file->isDynamicEntry !== true)) {
+//                     $result['js'] .= '<script type="module" src="/admin/' . $file->file . '"></script>' . "\n";
+//                     $html .= $result['js'];
+//                 }
+
+//                 if (!empty($file->css)) {
+//                     foreach ($file->css as $cssFile) {
+//                         $result['css'] .= '<link rel="stylesheet" href="/admin/' . $cssFile . '" />' . "\n";
+//                         $html .= $result['css'];
+//                     }
+//                 }
+//             }
+//         }
+
+//         return $html;
+//     }
+// }
+
+// if (!function_exists('vite_front')) {
+//     function vite_front(array $paths)
+//     {
+
+//         $manifest = FCPATH . 'front/manifest.json';
+
+//         $result = [
+//             'js' => null,
+//             'css' => null
+//         ];
+
+//         $html = '';
+
+//         # Check if vite is running.
+//         $entryFile = env('VITE_ORIGIN_FRONT') . '/' . env('VITE_RESOURCES_DIR') . '/' . env('VITE_ENTRY_FILE_FRONT');
+
+//         $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
+//         $html .= $result['js'];
+
+//         # If vite isn't running, then return the bundled resources.
+//         if (empty($result['js']) && is_file($manifest)) {
+//             # Get the manifest content.
+//             $manifest = file_get_contents($manifest);
+//             # You look much pretty as a php object =).
+//             $manifest = json_decode($manifest);
+
+//             # Now, we will get all js files and css from the manifest.
+//             foreach ($manifest as $file) {
+//                 // print_r($file);exit; 
+//                 # Check extension
+//                 $fileExtension = substr($file->file, -3, 3);
+
+//                 # Generate js tag.
+//                 if ($fileExtension === '.js' && isset($file->isEntry) && $file->isEntry === true && (!isset($file->isDynamicEntry) || $file->isDynamicEntry !== true)) {
+//                     $result['js'] .= '<script type="module" src="/front/' . $file->file . '"></script>' . "\n";
+//                     $html .= $result['js'];
+//                 }
+
+//                 if (!empty($file->css)) {
+//                     foreach ($file->css as $cssFile) {
+//                         $result['css'] .= '<link rel="stylesheet" href="/front/' . $cssFile . '" />' . "\n";
+//                         $html .= $result['css'];
+//                     }
+//                 }
+//             }
+//         }
+
+//         return $html;
+//     }
+// }
+
+if (!function_exists('vite_url')) {
+    function vite_url(string $entry = ''): ?string
     {
+        $config = config('Vite');
+        if (empty($config->entryPoints)) {
+            return null;
+        }
 
-        $manifest = FCPATH . 'admin/manifest.json';
+        $main_url = function ($url) {
+            $parts = parse_url($url);
 
-        $result = [
-            'js' => null,
-            'css' => null
-        ];
+            return "{$parts['scheme']}://{$parts['host']}";
+        };
 
-        $html = '';
-
-        # Check if vite is running.
-        $entryFile = env('VITE_ORIGIN') . '/' . env('VITE_RESOURCES_DIR') . '/' . env('VITE_ENTRY_FILE_ADMIN');
-
-        $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
-        $html .= $result['js'];
-
-        # If vite isn't running, then return the bundled resources.
-        if (empty($result['js']) && is_file($manifest)) {
-            # Get the manifest content.
-            $manifest = file_get_contents($manifest);
-            # You look much pretty as a php object =).
-            $manifest = json_decode($manifest);
-
-            # Now, we will get all js files and css from the manifest.
-            foreach ($manifest as $file) {
-                // print_r($file);exit; 
-                # Check extension
-                $fileExtension = substr($file->file, -3, 3);
-
-                # Generate js tag.
-                if ($fileExtension === '.js' && isset($file->isEntry) && $file->isEntry === true && (!isset($file->isDynamicEntry) || $file->isDynamicEntry !== true)) {
-                    $result['js'] .= '<script type="module" src="/admin/' . $file->file . '"></script>' . "\n";
-                    $html .= $result['js'];
-                }
-
-                if (!empty($file->css)) {
-                    foreach ($file->css as $cssFile) {
-                        $result['css'] .= '<link rel="stylesheet" href="/admin/' . $cssFile . '" />' . "\n";
-                        $html .= $result['css'];
-                    }
-                }
+        $entryPoint = $main_url(base_url()) . ":5173/{$config->entryPoints[$entry]}";
+        if (@file_get_contents($entryPoint)) {
+            if (count(explode('/', $entry)) == 1) {
+                return sprintf(
+                    '<script type="module" src="%s"></script><script type="module" src="%s"></script>',
+                    $main_url(base_url()) . ':5173/@vite/client',
+                    $entryPoint
+                );
+            } else {
+                return sprintf('<script type="module" src="%s"></script>', $entryPoint);
             }
         }
 
-        return $html;
-    }
-}
+        $mainEntry = explode('/', $entry)[0];
+        // $manifest = json_decode(@file_get_contents(base_url("{$mainEntry}/manifest.json")), true);
+        $link = @file_get_contents(ROOTPATH . "public/{$mainEntry}/manifest.json");
+        $manifest = json_decode($link, true);
+        if (empty($manifest)) {
+            return null;
+        }
 
-if (!function_exists('vite_front')) {
-    function vite_front(array $paths)
-    {
-
-        $manifest = FCPATH . 'front/manifest.json';
-
-        $result = [
-            'js' => null,
-            'css' => null
-        ];
-
-        $html = '';
-
-        # Check if vite is running.
-        $entryFile = env('VITE_ORIGIN') . '/' . env('VITE_RESOURCES_DIR') . '/' . env('VITE_ENTRY_FILE_FRONT');
-
-        $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
-        $html .= $result['js'];
-
-        # If vite isn't running, then return the bundled resources.
-        if (empty($result['js']) && is_file($manifest)) {
-            # Get the manifest content.
-            $manifest = file_get_contents($manifest);
-            # You look much pretty as a php object =).
-            $manifest = json_decode($manifest);
-
-            # Now, we will get all js files and css from the manifest.
-            foreach ($manifest as $file) {
-                // print_r($file);exit; 
-                # Check extension
-                $fileExtension = substr($file->file, -3, 3);
-
-                # Generate js tag.
-                if ($fileExtension === '.js' && isset($file->isEntry) && $file->isEntry === true && (!isset($file->isDynamicEntry) || $file->isDynamicEntry !== true)) {
-                    $result['js'] .= '<script type="module" src="/front/' . $file->file . '"></script>' . "\n";
-                    $html .= $result['js'];
-                }
-
-                if (!empty($file->css)) {
-                    foreach ($file->css as $cssFile) {
-                        $result['css'] .= '<link rel="stylesheet" href="/front/' . $cssFile . '" />' . "\n";
-                        $html .= $result['css'];
-                    }
-                }
+        $styles = '';
+        $entryPoint = $manifest[$config->entryPoints[$entry]];
+        if (!empty($entryPoint['css'])) {
+            foreach ($entryPoint['css'] as $css) {
+                $styles .= sprintf('<link rel="stylesheet" href="%s">', base_url("{$mainEntry}/{$css}"));
             }
         }
 
-        return $html;
+        $scripts = sprintf('<script type="module" src="%s"></script>', base_url("{$mainEntry}/{$entryPoint['file']}"));
+
+        $collectImports = function ($record, $imports) use ($manifest, &$collectImports) {
+            if (isset($record['dynamicImports']) || isset($record['imports'])) {
+                if (isset($record['dynamicImports'])) {
+                    foreach ($record['dynamicImports'] as $dynamicImport) {
+                        $imports[] = $manifest[$dynamicImport]['file'];
+                        $imports = $collectImports($manifest[$dynamicImport], $imports);
+                    }
+                }
+
+                if (isset($record['imports'])) {
+                    foreach ($record['imports'] as $import) {
+                        $imports[] = $manifest[$import]['file'];
+                        $imports = $collectImports($manifest[$import], $imports);
+                    }
+                }
+
+                return $imports;
+            } else {
+                return $imports;
+            }
+        };
+
+        $imports = $collectImports($entryPoint, []);
+
+        if (count(explode('/', $entry)) == 1) {
+            $mainEntryPoint = $manifest[$config->entryPoints[$mainEntry]];
+            $mainImports = $collectImports($mainEntryPoint, []);
+            $imports = array_diff($imports, $mainImports);
+        }
+
+        foreach (array_reverse($imports) as $import) {
+            $scripts = sprintf('<script type="module" src="%s"></script>', $import) . $scripts;
+        }
+
+        return "{$styles}\n{$scripts}";
     }
 }
 

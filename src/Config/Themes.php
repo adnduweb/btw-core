@@ -23,7 +23,7 @@ class Themes
     public $collections = [
         //__DIR__ . '/../../resources/Views/',
         //  __DIR__ . '/../../../../../resources/Views/',
-         __DIR__ . '/../../../../../themes/',
+        __DIR__ . '/../../../../../themes/',
         //  __DIR__ . '/../../themes/',
     ];
 
@@ -56,5 +56,6 @@ class Themes
      * --------------------------------------------------------------------------
      *
      */
-    public $collectionsMedias =  __DIR__ . '/../../themes/medias/';
+    // public $collectionsMedias =  __DIR__ . '/../../themes/medias/';
+    public $collectionsMedias =  __DIR__ . '/../../../../../themes/medias/';
 }

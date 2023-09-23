@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
     <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
-    <?= vite_admin(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
+    <?= vite_url('admin'); //vite_admin(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); 
+    ?>
 
     <style>
         .htmx-indicator {

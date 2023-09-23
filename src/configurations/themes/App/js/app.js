@@ -26,7 +26,8 @@ import "datatables.net-responsive";
 import * as echarts from "echarts";
 import Dropzone from "dropzone";
 import * as htmx from "htmx.org";
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
 
 window.jQuery = window.$ = $;
 window.intlTelInput = intlTelInput;
@@ -43,6 +44,12 @@ window.datatable = Datatable;
 window.echarts = echarts;
 window.dropzone = Dropzone;
 window.htmx = htmx;
+AOS.init({
+    disable: window.innerWidth < 768,
+    easing: 'ease-out-back',
+    duration: 1000
+});
+
 
 Alpine.plugin(focus);
 Alpine.plugin(morph);
@@ -74,3 +81,8 @@ function _getElementById(el){
   }
 
 window._getElementById = _getElementById();
+
+if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent)) {
+    var root = document.getElementsByTagName('html')[0];
+    root.className += " no-touch";
+}

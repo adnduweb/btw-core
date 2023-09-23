@@ -13,3 +13,38 @@ Events::on('post_system', static function () {
 //     //send an email to registered user
 //     service('notifications')->save();
 // });
+
+//minify html output on codeigniter 4 in production environment
+Events::on('post_controller_constructor', function () {
+
+    $allSegments = request()->getUri()->getSegments();
+
+    $admin_area = empty($allSegments) || $allSegments[0] != ADMIN_AREA ? false : true;
+
+    if (ENVIRONMENT == 'production' && $admin_area == false) {
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+
+        ob_start(function ($buffer) {
+            $search = array(
+                '/\n/',      // replace end of line by a <del>space</del> nothing , if you want space make it down ' ' instead of ''
+                '/\>[^\S ]+/s',    // strip whitespaces after tags, except space
+                '/[^\S ]+\</s',    // strip whitespaces before tags, except space
+                '/(\s)+/s',    // shorten multiple whitespace sequences
+                '/<!--(.|\s)*?-->/' //remove HTML comments
+            );
+
+            $replace = array(
+                '',
+                '>',
+                '<',
+                '\\1',
+                ''
+            );
+
+            $buffer = preg_replace($search, $replace, $buffer);
+            return $buffer;
+        });
+    }
+});
