@@ -22,7 +22,8 @@ class SwitchCell
     /** HTMX swap */
     protected $hxSwap;
     protected $disabled;
-      protected $required;
+    protected $required;
+
 
     public function renderList($params)
     {
@@ -33,7 +34,7 @@ class SwitchCell
         $html = "";
 
 
-        $this->checkedNew = $params['checked'] == false ? 'false' : 'true';        
+        $this->checkedNew = $params['checked'] == false ? 'false' : 'true';
 
         if (request()->is('json')) {
             $requestOld = request()->getJSON(true);
@@ -41,7 +42,7 @@ class SwitchCell
                 $this->checkedNew = 'true';
             }
         }
-        
+
         $this->value = (!empty($params['value'])) ? $params['value'] : true;
         $this->xOnClick = (isset($params['xOnClick'])) ? 'x-on:click="' . $params['xOnClick'] . '"' : false;
         $this->xChange = (isset($params['xChange'])) ? '@change="' . $params['xChange'] . '"' : false;
@@ -53,10 +54,10 @@ class SwitchCell
         $this->hxSwap = (isset($params['hxSwap'])) ? 'hx-swap="' . $params['hxSwap'] . '"' : '';
         $this->disabled = (isset($params['disabled']) && $params['disabled'] == true) ? 'disabled="disabled"' : false;
         $disabledClass = (isset($params['disabled']) && $params['disabled'] == true) ? 'bg-gray-100 dark:bg-gray-300' : 'bg-gray-400 dark:bg-gray-700';
-         $this->required = (isset($params['required'])) ? 'required' : '';
+        $this->required = (isset($params['required'])) ? 'required' : '';
 
-        $html .= '<div class="flex items-center ' . $this->class . '">';
-        $html .= '<button ' . $this->disabled . ' type="button" class="button-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-100" ' . $this->xNotData . '  role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \' ' . $disabledClass . ' \': ' . $this->xOn . ',\'bg-slate-100\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxSwap . ' >';
+        $html .= '<div class="flex items-center ' . $this->class . '" ' . $this->xNotData . ' >';
+        $html .= '<button ' . $this->disabled . ' type="button" class="button-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-100" role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \' ' . $disabledClass . ' \': ' . $this->xOn . ',\'bg-slate-100\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxSwap . ' >';
         $html .= '<span class="sr-only">Use setting</span>';
         $html .= $this->getInput($params);
         $html .= '<span class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \'translate-x-5\': ' . $this->xOn . ', \'translate-x-0\': !(' . $this->xOn . ') }">';
@@ -87,8 +88,8 @@ class SwitchCell
     public function getLabel($params)
     {
         $html = "";
-         $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
-        $html .= '<label @click="$refs.toggle.click(); $refs.toggle.focus()" :id="$id(\'toggle-label\')" class="text-sm text-gray-900 dark:text-white font-medium ml-3">';
+        $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
+        $html .= '<label aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '"  class="text-sm text-gray-900 dark:text-white font-medium ml-3">';
         $html .= $params['label'] . ' ' .  $required;
         $html .= '</label>';
 
@@ -109,14 +110,14 @@ class SwitchCell
         $html = '';
         if (isset($params['lang']) && $params['lang'] == true) {
 
-            if (service('validation')->hasError('lang.' . request()->getLocale() . '.' . uniforme($params['name']))):
+            if (service('validation')->hasError('lang.' . request()->getLocale() . '.' . uniforme($params['name']))) :
                 // print_r($params['validation']); exit;
                 $html = '<div class="invalid-feedback block text-red-600 text-sm">';
                 $html .= service('validation')->getError('lang.' . request()->getLocale() . '.' . uniforme($params['name']));
                 $html .= '</div>';
             endif;
         } else {
-            if (service('validation')->hasError(uniforme($params['name']))):
+            if (service('validation')->hasError(uniforme($params['name']))) :
                 $html = '<div class="invalid-feedback block text-red-600 text-sm">';
                 $html .= service('validation')->getError(uniforme($params['name']));
                 $html .= '</div>';

@@ -1536,3 +1536,18 @@ Developed by: Bruno Vieira
 .ck-editor__editable_inline {
   @apply min-h-[25rem]
 }
+
+.iti__flag {
+  @apply !bg-[url('../../../../admin/img/flags.png')] 
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .iti__flag {
+    @apply !bg-[url('../../../../admin/img/flags@2x.png')]
+  }
+  
+}
+
+.element-media-modal.selected{
+  @apply border-8 border-blue-600
+}

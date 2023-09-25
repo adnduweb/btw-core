@@ -82,7 +82,7 @@ import './alpine.js';
 import * as SetHtmx from "./htmx.js";
 SetHtmx.initHtmx();
 import * as SetHtmxHead from "./htmx-head-support.js";
-if(doudou.env != 'development'){
+if (doudou.env != 'development') {
     SetHtmxHead.initHtmx();
 }
 
@@ -92,9 +92,9 @@ htmx.on("htmx:afterSettle", function(evt) {
 });
 
 
-function _getElementById(el){
+function _getElementById(el) {
     return document.getElementById(el);
-  }
+}
 
 window._getElementById = _getElementById();
 
@@ -132,7 +132,7 @@ document.body.addEventListener("deleteConfirmed", function(evt) {
 // this function does run, due to HTMX's HX-Trigger-After-Swap header
 // but cannot change the showMessage paramter above
 document.body.addEventListener("showMessage", function(evt) {
-    console.log(evt);
+
     if (typeof evt.detail.content == "object") {
         var contentRead = evt.detail.content;
         var content = "<ul>";
@@ -220,10 +220,64 @@ window.dispatchEvent(
 );
 
 const searchField = document.getElementById('search-field');
-if(searchField){
+if (searchField) {
     searchField.addEventListener('keypress', function(event) {
-    if (event.keyCode == 13) {
-        event.preventDefault();
-    }
-});
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
 }
+htmx.onLoad(function(content) {
+    let characterCounter = document.querySelectorAll(".maxlength");
+    characterCounter.forEach(c => {
+
+        var inputLimit = document.querySelector("." + c.getAttribute('id'));
+        const maxNumOfChars = c.getAttribute('data-limit-word');
+        const countCharacters = () => {
+
+            let numOfEnteredChars = inputLimit.value.length;
+            let counter = maxNumOfChars - numOfEnteredChars;
+            c.textContent = counter + "/" + maxNumOfChars;
+            if (counter <= 0) {
+                c.classList.remove("text-black-800", "text-warning-800");
+                c.classList.add("text-red-800");
+            } else if (counter < 20) {
+                c.classList.remove("text-black-800", "text-red-800");
+                c.classList.add("text-warning-800");
+            } else {
+                c.classList.remove("text-warning-800", "text-red-800");
+                c.classList.add("text-black-800");
+            }
+        };
+
+        inputLimit.addEventListener("input", countCharacters);
+        countCharacters();
+    });
+});
+
+
+/*** Modal Media */
+
+
+// document.body.addEventListener("openmodalmedia", function(evt) {
+//     console.log(evt);
+// let listFilesForModal = window.getElementById("listFilesForModal");
+// let elementMediaModal = window.querySelectorAll(".element-media-modal");
+
+// console.log(elementMediaModal);
+// elementMediaModal.forEach(c => {
+//     c.classList.remove('selected');
+//     c.addEventListener('click', function (event) {
+//         const isSelectded = c.classList.contains("selected");
+
+//         if(isSelectded){
+//             console.log('remove');
+//             c.classList.remove('selected');
+//         }else{
+//             console.log('add');
+//             c.classList.add('selected');
+//         }
+        
+//     });
+// });
+// });

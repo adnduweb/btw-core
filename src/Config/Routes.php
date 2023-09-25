@@ -126,6 +126,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
 
 $routes->setPrioritize();
 $routes->get('assets/(:any)', '\Btw\Core\Controllers\AssetController::serve/$1');
+$routes->get('themes/(:any)', '\Btw\Core\Controllers\AssetController::serveTheme/$1');
 $routes->get('attachments/(:any)', '\Btw\Core\Controllers\AssetController::renderFile/$1', ['priority' => 1]);
 $routes->get('uploads/placeholder/(:any)', '\Btw\Core\Controllers\AssetController::renderFilePLaceholder/$1', ['priority' => 2]);
 

@@ -22,6 +22,8 @@ class InputCell
     protected $xInput;
     protected $classError;
     protected $disabled;
+    protected $limit;
+    protected $uniqID;
 
     public function renderList($params)
     {
@@ -34,6 +36,9 @@ class InputCell
         $this->class = (isset($params['class'])) ? $params['class'] : '';
         $this->disabled = (isset($params['disabled'])) ? 'disabled="disabled"' : '';
         $this->placeholder = (isset($params['placeholder'])) ? 'placeholder="' . $params['placeholder'] . '"' : '';
+        $this->limit = (isset($params['limit'])) ? 'maxlength="' . $params['limit'] . '"' : '';
+
+        $this->uniqID = uniqid();
 
         $html = $this->getLabel($params);
         $html .= '<div class="relative">';
@@ -81,6 +86,10 @@ class InputCell
             $this->classError = "border-red-500 focus:border-red-500";
         endif;
 
+        if (!empty($params['limit'])) {
+            $this->class .=  'maxlength-' . $this->uniqID;
+        }
+
         if (isset($params['lang']) && $params['lang'] == true) {
 
             $html .= '<div class="relative rounded-md shadow-sm">';
@@ -91,6 +100,11 @@ class InputCell
             $html .= ' </div>';
         } else {
             $html .= '<input ' . $this->disabled . ' ' . $this->required . ' type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '" autocomplete="' . $params['type'] . '" ' . $this->placeholder . '  value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 ' . $this->class . ' ' . $this->classError . ' ">';
+        }
+
+        if (!empty($params['limit'])) {
+            $countValue = !empty($params['value']) ? $params['limit'] - strlen($params['value']) : $params['limit'];
+            $html .=  '<small data-limit-word="' . $params['limit'] . '" id="maxlength-' . $this->uniqID . '" class="maxlength">' . $countValue . '/' . $params['limit'] . '</small>';
         }
 
         if (!empty($this->classError)) {

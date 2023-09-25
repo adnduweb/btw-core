@@ -68,7 +68,15 @@ class FrontController extends BaseController
             'paths' => [ROOTPATH . 'themes/App', APPPATH  . 'Modules/btw-front/src/Views/Front'],
             'cache' => WRITEPATH . '/cache/twig',
             'debug' => true,
-            'functions'      => ['asset_link', 'setting', 'form', 'vite_url', 'csrf_meta']
+            'functions'      => [
+                'asset_link',
+                'theme_link',
+                'setting',
+                'form',
+                'vite_url',
+                'csrf_meta',
+                'current_url'
+            ]
         ];
 
         // print_r(theme()->path($this->theme));

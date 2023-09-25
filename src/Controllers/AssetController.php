@@ -143,4 +143,46 @@ class AssetController extends Controller
         // print_r($segments); exit;
 
     }
+
+    public function serveTheme(...$segments)
+    {
+        /**
+         * De-bust the filename
+         *
+         * @var string
+         */
+        $filename     = array_pop($segments);
+        $origFilename = $filename;
+        $filename     = explode('.', $filename);
+
+        // Must be at least a name and extension
+        if (count($filename) < 2) {
+            $this->response->setStatusCode(404);
+            return;
+        }
+
+        // If we have a fingerprint...
+        $filename = $origFilename;
+
+        $folder = config('Assets')->folders[array_shift($segments)];
+        $path   = $folder . '/' . implode('/', $segments) . '/' . $filename;
+
+        if (!is_file($path)) {
+            $this->response->setStatusCode(404);
+
+            return;
+        }
+
+        // return $this->response->download($origFilename, file_get_contents($path), true);
+        $file = new \CodeIgniter\Files\File($path);
+
+        // choose the right mime type
+        $mimeType = $file->getMimeType();
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setContentType($mimeType)
+            ->setBody(file_get_contents($path))
+            ->send();
+    }
 }
