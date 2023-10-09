@@ -14,7 +14,7 @@ $errorId = uniqid('error', true);
 
     <title>Forbidden</title>
 
-    <?= vite(['themes/Admin/css/app.css', 'themes/Admin/js/app.js']); ?>
+    <?= vite_url('admin'); ?>
 </head>
 
 <body class="antialiased">
@@ -28,11 +28,11 @@ $errorId = uniqid('error', true);
                     <div class="flex ml-4 text-lg text-gray-500 uppercase tracking-wider">
                         <?= nl2br(esc($message)) ?>
                     </div>
-                   
+
                 </div>
                 <div class="flex items-center justify-center ml-4 mt-5 text-lg text-gray-500 uppercase tracking-wider">
-                        <a href="/<?= ADMIN_AREA; ?>" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"> return Home</a>
-                    </div>
+                    <a href="/<?= ADMIN_AREA; ?>" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"> return Home</a>
+                </div>
             </div>
         <?php else : ?>
             <div class="mx-auto sm:px-6 lg:px-8">

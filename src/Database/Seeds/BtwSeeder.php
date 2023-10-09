@@ -31,6 +31,9 @@ class BtwSeeder extends Seeder
         service('settings')->set('Email.protocol', 'mail');
         service('settings')->set('Email.mailPath', '/usr/sbin/sendmail');
 
+        //Storage
+        service('settings')->set('Storage.sizeImg', config('Storage')->sizeImg);
+
         //Update themes
         $this->publishThemes();
     }

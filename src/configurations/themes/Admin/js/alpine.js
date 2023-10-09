@@ -227,6 +227,83 @@ document.addEventListener("alpine:init", () => {
         },
     }));
 
+    Alpine.data("xModalMedia", (params) => ({
+        dataUUID : '',
+        file : [],
+        identifier: 'test',
+        multiple: false,
+        container: 'element',
+        media_selected: '',
+        media_target: '',
+        init(params) {
+            console.log("modal Média loaded");
+
+            this.identifier = this.$el.getAttribute('data-media-identifier');
+            this.multiple = this.$el.getAttribute('data-media-multiple');
+            this.container = this.$el.getAttribute('data-media-container');
+
+            this.media_selected = this.$el.querySelector('.media_selected');
+            this.media_target = this.$el.querySelector('.media_target');
+          
+
+            this.$el.querySelectorAll('.element-media-modal').forEach(el => {
+                el.addEventListener('click',(e)=>{
+
+                    let media = el.querySelector('img');
+
+                    const isSelectded = el.classList.contains("selected");
+                    for (var i = 0; i < this.$el.querySelectorAll('.element-media-modal').length; i++) {
+                        this.$el.querySelectorAll('.element-media-modal')[i].classList.remove('selected')
+                    }
+                    this.media_selected.value = '';
+                    if (!isSelectded) {
+
+                        el.classList.add('selected');
+                        this.dataUUID = el.getAttribute('data-uuid');
+                        console.log("média selected : " + this.dataUUID);
+                        console.log(this.identifier);
+                        this.file = media.getAttribute('data-media-file');
+                        console.log(this.media_selected); 
+                        this.media_selected.value = this.dataUUID;
+                        this.insert();
+                    }
+                 })
+                 
+            });
+
+            // this.$watch('dataUUID', () => {
+            //     console.log( $(this.$refs))
+            // })
+        },
+        insert() {
+            console.log('fafa');
+            console.log(this.dataUUID);
+            console.log(this.container);
+            console.log(this.file);
+
+            // On ajoute la donnée
+            // var btwinserer = this.$el.querySelector('[name="btwinserer"]');
+            this.$el.querySelector('[name="btwinserer"]').addEventListener('click', function(event) {
+                console.log(event.__x.getUnobservedData());
+                var selected = document.querySelector('.selected');
+
+
+                console.log(event);
+                console.log(selected);
+
+                console.log(this.container);
+                console.log(this.file);
+                containerBody = document.querySelector("body");
+                if(containerBody){
+                    let img = container.querySelector('img');
+                    img.src = this.file[0];
+                }
+
+     
+            });
+        }
+    }));
+
     Alpine.data("drop_file_component", () => ({
         dropingFile: false,
         handleFileDrop(e) {

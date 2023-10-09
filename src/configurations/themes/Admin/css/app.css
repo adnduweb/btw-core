@@ -1551,3 +1551,24 @@ Developed by: Bruno Vieira
 .element-media-modal.selected{
   @apply border-8 border-blue-600
 }
+
+.nested-sort {
+  @apply p-0;
+}
+
+.nested-sort > li {
+  @apply p-5;
+  @apply border-gray-600 border-2
+}
+
+.nested-sort li ul {
+  @apply  p-0;
+}
+
+.nested-sort .ns-dragged {
+  @apply border-red-600 border-2
+}
+
+.nested-sort .ns-targeted {
+  @apply border-blue-600 border-2
+}

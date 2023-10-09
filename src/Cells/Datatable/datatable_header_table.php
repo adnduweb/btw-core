@@ -3,7 +3,7 @@
     <div class="flex-1 pr-4">
         <!--begin::Search-->
         <div class="relative md:w-1/3">
-            <input type="search" data-kt-datatable-filter="search" class="w-full pl-10 pr-4 py-2 border-gray-300 dark:border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 dark:text-gray-400 dark:bg-gray-700 font-medium" placeholder="<?= lang('Btw.search'); ?>" aria-label="Search" aria-describedby="button-addon1" />
+            <input type="search" data-kt-datatable-filter="search" class="w-full pl-10 pr-4 py-2 border-gray-300 dark:border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 dark:text-gray-400 dark:bg-gray-700 font-medium" placeholder="<?= lang('Btw.search'); ?>" aria-label="Search" aria-describedby="button-addon1" value="<?= service('session')->get('dt_' . $_controller)['search'] ?? ''; ?>" />
             <div class="absolute top-0 left-0 inline-flex items-center p-2">
                 <?= service('theme')->getSVG('duotone/General/Search.svg', "svg-icon svg-icon-1 position-absolute ms-2"); ?>
             </div>
@@ -40,6 +40,43 @@
                         </svg>
                     </button>
                 </div>
+            <?php endif; ?>
+
+
+            <?php if (!empty($import)) : ?>
+                <a target="_blank" href="<?= $import['href']; ?>" class="mr-2 rounded-lg inline-flex items-center bg-white hover:text-blue-500 dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:shadow-outline text-gray-500 font-semibold py-2 px-2 md:px-4 shadow rounded-lg flex">
+                    <?= theme()->getSVG('duotune/arrows/arr091.svg', 'svg-icon flex-shrink-0 dark:text-gray-200 text-gray-800', true); ?>
+                </a>
+            <?php endif; ?>
+
+            <?php if (!empty($export)) : ?>
+
+
+                <?php if (isset($export['type'])) : ?>
+
+                    <!-- Profile dropdown -->
+                    <div class="ml-3 relative" hx-boost="true">
+                        <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+                            <div @click="open = ! open" class="">
+                                <button type="button" class="mr-2 rounded-lg inline-flex items-center bg-white hover:text-blue-500 dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:shadow-outline text-gray-500 font-semibold py-2 px-2 md:px-4 shadow rounded-lg flex" aria-expanded="false" aria-haspopup="true">
+                                    <?= theme()->getSVG('duotune/arrows/arr078.svg', 'svg-icon flex-shrink-0 dark:text-gray-200 text-gray-800', true); ?>
+                                </button>
+                            </div>
+
+                            <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-50 my-2 w-48 rounded-md shadow-lg origin-top-right right-0 top-full" style="display: none;" @click="open = false">
+                                <div class="rounded-md ring-1 ring-black ring-opacity-5 dark:ring-slate-600 py-1 bg-white dark:bg-slate-800">
+                                    <?php foreach ($export['type'] as $type) : ?>
+                                        <a target="_blank" class="block px-4 py-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out dark:text-slate-200 dark:focus:bg-slate-700 dark:hover:bg-slate-700" href="<?= $export['href']; ?>?type=<?= $type; ?>"><?= lang(ucfirst($_controller) . '.export.'. $type); ?></a>
+                                     <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <a target="_blank" href="<?= $export['href']; ?>" class="mr-2 rounded-lg inline-flex items-center bg-white hover:text-blue-500 dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:shadow-outline text-gray-500 font-semibold py-2 px-2 md:px-4 shadow rounded-lg flex">
+                        <?= theme()->getSVG('duotune/arrows/arr078.svg', 'svg-icon flex-shrink-0 dark:text-gray-200 text-gray-800', true); ?>
+                    </a>
+                <?php endif; ?>
             <?php endif; ?>
 
         </div>

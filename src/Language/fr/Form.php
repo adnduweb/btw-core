@@ -111,7 +111,8 @@ return [
         'lastname' => 'Nom',
         'firstname' => 'Prénom',
         'listCurrencies'  => "Liste des devises",
-        'selectCurrencies'  => "Sélectionner votre devise des devises"
+        'selectCurrencies'  => "Sélectionner votre devise des devises",
+        'addElement' => 'Ajouter un élément'
 
     ],
     'address' => [

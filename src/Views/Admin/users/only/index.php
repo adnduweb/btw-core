@@ -45,7 +45,7 @@
             // Set date data order
 
             // Init datatable --- more info on datatables: https://datatables.net/manual/
-            window.Ci4DataTables["kt_table_users-table"] = $(table).DataTable({
+            window.Ci4DataTables["kt_table_users"] = $(table).DataTable({
                 'responsive': true,
                 "info": true,
                 "retrieve": true,
@@ -137,8 +137,11 @@
                 // Use DataTables' initComplete callback to tell htmx to reprocess any htmx attributes in the table
                 // DataTables docs: https://datatables.net/reference/option/initComplete
                 // htmx docs: https://htmx.org/api/#process AND https://htmx.org/docs/#3rd-party
-                "initComplete": function(settings, json) {
+                initComplete: function(settings, json) {
                     htmx.process(table);
+                },
+                drawCallback: function(settings, json) {
+                    htmx.process("#kt_table_users");
                 },
             });
 
@@ -147,105 +150,143 @@
             // DataTables docs: https://datatables.net/reference/api/ajax.reload()
             // htmx docs: https://htmx.org/events/#htmx:afterRequest
             document.body.addEventListener('reloadTable', function(evt) {
-                Ci4DataTables["kt_table_users-table"].ajax.reload(function() {
+                Ci4DataTables["kt_table_users"].ajax.reload(function() {
                     htmx.process('table');
                 }, false)
             });
 
             // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
-            window.Ci4DataTables["kt_table_users-table"].on('draw', function(jqXHR, settings) {
-                initToggleToolbar();
+            window.Ci4DataTables["kt_table_users"].on('draw', function(jqXHR, settings) {
+                initDatatable();
                 handleDeleteRows();
-                toggleToolbars();
-                handleSelectedRowDatatable();
-                htmx.process(table);
+                actionToggleToolbar();
             });
 
         }
 
-        const allCheck = table.querySelector('.allCheck');
-        allCheck.addEventListener('click', function() {
-            const checkboxes = table.querySelectorAll('tbody .selection [type="checkbox"]');
-            checkboxes.forEach(c => {
-                if (c.closest('tr').classList.contains('bg-sky-700')) {
-                    c.closest('tr').classList.remove('bg-sky-700', 'dark:bg-gray-800', 'selected');
-                } else {
-                    c.closest('tr').classList.add('bg-sky-700', 'dark:bg-gray-800', 'selected');
+        const countSelected = (init = false) => {
+            const allCheckboxes = table.querySelectorAll('tbody .selection [type="checkbox"]');
+
+            let checkedState = false;
+            let count = 0;
+            allCheckboxes.forEach(c => {
+                if (c.checked) {
+                    checkedState = true;
+                    count++;
                 }
             });
-        });
 
-        // Filter Datatable
-        var handleSelectedRowDatatable = () => {
-            // Select filter options
-            const groupCheckable = table.querySelectorAll('.group-checkable');
-            groupCheckable.forEach(c => {
-                c.addEventListener('click', function() {
-                    if (c.closest('tr').classList.contains('selected')) {
-                        c.closest('tr').classList.remove('selected');
+            // Select elements
+            let toolbarBase = document.querySelector('[data-kt-datatable-toolbar="base"]');
+            let toolbarSelected = document.querySelector('[data-kt-datatable-toolbar="selected"]');
+            let rowSelected = document.querySelector('[data-kt-datatable-row="selected"]');
+            let selectedCount = document.querySelector('[data-kt-datatable-select="selected_count"]');
+
+            //  // Toggle toolbars
+            if (checkedState) {
+                selectedCount.innerHTML = count;
+                toolbarBase.classList.add('hidden');
+                toolbarSelected.classList.remove('hidden');
+                rowSelected.classList.remove('hidden');
+
+                var firstRow = table.rows[0];
+                firstRow.parentNode.insertBefore(rowSelected, firstRow.rows);
+
+            } else {
+                toolbarBase.classList.remove('hidden');
+                toolbarSelected.classList.add('hidden');
+                rowSelected.classList.add('hidden');
+            }
+            return count;
+        }
+
+        const initDatatable = () => {
+
+            // List checkbox all click 
+            const allCheck = table.querySelector('.allCheck');
+            if (allCheck) {
+                // Select elements
+                let toolbarBase = document.querySelector('[data-kt-datatable-toolbar="base"]');
+                let toolbarSelected = document.querySelector('[data-kt-datatable-toolbar="selected"]');
+                let rowSelected = document.querySelector('[data-kt-datatable-row="selected"]');
+                let selectedCount = document.querySelector('[data-kt-datatable-select="selected_count"]');
+
+
+                allCheck.addEventListener('click', function() {
+                    if (allCheck.checked) {
+                        const checkboxes = table.querySelectorAll('tbody .selection [type="checkbox"]');
+                        checkboxes.forEach((c, i) => {
+                            c.closest('tr').classList.add('selected');
+                            selectedCount.innerHTML = (i++) + 1;
+                            toolbarBase.classList.add('hidden');
+                            toolbarSelected.classList.remove('hidden');
+                            rowSelected.classList.remove('hidden');
+
+                            var firstRow = table.rows[0];
+                            firstRow.parentNode.insertBefore(rowSelected, firstRow.rows);
+                        });
                     } else {
-                        c.closest('tr').classList.add('selected');
+                        const checkboxes = table.querySelectorAll('tbody .selection [type="checkbox"]');
+                        checkboxes.forEach(c => {
+                            c.closest('tr').classList.remove('selected');
+                            toolbarBase.classList.remove('hidden');
+                            toolbarSelected.classList.add('hidden');
+                            rowSelected.classList.add('hidden');
+
+                        });
                     }
                 });
-            });
+
+            }
+
+            // Select filter options
+            const groupCheckable = table.querySelectorAll('.group-checkable');
+            if (groupCheckable) {
+                groupCheckable.forEach(c => {
+                    c.addEventListener('click', function() {
+                        if (c.closest('tr').classList.contains('selected')) {
+                            c.closest('tr').classList.remove('selected');
+                            countSelected();
+                        } else {
+                            c.closest('tr').classList.add('selected');
+                            countSelected();
+                        }
+                    });
+                });
+            }
         }
 
 
         // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
-        var handleSearchDatatable = () => {
+        var handleSearchDatatable = (datatableOnly) => {
             const filterSearch = document.querySelector('[data-kt-datatable-filter="search"]');
-            filterSearch.addEventListener('change', function(e) {
-                Ci4DataTables["kt_table_users-table"].search(e.target.value).draw();
-            });
-        }
-
-        // Filter Datatable
-        var handleFilterDatatable = () => {
-            // Select filter options
-            const filterForm = document.querySelector('[data-kt-datatable-filter="form"]');
-            const filterButton = filterForm.querySelector('[data-kt-datatable-filter="filter"]');
-            const selectOptions = filterForm.querySelectorAll('select');
-
-            // Filter datatable on submit
-            filterButton.addEventListener('click', function() {
-                var filterString = '';
-
-                // Get filter values
-                selectOptions.forEach((item, index) => {
-                    if (item.value && item.value !== '') {
-                        if (index !== 0) {
-                            filterString += ' ';
-                        }
-                        // Build filter value options
-                        filterString += item.value;
-                    }
+            if (filterSearch) {
+                filterSearch.addEventListener('change', function(e) {
+                    Ci4DataTables["kt_table_users"].search(e.target.value).draw();
                 });
+            }
+        }
 
-                // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-                Ci4DataTables["kt_table_users-table"].search(filterString).draw();
+
+        const datKtDatatableFilter = document.querySelectorAll('[data-kt-datatable-filter]');
+        const dataFilterDateRange = document.querySelectorAll('[data-kt-datatable-filter-date="daterange"]');
+
+        if (dataFilterDateRange) {
+            $('[data-kt-datatable-filter]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+                Ci4DataTables["kt_table_users"].destroy();
+                initquotesTable();
+
             });
         }
 
-        // Reset Filter
-        var handleResetForm = () => {
-            // Select reset button
-            const resetButton = document.querySelector('[data-kt-datatable-filter="reset"]');
-
-            // Reset datatable
-            resetButton.addEventListener('click', function() {
-                // Select filter options
-                const filterForm = document.querySelector('[data-kt-datatable-filter="form"]');
-                const selectOptions = filterForm.querySelectorAll('select');
-
-                // Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
-                selectOptions.forEach(select => {
-                    $(select).val('').trigger('change');
-                });
-
-                // Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
-                Ci4DataTables["kt_table_users-table"].search('').draw();
+        datKtDatatableFilter.forEach(c => {
+            c.addEventListener("change", (event) => {
+                // Ci4DataTables["kt_table_users"].ajax.reload();
+                Ci4DataTables["kt_table_users"].destroy();
+                initquotesTable();
             });
-        }
+        });
 
 
         // Delete subscirption
@@ -267,15 +308,6 @@
 
                     var id = $(this).data('identifier');
 
-                    // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-
-                    // const swalWithBootstrapButtons = Swal.mixin({
-                    //     customClass: {
-                    //         confirmButton: 'btn btn-success',
-                    //         cancelButton: 'btn btn-danger'
-                    //     },
-                    //     buttonsStyling: false
-                    // })
                     Swal.fire({
                         text: "Are you sure you want to delete dd " + userName + "?",
                         icon: "warning",
@@ -321,39 +353,20 @@
         }
 
         // Init toggle toolbar
-        var initToggleToolbar = () => {
-            // Toggle selected action toolbar
-            // Select all checkboxes
-            const checkboxes = table.querySelectorAll('[type="checkbox"]');
+        var actionToggleToolbar = () => {
 
-            // Select elements
-            toolbarBase = document.querySelector('[data-kt-datatable-toolbar="base"]');
-            toolbarSelected = document.querySelector('[data-kt-datatable-toolbar="selected"]');
-            rowSelected = document.querySelector('[data-kt-datatable-row="selected"]');
-            selectedCount = document.querySelector('[data-kt-datatable-select="selected_count"]');
             const deleteSelected = document.querySelector('[data-kt-datatable-action="delete_selected"]');
-
-            // Toggle delete selected toolbar
-            checkboxes.forEach(c => {
-                // Checkbox on click event
-                c.addEventListener('click', function() {
-                    setTimeout(function() {
-                        toggleToolbars();
-                    }, 50);
-                });
-            });
-
 
             // Deleted selected rows
             if (deleteSelected) {
                 deleteSelected.addEventListener('click', function() {
                     const identifiers = [];
-                    var dtRow = Ci4DataTables["kt_table_users-table"].rows('.selected').data().map(function(t, e) {
+                    var dtRow = Ci4DataTables["kt_table_users"].rows('.selected').data().map(function(t, e) {
                         identifiers.push(t.identifier);
                     });
 
                     Swal.fire({
-                        text: _LANG_.are_you_sure_delete + " " + Ci4DataTables["kt_table_users-table"].rows('.selected').data().length + " " + _LANG_.selected_records + " ?",
+                        text: _LANG_.are_you_sure_delete + " " + Ci4DataTables["kt_table_users"].rows('.selected').data().length + " " + _LANG_.selected_records + " ?",
                         icon: "warning",
                         showCancelButton: true,
                         buttonsStyling: false,
@@ -385,41 +398,6 @@
             }
         }
 
-        // Toggle toolbars
-        const toggleToolbars = () => {
-            // Select refreshed checkbox DOM elements 
-            const allCheckboxes = table.querySelectorAll('tbody .selection [type="checkbox"]');
-
-            // Detect checkboxes state & count
-            let checkedState = false;
-            let count = 0;
-
-            // Count checked boxes
-            allCheckboxes.forEach(c => {
-                if (c.checked) {
-                    checkedState = true;
-                    count++;
-                }
-            });
-
-            // Toggle toolbars
-            if (checkedState) {
-                selectedCount.innerHTML = count;
-                toolbarBase.classList.add('hidden');
-                toolbarSelected.classList.remove('hidden');
-                rowSelected.classList.remove('hidden');
-
-                var firstRow = table.rows[0];
-                firstRow.parentNode.insertBefore(rowSelected, firstRow.rows);
-
-            } else {
-                table.querySelector('.allCheck').checked = false;
-                toolbarBase.classList.remove('hidden');
-                toolbarSelected.classList.add('hidden');
-                rowSelected.classList.add('hidden');
-            }
-        }
-
         return {
             // Public functions  
             init: function() {
@@ -428,15 +406,12 @@
                 }
 
                 initPermissionTable();
-                initToggleToolbar();
+                actionToggleToolbar();
                 handleSearchDatatable();
             }
         }
     }();
 
-    // On document ready
-    //KTUtil.onDOMContentLoaded(function() {
     KTUsersList.init();
-    //});
 </script>
 <?php $this->endSection() ?>

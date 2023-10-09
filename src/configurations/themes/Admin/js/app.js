@@ -11,6 +11,7 @@ import "flowbite"; // Flowbite
 import "flowbite-datepicker"; // Flowbite
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import Sortable from "sortablejs";
+import nestedSort from "nested-sort";
 import axios from "axios";
 import select2 from 'select2';
 import daterangepicker from "daterangepicker";
@@ -39,6 +40,7 @@ window.jQuery = window.$ = $;
 window.intlTelInput = intlTelInput;
 window.Swal = Swal;
 window.Sortable = Sortable;
+window.nestedSort = nestedSort;
 window.axios = axios;
 select2();
 window.select2 = select2;
@@ -254,30 +256,3 @@ htmx.onLoad(function(content) {
         countCharacters();
     });
 });
-
-
-/*** Modal Media */
-
-
-// document.body.addEventListener("openmodalmedia", function(evt) {
-//     console.log(evt);
-// let listFilesForModal = window.getElementById("listFilesForModal");
-// let elementMediaModal = window.querySelectorAll(".element-media-modal");
-
-// console.log(elementMediaModal);
-// elementMediaModal.forEach(c => {
-//     c.classList.remove('selected');
-//     c.addEventListener('click', function (event) {
-//         const isSelectded = c.classList.contains("selected");
-
-//         if(isSelectded){
-//             console.log('remove');
-//             c.classList.remove('selected');
-//         }else{
-//             console.log('add');
-//             c.classList.add('selected');
-//         }
-        
-//     });
-// });
-// });

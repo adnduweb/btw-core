@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
- 
+
 return [
     'cellh3' => [
         'general' => 'Général',
@@ -48,7 +48,7 @@ return [
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
-        'resourceSaved' => 'Les modifications de {0} ont été enregistrées avec succès.', 
+        'resourceSaved' => 'Les modifications de {0} ont été enregistrées avec succès.',
         'formValidationFailed' => 'Une validation de champ est requis',
         'resourcesDeleted' => "Les {0} ont été supprimés.",
         'resourcesDeletedAll' => "Les {0} ont été supprimés.",
@@ -57,7 +57,7 @@ return [
         'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
         'resourcesNotDeletedOnlyUser' => 'Vous ne pouvez pas supprimer votre propore compte',
         'errorMdp' => 'Erreur de mot de passe'
-        
+
     ],
     'sidebar' => [
         'general' => 'Général',
@@ -65,8 +65,8 @@ return [
         'passwords' => 'Mots de passe',
         'update' => 'Mise à jour',
         'capabilities' => 'Permissions',
-        'changePassword' => 'Changer de mot de passe', 
-        'TwoFactoAuthentification' => 'Authentification à deux facteurs', 
+        'changePassword' => 'Changer de mot de passe',
+        'TwoFactoAuthentification' => 'Authentification à deux facteurs',
         'historyLogin' => 'Historique de connexion',
         'historyBrowser' => 'Navigateur session',
         'company' => "Entreprise",
@@ -76,14 +76,14 @@ return [
         'addUser' => 'Créer un utilisateur',
         'usersList' => 'Liste des utilisateurs',
         'userCreate' => 'Creer un nouvel utilisateur',
-        
+
     ],
 
     'modules' => [
         'customers' => 'Clients',
     ],
 
-     'tabs' => [
+    'tabs' => [
         'general' => 'Général',
         'listAdresses' => 'Liste des adresses',
         'listContact' => 'Liste des contacts',
@@ -92,7 +92,7 @@ return [
         'accesWeb' => 'Accès Web'
     ],
 
-    
+
     'intitulecustomer'     => 'Modification client',
     'resourceNotFound'     => 'Unable to find the {0}.',
     'resourceSaved'        => 'The {0} has been saved.',
@@ -127,29 +127,29 @@ return [
     'Dashboard' => 'Tableau de bord',
     'Logs' => 'Audits Logs',
     'systemLogs' => 'System Logs',
-    'Settings' => 'Préférences', 
-    'active' => 'Activer', 
-    'desactive' => 'Désactiver', 
-    'search' => 'Rechercher', 
+    'Settings' => 'Préférences',
+    'active' => 'Activer',
+    'desactive' => 'Désactiver',
+    'search' => 'Rechercher',
     'AddAdresses' => 'Ajouter une adresse',
     'AddContact' => 'Ajouter un contact',
-    
+    'deleteAll' => "Tout supprimer",
+
     'You are currently selecting' => 'Vous avez sélectionné',
-    'rows' => 'ligne(s)', 
+    'rows' => 'ligne(s)',
     'Deselect All' => 'déseclectionner',
     'Action' => 'Actions',
-    'siteName' => 'Nom du site',        
-    'siteOnline' => 'Site en ligne',      
-    'french' => 'Français',      
-    'english' => 'Anglais',        
-    'delete_all' => 'Tout supprimer',   
-    'delete_selected' => 'Supprimer la sélection',   
+    'siteName' => 'Nom du site',
+    'siteOnline' => 'Site en ligne',
+    'french' => 'Français',
+    'english' => 'Anglais',
+    'delete_all' => 'Tout supprimer',
+    'delete_selected' => 'Supprimer la sélection',
     'systemInfos' => 'Informations',
-    'back' => 'Retour', 
-    'InfomationPage' => 'Information sur la page', 
-    'intitulePage' => 'titre', 
+    'back' => 'Retour',
+    'InfomationPage' => 'Information sur la page',
+    'intitulePage' => 'titre',
     // 'general' => 'Général', 
-    'construction' => 'Construction', 
+    'construction' => 'Construction',
     'errorField' => 'Un ou plusieurs champs sont requis'
 ];
-

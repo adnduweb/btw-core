@@ -36,19 +36,20 @@ class SearchController extends AdminController
         if (!auth()->user()->can('admin.settings')) {
             return redirect()->to(ADMIN_AREA)->with('error', lang('Btw.notAuthorized'));
         }
+        $this->response->triggerClientEvent('openmodalslideover');
 
-        return $this->render($this->viewPrefix . 'index', [
+        return $this->render('Btw\Core\Cells\Core\admin_side_over', [
             'cells' => new SearchManager(),
         ]);
 
 
 
         // if (!$this->request->is('post')) {
-            // return $this->render($this->viewPrefix . 'index', [
-            //     'tokens'  => Auth()->user()->accessTokens(),
-            //     'menu' => service('menus')->menu('sidebar_token'),
-            //     'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
-            // ]);
+        // return $this->render($this->viewPrefix . 'index', [
+        //     'tokens'  => Auth()->user()->accessTokens(),
+        //     'menu' => service('menus')->menu('sidebar_token'),
+        //     'currentUrl' => (string)current_url(true)->setHost('')->setScheme('')->stripQuery('token')
+        // ]);
         // }
     }
 }

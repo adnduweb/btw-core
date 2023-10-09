@@ -17,6 +17,13 @@ class PublicDisk implements FileSystem
     protected $basePath;
     protected $baseUrl;
     protected $mode;
+    /**
+     * @var string
+     */
+    protected $cwebpPath;
+    protected $quality;
+
+    protected $new_file_url;
 
     /**
      * PublicDisk constructor.
@@ -42,6 +49,8 @@ class PublicDisk implements FileSystem
         }
 
         $this->mode = $config->file['mode'] ?? 0664;
+        $this->quality = $config->default_quality;
+        $this->cwebpPath = $config->cwebp['path'];
     }
 
     /**
@@ -93,14 +102,20 @@ class PublicDisk implements FileSystem
 
         if (in_array($ext, config('Storage')->isImage)) {
             // Diffrente taille
-            if ($sizeImg = config('Storage')->sizeImg) {
+            if ($sizeImg = setting('Storage.sizeImg')) {
 
                 foreach ($sizeImg as $item) {
                     service('image')->withFile($this->basePath . $path . $fileName)
                         ->fit($item[0], $item[1], $item[2])
                         ->save(($this->basePath . $path . str_replace('.' . $ext, '-' . $item[0] . 'x' . $item[1] . '.' . $ext, $fileName)));
+
+                    $cmd = $this->cwebpPath . ' -q ' . $this->quality . ' ' . ($this->basePath . $path . str_replace('.' . $ext, '-' . $item[0] . 'x' . $item[1] . '.' . $ext, $fileName)) . ' -o ' . ($this->basePath . $path . str_replace('.' . $ext, '-' . $item[0] . 'x' . $item[1] . '.' . $ext, $fileName)) . '.webp';
+                    exec($cmd, $output, $exitCode);
                 }
             }
+
+            $cmd = $this->cwebpPath . ' -q ' . $this->quality . ' ' . $this->basePath . $path . $fileName . ' -o ' . ($this->basePath . $path . str_replace('.' . $ext, '-' . $item[0] . 'x' . $item[1] . '.' . $ext, $fileName)) . '.webp';
+            exec($cmd, $output, $exitCode);
 
             if ($companyPdf) {
                 service('image')->withFile($this->basePath . $path . $fileName)
@@ -139,6 +154,40 @@ class PublicDisk implements FileSystem
 
         return $result;
     }
+    /**
+     * Store or put file into storage.
+     *
+     * @param $content
+     * @param null $path
+     * @param array $options
+     * @return mixed
+     */
+    public function storeVsMore($idFile, $path = null, $sizeImg = [], bool $webp = true)
+    {
+        $media = model(MediaModel::class)->find($idFile);
+
+        if ($media === false) {
+            return false;
+        }
+        $path = empty($path) ? '' : rtrim($path, '/') . '/';
+        $file = pathinfo(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . $media->disk  . DIRECTORY_SEPARATOR .  $media->file_path);
+
+        if (!empty($sizeImg)) {
+            // Diffrente taille
+            foreach ($sizeImg as $item) {
+                service('image')->withFile($this->basePath . $path . $media->file_name)
+                    ->fit($item[0], $item[1], $item[2])
+                    ->save(($this->basePath . $path . str_replace('.' . $file['extension'], '-' . $item[0] . 'x' . $item[1] . '.' . $file['extension'], $media->file_name)));
+
+                if ($webp == true) {
+                    $cmd = $this->cwebpPath . ' -q ' . $this->quality . ' ' . ($this->basePath . $path . str_replace('.' . $file['extension'], '-' . $item[0] . 'x' . $item[1] . '.' . $file['extension'], $media->file_name)) . ' -o ' . ($this->basePath . $path . str_replace('.' . $file['extension'], '-' . $item[0] . 'x' . $item[1] . '.' . $file['extension'], $media->file_name)) . '.webp';
+                    exec($cmd, $output, $exitCode);
+                }
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Get file from Storage.
@@ -172,30 +221,25 @@ class PublicDisk implements FileSystem
     public function getFileUrl($idFile, $options = [])
     {
 
-        if (is_null($idFile))
-            return false;
+        if (is_null($idFile)) {
+            return base_url($this->getPlaceholderIn());
+        }
 
         $media = model(MediaModel::class)->find($idFile);
 
         if ($media === false) {
-            return false;
+            return base_url($this->getPlaceholderIn());
         }
 
         //@todo Add image par defaut
         if (empty($media->full_path)) {
-            $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
-            $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
-            $new_file_url =  $urlPlaceholder;
-            return base_url($new_file_url);
+            return base_url($this->getPlaceholderIn());
         }
 
 
         if (($fileName = @file_get_contents($media->full_path)) === false) {
 
-            $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
-            $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
-            $new_file_url =  $urlPlaceholder;
-            return base_url($new_file_url);
+            return base_url($this->getPlaceholderIn());
         }
 
 
@@ -203,14 +247,10 @@ class PublicDisk implements FileSystem
 
         if (!empty($options) && is_array($options)) {
             if (isset($options['size'])) {
-                $sizeImg = config('Storage')->sizeImg[$options['size']];
+                $sizeImg = setting('Storage.sizeImg')[$options['size']];
                 $new_full_path = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->full_path);
                 if (($fileName = @file_get_contents($new_full_path)) === false) {
-
-                    $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
-                    $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
-                    $new_file_url =  $urlPlaceholder;
-                    return base_url($new_file_url);
+                    return base_url($this->getPlaceholderIn());
                 } else {
 
                     $new_file_url = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->file_url);
@@ -220,6 +260,36 @@ class PublicDisk implements FileSystem
         }
 
         return $media->getFileUrl();
+    }
+
+    /**
+     * Get placeholder from Storage.
+     *
+     * @param null $path
+     * @param array $options
+     * @return mixed
+     */
+    public function getPlaceholder($options = [])
+    {
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
+        $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
+        $new_file_url = $urlPlaceholder;
+        return base_url($new_file_url);
+    }
+
+    /**
+     * Get placeholder in from Storage.
+     *
+     * @param null $path
+     * @param array $options
+     * @return mixed
+     */
+    public function getPlaceholderIn($options = [])
+    {
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
+        $urlPlaceholder = str_replace(WRITEPATH, '/', $file->getPathName());
+        $this->new_file_url = $urlPlaceholder;
+        return $this->new_file_url;
     }
 
     public function getFileBaseUrl($idFile, $options = [])

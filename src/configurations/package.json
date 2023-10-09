@@ -52,6 +52,7 @@
         "jquery": "^3.6.4",
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
+        "nested-sort": "^5.2.0",
         "postcss-import": "^15.1.0",
         "remove": "^0.1.5",
         "sortablejs": "^1.15.0",

@@ -146,8 +146,10 @@ if (!function_exists('vite_url')) {
         }
 
         $mainEntry = explode('/', $entry)[0];
+        // print_r($mainEntry);
+        // exit;
         // $manifest = json_decode(@file_get_contents(base_url("{$mainEntry}/manifest.json")), true);
-        $link = @file_get_contents(ROOTPATH . "public/{$mainEntry}/manifest.json");
+        $link = @file_get_contents(ROOTPATH . "public/{$mainEntry}/build/manifest.json");
         $manifest = json_decode($link, true);
         if (empty($manifest)) {
             return null;
@@ -157,11 +159,11 @@ if (!function_exists('vite_url')) {
         $entryPoint = $manifest[$config->entryPoints[$entry]];
         if (!empty($entryPoint['css'])) {
             foreach ($entryPoint['css'] as $css) {
-                $styles .= sprintf('<link rel="stylesheet" href="%s">', base_url("{$mainEntry}/{$css}"));
+                $styles .= sprintf('<link rel="stylesheet" href="%s">', base_url("{$mainEntry}/build/{$css}"));
             }
         }
 
-        $scripts = sprintf('<script type="module" src="%s"></script>', base_url("{$mainEntry}/{$entryPoint['file']}"));
+        $scripts = sprintf('<script type="module" src="%s"></script>', base_url("{$mainEntry}/build/{$entryPoint['file']}"));
 
         $collectImports = function ($record, $imports) use ($manifest, &$collectImports) {
             if (isset($record['dynamicImports']) || isset($record['imports'])) {
@@ -1044,5 +1046,56 @@ if (!function_exists('getNameCurrency')) {
             throw new \Exception('Incorrect model id.');
         }
         return $model->name;
+    }
+}
+
+
+if (!function_exists('buildTree')) {
+    function buildTree(array $elements, $parentId = 0)
+    {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element->parent_id == $parentId) {
+                $children = buildTree($elements, $element->id);
+                if ($children) {
+                    $element->children = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+
+        return $branch;
+    }
+}
+
+
+if (!function_exists('isJson')) {
+    function isJson($string)
+    {
+        if (!in_array(substr($string, 0, 1), ['{', '[']) || !in_array(substr($string, -1), ['}', ']'])) {
+            return false;
+        } else {
+            json_decode($string);
+            return (json_last_error() === JSON_ERROR_NONE);
+        }
+    }
+}
+
+if (!function_exists('isValidUuid')) {
+    /**
+     * Check if a given string is a valid UUID
+     *
+     * @param   string  $uuid   The string to check
+     * @return  boolean
+     */
+    function isValidUuid($uuid)
+    {
+
+        if (!is_string($uuid) || (preg_match('/^[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}$/i', $uuid) !== 1)) {
+            return false;
+        }
+
+        return true;
     }
 }

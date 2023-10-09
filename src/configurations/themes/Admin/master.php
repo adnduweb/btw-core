@@ -52,7 +52,7 @@
 <!-- debug, loading-states, json-enc, event-header -->
 <!-- hx-headers='{"X-Theme": "admin"}' -->
 
-<body hx-ext="morph, ajax-header, head-support, preload" hx-history="false" hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100 <?= detectAgent(); ?>" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false }" @keydown.escape="showModal = false">
+<body hx-ext="morph, ajax-header, head-support, preload" hx-history="false" hx-indicator="#progress" class="h-full antialiased font-sans bg-slate-100 <?= detectAgent(); ?>" x-data="{ modelOpen: false, showDeleteModal: false, showAuthDisplayDataModal: false, showSlideOver: false }" @keydown.escape="showModal = false">
 
     <!-- Main content -->
     <main class="<?= site_offline() ? 'offline' : '' ?>" x-data="{open: false}">
@@ -90,8 +90,9 @@
 
 
         <?= $this->include('_notifications') ?>
-
-        <?= $this->include('_modalsLogout') ?>
+        <?= view_cell('Btw\Core\Cells\Core\AdminSideOver'); ?>
+        <?= ''; //$this->include('_modalsLogout') 
+        ?>
 
         <?= $viewJavascript->render(); ?>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

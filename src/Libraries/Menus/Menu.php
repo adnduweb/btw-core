@@ -20,6 +20,7 @@ class Menu
      * @var array
      */
     protected $items = [];
+    protected $itemschild = [];
 
     /**
      * Returns all items/collections in the menu.
@@ -29,6 +30,17 @@ class Menu
     public function items()
     {
         return $this->items;
+    }
+
+
+    /**
+     * Returns all items/collections in the menu.
+     *
+     * @return array
+     */
+    public function itemschild()
+    {
+        return $this->itemschild;
     }
 
     /**
@@ -42,6 +54,20 @@ class Menu
 
         return $this;
     }
+
+    /**
+     * Adds a new item
+     *
+     * @return $this
+     */
+    public function addChildItem(MenuChildItem $itemschild)
+    {
+        $this->itemschild[] = $itemschild;
+
+        return $this;
+    }
+
+    
 
     /**
      * Creates a new collection with default values for

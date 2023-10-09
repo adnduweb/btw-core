@@ -95,7 +95,8 @@
                     <hr class="border-t border-gray-700 dark:border-gray-600 my-5" aria-hidden="true">
 
                     <?php
-                    // print_r($menu); exit; 
+                    // print_r($menu);
+                    // exit;
                     if (isset($menu)) : ?>
                         <?php foreach ($menu->collections() as $collection) : ?>
 
@@ -124,6 +125,17 @@
                                                     </a>
 
                                                 <?php endif ?>
+
+                                                <?php if ($item->itemschild()) : ?>
+                                                    <?php foreach ($item->itemschild() as $child) : ?>
+                                                    <div class="ml-2">
+                                                        <a x-data="tooltip" x-on:mouseover="show = true" x-on:mouseleave="show = false" data-current="<?= $currentUrl ?>" data-url="<?= $child->url; ?>" :class="isSidebarExpanded ? 'pl-5' : 'justify-center'" class="relative group flex childs-center px-2 py-1 text-sm font-medium rounded-md text-gray-400 dark:text-slate-300 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white <?= (in_array((string)$currentUrl, [$child->url])) ? "bg-gray-900 text-white dark:bg-slate-900" : ""; ?> <?= url_is($child->url . '*') ? 'active bg-gray-900 text-white dark:bg-slate-900' : '' ?>" href="<?= $child->url ?>">
+                                                            <?= $child->icon ?>
+                                                            <span x-cloak x-bind:class="!isSidebarExpanded && show ? visibleClass :'' || !isSidebarExpanded && !show ? 'sm:hidden':''" :class="isSidebarExpanded ? 'block ml-3' : 'hidden'"><?= $child->title ?></span>
+                                                        </a>
+                                                    </div>
+                                                        <?php endforeach ?>
+                                                    <?php endif ?>
                                             <?php endforeach ?>
                                             <?php if ($collection->isCollapsible()) : ?>
                                             </div>

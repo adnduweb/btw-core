@@ -27,6 +27,7 @@ class MenuCollection extends MenuItem
      * @var array
      */
     protected $items = [];
+    protected $itemschild = [];
 
     /**
      * The name this collection is discovered by.
@@ -90,6 +91,18 @@ class MenuCollection extends MenuItem
     }
 
     /**
+     * Adds a single item to the menu.
+     *
+     * @return $this
+     */
+    public function addChildItem(MenuChildItem $itemschild)
+    {
+        $this->itemschild[] = $itemschild;
+
+        return $this;
+    }
+
+    /**
      * Add multiple items at once.
      *
      * @return $this
@@ -100,6 +113,7 @@ class MenuCollection extends MenuItem
 
         return $this;
     }
+
 
     public function removeItem(string $title)
     {
@@ -137,6 +151,20 @@ class MenuCollection extends MenuItem
         return $this->items;
     }
 
+     /**
+     * Returns all items in the Collection,
+     * sorted by weight, where larger weights
+     * make them fall to the bottom.
+     *
+     * @return array
+     */
+    public function itemschild()
+    {
+        $this->sortItemsChild();
+
+        return $this->itemschild;
+    }
+
     /**
      * Is this collection "active"?
      * Used in default admin theme to determine
@@ -149,7 +177,7 @@ class MenuCollection extends MenuItem
         return url_is($url . '*');
     }
 
-     /**
+    /**
      * Is this collection "active"?
      * Used in default admin theme to determine
      * if the subnavs should be open or flyouts.
@@ -171,6 +199,17 @@ class MenuCollection extends MenuItem
     protected function sortItems()
     {
         usort($this->items, static function ($a, $b) {
+            if ($a->weight === $b->weight) {
+                return $a->title <=> $b->title;
+            }
+
+            return $a->weight <=> $b->weight;
+        });
+    }
+
+    protected function sortItemsChild()
+    {
+        usort($this->itemschild, static function ($a, $b) {
             if ($a->weight === $b->weight) {
                 return $a->title <=> $b->title;
             }

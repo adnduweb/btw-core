@@ -24,7 +24,7 @@ namespace Btw\Core\Libraries\Menus;
  * @property string $target
  * @property int    $weight
  */
-class MenuItem
+class MenuChildItem
 {
     use HasMenuIcons;
 
@@ -72,9 +72,6 @@ class MenuItem
      * @var string
      */
     protected $permission;
-    protected $itemschild;
-    protected $instance;
-    protected $parent = 0;
 
     public function __construct(?array $data = null)
     {
@@ -89,38 +86,6 @@ class MenuItem
             }
         }
     }
-
-    /**
-     * @return $this
-     */
-    public function setInstance(string $instance)
-    {
-        $this->instance = $instance;
-
-        return $this;
-    }
-     /**
-     * @return $this
-     */
-    public function setItemschild(MenuChildItem $itemschild)
-    {
-        $this->itemschild[] = $itemschild;
-
-        return $this;
-    }
-
-    
-
-    /**
-     * @return $this
-     */
-    public function setParent(string $parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
 
     /**
      * @return $this
@@ -235,22 +200,6 @@ class MenuItem
     /**
      * @return string
      */
-    public function instance()
-    {
-        return $this->instance;
-    }
-
-    /**
-     * @return string
-     */
-    public function parent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return string
-     */
     public function title()
     {
         return $this->title;
@@ -287,16 +236,6 @@ class MenuItem
     {
         return $this->target;
     }
-
-    /**
-     * @return string
-     */
-    public function itemschild()
-    {
-        return $this->itemschild;
-    }
-
-    
 
     /**
      * @return string

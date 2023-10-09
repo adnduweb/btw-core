@@ -11,6 +11,17 @@ use CodeIgniter\Config\BaseConfig;
 
 class Storage extends BaseConfig
 {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Quality
+    |--------------------------------------------------------------------------
+    |
+    | This is a default quality unless you provide while generation of the WebP
+    |
+    */
+    public $default_quality = 70;
+
     /**
      * --------------------------------------------------------------------------
      * Storage Handler
@@ -116,4 +127,8 @@ class Storage extends BaseConfig
      * Default sort ordering. "asc" or "desc"
      */
     public string $filesOrder = 'asc';
+
+    public $cwebp = [
+        'path' => '/usr/local/bin/cwebp',
+    ];
 }

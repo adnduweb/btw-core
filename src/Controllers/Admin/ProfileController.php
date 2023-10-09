@@ -671,6 +671,8 @@ class ProfileController extends AdminController
 
 
 
+
+
         // $server = \Ratchet\Server\IoServer::factory(
         //     new \Ratchet\Http\HttpServer(
         //         new \Ratchet\WebSocket\WsServer(
@@ -681,6 +683,27 @@ class ProfileController extends AdminController
         // );
 
         // $server->run();
+    }
+
+
+    public function working()
+    {
+        // Set the appropriate headers for SSE
+        $this->response->setContentType('text/event-stream');
+        $this->response->setHeader('Cache-Control', 'no-cache')
+            ->setHeader('Connection', 'keep-alive')
+            ->setHeader('Access-Control-Allow-Origin', base_url())
+            ->setHeader('Access-Control-Allow-Methods', 'GET');
+
+        // data to be sent
+        $data = [
+            'timestamp' => time()
+        ];
+        $sse_data = "retry: 5000\ndata: " . json_encode($data) . "\n\n";
+
+        // Send the SSE data to the client
+        $this->response->appendBody($sse_data);
+        $this->response->send();
     }
 
     // $data = [
