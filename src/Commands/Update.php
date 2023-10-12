@@ -59,19 +59,19 @@ class Update extends BaseCommand
     {
         $action = CLI::getSegment(2);
         if ($action && in_array($action, $this->valid_actions, true)) {
-          
+
 
             switch ($action) {
                 case 'theme-admin':
-                    $this->publishThemes('Admin');
+                    $this->publishThemes('admin');
                     break;
 
                 case 'theme-app':
-                    $this->publishThemes('App');
+                    $this->publishThemes('app');
                     break;
 
                 case 'theme-auth':
-                    $this->publishThemes('Auth');
+                    $this->publishThemes('auth');
                     break;
             }
         } else {
@@ -87,11 +87,12 @@ class Update extends BaseCommand
         $publisher = new Publisher();
         $publisher->copyDirectory($source, $destination);
 
-        if( $resource == 'Admin'){
-        //logo
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/logo-adn.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/logo-adn-grey.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-blanc.png', APPPATH . '../public/logo-adn-blanc.png');
+        if ($resource == 'Admin') {
+            //logo
+            // $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/logo-adn.png');
+            // $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/logo-adn-grey.png');
+            // $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-blanc.png', APPPATH . '../public/logo-adn-blanc.png');
+            $publisher->copyDirectory($source, $destination);
         }
     }
 }

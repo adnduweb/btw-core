@@ -203,7 +203,7 @@ class Install extends BaseCommand
         $this->updateEnvFile("# session.sessionExpiration = 7200", "session.sessionExpiration = 86400");
         $this->updateEnvFile("# session.sessionSavePath = null", "session.sessionSavePath = 'sessions'");
         $this->updateEnvFile("# session.sessionMatchIP = false", "session.sessionMatchIP = true");
-        $this->updateEnvFile("# session.sessionTimeToUpdate = 300", "session.sessionTimeToUpdate = 300");
+        $this->updateEnvFile("# session.sessionTimeToUpdate = 300", "session.sessionTimeToUpdate = 100");
         $this->updateEnvFile("# session.sessionRegenerateDestroy = false", "session.sessionRegenerateDestroy = true");
         CLI::write('Session saved to .env file', 'green');
         CLI::newLine();
@@ -244,15 +244,18 @@ class Install extends BaseCommand
         $source      = BTPATH . 'configurarions/themes';
         $destination = APPPATH . '../themes';
 
+        $sourcePublic      = BTPATH . 'configurarions/public';
+        $destinationPublic = APPPATH . '../public';
+
         $admin = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin';
         if (!is_dir($admin) && !@mkdir($admin, 0775, true)) {
             throw new \Exception('impossible de créer le dossier admin');
         }
 
-        $admin_img = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'img';
-        if (!is_dir($admin_img) && !@mkdir($admin_img, 0775, true)) {
-            throw new \Exception('impossible de créer le dossier admin/img');
-        }
+        // $admin_img = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'img';
+        // if (!is_dir($admin_img) && !@mkdir($admin_img, 0775, true)) {
+        //     throw new \Exception('impossible de créer le dossier admin/img');
+        // }
 
         $front = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'front';
         if (!is_dir($front) && !@mkdir($front, 0775, true)) {
@@ -272,13 +275,14 @@ class Install extends BaseCommand
         $publisher->copyDirectory(BTPATH . 'configurations/tailwind.admin.config.js', APPPATH . '../tailwind.admin.config.js');
         $publisher->copyDirectory(BTPATH . 'configurations/tailwind.front.config.js', APPPATH . '../tailwind.front.config.js');
 
-        //logo
-        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn.png', APPPATH . '../public/admin/img/logo-adn.png');
-        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/img/logo-adn-grey.png');
-        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-white.png', APPPATH . '../public/admin/img/logo-adn-white.png');
-        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-small.png', APPPATH . '../public/admin/img/logo-adn-small.png');
-        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/flags.png', APPPATH . '../public/admin/img/flags.png');
-        $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/flags@2x.png', APPPATH . '../public/admin/img/flags@2x.png');
+        //Dir Public
+        $publisher->copyDirectory($sourcePublic, $destinationPublic);
+        // $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn.png', APPPATH . '../public/admin/img/logo-adn.png');
+        // $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/img/logo-adn-grey.png');
+        // $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-white.png', APPPATH . '../public/admin/img/logo-adn-white.png');
+        // $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/logo-adn-small.png', APPPATH . '../public/admin/img/logo-adn-small.png');
+        // $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/flags.png', APPPATH . '../public/admin/img/flags.png');
+        // $publisher->copyDirectory(BTPATH . 'configurations/themes/Admin/img/flags@2x.png', APPPATH . '../public/admin/img/flags@2x.png');
     }
 
     private function setEncryptionKey()

@@ -5,7 +5,7 @@
     </div>
 
     <!-- Panel -->
-    <div class="fixed inset-y-0 right-0 max-w-lg w-full">
+    <div class="fixed inset-y-0 right-0 max-w-lg w-full z-50">
         <div x-dialog:panel="" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="h-full w-full">
             <div class=" h-full flex flex-col justify-between bg-white shadow-lg overflow-y-auto">
                 <!-- Close Button -->

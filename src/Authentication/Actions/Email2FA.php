@@ -22,6 +22,7 @@ use Btw\Core\View\Theme;
 class Email2FA implements ActionInterface
 {
     private string $type = Session::ID_TYPE_EMAIL_2FA;
+    protected $viewPrefix = 'Btw\Core\Views\Auth\\';
 
     /**
      * Displays the "Hey we're going to send you a number to your email"
@@ -75,6 +76,7 @@ class Email2FA implements ActionInterface
         }
 
         // Send the user an email with the code
+        helper('email');
         $email = emailer()->setFrom(setting('Email.fromEmail'), setting('Email.fromName') ?? '');
         $email->setTo($user->email);
         $email->setSubject(lang('Auth.email2FASubject'));
@@ -107,12 +109,17 @@ class Email2FA implements ActionInterface
         $user = $authenticator->getPendingUser();
         if ($user === null) {
             response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => 'Cannot get the pending login User']);
-            throw new RuntimeException('Cannot get the pending login User.');
+            return view($this->viewPrefix . 'cells\form_cell_email_2fa_show', [
+                'user' => $user
+            ]);
         }
 
         if (empty($email) || $email !== $user->email) {
             response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.invalidEmail')]);
-            //return redirect()->route('auth-action-show')->with('error', lang('Auth.invalidEmail'));
+            // return redirect()->route('auth-action-show')->with('error', lang('Auth.invalidEmail'));
+            return view($this->viewPrefix . 'cells\form_cell_email_2fa_show', [
+                'user' => $user
+            ]);
         }
 
         /** @var UserIdentityModel $identityModel */
@@ -122,10 +129,13 @@ class Email2FA implements ActionInterface
 
         if (empty($identity)) {
             response()->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.need2FA')]);
-            //return redirect()->route('auth-action-show')->with('error', lang('Auth.need2FA'));
+            return view($this->viewPrefix . 'cells\form_cell_email_2fa_show', [
+                'user' => $user
+            ]);
         }
 
         // Send the user an email with the code
+        helper('email');
         $email = emailer()->setFrom(setting('Email.fromEmail'), setting('Email.fromName') ?? '');
         $email->setTo($user->email);
         $email->setSubject(lang('Auth.email2FASubject'));
@@ -139,6 +149,7 @@ class Email2FA implements ActionInterface
         // Clear the email
         $email->clear();
 
+        Theme::set_message_htmx('success', lang('Btw.welcomeUser', ['user']));
         return redirect()->hxLocation(str_replace(config('App')->baseURL, '', route_to('auth-action-verify')));
     }
 

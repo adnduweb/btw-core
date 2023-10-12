@@ -2,7 +2,7 @@
     <nav x-data="sidebar" class="sidebar fixed min-h-screen h-full top-0 bottom-0 w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] z-50 transition-all duration-300">
         <div class="bg-white dark:bg-[#0e1726] h-full">
             <div class="flex justify-between items-center px-4 py-3">
-                <a href="/" class="main-logo flex items-center shrink-0">
+                <a href="/<?= ADMIN_AREA; ?>" class="main-logo flex items-center shrink-0">
                     <img class="w-8 ml-[5px] flex-none" src="<?php echo base_url('admin/images/logo.svg') ?>" alt="image" />
                     <span class="text-2xl ltr:ml-1.5 rtl:mr-1.5  font-semibold  align-middle lg:inline dark:text-white-light">VRISTO</span>
                 </a>
@@ -15,7 +15,7 @@
             </div>
             <ul class="perfect-scrollbar relative font-semibold space-y-0.5 h-[calc(100vh-80px)] overflow-y-auto overflow-x-hidden  p-4 py-0" x-data="{ activeDropdown: null }">
                 <li class="menu nav-item">
-                    <a href="/apps/chat" class="group">
+                    <a href="/<?= ADMIN_AREA; ?>" class="group">
                         <div class="flex items-center">
 
                             <svg class="group-hover:!text-primary shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
