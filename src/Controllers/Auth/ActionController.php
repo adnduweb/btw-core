@@ -24,7 +24,7 @@ class ActionController extends BaseController
 
     public function __construct()
     {
-        $this->theme = 'Auth';
+        $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }
 
@@ -98,7 +98,7 @@ class ActionController extends BaseController
         return $this->action->verify($this->request);
     }
 
-     /**
+    /**
      * This handles the response after the user takes action
      * in response to the show/handle flow. This might be
      * from clicking the 'confirm my email' action or

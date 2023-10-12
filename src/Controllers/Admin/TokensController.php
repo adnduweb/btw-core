@@ -17,7 +17,7 @@ use Btw\Core\Libraries\Menus\MenuItem;
 
 class TokensController extends AdminController
 {
-    protected $theme      = 'Admin';
+    protected $theme      = 'admin';
     protected $viewPrefix = 'Btw\Core\Views\Admin\\tools\\tokens\\';
 
 
@@ -48,7 +48,7 @@ class TokensController extends AdminController
         }
     }
 
-        /**
+    /**
      * Displays basic information about the site.
      *
      * @return string
@@ -68,7 +68,7 @@ class TokensController extends AdminController
         }
     }
 
-    
+
 
     /**
      * Creates any admin-required menus so they're

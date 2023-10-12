@@ -15,7 +15,7 @@ class LoginController extends ShieldLogin
 
     public function __construct()
     {
-        $this->theme = 'Auth';
+        $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }
 

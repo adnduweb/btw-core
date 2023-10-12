@@ -26,7 +26,7 @@ use Btw\Core\Libraries\WebSocket;
 
 class ProfileController extends AdminController
 {
-    protected $theme = 'Admin';
+    protected $theme = 'admin';
     protected $viewPrefix = 'Btw\Core\Views\Admin\users\\profile\\';
 
     public function __construct()

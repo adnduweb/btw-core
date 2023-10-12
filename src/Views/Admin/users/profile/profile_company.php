@@ -1,4 +1,4 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend(config('Themes')->views['layout_admin']) ?>
 
 <?php $this->section('main') ?>
 
@@ -21,7 +21,8 @@
                     'data-loading-target' => "#loadingcompany",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
-                <?= '' //csrf_field() ?>
+                <?= '' //csrf_field() 
+                ?>
                 <input type="hidden" name="section" value="company" />
                 <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_company'); ?>
                 <?= form_close(); ?>

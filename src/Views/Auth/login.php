@@ -47,7 +47,7 @@
             <?= form_close(); ?>
 
             <?php if (setting('Auth.allowRegistration')) : ?>
-                <p class="text-sm font-light text-gray-500 dark:text-gray-400" hx-boost="true"><?= lang('Auth.needAccount') ?>
+                <p class="text-sm font-light text-gray-500 dark:text-gray-400"><?= lang('Auth.needAccount') ?>
                     <a href="<?= url_to('register') ?>" class="font-medium text-blue-600 hover:underline dark:text-blue-500"><?= lang('Auth.register') ?></a>
                 </p>
             <?php endif ?>

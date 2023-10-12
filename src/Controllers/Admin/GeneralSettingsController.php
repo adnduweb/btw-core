@@ -29,7 +29,7 @@ class GeneralSettingsController extends AdminController
      *
      * @var string
      */
-    protected $theme = 'Admin';
+    protected $theme = 'admin';
 
     protected $viewPrefix = 'Btw\Core\Views\Admin\settings\\';
 

@@ -22,9 +22,25 @@
 // }
 
 
+function alertHtmx1(string $type, string $message)
+{
+  return sprintf('<div hx-swap-oob="beforeend:#alerts-wrapper">
+        <div x-data="{show: true}" _="on load wait 2 seconds then transition opacity to 0 then remove me" class="transition delay-150 toast show pointer-events-auto relative w-full max-w-lg rounded-md border border-gray-200 dark:bg-white bg-gray-800 text-white py-4 pl-6 pr-4 shadow-lg p-5" role="alert" x-show="show" x-transition.duration.500ms aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <span  avatar avatar-xs me-2"></span>
+                <strong class="me-auto">Information</strong>
+                <button class="btn-close" type="button" data-bs-dismiss="toast" aria-label="Close"> X </button>
+            </div>
+            <div class="toast-body text-muted">%s</div>
+        </div>
+    </div>', $message);
+}
+
+
+
 function alertHtmx(string $type, string $message)
 {
-    return sprintf('<script type="module">
+  return sprintf('<script type="module">
     document.dispatchEvent(
         new CustomEvent("notify", {
           detail: {

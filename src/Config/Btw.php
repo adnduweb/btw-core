@@ -59,12 +59,12 @@ class Btw extends BaseConfig
         'fr' => [
             'name' => 'Btw.french',
             'iso_code' => 'fr',
-            'flag' => '/flags/france.svg',
+            'flag' => '/flags/FR.svg',
         ],
         'en' => [
             'name' => 'Btw.english',
             'iso_code' => 'en',
-            'flag' => 'flags/united-states.svg',
+            'flag' => 'flags/EN.svg',
         ]
     ];
 
@@ -83,6 +83,6 @@ class Btw extends BaseConfig
         'Btw\Core\Controllers\Admin\WidgetsController::chart_view_hx'
 
     ];
-    
+
     public array $cellsearch = [];
 }

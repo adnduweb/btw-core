@@ -54,12 +54,26 @@ class AssetController extends Controller
         }
 
         // If we have a fingerprint...
-        $filename = count($filename) === 3
+        $filenameNew = count($filename) === 3
             ? $filename[0] . '.' . $filename[2]
             : $origFilename;
 
+        // min
+        if (str_contains($origFilename, '.min.')) {
+            $filenameNew = count($filename) === 4
+                ? $filename[0] . '.' . $filename[1] . '.' . end($filename)
+                : $origFilename;
+        }
+
+        // min
+        if (str_contains($origFilename, '.umd.min.')) {
+            $filenameNew = count($filename) === 5
+                ? $filename[0] . '.' . $filename[1] . '.' . $filename[2] . '.' . end($filename)
+                : $origFilename;
+        }
+
         $folder = config('Assets')->folders[array_shift($segments)];
-        $path   = $folder . '/' . implode('/', $segments) . '/' . $filename;
+        $path   = $folder . '/' . implode('/', $segments) . '/' . $filenameNew;
 
         if (!is_file($path)) {
             $this->response->setStatusCode(404);

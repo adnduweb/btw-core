@@ -16,10 +16,9 @@ use Btw\Core\Entities\Company;
 use Btw\Core\Models\CompanyModel;
 use ReflectionException;
 
-
 class CompanyController extends AdminController
 {
-    protected $theme = 'Admin';
+    protected $theme = 'admin';
     protected $viewPrefix = 'Btw\Core\Views\Admin\users\\profile\\';
 
     public function __construct()

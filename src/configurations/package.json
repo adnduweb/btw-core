@@ -1,19 +1,20 @@
 {
     "name": "doudou",
     "private": true,
-    "version": "0.0.0",
+    "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "dev:admin": "vite --config vite.admin.config.js",
+        "dev:admin": "vite --c vite.admin.config.js",
         "dev:front": "vite --config vite.front.config.js",
         "build:front": "vite build --config vite.front.config.js",
-        "build:admin": "vite build --config vite.admin.config.js",
+        "build:admin": "vite build --c vite.admin.config.js",
         "dev": "npm run dev:admin && npm run dev:front",
         "build": "npm run build:front && npm run build:admin"
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.9",
         "autoprefixer": "^10.4.13",
+        "laravel-vite-plugin": "^0.8.1",
         "postcss": "^8.4.23",
         "sass": "^1.62.0",
         "select2": "^4.1.0-rc.0",
@@ -35,6 +36,7 @@
         "alpinejs": "^3.11.1",
         "aos": "^2.3.4",
         "axios": "^1.3.4",
+        "codeigniter-vite-plugin": "^0.0.5",
         "common-es": "^1.0.1",
         "daisyui": "^2.51.3",
         "datatables.net": "^1.13.4",

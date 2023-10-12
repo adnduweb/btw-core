@@ -14,11 +14,19 @@ if (!defined('asset_link')) {
      *
      * @param string $type css, js
      */
-    function asset_link(string $location, string $type): string
+    function asset_link(string $location, string $type, array $options = []): string
     {
         $url = asset($location, $type);
 
         $tag = '';
+        $defer = ' ';
+
+        if (!empty($options)) {
+            foreach ($options as $option) {
+                if ($option == 'defer')
+                    $defer = ' defer ';
+            }
+        }
 
         switch ($type) {
             case 'css':
@@ -26,10 +34,10 @@ if (!defined('asset_link')) {
                 break;
 
             case 'js':
-                $tag = "<script src='{$url}'></script>";
+                $tag = "<script{$defer}src='{$url}'></script>";
         }
 
-        return $tag;
+        return $tag  . "\n";
     }
 }
 

@@ -1,4 +1,4 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend(config('Themes')->views['layout_admin']) ?>
 
 <?= $this->section('title') ?><?= lang('Btw.Tokens') ?> <?= $this->endSection() ?>
 
@@ -25,5 +25,5 @@
 
         </div>
 
-</div>
-<?php $this->endSection() ?>
+    </div>
+    <?php $this->endSection() ?>

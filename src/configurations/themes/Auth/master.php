@@ -9,8 +9,8 @@
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <?= $viewJavascript->renderLangJson('admin/js/language/' . service('request')->getLocale() . '.json'); ?>
-    <?= vite_url('admin'); ?>
+    <?= $viewJavascript->renderLangJson('admin/js/lang/' . service('request')->getLocale() . '.json'); ?>
+    <?= vite_tags(['themes/admin/css/app.css', 'themes/admin/js/app.js'], 'admin') ?>
 
     <style>
         .htmx-indicator {
@@ -31,7 +31,7 @@
 
 <!-- hx-target="#main" hx-select="#main" hx-swap="outerHTML" -->
 
-<body hx-ext="morph, ajax-header head-support" hx-history="false" hx-indicator="#progress" class="bg-gray-100 <?= detectAgent(); ?>">
+<body hx-ext="morph, ajax-header, head-support" hx-history="false" hx-indicator="#progress" class="bg-gray-100 <?= detectAgent(); ?>">
 
     <main id="main">
         <div id="progress" class="progress">
@@ -49,10 +49,10 @@
         <?= $this->include('_notifications') ?>
 
         <?= $viewJavascript->render(); ?>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-        <script src="https://unpkg.com/hyperscript.org@0.9.8" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+        <?= asset_link('admin/js/moment.min.js', 'js') ?>
+        <?= asset_link('admin/js/moment-with-locales.min.js', 'js') ?>
+        <?= asset_link('admin/js/_hyperscript.min.js', 'js') ?>
+        <?= asset_link('admin/js/zxcvbn.js', 'js') ?>
         <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.3.x/dist/index.js"></script>
         <?= $this->renderSection('scriptsUrl') ?>
 

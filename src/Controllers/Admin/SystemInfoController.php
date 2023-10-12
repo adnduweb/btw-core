@@ -14,9 +14,9 @@ namespace Btw\Core\Controllers\Admin;
 use Btw\Core\Controllers\AdminController;
 use CodeIgniter\CodeIgniter;
 
-class SystemInfoController extends AdminController 
+class SystemInfoController extends AdminController
 {
-    protected $theme      = 'Admin';
+    protected $theme      = 'admin';
     protected $viewPrefix = 'Btw\Core\Views\Admin\\tools\\';
 
     /**

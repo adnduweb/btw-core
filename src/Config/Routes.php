@@ -12,7 +12,8 @@ $routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth'], static functio
     $routes->post('login', 'LoginController::loginActionHtmx');
     $routes->get('logout', 'LoginController::logoutAction', ['as' => 'logout']);
     $routes->get('login/magic-link', 'MagicLinkController::loginView', ['as' => 'magic-link']);
-    $routes->post('login/magic-link', 'MagicLinkController::loginAction');
+    $routes->post('login/magic-link', 'MagicLinkController::loginActionHtmx');
+    $routes->get('login/magic-link/magic-link-message', 'MagicLinkController::magicLinkMesage', ['as' => 'magic-link-message']);
     $routes->get('login/verify-magic-link', 'MagicLinkController::verify', ['as' => 'verify-magic-link']);
     $routes->get('auth/a/show', 'ActionController::show', ['as' => 'auth-action-show']);
     $routes->post('auth/a/handle', 'ActionController::handleHtmx', ['as' => 'auth-action-handle']);

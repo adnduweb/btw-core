@@ -1,4 +1,4 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend(config('Themes')->views['layout_admin']) ?>
 
 <?php $this->section('main') ?>
 
@@ -31,16 +31,16 @@
 
             <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
                 <?= form_open(route_to('general-post-settings'), [
-                    'id' => 'kt_users_form_dateandtime', 
-                    'hx-post' => route_to('general-post-settings'), 
+                    'id' => 'kt_users_form_dateandtime',
+                    'hx-post' => route_to('general-post-settings'),
                     'hx-target' => '#dateandtime',
-                    'hx-swap' => 'none', 
+                    'hx-swap' => 'none',
                     'hx-ext' => "loading-states, event-header",
-                    'novalidate' => false, 
+                    'novalidate' => false,
                     'data-loading-target' => "#loadingdateandtime",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
-               <?= '' // csrf_field() 
+                <?= '' // csrf_field() 
                 ?>
                 <input type="hidden" name="section" value="dateandtime" />
                 <?= $this->include('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime'); ?>

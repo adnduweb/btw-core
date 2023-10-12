@@ -1,8 +1,8 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend(config('Themes')->views['layout_admin']) ?>
 
 <?php $this->section('main') ?>
 
-<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' =>   lang('Btw.general.edit') . ' : ' . ucfirst($user->last_name) . ' ' . ucfirst($user->first_name) ]) ?>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' =>   lang('Btw.general.edit') . ' : ' . ucfirst($user->last_name) . ' ' . ucfirst($user->first_name)]) ?>
 
 <div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 

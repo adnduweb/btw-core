@@ -1,4 +1,4 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend(config('Themes')->views['layout_admin']) ?>
 <?= $this->section('title') ?>
 <?= lang('Btw.users.userCreate'); ?>
 <?= $this->endSection() ?>
@@ -12,7 +12,7 @@
 
     <div class="max-w-3xl mx-auto">
 
-        <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states  x-data="app()" x-init="generatePassword()">
+        <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states x-data="app()" x-init="generatePassword()">
             <?= form_open(route_to('user-only-create'), [
                 'id' => 'kt_users_form_information',
                 'hx-post' => route_to('user-only-create'),
@@ -22,7 +22,8 @@
                 'data-loading-target' => "#loadinginformation",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
-            <?= '' //csrf_field() ?>
+            <?= '' //csrf_field() 
+            ?>
             <input type="hidden" name="section" value="general" />
             <?= $this->include('Btw\Core\Views\Admin\users\only\cells\form_cell_create'); ?>
             <?= form_close(); ?>
@@ -53,11 +54,11 @@
                 this.generatePassword();
             },
             charsLength: 12,
-            checkStrength: function () {
+            checkStrength: function() {
                 if (!this.new_password) return this.passwordScore = 0;
                 this.passwordScore = zxcvbn(this.new_password).score + 1;
             },
-            generatePassword: function () {
+            generatePassword: function() {
                 console.log(document.getElementById('charsSymbols').checked);
                 var _pass = this.shuffleArray(
                     ((document.getElementById('charsLower').checked ? this.chars.lower : '') + (document.getElementById('charsUpper').checked ? this.chars.upper : '') + (document.getElementById('charsNumeric').checked ? this.chars.numeric : '') + (document.getElementById('charsSymbols').checked ? this.chars.symbols : '')).split('')

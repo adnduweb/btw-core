@@ -1,4 +1,4 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend(config('Themes')->views['layout_admin']) ?>
 
 <?= $this->section('title') ?><?= lang('Btw.Search') ?> <?= $this->endSection() ?>
 
@@ -10,8 +10,8 @@
 </x-page-head>
 
 <x-admin-box>
-    
-<?= $cells->render(); ?>
+
+    <?= $cells->render(); ?>
 
 </x-admin-box>
 <?php $this->endSection() ?>

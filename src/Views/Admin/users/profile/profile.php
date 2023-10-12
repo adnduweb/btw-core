@@ -1,4 +1,4 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend(config('Themes')->views['layout_admin']) ?>
 
 <?php $this->section('main') ?>
 
@@ -18,13 +18,13 @@
                     'hx-swap' => 'none',
                     'hx-ext' => "loading-states, event-header",
                     'novalidate' => false,
-                    'data-loading-target' => "#loadinginformation", 
+                    'data-loading-target' => "#loadinginformation",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= '' //csrf_field() 
                 ?>
                 <input type="hidden" name="section" value="general" />
-                    <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_information'); ?>
+                <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_information'); ?>
                 <?= form_close(); ?>
             </div>
 

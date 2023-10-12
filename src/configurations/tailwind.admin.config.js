@@ -1,12 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require("tailwindcss/plugin");
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 module.exports = {
-  //darkMode: 'class',
+  darkMode: 'class',
   mode: "jit",
-  content: [
-    "./app/Modules/**/*.php",
+  content: ["./app/Modules/**/*.php",
     "./themes/**/*.php",
     "./themes/**/**/*.php",
     "./themes/**/**/**/*.php",
@@ -16,69 +14,80 @@ module.exports = {
     "./vendor/adnduweb/btw-core/src/Views/*.php",
     "./vendor/adnduweb/btw-core/src/Views/**/*.php",
     "./vendor/adnduweb/btw-core/themes/**/**/*.php",
-    "./vendor/adnduweb/btw-core/themes/**/**/**/*.php",
-    "./node_modules/flowbite/**/*.js"
-  ],
+    "./vendor/adnduweb/btw-core/themes/**/**/**/*.php"],
   theme: {
+    container: {
+      center: true,
+    },
     extend: {
+      colors: {
+        primary: {
+          DEFAULT: "#4361ee",
+          light: "#eaf1ff",
+          "dark-light": "rgba(67,97,238,.15)",
+        },
+        secondary: {
+          DEFAULT: "#805dca",
+          light: "#ebe4f7",
+          "dark-light": "rgb(128 93 202 / 15%)",
+        },
+        success: {
+          DEFAULT: "#00ab55",
+          light: "#ddf5f0",
+          "dark-light": "rgba(0,171,85,.15)",
+        },
+        danger: {
+          DEFAULT: "#e7515a",
+          light: "#fff5f5",
+          "dark-light": "rgba(231,81,90,.15)",
+        },
+        warning: {
+          DEFAULT: "#e2a03f",
+          light: "#fff9ed",
+          "dark-light": "rgba(226,160,63,.15)",
+        },
+        info: {
+          DEFAULT: "#2196f3",
+          light: "#e7f7ff",
+          "dark-light": "rgba(33,150,243,.15)",
+        },
+        dark: {
+          DEFAULT: "#3b3f5c",
+          light: "#eaeaec",
+          "dark-light": "rgba(59,63,92,.15)",
+        },
+        black: {
+          DEFAULT: "#0e1726",
+          light: "#e3e4eb",
+          "dark-light": "rgba(14,23,38,.15)",
+        },
+        white: {
+          DEFAULT: "#ffffff",
+          light: "#e0e6ed",
+          dark: "#888ea8",
+        },
+      },
       fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        nunito: ["Nunito", "sans-serif"],
       },
-      minHeight: {
-        "screen-75": "75vh",
+      spacing: {
+        4.5: "18px",
       },
-      fontSize: {
-        55: "55rem",
+      boxShadow: {
+        "3xl":
+          "0 2px 2px rgb(224 230 237 / 46%), 1px 6px 7px rgb(224 230 237 / 46%)",
       },
-      opacity: {
-        80: ".8",
-      },
-      zIndex: {
-        2: 2,
-        3: 3,
-      },
-      inset: {
-        "-100": "-100%",
-        "-225-px": "-225px",
-        "-160-px": "-160px",
-        "-150-px": "-150px",
-        "-94-px": "-94px",
-        "-50-px": "-50px",
-        "-29-px": "-29px",
-        "-20-px": "-20px",
-        "25-px": "25px",
-        "40-px": "40px",
-        "95-px": "95px",
-        "145-px": "145px",
-        "195-px": "195px",
-        "210-px": "210px",
-        "260-px": "260px",
-      },
-      height: {
-        "95-px": "95px",
-        "70-px": "70px",
-        "350-px": "350px",
-        "500-px": "500px",
-        "600-px": "600px",
-      },
-      maxHeight: {
-        "860-px": "860px",
-      },
-      maxWidth: {
-        "100-px": "100px",
-        "120-px": "120px",
-        "150-px": "150px",
-        "180-px": "180px",
-        "200-px": "200px",
-        "210-px": "210px",
-        "580-px": "580px",
-      },
-      minWidth: {
-        "140-px": "140px",
-        48: "12rem",
-      },
-      backgroundSize: {
-        full: "100%",
+      typography: {
+        DEFAULT: {
+          css: {
+            h1: { fontSize: "40px" },
+            h2: { fontSize: "32px" },
+            h3: { fontSize: "28px" },
+            h4: { fontSize: "24px" },
+            h5: { fontSize: "20px" },
+            h6: { fontSize: "16px" },
+          },
+        },
       },
       keyframes: {
         buzz: {
@@ -88,10 +97,6 @@ module.exports = {
           "75%": { transform: "scale(1.01)" },
         },
       },
-      backgroundImage: {
-        'int-flag': "url('../img/flags.png')",
-        'int-flag2': "url('../img/flags-texture.png')",
-      }
     },
     animation: {
       none: "none",
@@ -103,97 +108,11 @@ module.exports = {
       "slide-in-left": "slide-in-left .3s ease-in",
       buzz: "buzz .2s ease-in-out",
     },
-    aspectRatio: {
-      auto: "auto",
-      square: "1 / 1",
-      video: "16 / 9",
-    },
-
-    colors: {
-      transparent: "transparent",
-      current: "currentColor",
-      black: colors.black,
-      green: colors.green,
-      red: colors.red,
-      white: colors.white,
-      gray: colors.gray,
-      emerald: colors.emerald,
-      indigo: colors.indigo,
-      yellow: colors.yellow,
-	  slate: colors.slate,
-      sidebar: "#222E3C",
-    },
   },
-  variants: [
-    "responsive",
-    "group-hover",
-    "focus-within",
-    "first",
-    "last",
-    "odd",
-    "even",
-    "hover",
-    "focus",
-    "active",
-    "visited",
-    "disabled",
-  ],
   plugins: [
-    //require("daisyui"),
-
-    require("flowbite/plugin"),
-
-    require("tw-elements/dist/plugin"),
-
-    // Add Tailwind Typography.
-    require("@tailwindcss/typography"),
-
-    require("@tailwindcss/forms"),
-
-    require("@tailwindcss/aspect-ratio"),
-
-    plugin(function ({ addComponents, theme }) {
-      const screens = theme("screens", {});
-      addComponents([
-        {
-          ".container": { width: "100%" },
-        },
-        {
-          [`@media (min-width: ${screens.sm})`]: {
-            ".container": {
-              "max-width": "640px",
-            },
-          },
-        },
-        {
-          [`@media (min-width: ${screens.md})`]: {
-            ".container": {
-              "max-width": "768px",
-            },
-          },
-        },
-        {
-          [`@media (min-width: ${screens.lg})`]: {
-            ".container": {
-              "max-width": "1024px",
-            },
-          },
-        },
-        {
-          [`@media (min-width: ${screens.xl})`]: {
-            ".container": {
-              "max-width": "1280px",
-            },
-          },
-        },
-        {
-          [`@media (min-width: ${screens["2xl"]})`]: {
-            ".container": {
-              "max-width": "1280px",
-            },
-          },
-        },
-      ]);
+    require("@tailwindcss/forms")({
+      strategy: "base", // only generate global styles
     }),
+    require("@tailwindcss/typography"),
   ],
 };

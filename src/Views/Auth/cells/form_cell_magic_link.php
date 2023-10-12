@@ -12,7 +12,4 @@
         <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><?= lang('Auth.useMagicLink') ?></button>
     </div>
 
-    <div class="d-grid col-8 mx-auto m-3">
-        <a href="<?= route_to('login'); ?>" type="submit" class="w-full bg-gray-700 hover:bg-gray-800 active:bg-gray-600 text-white focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><?= lang('Btw.back') ?></a>
-    </div>
 </div>

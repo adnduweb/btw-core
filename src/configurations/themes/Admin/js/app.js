@@ -1,6 +1,3 @@
-//This is you main entry file, Be creative =)
-import "../css/app.css";
-
 window.Ci4DataTables = window.Ci4DataTables || {};
 const html = document.querySelector("html");
 

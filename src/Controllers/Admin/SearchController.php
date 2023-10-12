@@ -17,7 +17,7 @@ use Btw\Core\Libraries\SearchManager;
 
 class SearchController extends AdminController
 {
-    protected $theme      = 'Admin';
+    protected $theme      = 'admin';
     protected $viewPrefix = 'Btw\Core\Views\Admin\\search\\';
 
 

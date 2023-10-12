@@ -4,6 +4,7 @@ use CodeIgniter\Config\Services;
 use Btw\Core\View\Theme;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Config\View;
+use Btw\Core\View\Vite;
 
 
 if (!function_exists('newUUID')) {
@@ -118,6 +119,48 @@ if (!function_exists('newUUID')) {
 //     }
 // }
 
+if (!function_exists('vite_tags')) {
+    function vite_tags($entryPoints, $buildDirectory = null): string
+    {
+        if (!is_array($entryPoints)) {
+            $entryPoints = [$entryPoints];
+        }
+
+        $vite = new Vite;
+
+        return $vite($entryPoints, $buildDirectory);
+    }
+}
+
+if (!function_exists('vite')) {
+    function vite(): Vite
+    {
+        $vite = new Vite();
+
+        return $vite;
+    }
+}
+
+if (!function_exists('vite_react_hmr')) {
+    function vite_react_hmr(): string
+    {
+        $vite = new Vite();
+
+        return $vite->reactRefresh();
+    }
+}
+
+
+if (!function_exists('vite_asset')) {
+    function vite_asset($asset): string
+    {
+        $vite = new Vite();
+
+        return $vite->asset($asset);
+    }
+}
+
+
 if (!function_exists('vite_url')) {
     function vite_url(string $entry = ''): ?string
     {
@@ -146,10 +189,8 @@ if (!function_exists('vite_url')) {
         }
 
         $mainEntry = explode('/', $entry)[0];
-        // print_r($mainEntry);
-        // exit;
         // $manifest = json_decode(@file_get_contents(base_url("{$mainEntry}/manifest.json")), true);
-        $link = @file_get_contents(ROOTPATH . "public/{$mainEntry}/build/manifest.json");
+        $link = @file_get_contents(ROOTPATH . "public/{$mainEntry}/manifest.json");
         $manifest = json_decode($link, true);
         if (empty($manifest)) {
             return null;
@@ -159,11 +200,11 @@ if (!function_exists('vite_url')) {
         $entryPoint = $manifest[$config->entryPoints[$entry]];
         if (!empty($entryPoint['css'])) {
             foreach ($entryPoint['css'] as $css) {
-                $styles .= sprintf('<link rel="stylesheet" href="%s">', base_url("{$mainEntry}/build/{$css}"));
+                $styles .= sprintf('<link rel="stylesheet" href="%s">', base_url("{$mainEntry}/{$css}"));
             }
         }
 
-        $scripts = sprintf('<script type="module" src="%s"></script>', base_url("{$mainEntry}/build/{$entryPoint['file']}"));
+        $scripts = sprintf('<script type="module" src="%s"></script>', base_url("{$mainEntry}/{$entryPoint['file']}"));
 
         $collectImports = function ($record, $imports) use ($manifest, &$collectImports) {
             if (isset($record['dynamicImports']) || isset($record['imports'])) {

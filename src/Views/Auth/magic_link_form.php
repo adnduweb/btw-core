@@ -10,7 +10,7 @@
 
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
-            <a href="/" class="h-10">
+            <a href="/login" class="h-10">
                 <img src="<?= base_url() . 'admin/img/logo-adn-grey.png'; ?>" alt="Adn du web" class=" h-28 w-full" />
             </a>
         </div>
@@ -49,6 +49,9 @@
                 ]); ?>
                 <input type="hidden" name="section" value="formmagiclink" />
                 <?= $this->include('Btw\Core\Views\Auth\cells\form_cell_magic_link'); ?>
+                <div class="d-grid col-8 mx-auto m-3">
+                    <a href="<?= route_to('login'); ?>" type="submit" class="w-full bg-gray-700 hover:bg-gray-800 active:bg-gray-600 text-white focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><?= lang('Btw.back') ?></a>
+                </div>
                 <?= form_close(); ?>
 
             </div>

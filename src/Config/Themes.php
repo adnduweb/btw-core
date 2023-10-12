@@ -4,6 +4,13 @@ namespace Btw\Core\Config;
 
 class Themes
 {
+
+    public array $views = [
+        'layout_admin'                      => '\Themes\admin\master',
+        'layout_app'                      => '\Themes\app\master',
+    ];
+
+
     /**
      * ---------------------------------------------------------------
      * THEME COLLECTIONS

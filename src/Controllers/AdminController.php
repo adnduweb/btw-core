@@ -15,7 +15,7 @@ class AdminController extends BaseController
      *
      * @var string
      */
-    protected $theme = 'Admin';
+    protected $theme = 'admin';
     protected $langueCurrent;
     protected $_controller;
     protected $_method;
@@ -33,7 +33,8 @@ class AdminController extends BaseController
         setlocale(LC_TIME, service('request')->getLocale() . '_' .  service('request')->getLocale());
 
         $controllerName = service('router')->controllerName();
-        $handle = explode('\\', $controllerName);$end = end($handle);
+        $handle = explode('\\', $controllerName);
+        $end = end($handle);
         $this->_controller = strtolower(str_replace('Controller', '', $end));
         $this->_method = service('router')->methodName();
     }
