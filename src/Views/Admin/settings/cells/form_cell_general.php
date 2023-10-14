@@ -14,6 +14,16 @@
             ]); ?>
         </div>
 
+        <div class="row">
+            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
+                'type' => 'text',
+                'label' => lang('Form.general.titleNameAdmin'),
+                'name' => 'titleNameAdmin',
+                'value' => old('titleNameAdmin', setting('Btw.titleNameAdmin')),
+                'description' => lang('Form.general.titleNameAdminDesc'),
+            ]); ?>
+        </div>
+
         <!-- Site Online? -->
         <div x-data="{ allow_ip: <?= old('siteOnline', setting('Site.siteOnline')) ? 'true' : 'false' ?>}">
             <div class="w-full mb-6 md:mb-0">

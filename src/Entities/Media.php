@@ -64,4 +64,11 @@ class Media extends Entity
     {
         return isset($this->attributes['titre']) ? $this->attributes['titre'] : null;
     }
+
+    public function getUrlSrcFront($size = 'image300x300')
+    {
+        return  service('storage')->getFileUrl($this->getIdentifier(), ['size' => $size]);
+    }
+
+
 }

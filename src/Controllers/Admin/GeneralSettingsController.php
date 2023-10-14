@@ -21,7 +21,6 @@ use Btw\Core\Libraries\Menus\MenuItem;
  */
 class GeneralSettingsController extends AdminController
 {
-
     use ResponseTrait;
 
     /**
@@ -119,6 +118,7 @@ class GeneralSettingsController extends AdminController
                 }
 
                 setting('Site.siteName', $data['siteName']);
+                setting('Btw.titleNameAdmin', $data['titleNameAdmin']);
                 setting('Site.siteOnline', $data['siteOnline'] ?? 0);
                 setting('Site.ipAllowed', trim($data['ipAllowed']) ?? '');
                 setting('Site.activeMultilangue', $data['activeMultilangue'] ?? 0);
@@ -270,7 +270,8 @@ class GeneralSettingsController extends AdminController
                         'groups' => setting('AuthGroups.groups'),
                         'defaultGroup' => setting('AuthGroups.defaultGroup'),
                         'validation' => $validation
-                    ]);;
+                    ]);
+                    ;
                 }
 
                 setting('Auth.allowRegistration', $data['allowRegistration'] ?? false);
@@ -354,7 +355,8 @@ class GeneralSettingsController extends AdminController
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.settings')])]);
             return view('Btw\Core\Views\Admin\users\form_cell_password', [
                 'validation' => $validation
-            ]);;
+            ]);
+            ;
         }
 
         setting('Auth.minimumPasswordLength', (int) $data['minimumPasswordLength']);

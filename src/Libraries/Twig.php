@@ -52,16 +52,7 @@ class Twig
      *
      * @see https://twig.symfony.com/doc/3.x/advanced.html#automatic-escaping
      */
-    private array $functions_safe = [
-        'form_open',
-        'form_close',
-        'form_error',
-        'form_hidden',
-        'set_value',
-        'csrf_field',
-        // 'form_open_multipart', 'form_upload', 'form_submit', 'form_dropdown',
-        // 'set_radio', 'set_select', 'set_checkbox',
-    ];
+    private array $functions_safe = [];
 
     /**
      * @var bool Whether functions are added or not
@@ -90,9 +81,9 @@ class Twig
         }
 
         if (isset($params['functions_safe'])) {
-            $this->functions_safe = array_unique(
+            config('Btw')->functionsTwig = array_unique(
                 array_merge(
-                    $this->functions_safe,
+                    config('Btw')->functionsTwig,
                     $params['functions_safe']
                 )
             );
@@ -181,7 +172,7 @@ class Twig
     {
         $viewMeta         = service('viewMeta');
         $params['viewMeta'] = $viewMeta;
-        
+
         echo $this->render($view, $params);
     }
 
@@ -244,7 +235,7 @@ class Twig
         }
 
         // safe functions
-        foreach ($this->functions_safe as $function) {
+        foreach (config('Btw')->functionsTwig as $function) {
             if (function_exists($function)) {
                 $this->twig->addFunction(
                     new TwigFunction(
@@ -264,7 +255,7 @@ class Twig
 
     protected function addCustomizedFunctions()
     {
-        $functions = array_merge($this->functions_asis, $this->functions_safe);
+        $functions = array_merge($this->functions_asis, config('Btw')->functionsTwig);
 
         if (!in_array('anchor', $functions, true) && function_exists('anchor')) {
             $this->twig->addFunction(

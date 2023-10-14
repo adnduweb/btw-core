@@ -151,13 +151,13 @@ class MenuCollection extends MenuItem
         return $this->items;
     }
 
-     /**
-     * Returns all items in the Collection,
-     * sorted by weight, where larger weights
-     * make them fall to the bottom.
-     *
-     * @return array
-     */
+    /**
+    * Returns all items in the Collection,
+    * sorted by weight, where larger weights
+    * make them fall to the bottom.
+    *
+    * @return array
+    */
     public function itemschild()
     {
         $this->sortItemsChild();

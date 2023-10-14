@@ -127,8 +127,9 @@ class MenuChildItem
      */
     public function setNamedRoute($alias)
     {
-        if (!is_array($alias))
+        if (!is_array($alias)) {
             $alias = [$alias];
+        }
 
         $this->url = (isset($alias[1]) && !empty($alias[1])) ? route_to($alias[0], $alias[1]) : route_to($alias[0]);
 

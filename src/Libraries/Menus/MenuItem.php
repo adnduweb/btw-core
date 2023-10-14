@@ -99,17 +99,25 @@ class MenuItem
 
         return $this;
     }
-     /**
-     * @return $this
-     */
-    public function setItemschild(MenuChildItem $itemschild)
+    /**
+    * @return $this
+    */
+    public function setItemschild($itemschild)
     {
-        $this->itemschild[] = $itemschild;
+        if (!is_array($itemschild)) {
+            return;
+        }
+        $itemschildNew = [];
+        foreach ($itemschild as $value) {
+            $itemschildNew[] = new MenuChildItem($value);
+        }
+
+        $this->itemschild = $itemschildNew;
 
         return $this;
     }
 
-    
+
 
     /**
      * @return $this
@@ -162,8 +170,9 @@ class MenuItem
      */
     public function setNamedRoute($alias)
     {
-        if (!is_array($alias))
+        if (!is_array($alias)) {
             $alias = [$alias];
+        }
 
         $this->url = (isset($alias[1]) && !empty($alias[1])) ? route_to($alias[0], $alias[1]) : route_to($alias[0]);
 
@@ -296,7 +305,7 @@ class MenuItem
         return $this->itemschild;
     }
 
-    
+
 
     /**
      * @return string

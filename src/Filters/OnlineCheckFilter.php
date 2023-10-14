@@ -31,6 +31,10 @@ class OnlineCheckFilter implements FilterInterface
     {
         helper(['setting', 'auth']);
 
+        if(str_contains($request->getPath(), 'assets/')){
+            return true;
+        }
+
         if (setting('Site.siteOnline') == false) {
 
             $user = auth()->user();

@@ -13,7 +13,6 @@
                         'name' => 'timezoneArea',
                         'options' => $timezones,
                         'selected' => $currentTZArea,
-                        'byKey' => true,
                         'hxGet' => "/" . ADMIN_AREA . "/settings/timezones",
                         'hxTarget' => "#timezone",
                         'hxInclude' => "[name='timezoneArea']",
@@ -45,7 +44,7 @@
                 <label for="timezone" class="block text-sm font-medium text-gray-700 mt-px pt-2 dark:text-gray-300">Date &amp; Time Format</label>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">
-                    <?= view_cell('Btw\Core\Cells\Forms\RadioCell::renderList', ['label' =>lang('Form.time.mm/dd/yyyy'), 'name' => 'dateFormat', 'value' => 'm/d/Y', 'checked' => (old('dateFormat', $dateFormat) === 'm/d/Y')]); ?>
+                    <?= view_cell('Btw\Core\Cells\Forms\RadioCell::renderList', ['label' => lang('Form.time.mm/dd/yyyy'), 'name' => 'dateFormat', 'value' => 'm/d/Y', 'checked' => (old('dateFormat', $dateFormat) === 'm/d/Y')]); ?>
                 </div>
 
                 <div class="form-check ml-4 mb-2 mt-2 ">

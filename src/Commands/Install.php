@@ -73,7 +73,7 @@ class Install extends BaseCommand
         // 'Btw\Core\Assets\Config\Assets',
         //'Btw\Core\Config\Auth',
         //'Btw\Core\Config\AuthGroups',
-        // 'Btw\Core\Config\Btw',
+        'Btw\Core\Config\Btw',
         //'Btw\Core\Config\Site',
         //'Btw\Core\Config\Themes',
         //'Btw\Core\Consent\Config\Consent',
@@ -349,7 +349,7 @@ class Install extends BaseCommand
 
     /**
      * Set vite configs in .env file
-     * 
+     *
      * @return void
      */
     private function updateEnvFileVite()

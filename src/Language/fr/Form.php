@@ -70,6 +70,8 @@ return [
         'MailIsOnlyAvailableOnLinuxServers' => "Mail n'est disponible que sur les serveurs Linux. Il n'y a pas d'options",
         'Force2FACheckAfterLogin' => "Forcer le contrôle 2FA après la connexion",
         'Force2FACheckAfterLoginDesc' => "Si la case est cochée, un code sera envoyé par courrier électronique pour confirmation.",
+        "activeMultilangue" => 'Activer le multi-langue',
+        "activeMultilangueDescription" => 'Cela va ajouter dans les urls les langue fr, en, ou autres '
     ],
     'general' => [
         'title' => 'Titre',
@@ -112,7 +114,9 @@ return [
         'firstname' => 'Prénom',
         'listCurrencies'  => "Liste des devises",
         'selectCurrencies'  => "Sélectionner votre devise des devises",
-        'addElement' => 'Ajouter un élément'
+        'addElement' => 'Ajouter un élément',
+        'titleNameAdmin' => "Nom de l'application",
+        "titleNameAdminDesc" => "Apparaît dans la sidebar de l'administration."
 
     ],
     'address' => [

@@ -60,9 +60,9 @@ class Assets extends BaseConfig
      * This should make up the first segment of an asset URL.
      */
     public $folders = [
-        'app'   => __DIR__ . '/../../../../../themes/App',
-        'admin' => __DIR__ . '/../../../../../themes/Admin',
-        'auth'  => __DIR__ . '/../../../../../themes/Auth',
+        'app'   => __DIR__ . '/../../../../../themes/app',
+        'admin' => __DIR__ . '/../../../../../themes/admin',
+        'auth'  => __DIR__ . '/../../../../../themes/auth',
         'other' => VENDORPATH,
     ];
 }

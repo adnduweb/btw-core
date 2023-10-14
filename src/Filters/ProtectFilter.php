@@ -46,7 +46,7 @@ class ProtectFilter implements FilterInterface
 
             // If an action has been defined for login, start it up.
             if ($authenticator->hasAction()) {
-                if (!in_array('/' . $request->getPath(), [route_to('auth-action-show'), route_to('auth-action-handle'), route_to('auth-action-verify')])) {
+                if (!in_array('/' . $request->getPath(), [route_to('auth-action-show'), route_to('auth-action-handle'), route_to('auth-action-verify')]) && str_contains($request->getPath(), 'assets/')) {
                     return redirect()->route('auth-action-show')->withCookies();
                 }
             }

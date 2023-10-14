@@ -85,4 +85,23 @@ class Btw extends BaseConfig
     ];
 
     public array $cellsearch = [];
+
+    public $debugTwig = true;
+
+    public $functionsTwig = [
+        'dd',
+        'form_open',
+        'form_close',
+        'form_error',
+        'form_hidden',
+        'set_value',
+        'csrf_field',
+        'asset_link',
+        'theme_link',
+        'setting',
+        'form',
+        'vite_tags',
+        'csrf_meta',
+        'current_url'
+    ];
 }
