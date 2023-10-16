@@ -22,7 +22,8 @@ class MagicLinkController extends ShieldMagicLinkController
     public function __construct()
     {
         parent::__construct();
-
+        
+        service('viewMeta')->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
         $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }

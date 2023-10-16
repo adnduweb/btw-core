@@ -119,6 +119,7 @@ class GeneralSettingsController extends AdminController
 
                 setting('Site.siteName', $data['siteName']);
                 setting('Btw.titleNameAdmin', $data['titleNameAdmin']);
+                setting('Site.BreadcrumbStart', $data['BreadcrumbStart']);
                 setting('Site.siteOnline', $data['siteOnline'] ?? 0);
                 setting('Site.ipAllowed', trim($data['ipAllowed']) ?? '');
                 setting('Site.activeMultilangue', $data['activeMultilangue'] ?? 0);

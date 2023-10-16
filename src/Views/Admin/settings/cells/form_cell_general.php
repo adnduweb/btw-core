@@ -44,17 +44,16 @@
 
             <div x-show="allow_ip == false" class="w-full mt-6 mb-6 md:mb-0">
                 <?php echo view_cell('Btw\Core\Cells\Forms\TextAreaCell::renderList', [
-                    'label' => lang('Btw.IpAllowed'),
+                    'label' => lang('Form.general.IpAllowed'),
                     'name' =>  'ipAllowed',
                     'value' => (old('siteOnline', setting('Site.ipAllowed') ?? false)),
-                    'description' => lang('Form.general.IpAllowed'),
+                    'description' => lang('Form.general.IpAllowedDesc'),
                 ]); ?>
                 <div id="ipAllowedResult"></div>
             </div>
         </div>
 
         <div class="row mb-3">
-
             <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                 'label' => lang('Form.settings.activeMultilangue'),
                 'name' => 'activeMultilangue',
@@ -62,7 +61,16 @@
                 'checked' => (old('activeMultilangue', setting('Site.activeMultilangue') ?? false)),
                 'description' => lang('Form.settings.activeMultilangueDescription'),
             ]); ?>
+        </div>
 
+        <div class="row">
+            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
+                'type' => 'text',
+                'label' => lang('Form.general.BreadcrumbStart'),
+                'name' => 'BreadcrumbStart',
+                'value' => old('BreadcrumbStart', setting('Site.BreadcrumbStart')),
+                'description' => lang('Form.general.BreadcrumbStartDesc'),
+            ]); ?>
         </div>
 
     </div>

@@ -90,6 +90,7 @@ class Btw extends BaseConfig
 
     public $functionsTwig = [
         'dd',
+        'service',
         'form_open',
         'form_close',
         'form_error',

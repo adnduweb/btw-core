@@ -1,54 +1,57 @@
-<header class="w-full h-16 bg-indigo-600 drop-shadow-lg">
-	<div
-		class="container px-4 md:px-0 h-full mx-auto flex justify-between items-center">
-		<!-- Logo Here -->
-		<a class="text-yellow-400 text-xl font-bold italic" href="https://www.kindacode.com">KINDA<span class="text-white">CODE</span>
-		</a>
-
-		<!-- Menu links here -->
-		<ul id="menu" class="hidden fixed top-0 right-0 px-10 py-16 bg-gray-800 z-50
-																										                md:relative md:flex md:p-0 md:bg-transparent md:flex-row md:space-x-6">
-
-			<li class="md:hidden z-90 fixed top-4 right-6">
-				<a href="javascript:void(0)" class="text-right text-white text-4xl" onclick="toggleMenu()">&times;</a>
-			</li>
-
+<div class="navbar bg-base-100 mb-48 shadow-xl rounded-box justify-between">
+	<div class="navbar-start">
+		<div class="dropdown">
+			<label tabindex="0" class="btn btn-ghost lg:hidden">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path>
+				</svg>
+			</label>
+			<ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+				<li>
+					<a>Item 1</a>
+				</li>
+				<li>
+					<a>Parent</a>
+					<ul class="p-2 bg-base-100 absolute">
+						<li>
+							<a>Submenu 1</a>
+						</li>
+						<li>
+							<a>Submenu 2</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a>Item 3</a>
+				</li>
+			</ul>
+		</div>
+		<a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+	</div>
+	<div class="navbar-center hidden lg:flex">
+		<ul class="menu menu-horizontal px-1  flex flex-row ">
 			<li>
-				<a class="text-white opacity-70 hover:opacity-100 duration-300" href="#">Home</a>
+				<a>Item 1</a>
 			</li>
 			<li>
-				<a class="text-white opacity-70 hover:opacity-100 duration-300" href="#">Something</a>
+				<details>
+					<summary>Parent</summary>
+					<ul class="p-2 bg-base-100 absolute z-50">
+						<li>
+							<a>Submenu 1</a>
+						</li>
+						<li>
+							<a>Submenu 2</a>
+						</li>
+					</ul>
+				</details>
 			</li>
 			<li>
-				<a class="text-white opacity-70 hover:opacity-100 duration-300" href="#">Forums</a>
-			</li>
-
-			<li>
-				<a class="text-white opacity-70 hover:opacity-100 duration-300" href="#">About</a>
-			</li>
-			<li>
-				<a class="text-white opacity-70 hover:opacity-100 duration-300" href="#">Contact</a>
+				<a>Item 3</a>
 			</li>
 		</ul>
-
-		<!-- This is used to open the menu on mobile devices -->
-		<div class="flex items-center md:hidden">
-			<button class="text-white text-4xl font-bold opacity-70 hover:opacity-100 duration-300" onclick="toggleMenu()">
-				&#9776;
-			</button>
-		</div>
 	</div>
-
-</header>
-
-
-{% block script %}
-	<script>
-		var menu = document.getElementById('menu');
-function toggleMenu() {
-menu.classList.toggle('hidden');
-menu.classList.toggle('w-full');
-menu.classList.toggle('h-screen');
-}
-	</script>
-{% endblock %}
+	<div class="navbar-end">
+		<a class="btn">Button</a>
+	</div>
+</div>

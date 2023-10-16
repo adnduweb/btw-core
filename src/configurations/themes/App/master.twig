@@ -1,16 +1,17 @@
 <!doctype html>
-<html lang="en" data-theme="cupcake" class="scroll-smooth light no-touch">
+<html lang="{{ service('language').getLocale()|raw }}" data-theme="cupcake" class="scroll-smooth light no-touch">
 
 	<head>
 		{{ viewMeta.render('title')|raw }}
 		<link rel="canonical" href="{{ current_url()}}"/>
-		{{ viewMeta.render('meta')|raw }}
 		{{ csrf_meta()|raw }}
+		{{ viewMeta.render('meta')|raw }}
 		{# {{ asset_link('app/css/app.css', 'css')|raw }} #}
 		{% block styles %}{% endblock %}
-		{{  vite_url('front')|raw  }}
+		{{  vite_tags(['themes/app/css/app.css', 'themes/app/js/app.js'], 'front')|raw  }}
+		{% include '_partials/schema.twig' ignore missing %}
 	</head>
-
+	
 	<body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 {{ class }}">
 
 		{% include '_partials/header/header-2.twig' ignore missing %}
@@ -23,7 +24,7 @@
 
 
 			{# {{ asset_link('app/js/feather.js', 'js')|raw }}
-																																																	{{ asset_link('app/js/app.js', 'js')|raw }} #}
-			{% block script %}{% endblock %}
+																																																										{{ asset_link('app/js/app.js', 'js')|raw }} #}
+			{% block script %}{% endblock %}     
 		</body>
 	</html>

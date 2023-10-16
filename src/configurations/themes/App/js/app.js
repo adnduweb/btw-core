@@ -3,16 +3,8 @@ import "../css/app.css";
 
 // Jquery
 import $ from "jquery";
-import intlTelInput from "intl-tel-input";
-import "flowbite"; // Flowbite
-import "flowbite-datepicker"; // Flowbite
 import Swal from "sweetalert2/dist/sweetalert2.js";
-import Sortable from "sortablejs";
 import axios from "axios";
-import select2 from 'select2';
-import daterangepicker from "daterangepicker";
-import EasyMDE from "easymde";
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Alpine from "alpinejs";
 import persist from "@alpinejs/persist";
 import focus from "@alpinejs/focus";
@@ -21,28 +13,14 @@ import Clipboard from "@ryangjchandler/alpine-clipboard";
 import Tooltip from "@ryangjchandler/alpine-tooltip";
 import collapse from "@alpinejs/collapse";
 import mask from "@alpinejs/mask";
-import Datatable from "datatables.net";
-import "datatables.net-responsive";
-import * as echarts from "echarts";
-import Dropzone from "dropzone";
 import * as htmx from "htmx.org";
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 
 window.jQuery = window.$ = $;
-window.intlTelInput = intlTelInput;
 window.Swal = Swal;
-window.Sortable = Sortable;
 window.axios = axios;
-select2();
-window.select2 = select2;
-window.daterangepicker = daterangepicker;
-window.EasyMDE = EasyMDE;
-window.ClassicEditor = ClassicEditor;
 window.Alpine = Alpine; // console.log(Alpine.version);
-window.datatable = Datatable;
-window.echarts = echarts;
-window.dropzone = Dropzone;
 window.htmx = htmx;
 AOS.init({
     disable: window.innerWidth < 768,

@@ -116,7 +116,12 @@ return [
         'selectCurrencies'  => "Sélectionner votre devise des devises",
         'addElement' => 'Ajouter un élément',
         'titleNameAdmin' => "Nom de l'application",
-        "titleNameAdminDesc" => "Apparaît dans la sidebar de l'administration."
+        "titleNameAdminDesc" => "Apparaît dans la sidebar de l'administration.",
+        'IpAllowed' => "Liste des IP autorisées",
+        'IpAllowedDesc' => "Mettez votra adresse ou les adresse ip que voulez pour accéder au site en développement",
+        'BreadcrumbStart' => "Nom de fil d'ariane de départ",
+        'BreadcrumbStartDesc' => "Ce nom sera repris dans le fil d'ariane et également dans les richs snippets", 
+        "addMediaModal" => "Ajouter un média"
 
     ],
     'address' => [

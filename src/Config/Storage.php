@@ -131,4 +131,9 @@ class Storage extends BaseConfig
     public $cwebp = [
         'path' => '/usr/local/bin/cwebp',
     ];
+
+    public string $titleNameAdmin = 'Btw le meilleur';
+
+    public string $BreadcrumbStart = 'Artisan';
+
 }

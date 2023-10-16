@@ -1,0 +1,65 @@
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "ImageObject",
+				"@id": "{{ current_url(true)|raw }}#primaryimage",
+				"inLanguage": "{{ service('language').getLocale()|raw }}-{{ service('language').getLocale()|raw|upper }}",
+				"url": "https://www.etienne-services.fr/assets/img/medias/etienne-services.png",
+				"width": 669,
+				"height": 873
+			}
+		]
+	}
+</script>
+
+
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "WebPage",
+				"@id": "{{ current_url(true)|raw }}#webpage",
+				"url": "{{ current_url(true)|raw }}",
+				"name": "{{setting('Site.siteName')|raw }}",
+				"speakable": {
+					"@type": "SpeakableSpecification",
+					"xpath": ["/html/head/title", "/html/head/meta[@name='description']/@content"]
+				},
+				"inLanguage": "fr-FR",
+				"primaryImageOfPage": {
+					"@id": "{{ current_url(true)|raw }}#primaryimage"
+				},
+				"datePublished": "{{page.created_at}}",
+				"dateModified": "{{page.updated_at}}",
+				"description": "{{page.meta_description}}",
+				"potentialAction": [
+					{
+						"@type": "ReadAction",
+						"target": ["{{ current_url(true)|raw }}"]
+					}
+				]
+			}
+		]
+	}
+</script>
+
+<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@graph": {
+				"@context": "https://schema.org",
+				"@type": "BreadcrumbList",
+				"itemListElement": [
+					{
+						"@type": "ListItem",
+						"position": 1,
+						"name": "{{setting('Site.BreadcrumbStart')|raw }}",
+						"item": "{{ current_url(true)|raw }}"
+					}
+				]
+			}
+		}
+	</script>

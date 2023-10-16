@@ -15,6 +15,8 @@ class LoginController extends ShieldLogin
 
     public function __construct()
     {
+
+        service('viewMeta')->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
         $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }

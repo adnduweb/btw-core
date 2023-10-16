@@ -42,6 +42,7 @@ class RegisterController extends ShieldRegister
 
     public function __construct()
     {
+        service('viewMeta')->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
         $this->theme = 'Auth';
         helper(['auth', 'form', 'alertHtmx']);
     }
