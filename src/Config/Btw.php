@@ -105,4 +105,6 @@ class Btw extends BaseConfig
         'csrf_meta',
         'current_url'
     ];
+
+    public string $titleNameAdmin = 'Btw le meilleur';
 }

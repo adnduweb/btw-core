@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Btw\Core\Config;
-
 
 use Btw\Core\Libraries\Storage\Drivers\LocalDisk;
 use Btw\Core\Libraries\Storage\Drivers\PublicDisk;
@@ -11,7 +9,6 @@ use CodeIgniter\Config\BaseConfig;
 
 class Storage extends BaseConfig
 {
-
     /*
     |--------------------------------------------------------------------------
     | Default Quality
@@ -131,9 +128,4 @@ class Storage extends BaseConfig
     public $cwebp = [
         'path' => '/usr/local/bin/cwebp',
     ];
-
-    public string $titleNameAdmin = 'Btw le meilleur';
-
-    public string $BreadcrumbStart = 'Artisan';
-
 }

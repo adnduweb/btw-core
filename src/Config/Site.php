@@ -60,4 +60,7 @@ class Site extends BaseConfig
      * List address IP
      */
     public $activeMultilangue = false;
+
+    public string $BreadcrumbStart = 'Artisan';
+
 }
