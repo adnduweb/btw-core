@@ -21,7 +21,7 @@ class ShieldOAuth
     public static function setOAuth(string $serviceName): object
     {
         $serviceName = ucfirst($serviceName);
-        $className   = '\Btw\Core\Libraries\Oauth\\' . $serviceName . 'OAuth';
+        $className = '\Btw\Core\Libraries\Oauth\\' . $serviceName . 'OAuth';
 
         // For to detect custom OAuth
         if (file_exists(APPPATH . 'Libraries/ShieldOAuth' . DIRECTORY_SEPARATOR . $serviceName . 'OAuth.php')) {
@@ -71,7 +71,7 @@ class ShieldOAuth
     public function makeOAuthButton(string $forPage = 'login'): string
     {
         $Button = '';
-        $current = (string)current_url(true);
+        $current = (string) current_url(true);
 
         $active_by = lang('ShieldOAuthLang.login_by');
         if ($forPage === 'register') {
@@ -79,21 +79,18 @@ class ShieldOAuth
         }
 
         //On regarde si on est autorisé à se connecter Login en Oauth
-        if (in_array((string)$current, [route_to('login')])) {
+        if (in_array('/' . request()->getPath(), [route_to('login')])) {
             if (service('settings')->get('ShieldOAuthConfig.allow_login') == false) {
                 return $Button;
             }
         }
 
-
         //On regarde si on est autorisé à se connecter register en Oauth
-        if (in_array((string)$current, [route_to('register')])) {
+        if (in_array('/' . request()->getPath(), [route_to('register')])) {
             if (service('settings')->get('ShieldOAuthConfig.allow_register') == false) {
                 return $Button;
             }
         }
-
-        // $googleOauth = servicse('settings')->set()->set('ShieldOAuthConfig.google-allow_login');
 
         $Button = "<div class='mt-6 grid grid-cols-3 items-center text-gray-400'>
             <hr class='border-gray-400'>
@@ -102,7 +99,7 @@ class ShieldOAuth
         </div>
         <div class='text-center'>
                  <div class='btn-group' role='group' aria-label='Button group with nested dropdown'>
-                 <a hx-boost='false' href='#' class='btn btn-primary active' aria-current='page'>" . $active_by . '</a>';
+                 <p class='text-sm font-light text-gray-500 dark:text-gray-400'>" . $active_by . '</p>';
         if (service('settings')->get('ShieldOAuthConfig.allow_login_google') == true) {
             $Button .= '<a hx-boost="false" href=' . base_url('oauth/google') . " class='bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]' aria-current='page'>
         <svg class='mr-3' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='25px'>

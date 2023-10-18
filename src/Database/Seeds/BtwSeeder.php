@@ -35,6 +35,10 @@ class BtwSeeder extends Seeder
         //Storage
         service('settings')->set('Storage.sizeImg', config('Storage')->sizeImg);
 
+        // OAUTH
+        service('settings')->set('ShieldOAuthConfig.allow_login', false);
+        service('settings')->set('ShieldOAuthConfig.allow_register', false);
+
         //Update themes
         $this->publishThemes();
     }

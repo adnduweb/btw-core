@@ -149,7 +149,8 @@ return [
     'back' => 'Retour',
     'InfomationPage' => 'Information sur la page',
     'intitulePage' => 'titre',
-    // 'general' => 'Général', 
+    // 'general' => 'Général',
     'construction' => 'Construction',
-    'errorField' => 'Un ou plusieurs champs sont requis'
+    'errorField' => 'Un ou plusieurs champs sont requis',
+    'inserer' => 'Ajouter'
 ];
