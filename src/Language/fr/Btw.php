@@ -24,6 +24,7 @@ return [
         'listAllAdressCustomer' => 'Retrouvez toutes les adresses de ce client',
         'listContact' => "Liste des contacts",
         'listAllContactCustomer' => 'Retrouvez tous les contacts de ce client',
+        'listInfosTech' => 'Informations techniques'
     ],
     'general' => [
         'settings' => 'réglages',
@@ -92,6 +93,9 @@ return [
         'accesWeb' => 'Accès Web'
     ],
 
+    'types' => [
+        'attrGeneral' => 'Général',
+    ],
 
     'intitulecustomer'     => 'Modification client',
     'resourceNotFound'     => 'Unable to find the {0}.',
@@ -152,5 +156,16 @@ return [
     // 'general' => 'Général',
     'construction' => 'Construction',
     'errorField' => 'Un ou plusieurs champs sont requis',
-    'inserer' => 'Ajouter'
+    'inserer' => 'Ajouter',
+    'AddInfosTechniques' => "Ajouter une information",
+    'deleteAll' => 'Tout supprimer',
+    'InsertData' => 'Insérer une donnée',
+    "deleteDatatable" => 'Oui, je veux supprimer',
+    "cancelDatatable" => "Non, annuler",
+    "notDeletedDatatable" => " n'a pas été supprimer",
+    "okFinalDatatable" => 'Ok',
+    'link' => 'Lien',
+    'welcomeUser' => 'Bienvenue dans votre administration',
+    'accedeData' => 'Accéder aux données',
+    'sendData' => 'Demande Validation',
 ];
