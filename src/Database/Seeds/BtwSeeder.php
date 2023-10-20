@@ -39,6 +39,10 @@ class BtwSeeder extends Seeder
         service('settings')->set('ShieldOAuthConfig.allow_login', false);
         service('settings')->set('ShieldOAuthConfig.allow_register', false);
 
+        //Company
+        service('settings')->set('Btw.seuilMEArtisans', '36800');
+        service('settings')->set('Btw.seuilMECommercants', '91900');
+
         //Update themes
         $this->publishThemes();
     }

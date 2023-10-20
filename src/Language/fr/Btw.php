@@ -168,4 +168,6 @@ return [
     'welcomeUser' => 'Bienvenue dans votre administration',
     'accedeData' => 'Accéder aux données',
     'sendData' => 'Demande Validation',
+    'attention' => 'Attention',
+    'depaseTotalSeuilTVAME' => 'Si vous dépassez le seuil de franchise de TVA pour les micro entrprise, vous devez activer la TVA ci dessous avec la date d\'enregistrement',
 ];

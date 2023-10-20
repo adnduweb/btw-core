@@ -17,12 +17,12 @@ use Btw\Core\Entities\User;
 use Btw\Core\Models\UserModel;
 use Btw\Core\Entities\Company;
 use Btw\Core\Models\CompanyModel;
+use Btw\Core\Models\CurrencyModel;
 use CodeIgniter\Shield\Models\LoginModel;
 use Btw\Core\Models\SessionModel;
 use CodeIgniter\Shield\Models\UserIdentityModel;
 use ReflectionException;
 use Btw\Core\Libraries\WebSocket;
-
 
 class ProfileController extends AdminController
 {
@@ -180,8 +180,9 @@ class ProfileController extends AdminController
                 }
 
 
-                if (!is_array($data['currentGroup']))
+                if (!is_array($data['currentGroup'])) {
                     $data['currentGroup'] = [$data['currentGroup']];
+                }
 
                 // Save the user's groups
                 $user->syncGroups(...($data['currentGroup'] ?? []));
@@ -305,8 +306,9 @@ class ProfileController extends AdminController
 
         $data = $this->request->getPost();
 
-        if (isset($data['permissions']) && !is_array($data['permissions']))
+        if (isset($data['permissions']) && !is_array($data['permissions'])) {
             $data['permissions'] = [$data['permissions']];
+        }
 
         $user->syncPermissions(...($data['permissions'] ?? []));
 
@@ -390,13 +392,14 @@ class ProfileController extends AdminController
             ]);
         }
 
-        //On vérifie que le mote d epasse en cours est connu 
+        //On vérifie que le mote d epasse en cours est connu
         $validCreds = auth()->check(['password' => $data['current_password'], 'email' => $user->email]);
         if (!$validCreds->isOK()) {
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');;
+            ]) . alertHtmx('danger', 'Erreur de mot de passe en cours.');
+            ;
         }
 
 
@@ -466,12 +469,14 @@ class ProfileController extends AdminController
         }
 
         $company = $companies->find(Auth()->user()->company_id);
+        $allCurrencies = model(CurrencyModel::class)->asArray()->select('id, name as nameoption')->withDeleted()->findAll();
 
         if (!$this->request->is('post')) {
 
             return $this->render($this->viewPrefix . 'profile_company', [
                 'user' => $user,
                 'company' => $company,
+                'currencies' => $allCurrencies,
                 'menu' => service('menus')->menu('sidebar_user_profile'),
                 'currentUrl' => (string)current_url(true)
             ]);
@@ -500,6 +505,7 @@ class ProfileController extends AdminController
                 $this->response->setReswap('innerHTML show:#general:top');
                 return view($this->viewPrefix . 'cells\form_cell_company', [
                     'user' => $user,
+                    'currencies' => $allCurrencies,
                     'company' => $company,
                 ]);
             }
@@ -524,6 +530,7 @@ class ProfileController extends AdminController
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
         return view($this->viewPrefix . 'cells\form_cell_company', [
             'user' => $user,
+            'currencies' => $allCurrencies,
             'company' => $company,
         ]);
     }

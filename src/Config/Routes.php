@@ -44,6 +44,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'settings/avatar', 'GeneralSettingsController::sectionAvatar', ['as' => 'settings-avatar']);
     $routes->match(['get', 'post'], 'settings/email', 'GeneralSettingsController::sectionEmail', ['as' => 'settings-email']);
     $routes->match(['get', 'post'], 'settings/oauth', 'GeneralSettingsController::sectionOauth', ['as' => 'settings-oauth']);
+    $routes->match(['get', 'post'], 'settings/company', 'GeneralSettingsController::sectionCommpany', ['as' => 'settings-company']);
 
     // Manage Users
     $routes->get('users', 'UsersController::index', ['as' => 'user-list']);

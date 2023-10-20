@@ -30,6 +30,7 @@ class CompanySeeder extends Seeder
             'code_company' => 'company_' . passwdGen(8),
             'country' => 'FR',
             'state' => '',
+            'currency_code' => 3,
             'company' => $faker->userName,
             'lastname' => $faker->lastName,
             'firstname' => $faker->firstNameMale,

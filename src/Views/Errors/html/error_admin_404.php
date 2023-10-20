@@ -3,6 +3,8 @@
 use Config\Services;
 use CodeIgniter\CodeIgniter;
 
+helper('assets');
+
 $errorId = uniqid('error', true);
 ?>
 <!DOCTYPE html>
@@ -11,10 +13,11 @@ $errorId = uniqid('error', true);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <?= csrf_meta() ?>
     <title>Forbidden</title>
-
-    <?= vite_url('admin'); ?>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <?= service('viewJavascript')->renderLangJson('admin/js/lang/' . service('request')->getLocale() . '.json'); ?>
+    <?= vite_tags(['themes/admin/css/app.css', 'themes/admin/js/app.js'], 'admin') ?>
 </head>
 
 <body class="antialiased">
@@ -42,7 +45,11 @@ $errorId = uniqid('error', true);
                         <!-- Header -->
                         <div class="header">
                             <div class="container">
-                                <h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
+                                
+                                <h1>
+                                    <?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?>
+                                </h1>
+
                                 <p>
                                     <?= nl2br(esc($exception->getMessage())) ?>
                                     <a href="https://www.duckduckgo.com/?q=<?= urlencode($title . ' ' . preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>" rel="noreferrer" target="_blank">search &rarr;</a>
@@ -77,6 +84,11 @@ $errorId = uniqid('error', true);
             </div>
         <?php endif ?>
     </div>
+
+    <?= service('viewJavascript')->render(); ?>
+    <?= asset_link('admin/js/moment.min.js', 'js') ?>
+    <?= asset_link('admin/js/moment-with-locales.min.js', 'js') ?>
+
 </body>
 
 </html>

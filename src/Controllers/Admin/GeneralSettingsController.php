@@ -487,7 +487,7 @@ class GeneralSettingsController extends AdminController
 
 
     /**
-     * Displays the site's passwords settings.
+     * Displays the site's Oauth settings.
      */
     public function sectionOauth()
     {
@@ -525,6 +525,46 @@ class GeneralSettingsController extends AdminController
             'defaultGroup' => setting('AuthGroups.defaultGroup'),
         ]);
     }
+
+
+    /**
+    * Displays the site's passwords settings.
+    */
+    public function sectionCommpany()
+    {
+
+        if (!auth()->user()->can('admin.settings')) {
+            if ($this->request->isHtmx()) {
+                return $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.notAuthorized')]);
+            } else {
+                alertHtmx('danger', lang('Btw.message.notAuthorized'));
+                return redirect()->to(ADMIN_AREA)->with('htmx:errorPermisssion', lang('Btw.message.notAuthorized'));
+            }
+        }
+
+        if (!$this->request->is('post')) {
+
+            return $this->render($this->viewPrefix . 'settings_company', [
+                'menu' => service('menus')->menu('sidebar_on'),
+                'currentUrl' => request()->getUri()->getPath()
+            ]);
+        }
+
+        $data = $this->request->getPost();
+
+        // Company
+        setting('Btw.seuilMEArtisans', $data['seuilMEArtisans'] ?? 0);
+        setting('Btw.seuilMECommercants', $data['seuilMECommercants'] ?? 0);
+
+        $this->response->triggerClientEvent('updateOauth', time(), 'receive');
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
+
+        return view('Btw\Core\Views\Admin\settings\cells\form_cell_company', [
+            'defaultGroup' => setting('AuthGroups.defaultGroup'),
+        ]);
+    }
+
+
 
     /**
      * Creates any admin-required menus so they're
@@ -597,11 +637,20 @@ class GeneralSettingsController extends AdminController
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
 
         $item = new MenuItem([
+            'title' =>  lang('Btw.sidebar.company'),
+            'namedRoute' => 'settings-company',
+            'fontIconSvg' => theme()->getSVG('duotune/coding/cod005.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
+            'permission' => 'admin.view',
+            'weight' => 7
+        ]);
+        $sidebar->menu('sidebar_on')->collection('content')->addItem($item);
+
+        $item = new MenuItem([
             'title' =>  lang('Btw.sidebar.update'),
             'namedRoute' => 'settings-update',
             'fontIconSvg' => theme()->getSVG('duotune/coding/cod005.svg', 'svg-icon group-hover:text-slate-300 mr-3 flex-shrink-0 h-6 w-6 text-slate-400 group-hover:text-slate-300', true),
             'permission' => 'admin.view',
-            'weight' => 7
+            'weight' => 8
         ]);
 
         $sidebar->menu('sidebar_on')->collection('content')->addItem($item);

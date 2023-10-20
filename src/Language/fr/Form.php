@@ -125,6 +125,10 @@ return [
         'company' => "Société",
         'legend' => 'Légende',
         'content' => 'Contenu',
+        'seuilMEArtisans' => 'Seuil de franchise de TVA',
+        'seuilMEArtisansDesc' => 'Seuil de franchise de TVA pour les artisans et professions libérales',
+        'seuilMECommercants' => 'Seuil de franchise de TVA',
+        'seuilMECommercantsDesc' => 'Seuil de franchise de TVA pour les commerçants'
 
     ],
     'address' => [
@@ -144,6 +148,7 @@ return [
         'siret' => 'Siret',
         'ape' => 'Code ape',
         'titre' => 'Titre',
+        'type_company' => 'Type d\'entreprise',
 
     ],
     'modal' => [

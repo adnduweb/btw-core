@@ -107,4 +107,8 @@ class Btw extends BaseConfig
     ];
 
     public string $titleNameAdmin = 'Btw le meilleur';
+
+    public $seuilMEArtisans = '36800';
+
+    public $seuilMECommercants = '91900';
 }

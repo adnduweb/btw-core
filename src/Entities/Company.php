@@ -20,6 +20,7 @@ class Company extends Entity
         'code_client' => null,
         'country' => 'FR',
         'state' => null,
+        'currency_code' => 3,
         'type_company' => 1,
         'company' => null,
         'lastname' => null,
@@ -42,16 +43,29 @@ class Company extends Entity
     ];
 
 
-      /**
+    /**
      * Renders Datatable Identifier primary
      *
      * @return int
      */
-    public function getIdentifier(){
-        return $this->attributes['identifier'] ?? null; 
+    public function getIdentifier()
+    {
+        return $this->attributes['identifier'] ?? null;
     }
 
-    public function getCompany(){
-        return $this->attributes['company'] ?? null; 
+    public function getCompany()
+    {
+        return $this->attributes['company'] ?? null;
+    }
+
+
+    public function getCurrency()
+    {
+        return $this->attributes['currency_code'] ?? null;
+    }
+
+    public function getTypeCompany()
+    {
+        return $this->attributes['type_company'] ?? null;
     }
 }

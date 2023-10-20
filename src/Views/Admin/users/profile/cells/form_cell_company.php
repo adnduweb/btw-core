@@ -98,7 +98,8 @@
         </div>
 
         <!-- Site Name -->
-        <div class="w-full mb-6 md:mb-4">
+        <div class="flex flex-wrap -mx-3 mb-4">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 
             <?= view_cell('Btw\Core\Cells\Forms\DropdownCell::renderList', [
                 'label' => lang('Form.address.type_company'),
@@ -114,6 +115,32 @@
                 'selected' => old('type_company', $company->type_company)
             ]); ?>
 
+            </div>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <?= view_cell('Btw\Core\Cells\Forms\DropdownCell::renderList', [
+                    'label' => lang('Form.general.listCurrencies'),
+                    'name' => 'currency_code',
+                    'placeholder' => lang('Form.general.selectCurrencies'),
+                    'options' => $currencies,
+                    'key' => "id",
+                    'val' => "nameoption",
+                    'required' => true,
+                    'class' => "select2-currency",
+                    'byKey' => true,
+                    'selected' =>  old('currency_code', $company->currency_code ?? null),
+                ]); ?>
+            </div>
+
+        </div>
+
+        <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+            <div class="flex flex-col">
+                <div class="flex flex-row items-center mb-2">
+                    <?= theme()->getSVG('admin/images/icons/bonasavoir.svg', 'svg-icon flex-shrink-0 h-6 w-6 mr-2 dark:text-gray-200 text-gray-800 svg-white', true); ?>
+                    <span class="font-bold"><?= lang('Btw.attention'); ?>!</span>
+                </div>
+                <?= lang('Btw.depaseTotalSeuilTVAME'); ?>
+            </div> 
         </div>
 
         <div class="flex flex-wrap -mx-3 mb-4">
