@@ -50,4 +50,8 @@ class Company extends Entity
     public function getIdentifier(){
         return $this->attributes['identifier'] ?? null; 
     }
+
+    public function getCompany(){
+        return $this->attributes['company'] ?? null; 
+    }
 }

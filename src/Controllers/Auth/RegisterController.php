@@ -43,7 +43,7 @@ class RegisterController extends ShieldRegister
     public function __construct()
     {
         service('viewMeta')->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
-        $this->theme = 'Auth';
+        $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }
 
@@ -141,47 +141,6 @@ class RegisterController extends ShieldRegister
         Theme::set_message_htmx('success', lang('Auth.registerSuccess'));
         return redirect()->hxLocation("/login");
     }
-
-    /**
-     * Returns the rules that should be used for validation.
-     *
-     * @return array<string, array<string, array<string>|string>>
-     * @phpstan-return array<string, array<string, string|list<string>>>
-     */
-    protected function getValidationRules(): array
-    {
-        $registrationUsernameRules = array_merge(
-            config('AuthSession')->usernameValidationRules,
-            [sprintf('is_unique[%s.username]', $this->tables['users'])]
-        );
-        $registrationEmailRules = array_merge(
-            config('AuthSession')->emailValidationRules,
-            [sprintf('is_unique[%s.secret]', $this->tables['identities'])]
-        );
-
-        return setting('Validation.registration') ?? [
-            'username' => [
-                'label' => 'Auth.username',
-                'rules' => $registrationUsernameRules,
-            ],
-            'email' => [
-                'label' => 'Auth.email',
-                'rules' => $registrationEmailRules,
-            ],
-            'password' => [
-                'label'  => 'Auth.password',
-                'rules'  => 'required|' . Passwords::getMaxLenghtRule() . '|strong_password',
-                'errors' => [
-                    'max_byte' => 'Auth.errorPasswordTooLongBytes',
-                ],
-            ],
-            'password_confirm' => [
-                'label' => 'Auth.passwordConfirm',
-                'rules' => 'required|matches[password]',
-            ],
-        ];
-    }
-
 
     /**
      * Returns the URL the user should be redirected to

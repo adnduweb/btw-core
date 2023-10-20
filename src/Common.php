@@ -1017,23 +1017,39 @@ if (!function_exists('getNameCustomer')) {
 
 
 if (!function_exists('getUUIDByID')) {
-    function getUUIDByID(int $id, object $models)
+    function getUUIDByID(int $id, object $models, $withDeleted = false )
     {
-        if (!$model = $models->select('uuid')->where('id', $id)->first()) {
-            throw new \Exception('Incorrect model uuid.');
+        if($withDeleted == true){
+            if (!$model = $models->select('uuid')->where('id', $id)->withDeleted()->first()) {
+                throw new \Exception('Incorrect model uuid.');
+            }
+        }else{
+
+            if (!$model = $models->select('uuid')->where('id', $id)->first()) {
+                throw new \Exception('Incorrect model uuid.');
+            }
         }
+        
         return $model->uuid;
     }
 }
 
 if (!function_exists('getIDByUUID')) {
-    function getIDByUUID(string $uuid, object $models, $sep = '-')
+    function getIDByUUID(string $uuid, object $models, $sep = '-', $withDeleted = false )
     {
         if ($sep != '-')
             $uuid = str_replace($sep, '-', $uuid);
-        if (!$model = $models->select('id')->where('uuid', $uuid)->first()) {
-            throw new \Exception('Incorrect model id.');
+
+        if($withDeleted == true){
+            if (!$model = $models->select('id')->where('uuid', $uuid)->withDeleted()->first()) {
+                throw new \Exception('Incorrect model id.');
+            }
+        }else{
+            if (!$model = $models->select('id')->where('uuid', $uuid)->first()) {
+                throw new \Exception('Incorrect model id.');
+            }
         }
+       
         return $model->getIdentifier();
     }
 }

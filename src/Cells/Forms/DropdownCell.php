@@ -15,7 +15,6 @@ use RuntimeException;
 
 class DropdownCell
 {
-
     protected $options;
     protected $class;
     protected $label;
@@ -71,22 +70,24 @@ class DropdownCell
             endif;
         }
 
-        $html = "";
+        $html = '';
         $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
         $html .= "<div x-data=\"initSelect2Alpine()\" x-init=\"init()\">";
-        if ($this->label == true)
-            $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . '  ' . $required . ' ' .  $this->addButton . '</label>';
+        if ($this->label == true) {
+            $html .= '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . '  ' . $required . ' ' . $this->addButton . '</label>';
+        }
         $html .= '<select data-allow-clear="true" data-hide-search="false" x-ref="select" data-placeholder="' . $this->placeholder . '" name="' . $params['name'] . '" class="' . $this->class . ' kt-select2 appearance-none block px-4 py-3 w-full rounded-md bg-gray-100  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150 ' . $this->classError . '"  
         ' . $this->ktData . ' data-kt-form-select >';
         $i = 0;
         $placeHoler = $this->placeholder ?? lang('Form.general.choisissezVotreValeur');
         $html .= '<option value="">' . $placeHoler . '</option>';
 
+        // print_r($params['options']); exit;
         if (isset($params['options']) && count($params['options'])) :
 
             foreach ($params['options'] as $key => $val) :
-
-                // Not key 
+                $deleted_at = '';
+                // Not key
                 if (!isset($params['byKey']) || $params['byKey'] == false) {
                     $value = isset($val['nameoption']) ? $val['nameoption'] : $val;
                     $newSelected = ($params['selected'] === $value) ? ' selected="selected" ' : '';
@@ -110,7 +111,10 @@ class DropdownCell
 
 
                 $html .= '<option value="' . $valueOption . '" ' . $newSelected . '>';
-                $html .= ucfirst($value);
+                if(isset($val['deleted_at']) && !empty($val['deleted_at'])){
+                    $deleted_at = '(Contact supprimé)';
+                }
+                $html .= ucfirst($value) . ' ' . $deleted_at;
                 $html .= '</option>';
                 $i++;
             endforeach;
@@ -129,13 +133,13 @@ class DropdownCell
 
             if (service('validation')->hasError('lang.' . service('language')->getLocale() . '.' . $params['name'])) :
                 // print_r($params['validation']); exit;
-                $html = '<div class="invalid-feedback block text-red-600 text-sm">';
+                $html = '<div class="invalid-feedback block text-red-600 text-xs mt-2">';
                 $html .= service('validation')->getError('lang.' . service('language')->getLocale() . '.' . $params['name']);
                 $html .= '</div>';
             endif;
         } else {
             if (service('validation')->hasError($params['name'])) :
-                $html = '<div class="invalid-feedback block text-red-600 text-sm">';
+                $html = '<div class="invalid-feedback block text-red-600 text-xs mt-2">';
                 $html .= service('validation')->getError($params['name']);
                 $html .= '</div>';
             endif;

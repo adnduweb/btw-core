@@ -94,7 +94,7 @@ class AssetController extends Controller
 
         //@todo
         // list($base, $options) = explode('-', $segments[2]);
-        // print_r($options); 
+        // print_r($options);
         // print_r($segments); exit;
 
         // $year = $segments[0];
@@ -105,7 +105,7 @@ class AssetController extends Controller
         $month = $segments[1];
         $file = $segments[2];
 
-        if (($fileName = @file_get_contents(WRITEPATH . 'uploads/' .  config('Storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file)) === false) {
+        if (($fileName = @file_get_contents(WRITEPATH . 'uploads/' . config('Storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file)) === false) {
             $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
             $fileName = @file_get_contents(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
             // choose the right mime type
@@ -118,7 +118,7 @@ class AssetController extends Controller
                 ->send();
         }
 
-        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' .  config('Storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file);
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' . config('Storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file);
 
         // choose the right mime type
         $mimeType = $file->getMimeType();
@@ -141,10 +141,11 @@ class AssetController extends Controller
 
         $file = $segments[0];
 
-        if (($fileName = file_get_contents(WRITEPATH . 'uploads/' .  '/placeholder/' . $file)) === FALSE)
+        if (($fileName = file_get_contents(WRITEPATH . 'uploads/' . '/placeholder/' . $file)) === false) {
             return false;
+        }
 
-        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' .  '/placeholder/' . $file);
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' . '/placeholder/' . $file);
 
         // choose the right mime type
         $mimeType = $file->getMimeType();

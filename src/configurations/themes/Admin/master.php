@@ -74,7 +74,7 @@
 
 </head>
 
-<body x-data="main" hx-ext="alpine-morph, ajax-header, head-support, preload" hx-history="false" hx-indicator="#progress" class="antialiased relative font-nunito text-sm font-normal overflow-x-hidden collapsible-vertical full <?= detectAgent(); ?>" :class="[$store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
+<body x-data="main" hx-ext="alpine-morph, ajax-header, head-support, preload" hx-history="false" hx-boost="true" hx-indicator="#progress" class="antialiased relative font-nunito text-sm font-normal overflow-x-hidden collapsible-vertical full <?= detectAgent(); ?>" :class="[$store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
 
     <!-- sidebar menu overlay -->
     <div x-cloak class="fixed inset-0 bg-[black]/60 z-50 lg:hidden" :class="{ 'hidden': !$store.app.sidebar }" @click="$store.app.toggleSidebar()"></div>
@@ -119,7 +119,7 @@
     <?= '' //$this->include('partials/theme-customiser')
 ?>
 
-    <div class="main-container relative z-0 text-black dark:text-white-dark min-h-screen transition-fade <?= site_offline() ? 'offline' : '' ?>" :class="[$store.app.navbar]" x-data="{open: false}">
+    <div class="main-container relative text-black dark:text-white-dark min-h-screen transition-fade <?= site_offline() ? 'offline' : '' ?>" :class="[$store.app.navbar]" x-data="{open: false}">
 
         <?= view_cell('Btw\Core\Cells\Core\AdminSidebar'); ?>
 

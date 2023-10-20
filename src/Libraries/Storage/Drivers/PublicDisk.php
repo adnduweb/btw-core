@@ -119,8 +119,8 @@ class PublicDisk implements FileSystem
 
             if ($companyPdf) {
                 service('image')->withFile($this->basePath . $path . $fileName)
-                    ->fit(250, 200, 'center')
-                    ->save(ROOTPATH . 'public/logo-company' . $fileName);
+                    ->resize(250, 200, true, 'width')
+                    ->save(ROOTPATH . 'public/admin/images/logo-company' . $fileName);
             }
         }
 
@@ -170,7 +170,7 @@ class PublicDisk implements FileSystem
             return false;
         }
         $path = empty($path) ? '' : rtrim($path, '/') . '/';
-        $file = pathinfo(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . $media->disk  . DIRECTORY_SEPARATOR .  $media->file_path);
+        $file = pathinfo(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . $media->disk . DIRECTORY_SEPARATOR . $media->file_path);
 
         if (!empty($sizeImg)) {
             // Diffrente taille
@@ -292,11 +292,26 @@ class PublicDisk implements FileSystem
         return $this->new_file_url;
     }
 
+    /**
+     * Get placeholder img Data in from Storage.
+     *
+     * @param null $path
+     * @param array $options
+     * @return mixed
+     */
+    public function getPlaceholderImgdata($options = [])
+    {
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . 'placeholder/placeholder.webp');
+        return img_data($file->getPathName());
+    }
+
+
     public function getFileBaseUrl($idFile, $options = [])
     {
 
-        if (is_null($idFile))
+        if (is_null($idFile)) {
             return false;
+        }
 
         $media = model(MediaModel::class)->find($idFile);
 
@@ -305,17 +320,68 @@ class PublicDisk implements FileSystem
         }
 
         //@todo Add image par defaut
-        if (empty($media->full_path))
+        if (empty($media->full_path)) {
             return false;
+        }
 
-        if (($fileName = @file_get_contents($media->full_path)) === FALSE)
+        if (($fileName = @file_get_contents($media->full_path)) === false) {
             return false;
+        }
 
         $file = new \CodeIgniter\Files\File($media->full_path);
 
         if ($file) {
-            return ROOTPATH . 'public/logo-company' . $media->file_name;
+            return ROOTPATH . 'public/admin/images/logo-company' . $media->file_name;
         }
+    }
+
+    public function getImgData($idFile, $options = [])
+    {
+
+        if (is_null($idFile)) {
+            return $this->getPlaceholderImgdata();
+        }
+
+        $media = model(MediaModel::class)->find($idFile);
+
+        if ($media === false) {
+            return $this->getPlaceholderImgdata();
+        }
+
+        //@todo Add image par defaut
+        if (empty($media->full_path)) {
+            return $this->getPlaceholderImgdata();
+        }
+
+
+        if (($fileName = @file_get_contents($media->full_path)) === false) {
+
+            return $this->getPlaceholderImgdata();
+        }
+
+
+        $file = new \CodeIgniter\Files\File($media->full_path);
+
+        // print_r($media->getFileUrl());
+        // print_r($file);
+        // exit;
+
+        if (!empty($options) && is_array($options)) {
+            if (isset($options['size'])) {
+                $sizeImg = setting('Storage.sizeImg')[$options['size']];
+                $new_full_path = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->full_path);
+                if (($fileName = @file_get_contents($new_full_path)) === false) {
+                    return $this->getPlaceholderImgdata();
+                } else {
+
+                    $new_file_url = str_replace('.' . $file->guessExtension(), '-' . $sizeImg[0] . 'x' . $sizeImg[1] . '.' . $file->guessExtension(), $media->file_url);
+                    img_data($new_file_url);
+                }
+            }
+        }
+
+        return img_data($file->getPathName());
+
     }
 
     /**
@@ -416,12 +482,14 @@ class PublicDisk implements FileSystem
     private function deleteRecursive($dir)
     {
         foreach (scandir($dir) as $file) {
-            if ('.' === $file || '..' === $file)
+            if ('.' === $file || '..' === $file) {
                 continue;
-            if (is_dir($dir . DIRECTORY_SEPARATOR . $file))
+            }
+            if (is_dir($dir . DIRECTORY_SEPARATOR . $file)) {
                 $this->deleteRecursive($dir . DIRECTORY_SEPARATOR . $file);
-            else
+            } else {
                 unlink($dir . DIRECTORY_SEPARATOR . $file);
+            }
         }
         return rmdir($dir);
     }

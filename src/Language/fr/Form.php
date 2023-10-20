@@ -120,8 +120,11 @@ return [
         'IpAllowed' => "Liste des IP autorisées",
         'IpAllowedDesc' => "Mettez votra adresse ou les adresse ip que voulez pour accéder au site en développement",
         'BreadcrumbStart' => "Nom de fil d'ariane de départ",
-        'BreadcrumbStartDesc' => "Ce nom sera repris dans le fil d'ariane et également dans les richs snippets", 
-        "addMediaModal" => "Ajouter un média"
+        'BreadcrumbStartDesc' => "Ce nom sera repris dans le fil d'ariane et également dans les richs snippets",
+        "addMediaModal" => "Ajouter un média",
+        'company' => "Société",
+        'legend' => 'Légende',
+        'content' => 'Contenu',
 
     ],
     'address' => [
@@ -136,11 +139,17 @@ return [
         'phone' => 'Téléphone',
         'phone_mobile' => 'Mobile',
         'lastname' => 'Nom',
+        'firstname' => 'Prénom',
+        'email' => 'Email',
         'siret' => 'Siret',
-        'ape' => 'Code ape'
+        'ape' => 'Code ape',
+        'titre' => 'Titre',
+
     ],
     'modal' => [
-        'Ajouter/Modifier une adresse' => 'Ajouter/Modifier une adresse'
+        "addOrdEditAddress" => 'Ajouter ou modifier une adresse',
+        "addOrdEditContact" => 'Ajouter ou modifier un contact',
+        "addOrdEditInfosTech" => 'Ajouter ou modifier une information'
     ],
     'ShieldOAuthLang' => [
         'allow_login' => 'Autoriser la connexion',
