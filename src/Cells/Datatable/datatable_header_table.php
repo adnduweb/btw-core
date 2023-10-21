@@ -122,7 +122,7 @@
                                 <?php
                                 switch ($action) {
                                     case 'delete':
-                                ?>
+                                        ?>
                                         <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 dark:hover:bg-gray-600 px-4 py-2">
                                             <button type="button" class="w-full flex justify-start text-red-700 dark:text-gray-200" data-kt-datatable-action="delete_selected">
                                                 <span>
@@ -131,9 +131,9 @@
                                             </button>
                                         </div>
                                     <?php
-                                        break;
+                                                break;
                                     case 'activate':
-                                    ?>
+                                        ?>
                                         <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
                                             <button type="button" class="w-full flex justify-start" data-kt-datatable-action="active_selected">
                                                 <span>
@@ -142,9 +142,9 @@
                                             </button>
                                         </div>
                                     <?php
-                                        break;
+                                            break;
                                     case 'desactivate':
-                                    ?>
+                                        ?>
                                         <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
 
                                             <button type="button" class="w-full flex justify-start" data-kt-datatable-action="descative_selected">
@@ -154,10 +154,10 @@
                                             </button>
                                         </div>
                                     <?php
-                                        break;
+                                            break;
 
                                     default:
-                                    ?>
+                                        ?>
                                         <div class="flex flex-col justify-between items-center text-truncate hover:bg-gray-100 px-4 py-2">
 
                                             <button type="button" class="w-full flex justify-start" data-kt-datatable-action-custom="<?= $action; ?>">

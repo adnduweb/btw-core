@@ -127,6 +127,7 @@ return [
     'name' => 'Role',
     'description' => 'description',
     'save' => 'Sauvegarder',
+    'validate' => 'Valider',
     'close' => 'Fermer',
     'Dashboard' => 'Tableau de bord',
     'Logs' => 'Audits Logs',
