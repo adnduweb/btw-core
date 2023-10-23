@@ -1,6 +1,6 @@
-<div class="mb-4 flex justify-between items-center">
+<div class="mb-4 flex flex-col md:flex-row justify-between items-center">
     <!--begin::Card title-->
-    <div class="flex-1 pr-4">
+    <div class="flex-1 w-full md:pr-4 pb-5 md:pb-0">
         <!--begin::Search-->
         <div class="relative md:w-1/3">
             <input type="search" data-kt-datatable-filter="search" class="w-full pl-10 pr-4 py-2 border-gray-300 dark:border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 dark:text-gray-400 dark:bg-gray-700 font-medium" placeholder="<?= lang('Btw.search'); ?>" aria-label="Search" aria-describedby="button-addon1" value="<?= service('session')->get('dt_' . $_controller)['search'] ?? ''; ?>" />

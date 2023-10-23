@@ -64,6 +64,16 @@
 
         <div class="w-full mb-6 md:mb-4">
             <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
+                'type' => 'email',
+                'label' => lang('Form.address.email'),
+                'name' => 'email',
+                'value' => old('email', $company->email),
+                'lang' => false,
+            ]); ?>
+        </div>
+
+        <div class="w-full mb-6 md:mb-4">
+            <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
                 'type' => 'text',
                 'label' => lang('Form.address.address1'),
                 'name' => 'address1',

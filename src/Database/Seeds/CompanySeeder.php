@@ -34,6 +34,7 @@ class CompanySeeder extends Seeder
             'company' => $faker->userName,
             'lastname' => $faker->lastName,
             'firstname' => $faker->firstNameMale,
+            'email' => $faker->email,
             'address1' => $faker->streetAddress,
             'address2' => '',
             'postcode' => $faker->postcode,

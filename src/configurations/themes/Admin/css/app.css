@@ -867,3 +867,14 @@ td.selection {
     @apply !bg-[url('../../../../admin/img/flags@2x.png')];
   }
 }
+
+.table-responsive{
+  position: relative;
+    overflow: auto;
+    max-height: 80vh;
+    height: 80vh;
+}
+.table-responsive thead{
+  position: relative;
+  z-index: 20;
+}

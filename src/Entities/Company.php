@@ -25,6 +25,7 @@ class Company extends Entity
         'company' => null,
         'lastname' => null,
         'firstname' => null,
+        'email' => null,
         'address1' => null,
         'address2' => null,
         'postcode' => null,

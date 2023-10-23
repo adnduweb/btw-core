@@ -22,6 +22,7 @@ class CompanyModel extends Model
         'company',
         'lastname',
         'firstname',
+        'email',
         'address1',
         'address2',
         'postcode',

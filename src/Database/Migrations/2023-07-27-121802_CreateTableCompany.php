@@ -20,6 +20,7 @@ class CreateTableCompany extends Migration
             'company' => ['type' => 'VARCHAR', 'constraint' => 255, 'default' => 0],
             'lastname' => ['type' => 'VARCHAR', 'constraint' => 255],
             'firstname' => ['type' => 'VARCHAR', 'constraint' => 255],
+            'email' => ['type' => 'VARCHAR', 'constraint' => 255],
             'address1' => ['type' => 'VARCHAR', 'constraint' => 255],
             'address2' => ['type' => 'VARCHAR', 'constraint' => 255],
             'postcode' => ['type' => 'VARCHAR', 'constraint' => 255],

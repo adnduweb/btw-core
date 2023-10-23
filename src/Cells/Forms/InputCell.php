@@ -4,10 +4,8 @@ namespace Btw\Core\Cells\Forms;
 
 use RuntimeException;
 
-
 class InputCell
 {
-
     protected $type = 'text';
     protected $label;
     protected $placeholder;
@@ -34,7 +32,7 @@ class InputCell
         $this->xInput = (isset($params['xInput'])) ? '@input="' . $params['xInput'] . '"' : '';
         $this->required = (isset($params['required'])) ? 'required' : '';
         $this->class = (isset($params['class'])) ? $params['class'] : '';
-        $this->disabled = (isset($params['disabled'])) ? 'disabled="disabled"' : '';
+        $this->disabled = (isset($params['disabled']) && $params['disabled'] == 'true') ? 'disabled="disabled"' : '';
         $this->placeholder = (isset($params['placeholder'])) ? 'placeholder="' . $params['placeholder'] . '"' : '';
         $this->limit = (isset($params['limit'])) ? 'maxlength="' . $params['limit'] . '"' : '';
 
@@ -54,8 +52,9 @@ class InputCell
 
     public function getLabel($params)
     {
-        if ($params['label'] == false)
+        if ($params['label'] == false) {
             return false;
+        }
         $html = "";
         $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
         if (isset($params['lang']) && $params['lang'] == true) {

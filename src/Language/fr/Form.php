@@ -128,7 +128,8 @@ return [
         'seuilMEArtisans' => 'Seuil de franchise de TVA',
         'seuilMEArtisansDesc' => 'Seuil de franchise de TVA pour les artisans et professions libérales',
         'seuilMECommercants' => 'Seuil de franchise de TVA',
-        'seuilMECommercantsDesc' => 'Seuil de franchise de TVA pour les commerçants'
+        'seuilMECommercantsDesc' => 'Seuil de franchise de TVA pour les commerçants',
+        'note' => 'Note'
 
     ],
     'address' => [

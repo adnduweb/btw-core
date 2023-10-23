@@ -45,7 +45,7 @@ return [
         'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
         'accountProfile' => 'Votre profil',
         'signOut' => 'Se déconnecter',
-        'filters' => 'Filtres',
+        'filters' => 'Filtres'
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
