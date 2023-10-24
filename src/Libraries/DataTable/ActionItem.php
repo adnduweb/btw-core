@@ -21,7 +21,6 @@ namespace Btw\Core\Libraries\DataTable;
  */
 class ActionItem
 {
-
     /**
      * @var array|null
      */
@@ -178,20 +177,27 @@ class ActionItem
             $this->custom = true;
         }
 
-        if (!is_array($custom))
+        if (!is_array($custom)) {
             return false;
-            
-            $this->custom = ['list'];
-            foreach($custom as $cus){
+        }
 
+        $this->custom = ['list'];
+        foreach($custom as $cus) {
+
+            if(isset($cus['callback'])) {
+                if($this->callback($objectRows, $cus['callback']) == true) {
+                    $this->custom['list'][] = $cus;
+                }
+            } else {
                 $this->custom['list'][] = $cus;
-                
             }
 
-            $handle = explode('\\', get_class($objectRows));
-            $this->custom['module'] = $this->module = end($handle);
+        }
 
+        $handle = explode('\\', get_class($objectRows));
+        $this->custom['module'] = $this->module = end($handle);
 
+        // print_r($this->module);
         // print_r($this->custom);
         // print_r($objectRows);
         // exit;
@@ -236,9 +242,9 @@ class ActionItem
         return $this->desactive;
     }
 
-     /**
-     * @return array
-     */
+    /**
+    * @return array
+    */
     public function custom()
     {
         return $this->custom;
@@ -259,12 +265,17 @@ class ActionItem
         $controller = strtolower(str_replace('Controller', '', $end));
         return $controller;
     }
-    
+
     public function getAll()
     {
         if (count(self::$actions) == count($this->actionsAllFalse)) {
             return false;
         }
         return true;
+    }
+
+    protected function callback(Object $objectRows, $callback)
+    {
+        return $objectRows->{$callback}();
     }
 }

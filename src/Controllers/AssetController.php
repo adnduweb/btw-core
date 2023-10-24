@@ -200,4 +200,27 @@ class AssetController extends Controller
             ->setBody(file_get_contents($path))
             ->send();
     }
+
+    /**
+     * Generate download PDF
+     */
+    public function serveDownloadPDF(...$segments)
+    {
+        $total = (implode('/', $segments));
+
+        $file = end($segments);
+        $folder = str_replace($file, '', $total)   ;
+
+        if (($fileName = file_get_contents(WRITEPATH . 'uploads/' . $folder . $file)) === false) {
+            return false;
+        }
+
+        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' . $folder . $file);
+
+        // choose the right mime type
+        $mimeType = $file->getMimeType();
+
+        return $this->response->download($file->getFilename(), $fileName);
+
+    }
 }
