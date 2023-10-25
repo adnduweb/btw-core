@@ -655,6 +655,7 @@ class ProfileController extends AdminController
         session()->set(request()->getPost('module') . '_' . request()->getPost('identifier'), time());
         $this->response->triggerClientEvent(request()->getPost('actionHtmx'), time(), 'receive');
         $this->response->setReswap('innerHTML show:#general:top');
+        $this->response->triggerClientEvent('reloadTable');
         $this->response->triggerClientEvent('closemodal');
     }
 

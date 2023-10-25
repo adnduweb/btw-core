@@ -43,6 +43,16 @@ class BtwSeeder extends Seeder
         service('settings')->set('Btw.seuilMEArtisans', '36800');
         service('settings')->set('Btw.seuilMECommercants', '91900');
 
+        //Search
+        $cellsearch = service('settings')->get('Search.cellsearch');
+        if (!empty($cellsearch)) {
+            $cellsearch = array_merge($cellsearch, ['Btw\Customer\Cells\SearchCells::search']);
+            $cellsearch = array_unique($cellsearch);
+            service('settings')->set('Search.cellsearch', $cellsearch);
+        } else {
+            service('settings')->set('Search.cellsearch', ['Btw\Customer\Cells\SearchCells::search']);
+        }
+
         //Update themes
         $this->publishThemes();
     }

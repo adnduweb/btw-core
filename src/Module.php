@@ -88,6 +88,17 @@ class Module extends BaseModuleController
         // Add to the Content menu
         $sidebar = service('menus');
         $item    = new MenuItem([
+            'title'           => lang('Btw.notes'),
+            'namedRoute'      => 'notes-list',
+            'fontIconSvg'     => theme()->getSVG('admin/images/icons/note.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
+            'permission'      => 'admin.view',
+            'weight' => 3
+        ]);
+        $sidebar->menu('sidebar')->collection('system')->addItem($item);
+
+        // Add to the Content menu
+        $sidebar = service('menus');
+        $item    = new MenuItem([
             'title'           => lang('Btw.systemInfos'),
             'namedRoute'      => 'sys-info',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/code.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),

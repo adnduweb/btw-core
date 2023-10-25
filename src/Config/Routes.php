@@ -120,6 +120,14 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->post('system-auth-pass-modal', 'ProfileController::authPassModal', ['as' => 'system-auth-pass-modal']);
     $routes->get('update-notification', 'ProfileController::updateNotification', ['as' => 'update-notification']);
 
+    //Notes
+    $routes->get('notes', 'NoteController::index', ['as' => 'notes-list']);
+    $routes->post('notes-bulkaction', 'NoteController::bulkaction', ['as' => 'notes-bulkaction']);
+    $routes->get('notes/list', 'NoteController::ajaxDatatable', ['as' => 'notes-list-ajax']);
+    $routes->match(['get', 'post'], 'notes/create', 'NoteController::modalCreateInfosTechAction', ['as' => 'note-create']);
+    $routes->match(['get', 'post'], 'notes/edit/(:any)', 'NoteController::modalEditNoteAction/$1', ['as' => 'note-edit']);
+    $routes->delete('notes/delete', 'NoteController::delete', ['as' => 'notes-delete']);
+
 
     // Seach All admin
 

@@ -6,5 +6,5 @@ use CodeIgniter\Config\BaseConfig;
 
 class Search extends BaseConfig
 {
-    public array $cellsearch = [];
+    public array $cellsearch = ['Btw\Core\Cells\SearchCells::search'];
 }

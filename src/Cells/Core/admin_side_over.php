@@ -1,4 +1,4 @@
-<div x-cloak x-dialog="" x-model="showSlideOver" x-show="showSlideOver" x-on:openmodalslideover.window="showSlideOver = true" class="fixed inset-0 overflow-hidden z-10" aria-labelledby="alpine-dialog-title-2" aria-describedby="alpine-dialog-description-2" role="dialog" aria-modal="true">
+<div x-cloak x-dialog="" x-model="showSlideOver" x-show="showSlideOver" x-on:openmodalslideover.window="showSlideOver = true" class="fixed inset-0 overflow-hidden z-50" aria-labelledby="alpine-dialog-title-2" aria-describedby="alpine-dialog-description-2" role="dialog" aria-modal="true">
     <!-- Overlay -->
     <!-- <div x-dialog:overlay="" x-transition.opacity="" class=" fixed inset-0 bg-black bg-opacity-50"></div> -->
     <div x-dialog:overlay="" x-cloak x-show="showSlideOver" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity backdrop-blur-sm bg-gray-500 bg-opacity-40" aria-hidden="true">
@@ -31,12 +31,8 @@
 
                 <!-- Footer -->
                 <div class="p-4 flex justify-end space-x-2 bg-gray-50">
-                    <button type="button" x-on:click="showSlideOver = false" class="text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg px-5 py-2.5">
-                        Close
-                    </button>
-
                     <button type="button" x-on:click="showSlideOver = false" class="bg-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 px-5 py-2.5 rounded-lg text-white">
-                        Take Action
+                        <?= lang("Btw.close") ?>
                     </button>
                 </div>
             </div>

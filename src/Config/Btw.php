@@ -111,4 +111,17 @@ class Btw extends BaseConfig
     public $seuilMEArtisans = '36800';
 
     public $seuilMECommercants = '91900';
+
+    /**
+    * --------------------------------------------------------------------------
+    * Additional User Fields
+    * --------------------------------------------------------------------------
+    * Validation rules used when saving a user.
+    */
+    public $typesInfos = [
+        1                     => [
+            'name'            => 'attrGeneral',
+            'class'           => ' bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
+        ],
+    ];
 }

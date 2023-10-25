@@ -253,3 +253,17 @@ htmx.onLoad(function(content) {
         countCharacters();
     });
 });
+
+
+window.onload=function(){
+      
+    let inputs = document.querySelectorAll("input.noenter,select.noenter");
+    for (var i = 0 ; i < inputs.length; i++) {
+       inputs[i].addEventListener("keypress", function(e){
+          if (e.which == 13) {
+             e.preventDefault();             
+          }
+       })
+    }
+    
+}

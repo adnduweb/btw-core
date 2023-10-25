@@ -20,6 +20,14 @@ class DatatableHeaderTable extends Cell
 
     public function mount(array $add, array $actions, $filter = false, array $fieldsFilter = [], array $settings = [], array $import = [], array $export = [])
     {
+
+        if(isset($add['htmx'])){
+            $add['htmxFormat'] = '';
+            foreach($add['htmx'] as $key => $value){
+                $add['htmxFormat'] .= $key .'="'.$value.'" ';
+            }
+        }
+
         $this->filter =  $filter;
         $this->fieldsFilter = $fieldsFilter;
         $this->actions = $actions;

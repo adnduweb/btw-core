@@ -171,4 +171,8 @@ return [
     'sendData' => 'Demande Validation',
     'attention' => 'Attention',
     'depaseTotalSeuilTVAME' => 'Si vous dépassez le seuil de franchise de TVA pour les micro entrprise, vous devez activer la TVA ci dessous avec la date d\'enregistrement',
+    'notes' => 'Notes',
+    'addNote' => 'Ajouter une note',
+    'askAccess' => "Demander un accés",
+    'notesList' => "Liste des notes"
 ];
