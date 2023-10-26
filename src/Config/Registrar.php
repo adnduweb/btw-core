@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Btw\Core\Config;
 
-
 use Btw\Core\Filters\SiteFilter;
 use Btw\Core\Filters\AdminFilter;
 use Btw\Core\Filters\ProtectFilter;
@@ -64,6 +63,7 @@ class Registrar
                 ]),
             ],
             'filters' => [
+                'signedurl' => ['before' => ['signed-urls/*']],
                 'protect' => [
                     'before' => ['*'],
                 ],

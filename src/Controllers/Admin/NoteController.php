@@ -109,7 +109,7 @@ class NoteController extends AdminController
                 $row = new Note((array) $row);
                 return view_cell('Btw\Core\Cells\Datatable\DatatableAction', [
                     'row' => $row,
-                    'actions' => DataTable::actions(self::$actions, $row)
+                    'actions' => DataTable::actions(config('Note')->actions, $row)
                 ]);
             }, 'last')
             ->filter(function ($datatable, $request) {
@@ -257,7 +257,6 @@ class NoteController extends AdminController
         ]);
     }
 
-
     /**
      * Delete the item (soft).
      *
@@ -286,4 +285,66 @@ class NoteController extends AdminController
         return $this->respondNoContent();
     }
 
+    public function modalShare(int $noteID)
+    {
+        $notes = model(NoteModel::class);
+
+        if (!$note = $notes->where('id', $noteID)->first()) {
+            throw new PageNotFoundException('Incorrect invoice id.');
+        }
+
+
+        if (!$this->request->is('post')) {
+            $this->response->triggerClientEvent('openmodalnotesharenote', true);
+            $this->response->triggerClientEvent('modalcomponent', true);
+
+            if (!session()->get('note_' . $note->getIdentifier()) && !((time() - session()->get('note_' . $note->getIdentifier())) < 3600)) :
+                return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $note]);
+            endif;
+
+            return view($this->viewPrefix . 'cells\form_cell_form_share', [
+                'note' => $note,
+            ]);
+        }
+
+        $data = $this->request->getPost();
+        $validation = service('validation');
+
+        $validation->setRules([
+            'date_expiration' => 'required'
+
+        ]);
+
+        if (!$validation->run($data)) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $validation->getErrors()]);
+            return view($this->viewPrefix . 'cells\form_cell_form_share', [
+                'note' => $note,
+                'validation' => $validation
+            ]);
+        }
+
+        $this->response->triggerClientEvent('shareNote', time(), 'receive');
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Note.itemCustomer')])]);
+
+        return view($this->viewPrefix . 'cells\form_cell_form_share', [
+            'url_signed' => service('signedurl')->setExpiration($data['date_expiration'])->urlTo('note-view', $note->id),
+            'note' => $note
+        ]);
+    }
+
+    /**
+    * Update list table Address
+    */
+    public function updateListeNoteItem(string $noteID): string
+    {
+        $notes = model(NoteModel::class);
+
+        if (!$note = $notes->where('id', $noteID)->first()) {
+            throw new PageNotFoundException('Incorrect invoice id.');
+        }
+
+        return view('Btw\Core\Views\Admin\search\cells\form_search_note_item', [
+            'note' => $note
+        ]);
+    }
 }

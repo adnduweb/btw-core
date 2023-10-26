@@ -14,7 +14,7 @@ x-init="$watch('showAuthDisplayDataModal', value => {
         }
     })" x-transition> 
     <template x-if="showAuthDisplayDataModal">
-<div id="showAuthDisplayDataModal" x-show="showAuthDisplayDataModal"  x-on:closemodal.window="showAuthDisplayDataModal = false" class="fixed inset-0 z-50 overflow-y-auto"
+<div id="showAuthDisplayDataModal" x-show="showAuthDisplayDataModal"  x-on:closemodal.window="showAuthDisplayDataModal = false" class="fixed inset-0 z-[9999999999] overflow-y-auto"
     aria-labelledby="modal-title" role="dialog" aria-modal="true">
     
         <div class="flex items-end justify-center min-h-screen px-4 text-center md:items-center sm:block sm:p-0">

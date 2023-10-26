@@ -11,7 +11,7 @@
 
 <?= view_cell('Btw\Core\Cells\Datatable\DatatableHeaderTable', [
         'add' => ['href' => route_to('note-create'), 'titre' => lang('Btw.addNote'), 'htmx' => ['hx-get' => route_to('note-create'), 'hx-target' => "#addnote", 'x-on:click' => '$dispatch(`modalcomponent`, {showNoteModal: true})' ]],
-        'actions' => ['delete'],
+        'actions' => config('Note')->actionsAll,
         'filter' => [],
         'fieldsFilter' => [],
         'settings' => [],
@@ -51,10 +51,22 @@
     'view' => 'Btw\Core\Views\Admin\notes\cells\form_cell_infos_edit_tech'
 ]); ?>
 
+<?= view_cell('Btw\Core\Cells\Modal::renderList', [
+    'type' => 'showShareNoteModal',
+    'name' => 'notesharenote',
+    'title' => lang('Note.modal.showShareNoteModal'),
+    'identifier' => 'sharenote',
+    'view' => 'Btw\Core\Views\Admin\notes\cells\form_cell_form_share'
+]); ?>
+
 <?php $this->endSection() ?>
 
 
 <?php $this->section('scripts') ?>
+<?= asset_link('admin/js/clipboard.min.js', 'js') ?>
+<script>
+    new ClipboardJS('.copyLink');
+</script>
 <script type="module">
     var KTnotesList = function() {
         // Define shared variables

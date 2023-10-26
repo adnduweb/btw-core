@@ -22,10 +22,10 @@
                 <!-- Body -->
                 <div class="p-8">
                     <!-- Title -->
-                    <h2 x-dialog:title="" class="text-3xl font-bold" id="alpine-dialog-title-2">Slideover Title</h2>
+                    <h2 x-dialog:title="" class="text-3xl font-bold" id="alpine-dialog-title-2"><?= (request()->getPost('search')) ? 'Résutat de la recherche' : ''; ?></h2>
 
                     <!-- Content -->
-                    <p class="mt-4 text-gray-600 flex-1">Your slideout text and content goes here.</p>
+                    <p class="mt-4 text-gray-600 flex-1"><?= (request()->getPost('search')) ? request()->getPost('search') : ''; ?></p>
                     <div id="displaySideOver"><?= $cells->render(); ?></div>
                 </div>
 

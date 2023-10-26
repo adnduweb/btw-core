@@ -49,6 +49,17 @@ class Btw extends BaseConfig
     public $menuWeights = [];
 
 
+    public $getExpirated = [
+        '5 minutes' => 5 * MINUTE,
+        '10 minutes' => 10 * MINUTE,
+        '1 hour' => 1 * HOUR,
+        '1 days' => 1 * DAY,
+        '1 week' => 1 * WEEK,
+        '1 month' => 1 * MONTH,
+        '1 year' => 12 * MONTH,
+    ];
+
+
     /**
      * --------------------------------------------------------------------------
      * Supported Locales

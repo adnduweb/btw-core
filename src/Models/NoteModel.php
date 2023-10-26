@@ -36,6 +36,7 @@ class NoteModel extends Model
     public function searchAll(string $search)
     {
         // $searchs = explode(" ", trim($search));
+        $noteNew = [];
         $searchs = $search;
         if ($searchs) {
 
@@ -49,7 +50,13 @@ class NoteModel extends Model
             $builder->groupEnd();
             $builder->where('user_id', Auth()->User()->id);
 
-            return  $builder->get()->getResult();
+            $notes = $builder->get()->getResultArray();
+            if(!empty($notes)) {
+                foreach ($notes as $note) {
+                    $noteNew[] = new Note($note);
+                }
+            }
+            return $noteNew;
 
         }
     }

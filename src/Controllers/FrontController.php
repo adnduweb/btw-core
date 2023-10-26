@@ -65,7 +65,7 @@ class FrontController extends BaseController
 
 
         $config = [
-            'paths' => [ROOTPATH . 'themes/App', APPPATH . 'Modules/btw-front/src/Views/Front'],
+            'paths' => [ROOTPATH . 'themes/App', APPPATH . 'Modules/btw-front/src/Views/Front', VENDORPATH . 'adnduweb/btw-core/src/Views'],
             'cache' => WRITEPATH . '/cache/twig',
             'debug' => config('Btw')->debugTwig
         ];

@@ -119,7 +119,8 @@ class LoginController extends ShieldLogin
         }
 
         Theme::set_message_htmx('success', lang('Btw.welcomeUser', ['user']));
-        return redirect()->hxLocation(str_replace(config('App')->baseURL, '', $redirect));
+        // return redirect()->hxLocation(str_replace(config('App')->baseURL, '', $redirect));
+        return redirect()->hxRefresh();
     }
 
     /**
@@ -135,5 +136,20 @@ class LoginController extends ShieldLogin
 
         theme()->set_message_not_htmx('success', lang('Auth.successLogout', ['Logs']));
         return redirect()->to($url);
+    }
+
+    /**
+    * Logs the current user out.
+    */
+    public function logoutActionHtmx()
+    {
+        // Capture logout redirect URL before auth logout,
+        // otherwise you cannot check the user in `logoutRedirect()`.
+        $url = config('Auth')->logoutRedirect();
+
+        auth()->logout();
+
+        theme()->set_message_not_htmx('success', lang('Auth.successLogout', ['Logs']));
+        return redirect()->hxRefresh();
     }
 }

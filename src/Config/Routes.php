@@ -10,7 +10,7 @@ $routes->group('', ['namespace' => '\Btw\Core\Controllers\Auth'], static functio
     $routes->post('register', 'RegisterController::registerActionHtmx');
     $routes->get('login', 'LoginController::loginView', ['as' => 'login']);
     $routes->post('login', 'LoginController::loginActionHtmx');
-    $routes->get('logout', 'LoginController::logoutAction', ['as' => 'logout']);
+    $routes->get('logout', 'LoginController::logoutActionHtmx', ['as' => 'logout']);
     $routes->get('login/magic-link', 'MagicLinkController::loginView', ['as' => 'magic-link']);
     $routes->post('login/magic-link', 'MagicLinkController::loginActionHtmx');
     $routes->get('login/magic-link/magic-link-message', 'MagicLinkController::magicLinkMesage', ['as' => 'magic-link-message']);
@@ -127,6 +127,8 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->match(['get', 'post'], 'notes/create', 'NoteController::modalCreateInfosTechAction', ['as' => 'note-create']);
     $routes->match(['get', 'post'], 'notes/edit/(:any)', 'NoteController::modalEditNoteAction/$1', ['as' => 'note-edit']);
     $routes->delete('notes/delete', 'NoteController::delete', ['as' => 'notes-delete']);
+    $routes->match(['get', 'post'], 'notes/(:any)/share', 'NoteController::modalShare/$1', ['as' => 'note-share-note-modal']);
+    $routes->get('notes/item/(:any)', 'NoteController::updateListeNoteItem/$1', ['as' => 'note-update-line-search']);
 
 
     // Seach All admin
@@ -140,6 +142,9 @@ $routes->get('files/downloads/(:any)', '\Btw\Core\Controllers\AssetController::s
 $routes->get('themes/(:any)', '\Btw\Core\Controllers\AssetController::serveTheme/$1');
 $routes->get('attachments/(:any)', '\Btw\Core\Controllers\AssetController::renderFile/$1', ['priority' => 1]);
 $routes->get('uploads/placeholder/(:any)', '\Btw\Core\Controllers\AssetController::renderFilePLaceholder/$1', ['priority' => 2]);
+$routes->get('signed-urls/notes/view/(:any)', '\Btw\Core\Controllers\Front\NoteController::viewNote/$1', ['as' => 'note-view']);
+
+
 
 /**
  * @var CodeIgniter\Router\RouteCollection $routes

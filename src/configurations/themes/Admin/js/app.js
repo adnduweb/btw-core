@@ -267,3 +267,52 @@ window.onload=function(){
     }
     
 }
+
+export const INACTIVE_USER_TIME_THRESHOLD = 900000; // 15min
+export const USER_ACTIVITY_THROTTLER_TIME = 1000;
+
+let eventsCount = 0;
+
+// document.getElementById("app").innerHTML = '<h1>User is inactive = false</h1><h3>events count: ${eventsCount}</h3>';
+
+let userActivityTimeout = null;
+
+activateActivityTracker();
+
+function activateActivityTracker() {
+  window.addEventListener("mousemove", resetUserActivityTimeout);
+  window.addEventListener("scroll", resetUserActivityTimeout);
+  window.addEventListener("keydown", resetUserActivityTimeout);
+  window.addEventListener("resize", resetUserActivityTimeout);
+  window.addEventListener("beforeunload", deactivateActivityTracker);
+}
+
+function deactivateActivityTracker() {
+  window.removeEventListener("mousemove", resetUserActivityTimeout);
+  window.removeEventListener("scroll", resetUserActivityTimeout);
+  window.removeEventListener("keydown", resetUserActivityTimeout);
+  window.removeEventListener("resize", resetUserActivityTimeout);
+  window.removeEventListener("beforeunload", deactivateActivityTracker);
+}
+
+function resetUserActivityTimeout() {
+  clearTimeout(userActivityTimeout);
+  eventsCount = eventsCount + 1;
+  userActivityTimeout = setTimeout(() => {
+    inactiveUserAction();
+  }, INACTIVE_USER_TIME_THRESHOLD);
+  console.log('User is inactive = false');
+}
+
+function inactiveUserAction() {
+
+console.log('User is inactive = true');
+window.dispatchEvent(
+    new CustomEvent("modaldelainotactivity", {
+        detail: {
+            userActivity: true,
+        },
+        bubbles: true,
+    })
+);
+}

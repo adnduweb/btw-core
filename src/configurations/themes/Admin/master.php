@@ -142,6 +142,7 @@
     <div id="alerts-wrapper" class="fixed mx-auto top-5 right-5 max-w-lg sm:w-full space-y-5 z-50"></div>
 
     <?= $this->renderSection('modals') ?>
+    <?= $this->include('partials/modal-session-expired') ?>
     <?= $this->include('partials/modal-delete') ?>
     <?= $this->include('partials/modal-auth-display-data') ?>
     <?= $this->include('_notifications')  ?>

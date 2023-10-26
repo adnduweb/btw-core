@@ -21,16 +21,6 @@ class Note extends Entity
         }
     }
 
-    /**
-     * Renders Identifier UUID
-     *
-     * @return int
-     */
-    public function getIdentifierUUID()
-    {
-        return $this->attributes['uuid'] ?? null;
-    }
-
 
     /**
      * Renders Datatable Url
@@ -54,7 +44,7 @@ class Note extends Entity
 
     public function setContentPrep($content)
     {
-        $content = strtr(addslashes($content), array("\n" => "\\n", "\r" => "\\r"));
+        // $content = strtr(addslashes($content), array("\n" => "\\n", "\r" => "\\r"));
         $this->encrypter = new Encrypt(['driver' => 'OpenSSL']);
         return $this->attributes['content'] = $this->encrypter->encrypt($content);
     }
@@ -63,8 +53,20 @@ class Note extends Entity
     {
         $content = $this->attributes['content'] ?? $content;
         $this->encrypter = new Encrypt(['driver' => 'OpenSSL']);
-        return $this->attributes['content'] = $this->encrypter->decrypt($content);
+        $contentNew = $this->encrypter->decrypt($content);
+        $contentNew = strtr(addslashes($contentNew), array("\n" => "\\n", "\r" => "\\r"));
+        return $this->attributes['content'] = $contentNew;
     }
+
+    public function getContentPrepFront($content = null)
+    {
+        $content = $this->attributes['content'] ?? $content;
+        $this->encrypter = new Encrypt(['driver' => 'OpenSSL']);
+        $contentNew = $this->encrypter->decrypt($content);
+        return $this->attributes['content'] = $contentNew;
+    }
+
+
 
     public function getAttrType()
     {
@@ -72,4 +74,8 @@ class Note extends Entity
         return lang('Btw.types.' . $type);
     }
 
+    public function displayShareNoteAction()
+    {
+        return true;
+    }
 }

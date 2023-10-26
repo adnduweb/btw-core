@@ -45,7 +45,8 @@ return [
         'notAuthorized' => "Vous n'avez pas les autorisations nécessaires.",
         'accountProfile' => 'Votre profil',
         'signOut' => 'Se déconnecter',
-        'filters' => 'Filtres'
+        'filters' => 'Filtres',
+        'shareNote' => 'partager cette note'
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
@@ -174,5 +175,7 @@ return [
     'notes' => 'Notes',
     'addNote' => 'Ajouter une note',
     'askAccess' => "Demander un accés",
-    'notesList' => "Liste des notes"
+    'notesList' => "Liste des notes",
+    'share' => "Partager",
+    'viewDetail' => 'Voir le détail'
 ];
