@@ -92,15 +92,6 @@ class AssetController extends Controller
             return false;
         }
 
-        //@todo
-        // list($base, $options) = explode('-', $segments[2]);
-        // print_r($options);
-        // print_r($segments); exit;
-
-        // $year = $segments[0];
-        // $month = $segments[1];
-        // $file = $segments[2];
-
         $year = $segments[0];
         $month = $segments[1];
         $file = $segments[2];
@@ -118,6 +109,7 @@ class AssetController extends Controller
                 ->send();
         }
 
+
         $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' . config('Storage')->disk . '/attachments/' . $year . '/' . $month . '/' . $file);
 
         // choose the right mime type
@@ -126,9 +118,8 @@ class AssetController extends Controller
         return $this->response
             ->setStatusCode(200)
             ->setContentType($mimeType)
-            ->setBody($fileName)
+            ->setBody(file_get_contents($file->getPathName()))
             ->send();
-        // print_r($segments); exit;
 
     }
 
