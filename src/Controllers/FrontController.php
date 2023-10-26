@@ -52,7 +52,7 @@ class FrontController extends BaseController
      *
      * @var string
      */
-    protected $theme = 'App';
+    protected $theme = 'app';
 
     /**
      * Constructor.
@@ -65,7 +65,7 @@ class FrontController extends BaseController
 
 
         $config = [
-            'paths' => [ROOTPATH . 'themes/App', APPPATH . 'Modules/btw-front/src/Views/Front', VENDORPATH . 'adnduweb/btw-core/src/Views'],
+            'paths' => [ROOTPATH . 'themes/app', APPPATH . 'Modules/btw-front/src/Views/Front', VENDORPATH . 'adnduweb/btw-core/src/Views'],
             'cache' => WRITEPATH . '/cache/twig',
             'debug' => config('Btw')->debugTwig
         ];
