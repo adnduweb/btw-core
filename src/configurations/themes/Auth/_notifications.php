@@ -17,16 +17,16 @@
             <div x-data="{
                 show: false,
                 init() {
-                    this.$nextTick(() => this.show = true)
+                    this.$nextTick(() => this.show = true);
  
                     if(this.notification.type == 'error'){
-                        setTimeout(() => this.transitionOut(), 10000)
+                        setTimeout(() => this.transitionOut(), 10000);
                     }else{
-                        setTimeout(() => this.transitionOut(), 2000)
+                        setTimeout(() => this.transitionOut(), 2000);
                     }
                 },
                 transitionOut() {
-                    this.show = false
+                    this.show = false;
  
                     setTimeout(() => this.remove(this.notification), 500) 
                 },

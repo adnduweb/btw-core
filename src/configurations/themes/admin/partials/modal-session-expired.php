@@ -14,10 +14,10 @@
 
                 <div hx-trigger="load">
                     <div class="p-8">
-                <h2 class="text-3xl font-bold" :id="$id('modal-title')">Etes vous toujours la ? </h2>
+                        <h2 class="text-3xl font-bold" :id="$id('modal-title')">Etes vous toujours la ? </h2>
 
                         <!-- Content -->
-                        <p class="mt-2 text-gray-600">Votre session a expiré <span id="decompte"></span></p>
+                        <p class="mt-2 text-gray-600">Votre session va expirer si aucune activité n'est détecté <span id="decompte"></span></p>
 
                         <!-- Buttons -->
                         <!-- <div class="mt-8 flex space-x-2">
@@ -25,12 +25,10 @@
                             </button>
                         </div> -->
                        
-</div>
-<div class="px-4 py-3 text-right sm:px-6 bg-gray-100 rounded-b-md">
-  
-  <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.validate'), 'loading' => "loadingmodaladdcustomer"]) ?>
-
-</div>
+                    </div>
+                    <div class="px-4 py-3 text-right sm:px-6 bg-gray-100 rounded-b-md">
+                        <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.validate'), 'loading' => "loadingmodaladdcustomer"]) ?>
+                    </div>
                 </div>
 
             </div>
