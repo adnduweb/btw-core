@@ -3,6 +3,7 @@
 namespace Btw\Core\Config;
 
 use CodeIgniter\Events\Events;
+
 // // use Btw\Core\Entities\User;
 Events::on('post_system', static function () {
     service('activitys')->save();
@@ -18,6 +19,12 @@ Events::on('post_system', static function () {
 Events::on('post_controller_constructor', function () {
 
     $allSegments = request()->getUri()->getSegments();
+
+    if(!empty($allSegments)) {
+        if(in_array($allSegments[0], ['attachments', 'assets', 'files', 'uploads', 'themes'])) {
+            return false;
+        }
+    }
 
     $admin_area = empty($allSegments) || $allSegments[0] != ADMIN_AREA ? false : true;
 

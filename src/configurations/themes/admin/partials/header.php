@@ -56,7 +56,7 @@
                 <div class="sm:ltr:mr-auto sm:rtl:ml-auto" x-data="{ search: false }" @click.outside="search = false">
                     <form class="sm:relative absolute inset-x-0 sm:top-0 top-1/2 sm:translate-y-0 -translate-y-1/2 sm:mx-0 mx-4 z-10 sm:block hidden" :class="{'!block' : search}" @submit.prevent="search = false">
                         <div class="relative">
-                            <input type="text" hx-post="<?= route_to('search-all-admin'); ?>" hx-trigger="keyup changed delay:1000ms, search, triggerSearchAll" hx-target="#displaySideOver" hx-swap="innerHTML" name="search" hx-indicator=".htmx-indicator" class="form-input noenter ltr:pl-9 rtl:pr-9 ltr:sm:pr-4 rtl:sm:pl-4 ltr:pr-9 rtl:pl-9 peer sm:bg-transparent bg-gray-100 placeholder:tracking-widest" placeholder="<?= lang('Form.general.search'); ?>" />
+                            <input type="text" hx-post="<?= route_to('search-all-admin'); ?>" hx-trigger="keyup changed delay:1000ms, search, triggerSearchAll" hx-target="#displaySideOver" hx-swap="innerHTML" name="search" hx-indicator=".progress" class="form-input noenter ltr:pl-9 rtl:pr-9 ltr:sm:pr-4 rtl:sm:pl-4 ltr:pr-9 rtl:pl-9 peer sm:bg-transparent bg-gray-100 placeholder:tracking-widest" placeholder="<?= lang('Form.general.search'); ?>" />
                             <button type="button" class="absolute w-9 h-9 inset-0 ltr:right-auto rtl:left-auto appearance-none peer-focus:text-primary">
                                 <svg class="mx-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="11.5" cy="11.5" r="9.5" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
