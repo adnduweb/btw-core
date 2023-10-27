@@ -164,8 +164,8 @@ foreach ($columns as $column) : ?>
             endif;
             echo "createdCell: function(td, cellData, rowData, row, col) {";
             if (!isset($column['notClick'])) :
-                echo "td.setAttribute('hx-get', '/admin1198009422/notes/edit/' + rowData.identifier);
-                                 td.setAttribute('x-on:click', 'new CustomEvent(`modalcomponent`, {showNoteEditModal: true})' );td.setAttribute('hx-target', '#createnote');";
+                echo "if(rowData.askAuth == true ){td.setAttribute('hx-get', '/admin1198009422/notes/edit/' + rowData.identifier);
+                                 td.setAttribute('x-on:click', 'new CustomEvent(`modalcomponent`, {showNoteEditModal: true})' );td.setAttribute('hx-target', '#createnote');}";
             endif;
             echo "}";
             echo "},";

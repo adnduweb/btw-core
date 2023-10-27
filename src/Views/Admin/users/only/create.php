@@ -12,7 +12,7 @@
 
     <div class="max-w-3xl mx-auto">
 
-        <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states x-data="app()" x-init="generatePassword()">
+        <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states x-data="appGeneratePassword()" x-init="generatePassword()">
             <?= form_open(route_to('user-only-create'), [
                 'id' => 'kt_users_form_information',
                 'hx-post' => route_to('user-only-create'),
@@ -30,7 +30,7 @@
         </div>
 
     </div>
-
+ 
 </x-admin-box>
 
 <?= $this->endSection() ?>

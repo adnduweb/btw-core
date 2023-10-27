@@ -137,21 +137,19 @@ class ProfileController extends AdminController
                 $user->username = generateUsername($data['last_name'] . ' ' . $data['first_name']);
 
                 // Try saving basic details
+
                 try {
-                    if (!$users->save($user)) {
-                        log_message('error', 'User errors', $users->errors());
-                        $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.unknownSaveError', ['user'])]);
-                    }
-                } catch (DataException $e) {
-                    // Just log the message for now since it's
-                    // likely saying the user's data is all the same
-                    log_message('debug', 'SAVING USER: ' . $e->getMessage());
+                    $users->save($user);
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
+                    $this->response->triggerClientEvent('updateUserCurrent');
+                    $this->response->setReswap('innerHTML show:#information:top');
+                    log_message('info', 'User save {user}', ['user' => json_encode($user, JSON_UNESCAPED_SLASHES)]);
+                } catch (\CodeIgniter\Database\Exceptions\DataException $e) {
+                    $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $e->getMessage()]);
+                    log_message('debug', 'User save: ' . $e->getMessage());
                 }
 
 
-                $this->response->triggerClientEvent('updateUserCurrent');
-                $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
-                $this->response->setReswap('innerHTML show:#general:top');
 
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,
@@ -516,18 +514,22 @@ class ProfileController extends AdminController
             $company->logo = $result;
         }
 
+        $company->updated_at = date('Y-m-d H:i:s');
+
         // Try saving basic details
         try {
-            if (!$companies->save($company, true)) {
-                log_message('error', 'Company errors', $companies->errors());
-                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $companies->errors()]);
-            }
-        } catch (\Exception $e) {
+            $companies->save($company);
+            $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.company')])]);
+            $this->response->triggerClientEvent('updateCompanyCurrent');
+            $this->response->setReswap('innerHTML show:#company:top');
+            log_message('info', 'Company save {companies}', ['companies' => json_encode($company, JSON_UNESCAPED_SLASHES)]);
+        } catch (\CodeIgniter\Database\Exceptions\DataException $e) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $e->getMessage()]);
+            $this->response->setReswap('innerHTML show:#company:top');
             log_message('debug', 'SAVING Company: ' . $e->getMessage());
         }
 
 
-        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
         return view($this->viewPrefix . 'cells\form_cell_company', [
             'user' => $user,
             'currencies' => $allCurrencies,

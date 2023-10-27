@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-
+ 
 
     <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
 
@@ -125,7 +125,7 @@
             <label class="block text-xs font-semibold text-gray-500 mb-2">
                 <?= lang('Form.users.passwordLength'); ?>
             </label>
-            <input class="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="Length" type="number" min="6" max="30" step="1" x-model="charsLength" @input="generatePassword()" />
+            <input class="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-blue-500 transition-colors" placeholder="Length" type="number" min="6" max="30" step="1" x-model="charsLength" @input="generatePassword()" />
             <input class="w-full" type="range" x-model="charsLength" min="6" max="30" step="1" @input="generatePassword()">
         </div>
         <div class="flex -mx-2 mb-2">
@@ -155,15 +155,15 @@
             </legend>
             <div class="-space-y-px rounded-md bg-white">
                 <?php foreach ($groups as $group => $info) : ?>
-                    <!-- Checked: "z-10 border-indigo-200 bg-indigo-50", Not Checked: "border-gray-200" -->
+                    <!-- Checked: "z-10 border-blue-200 bg-blue-50", Not Checked: "border-gray-200" -->
                     <label class="<?= ($group === array_key_first($groups)) ? 'rounded-tl-md' : '' ?> <?= ($group === array_key_last($groups)) ? 'rounded-bl-md' : '' ?> relative flex cursor-pointer border p-4 focus:outline-none">
-                        <input class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-indigo-600 border-gray-300 focus:ring-indigo-600" type="checkbox" name="currentGroup[]" value="<?= $group ?>" <?php if (isset($currentGroup[$group])) : ?> checked <?php endif ?> aria-labelledby="currentGroup-0-label" aria-describedby="currentGroup-0-description">
+                        <input class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-600" type="checkbox" name="currentGroup[]" value="<?= $group ?>" <?php if (isset($currentGroup[$group])) : ?> checked <?php endif ?> aria-labelledby="currentGroup-0-label" aria-describedby="currentGroup-0-description">
                         <span class="ml-3 flex flex-col">
-                            <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                            <!-- Checked: "text-blue-900", Not Checked: "text-gray-900" -->
                             <span id="privacy-setting-0-label" class="block text-sm font-medium">
                                 <?= esc($info['title']) ?>
                             </span>
-                            <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                            <!-- Checked: "text-blue-700", Not Checked: "text-gray-500" -->
                             <span id="privacy-setting-0-description" class="block text-sm">
                                 <?= esc($info['description']) ?>
                             </span>

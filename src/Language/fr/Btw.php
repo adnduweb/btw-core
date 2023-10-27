@@ -46,7 +46,8 @@ return [
         'accountProfile' => 'Votre profil',
         'signOut' => 'Se déconnecter',
         'filters' => 'Filtres',
-        'shareNote' => 'partager cette note'
+        'shareNote' => 'partager cette note',
+        'company' => "entreprise"
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
@@ -177,5 +178,7 @@ return [
     'askAccess' => "Demander un accés",
     'notesList' => "Liste des notes",
     'share' => "Partager",
-    'viewDetail' => 'Voir le détail'
+    'viewDetail' => 'Voir le détail', 
+    'notConnected' => 'Pas de connexion',
+    
 ];

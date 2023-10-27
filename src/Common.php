@@ -6,7 +6,6 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Config\View;
 use Btw\Core\View\Vite;
 
-
 if (!function_exists('newUUID')) {
     function newUUID()
     {
@@ -17,108 +16,6 @@ if (!function_exists('newUUID')) {
     }
 }
 
-// if (!function_exists('vite_admin')) {
-//     function vite_admin(array $paths)
-//     {
-
-//         $manifest = FCPATH . 'admin/manifest.json';
-
-//         $result = [
-//             'js' => null,
-//             'css' => null
-//         ];
-
-//         $html = '';
-
-//         # Check if vite is running.
-//         $entryFile = env('VITE_ORIGIN_ADMIN') . '/' . env('VITE_RESOURCES_DIR') . '/' . env('VITE_ENTRY_FILE_ADMIN');
-
-//         $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
-//         $html .= $result['js'];
-
-//         # If vite isn't running, then return the bundled resources.
-//         if (empty($result['js']) && is_file($manifest)) {
-//             # Get the manifest content.
-//             $manifest = file_get_contents($manifest);
-//             # You look much pretty as a php object =).
-//             $manifest = json_decode($manifest);
-
-//             # Now, we will get all js files and css from the manifest.
-//             foreach ($manifest as $file) {
-//                 // print_r($file);exit; 
-//                 # Check extension
-//                 $fileExtension = substr($file->file, -3, 3);
-
-//                 # Generate js tag.
-//                 if ($fileExtension === '.js' && isset($file->isEntry) && $file->isEntry === true && (!isset($file->isDynamicEntry) || $file->isDynamicEntry !== true)) {
-//                     $result['js'] .= '<script type="module" src="/admin/' . $file->file . '"></script>' . "\n";
-//                     $html .= $result['js'];
-//                 }
-
-//                 if (!empty($file->css)) {
-//                     foreach ($file->css as $cssFile) {
-//                         $result['css'] .= '<link rel="stylesheet" href="/admin/' . $cssFile . '" />' . "\n";
-//                         $html .= $result['css'];
-//                     }
-//                 }
-//             }
-//         }
-
-//         return $html;
-//     }
-// }
-
-// if (!function_exists('vite_front')) {
-//     function vite_front(array $paths)
-//     {
-
-//         $manifest = FCPATH . 'front/manifest.json';
-
-//         $result = [
-//             'js' => null,
-//             'css' => null
-//         ];
-
-//         $html = '';
-
-//         # Check if vite is running.
-//         $entryFile = env('VITE_ORIGIN_FRONT') . '/' . env('VITE_RESOURCES_DIR') . '/' . env('VITE_ENTRY_FILE_FRONT');
-
-//         $result['js'] = @file_get_contents($entryFile) ? '<script type="module" src="' . $entryFile . '"></script>' : null;
-//         $html .= $result['js'];
-
-//         # If vite isn't running, then return the bundled resources.
-//         if (empty($result['js']) && is_file($manifest)) {
-//             # Get the manifest content.
-//             $manifest = file_get_contents($manifest);
-//             # You look much pretty as a php object =).
-//             $manifest = json_decode($manifest);
-
-//             # Now, we will get all js files and css from the manifest.
-//             foreach ($manifest as $file) {
-//                 // print_r($file);exit; 
-//                 # Check extension
-//                 $fileExtension = substr($file->file, -3, 3);
-
-//                 # Generate js tag.
-//                 if ($fileExtension === '.js' && isset($file->isEntry) && $file->isEntry === true && (!isset($file->isDynamicEntry) || $file->isDynamicEntry !== true)) {
-//                     $result['js'] .= '<script type="module" src="/front/' . $file->file . '"></script>' . "\n";
-//                     $html .= $result['js'];
-//                 }
-
-//                 if (!empty($file->css)) {
-//                     foreach ($file->css as $cssFile) {
-//                         $result['css'] .= '<link rel="stylesheet" href="/front/' . $cssFile . '" />' . "\n";
-//                         $html .= $result['css'];
-//                     }
-//                 }
-//             }
-//         }
-
-//         return $html;
-//     }
-// }
-
 if (!function_exists('vite_tags')) {
     function vite_tags($entryPoints, $buildDirectory = null): string
     {
@@ -126,7 +23,7 @@ if (!function_exists('vite_tags')) {
             $entryPoints = [$entryPoints];
         }
 
-        $vite = new Vite;
+        $vite = new Vite();
 
         return $vite($entryPoints, $buildDirectory);
     }
@@ -415,15 +312,15 @@ if (!function_exists('viewBtw')) {
 if (!function_exists('getIp')) {
     function getIp()
     {
-        //whether ip is from the share internet  
+        //whether ip is from the share internet
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
         }
-        //whether ip is from the proxy  
+        //whether ip is from the proxy
         elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
-        //whether ip is from the remote address  
+        //whether ip is from the remote address
         else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
@@ -808,20 +705,20 @@ if (!function_exists('buildPermissionsTable')) {
     /**
      * Assumes Codeigniter - Shield - Creates a table row(s) to populate the Permissions Table.
      * This builds from the Shield auth_permissions_users DB Table
-     * @param $user->getPermissions() should be stored like: "group.value" or "controller.permission" 
+     * @param $user->getPermissions() should be stored like: "group.value" or "controller.permission"
      *
      * This function will split from the "." and populate the table with:
      *      Group - Permission - Permission - Permission - Permission
      *      Controller - Permission - Permission - Permission - Permission
      *      ** Currently set to Create - Read - Update - Delete
-     * 
+     *
      * @param $array = $user->getPermissions();
      * @param $permissionTable = buildPermissionsTable($array);
      * @param echo $permissionTable = build out HTML Table.
-     * 
+     *
      * @return array|msg Returns a HTML Table array or `No Data` if `$array` is invalid or empty.
-     * 
-     * 
+     *
+     *
      */
 
     function buildPermissionsTable(array $array)
@@ -1017,39 +914,40 @@ if (!function_exists('getNameCustomer')) {
 
 
 if (!function_exists('getUUIDByID')) {
-    function getUUIDByID(int $id, object $models, $withDeleted = false )
+    function getUUIDByID(int $id, object $models, $withDeleted = false)
     {
-        if($withDeleted == true){
+        if($withDeleted == true) {
             if (!$model = $models->select('uuid')->where('id', $id)->withDeleted()->first()) {
                 throw new \Exception('Incorrect model uuid.');
             }
-        }else{
+        } else {
 
             if (!$model = $models->select('uuid')->where('id', $id)->first()) {
                 throw new \Exception('Incorrect model uuid.');
             }
         }
-        
+
         return $model->uuid;
     }
 }
 
 if (!function_exists('getIDByUUID')) {
-    function getIDByUUID(string $uuid, object $models, $sep = '-', $withDeleted = false )
+    function getIDByUUID(string $uuid, object $models, $sep = '-', $withDeleted = false)
     {
-        if ($sep != '-')
+        if ($sep != '-') {
             $uuid = str_replace($sep, '-', $uuid);
+        }
 
-        if($withDeleted == true){
+        if($withDeleted == true) {
             if (!$model = $models->select('id')->where('uuid', $uuid)->withDeleted()->first()) {
                 throw new \Exception('Incorrect model id.');
             }
-        }else{
+        } else {
             if (!$model = $models->select('id')->where('uuid', $uuid)->first()) {
                 throw new \Exception('Incorrect model id.');
             }
         }
-       
+
         return $model->getIdentifier();
     }
 }
@@ -1079,7 +977,7 @@ if (!function_exists('detectAgent')) {
         $htmlClass = '';
 
         if ($agent->isBrowser()) {
-            $htmlClass .= uniforme($agent->getBrowser()) .  ' ';
+            $htmlClass .= uniforme($agent->getBrowser()) . ' ';
             $htmlClass .= uniforme($agent->getBrowser() . ' ' . $agent->getVersion());
         } elseif ($agent->isRobot()) {
             $htmlClass .= uniforme($agent->getRobot());

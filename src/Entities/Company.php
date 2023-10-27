@@ -14,34 +14,7 @@ class Company extends Entity
         'user_id'   => 'int',
     ];
 
-    protected $attributes = [
-        'uuid' => null,
-        'user_id' => null,
-        'code_client' => null,
-        'country' => 'FR',
-        'state' => null,
-        'currency_code' => 3,
-        'type_company' => 1,
-        'company' => null,
-        'lastname' => null,
-        'firstname' => null,
-        'email' => null,
-        'address1' => null,
-        'address2' => null,
-        'postcode' => null,
-        'city' => null,
-        'phone' => null,
-        'phone_mobile' => null,
-        'vat_number' => null,
-        'siret' => null,
-        'ape' => null,
-        'logo' => null,
-        'active' => null,
-        'order' => null,
-        'created_at' => null,
-        'updated_at' => null,
-        'deleted_at' => null,
-    ];
+    protected $attributes = [];
 
 
     /**

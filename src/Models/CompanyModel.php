@@ -11,6 +11,7 @@ class CompanyModel extends Model
     protected $primaryKey    = 'id';
     protected $returnType    = Company::class;
     protected $useTimestamps = true;
+    protected bool $allowEmptyInserts = false;
     protected $allowedFields = [
         'uuid',
         'user_id',

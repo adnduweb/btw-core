@@ -97,7 +97,7 @@ class NoteController extends AdminController
                 if (session()->get('note_' . $row->getIdentifier()) && ((time() - session()->get('note_' . $row->getIdentifier())) < 3600)) :
                     return getExcerpt($row->getContentPrep());
                 else :
-                    return '<span class="bg-slate-600 hover:bg-slate-700 mx-auto flex items-center justify-center rounded-full border border-transparent px-10 py-2.5 font-medium text-white transition-colors sm:w-auto">' . lang('Btw.askAccess') . '</span>';
+                    return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $row]);
 
                 endif;
             })
@@ -112,6 +112,17 @@ class NoteController extends AdminController
                     'actions' => DataTable::actions(config('Note')->actions, $row)
                 ]);
             }, 'last')
+
+            ->add('askAuth', function ($row) {
+                $row = new Note((array) $row);
+                if (session()->get('note_' . $row->getIdentifier()) && ((time() - session()->get('note_' . $row->getIdentifier())) < 3600)) :
+                    return true;
+                else :
+                    return false;
+
+                endif;
+            }, 'last')
+
             ->filter(function ($datatable, $request) {
 
                 if (!empty($request->daterange)) {
