@@ -10,6 +10,4 @@
  */
 defined('BONFIRE_VERSION') || define('BONFIRE_VERSION', '2.0.0-dev');
 defined('BTPATH') || define('BTPATH', realpath(__DIR__ . '/../') . '/');
-defined('ADMIN_AREA') || define('ADMIN_AREA', env('app.areaAdmin'));
-
-
+defined('ADMIN_AREA') || define('ADMIN_AREA', env('app.areaAdmin', 'admin'));

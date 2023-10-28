@@ -58,16 +58,36 @@ class BtwSeeder extends Seeder
     }
     private function publishThemes()
     {
-        $source      = BTPATH . '../themes';
+        $source      = BTPATH . 'configurations/themes';
         $destination = APPPATH . '../themes';
+
+        $sourcePublic      = BTPATH . 'configurations/public';
+        $destinationPublic = APPPATH . '../public';
+
+        $admin = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin';
+        if (!is_dir($admin) && !@mkdir($admin, 0775, true)) {
+            throw new \Exception('impossible de créer le dossier admin');
+        }
+
+        $front = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'front';
+        if (!is_dir($front) && !@mkdir($front, 0775, true)) {
+            throw new \Exception('impossible de créer le dossier front');
+        }
+
+        $front_img = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'front' . DIRECTORY_SEPARATOR . 'img';
+        if (!is_dir($front_img) && !@mkdir($front_img, 0775, true)) {
+            throw new \Exception('impossible de créer le dossier front/img');
+        }
 
         $publisher = new Publisher();
         $publisher->copyDirectory($source, $destination);
+        $publisher->copyDirectory(BTPATH . 'configurations/package.json', APPPATH . '../package.json');
+        $publisher->copyDirectory(BTPATH . 'configurations/vite.admin.config.js', APPPATH . '../vite.admin.config.js');
+        $publisher->copyDirectory(BTPATH . 'configurations/vite.front.config.js', APPPATH . '../vite.front.config.js');
+        $publisher->copyDirectory(BTPATH . 'configurations/tailwind.admin.config.js', APPPATH . '../tailwind.admin.config.js');
+        $publisher->copyDirectory(BTPATH . 'configurations/tailwind.front.config.js', APPPATH . '../tailwind.front.config.js');
 
-        //logo
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/admin/img/logo-adn.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/img/logo-adn-grey.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/admin/img/logo-adn-grey.png');
-        $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-small.png', APPPATH . '../public/admin/img/logo-adn-small.png');
+        //Dir Public
+        $publisher->copyDirectory($sourcePublic, $destinationPublic);
     }
 }

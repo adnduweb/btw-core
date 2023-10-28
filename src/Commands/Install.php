@@ -241,10 +241,10 @@ class Install extends BaseCommand
 
     private function publishThemes()
     {
-        $source      = BTPATH . 'configurarions/themes';
+        $source      = BTPATH . 'configurations/themes';
         $destination = APPPATH . '../themes';
 
-        $sourcePublic      = BTPATH . 'configurarions/public';
+        $sourcePublic      = BTPATH . 'configurations/public';
         $destinationPublic = APPPATH . '../public';
 
         $admin = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin';
