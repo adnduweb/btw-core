@@ -1,7 +1,7 @@
-# btw-core
+##  btw-core
 module core Ci4
 
-# Installation
+##  Installation
 
     composer create-project codeigniter4/appstarter my-app
 
@@ -26,13 +26,18 @@ Installer le package
     php spark db:seed Btw\\Core\\Database\\Seeds\\DatabaseSeeder
     npm install
 
-# Lancement de l'application
+## Lancement de l'application
     php spark serve
     npm run dev
 
     composer dump-autoload --optimize --no-dev --classmap-authoritative
     
 
+## Starting the Scheduler
+
+You only need to add a single line to your cronjob: 
+
+    > * * * * * php /path-to-your-project/spark cronjob:run >> /dev/null 2>&1 >> /dev/null 2>&1
 
 # Inspirations
 https://demo.cartify.dev/admin/settings
@@ -62,6 +67,7 @@ https://www.raymondcamden.com/2022/07/29/building-related-selects-in-alpinejs ->
 https://github.com/alpinejs/alpine/discussions/2865 - toasts
 https://github.com/kenjis/ci4-album
 https://www.builder.io/blog/htmx-vs-react
+https://github.com/daycry/cronjob
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604

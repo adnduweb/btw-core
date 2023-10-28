@@ -26,7 +26,8 @@
 		"dompdf/dompdf": "^2.0",
 		"phpoffice/phpspreadsheet": "^1.29",
 		"illuminate/collections": "^10.27",
-		"michalsn/codeigniter-signed-url": "^2.1"
+		"michalsn/codeigniter-signed-url": "^2.1",
+		"dragonmantank/cron-expression": "^3.3"
 	},
 	"require-dev": {
 		"codeigniter/coding-standard": "^1.1",

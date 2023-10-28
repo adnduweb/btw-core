@@ -12,7 +12,7 @@ use Btw\Core\Libraries\Activitys;
 use Btw\Core\Config\Activitys as ActivitysConfig;
 use Btw\Core\Libraries\Storage\FileSystem;
 use Btw\Core\Libraries\Storage\StorageFactory;
-
+use Btw\Core\Libraries\Cron\Scheduler;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\UserAgent;
@@ -44,7 +44,6 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
-
     /**
      * The Renderer class is the class that actually displays a file to the user.
      * The default View class within CodeIgniter is intentionally simple, but this
@@ -182,11 +181,11 @@ class Services extends BaseService
         return new MenuManager();
     }
 
-     /**
-     * Returns the view metadata manager.
-     *
-     * @return Metadata
-     */
+    /**
+    * Returns the view metadata manager.
+    *
+    * @return Metadata
+    */
     public static function viewMeta(bool $getShared = true)
     {
         if ($getShared) {
@@ -253,16 +252,16 @@ class Services extends BaseService
     }
 
 
-     /**
-     * The storage class provides a simple way to store and retrieve
-     * complex file to local or external service.
-     *
-     * @param null $disk
-     * @param Storage|null $config
-     * @param boolean $getShared
-     *
-     * @return FileSystem
-     */
+    /**
+    * The storage class provides a simple way to store and retrieve
+    * complex file to local or external service.
+    *
+    * @param null $disk
+    * @param Storage|null $config
+    * @param boolean $getShared
+    *
+    * @return FileSystem
+    */
     public static function storage($disk = null, Storage $config = null, bool $getShared = true)
     {
         $config = $config ?? new Storage();
@@ -274,4 +273,19 @@ class Services extends BaseService
         return StorageFactory::getDisk($config, $disk);
     }
 
+    /**
+     * Returns the Task Scheduler
+     *
+     * @param boolean $getShared
+     *
+     * @return \Daycry\CronJob\Scheduler
+     */
+    public static function scheduler(bool $getShared = true): Scheduler
+    {
+        if ($getShared) {
+            return static::getSharedInstance('scheduler');
+        }
+
+        return new Scheduler();
+    }
 }
