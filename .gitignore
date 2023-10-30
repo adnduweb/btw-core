@@ -54,7 +54,6 @@ Vagrantfile
 
 # Netbeans
 nbproject/
-build/
 nbbuild/
 dist/
 nbdist/

@@ -1,0 +1,96 @@
+{
+  "node_modules/intl-tel-input/build/img/flags.png": {
+    "file": "assets/flags-54dc5bc4.png",
+    "src": "node_modules/intl-tel-input/build/img/flags.png"
+  },
+  "node_modules/intl-tel-input/build/img/flags@2x.png": {
+    "file": "assets/flags@2x-9bd00899.png",
+    "src": "node_modules/intl-tel-input/build/img/flags@2x.png"
+  },
+  "themes/admin/css/app.css": {
+    "file": "assets/app-ec1b4283.css",
+    "isEntry": true,
+    "src": "themes/admin/css/app.css"
+  },
+  "themes/admin/css/easymde.min.css": {
+    "file": "assets/easymde.min-38063b9e.css",
+    "isEntry": true,
+    "src": "themes/admin/css/easymde.min.css"
+  },
+  "themes/admin/css/fancybox.css": {
+    "file": "assets/fancybox-62e850d0.css",
+    "isEntry": true,
+    "src": "themes/admin/css/fancybox.css"
+  },
+  "themes/admin/css/flatpickr.min.css": {
+    "file": "assets/flatpickr.min-ef5e17ae.css",
+    "isEntry": true,
+    "src": "themes/admin/css/flatpickr.min.css"
+  },
+  "themes/admin/css/font-awesome.min.css": {
+    "file": "assets/font-awesome.min-7a34bed3.css",
+    "isEntry": true,
+    "src": "themes/admin/css/font-awesome.min.css"
+  },
+  "themes/admin/css/fullcalendar.min.css": {
+    "file": "assets/fullcalendar.min-6d64b025.css",
+    "isEntry": true,
+    "src": "themes/admin/css/fullcalendar.min.css"
+  },
+  "themes/admin/css/highlight.min.css": {
+    "file": "assets/highlight.min-46cd66a0.css",
+    "isEntry": true,
+    "src": "themes/admin/css/highlight.min.css"
+  },
+  "themes/admin/css/markdown-editor.css": {
+    "file": "assets/markdown-editor-854cb2a8.css",
+    "isEntry": true,
+    "src": "themes/admin/css/markdown-editor.css"
+  },
+  "themes/admin/css/nice-select.css": {
+    "file": "assets/nice-select-b1ccd362.css",
+    "isEntry": true,
+    "src": "themes/admin/css/nice-select.css"
+  },
+  "themes/admin/css/nice-select2.css": {
+    "file": "assets/nice-select2-8faa6a66.css",
+    "isEntry": true,
+    "src": "themes/admin/css/nice-select2.css"
+  },
+  "themes/admin/css/nouislider.min.css": {
+    "file": "assets/nouislider.min-3771034d.css",
+    "isEntry": true,
+    "src": "themes/admin/css/nouislider.min.css"
+  },
+  "themes/admin/css/quill.snow.css": {
+    "file": "assets/quill.snow-2ca20ed0.css",
+    "isEntry": true,
+    "src": "themes/admin/css/quill.snow.css"
+  },
+  "themes/admin/css/swiper-bundle.min.css": {
+    "file": "assets/swiper-bundle.min-8ac2745f.css",
+    "isEntry": true,
+    "src": "themes/admin/css/swiper-bundle.min.css"
+  },
+  "themes/admin/css/tippy.css": {
+    "file": "assets/tippy-79ba074f.css",
+    "isEntry": true,
+    "src": "themes/admin/css/tippy.css"
+  },
+  "themes/admin/js/app.css": {
+    "file": "assets/app-8d5ae6d0.css",
+    "src": "themes/admin/js/app.css"
+  },
+  "themes/admin/js/app.js": {
+    "assets": [
+      "assets/flags-54dc5bc4.png",
+      "assets/flags@2x-9bd00899.png"
+    ],
+    "css": [
+      "assets/app-8d5ae6d0.css"
+    ],
+    "file": "assets/app-0f6fcfa2.js",
+    "isEntry": true,
+    "src": "themes/admin/js/app.js"
+  }
+}
