@@ -46,11 +46,11 @@ class BtwSeeder extends Seeder
         //Search
         $cellsearch = service('settings')->get('Search.cellsearch');
         if (!empty($cellsearch)) {
-            $cellsearch = array_merge($cellsearch, ['Btw\Customer\Cells\SearchCells::search']);
+            $cellsearch = array_merge($cellsearch, ['Btw\Core\Cells\SearchCells::search']);
             $cellsearch = array_unique($cellsearch);
             service('settings')->set('Search.cellsearch', $cellsearch);
         } else {
-            service('settings')->set('Search.cellsearch', ['Btw\Customer\Cells\SearchCells::search']);
+            service('settings')->set('Search.cellsearch', ['Btw\Core\Cells\SearchCells::search']);
         }
 
         //Update themes

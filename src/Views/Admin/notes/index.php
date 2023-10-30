@@ -108,7 +108,7 @@
                 'order': [
                     [1, 'asc']
                 ],
-                "pageLength": <?= Config('Customer')->customerLenght; ?>,
+                "pageLength": <?= Config('Note')->pageLenght; ?>,
                 "lengthChange": true,
                 "stateSave": true,
                 'rows': {
