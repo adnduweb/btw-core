@@ -12,7 +12,7 @@
 namespace Btw\Core\Controllers\Admin;
 
 use Btw\Core\Controllers\AdminController;
-use Btw\Core\Cells\CellManager;
+use Btw\Core\Libraries\StatsManager;
 
 /**
  * Class Dashboard
@@ -22,7 +22,7 @@ use Btw\Core\Cells\CellManager;
 class DashboardController extends AdminController
 {
 
-    protected $viewPrefix = 'Btw\Core\Views\Admin\\';
+    protected $viewPrefix = 'Btw\Core\Views\Admin\\dashboard\\';
 
     /**
      * Displays the site's initial page.
@@ -32,8 +32,8 @@ class DashboardController extends AdminController
         // Add the page title
         service('viewMeta')->setTitle('My Site');
 
-        return $this->render($this->viewPrefix . 'dashboard', [
-            'cells' => new CellManager(),
+        return $this->render($this->viewPrefix . 'index', [
+            'cells' => new StatsManager(),
         ]);
     }
 }
