@@ -94,10 +94,10 @@ class NoteController extends AdminController
 
             ->edit('content', function ($row) {
                 $row = new Note((array) $row);
-                if (session()->get('note_' . $row->getIdentifier()) && ((time() - session()->get('note_' . $row->getIdentifier())) < 3600)) :
+                if (session()->get($this->sessionAskAuth . '_' . $row->getIdentifier()) && ((time() - session()->get($this->sessionAskAuth . '_' . $row->getIdentifier())) < 3600)) :
                     return getExcerpt($row->getContentPrep());
                 else :
-                    return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $row]);
+                    return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $row,]);
 
                 endif;
             })
@@ -115,7 +115,7 @@ class NoteController extends AdminController
 
             ->add('askAuth', function ($row) {
                 $row = new Note((array) $row);
-                if (session()->get('note_' . $row->getIdentifier()) && ((time() - session()->get('note_' . $row->getIdentifier())) < 3600)) :
+                if (session()->get($this->sessionAskAuth . '_' . $row->getIdentifier()) && ((time() - session()->get($this->sessionAskAuth . '_' . $row->getIdentifier())) < 3600)) :
                     return true;
                 else :
                     return false;
@@ -216,9 +216,9 @@ class NoteController extends AdminController
             $this->response->triggerClientEvent('openmodalcreatenote', true);
             $this->response->triggerClientEvent('modalcomponent', true);
 
-            if (!session()->get('note_' . $note->getIdentifier()) && !((time() - session()->get('note_' . $note->getIdentifier())) < 3600)) :
-                return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $note]);
-            endif;
+            // if (!session()->get($this->sessionAskAuth . '_' . $note->getIdentifier()) && !((time() - session()->get($this->sessionAskAuth . '_' . $note->getIdentifier())) < 3600)) :
+            //     return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $note]);
+            // endif;
 
             return view($this->viewPrefix . 'cells\form_cell_infos_edit_tech', [
                 'noteModal' => $note,

@@ -272,6 +272,12 @@ if (!function_exists('render')) {
         $viewJavascript = service('viewJavascript');
         $data['viewJavascript'] = $viewJavascript;
 
+        $controllerName = service('router')->controllerName();
+        $handle = explode('\\', $controllerName);
+        $end = end($handle);
+        $data['_controller'] = strtolower(str_replace('Controller', '', $end));
+        $data['_method'] = service('router')->methodName();
+
         return $renderer->setData($data)
             ->render($view, $options, true);
     }

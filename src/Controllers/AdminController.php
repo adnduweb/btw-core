@@ -19,6 +19,7 @@ class AdminController extends BaseController
     protected $langueCurrent;
     protected $_controller;
     protected $_method;
+    protected $sessionAskAuth;
 
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
@@ -32,12 +33,13 @@ class AdminController extends BaseController
 
         $this->langueCurrent = service('settings')->get('Btw.language_bo', 'user:' . Auth()->user()->id) ?? 'fr';
         service('language')->setLocale($this->langueCurrent);
-        setlocale(LC_TIME, service('request')->getLocale() . '_' .  service('request')->getLocale());
+        setlocale(LC_TIME, service('request')->getLocale() . '_' . service('request')->getLocale());
 
         $controllerName = service('router')->controllerName();
         $handle = explode('\\', $controllerName);
         $end = end($handle);
         $this->_controller = strtolower(str_replace('Controller', '', $end));
         $this->_method = service('router')->methodName();
+        $this->sessionAskAuth = $this->_controller . '-' . strtolower($this->_method);
     }
 }

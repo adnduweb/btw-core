@@ -1,18 +1,14 @@
 <?= $this->extend(config('Themes')->views['layout_admin']) ?>
 
 <?= $this->section('title') ?>
-<?= lang('Auth.login') ?>
+<?= lang('Btw.Dashboard') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
+<?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.Dashboard')]) ?>
+<?= $cells->render();  ?>
+<?= $this->endSection() ?> 
 
-
-<x-page-head>Dashboard </x-page-head>
-
-<div class="panel px-0 border-[#e0e6ed] dark:border-[#1b2e4b]">
-    <div class="px-5">
-        <?= $cells->render();  ?>
-    </div>
-</div>
-
+<?= $this->section('scripts') ?>
+<?= $cells->scripts();  ?>
 <?= $this->endSection() ?>
