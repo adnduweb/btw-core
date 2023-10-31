@@ -72,6 +72,20 @@ class VisitsFilter implements FilterInterface
             return;
         }
 
+        // Return false if assets
+        $allSegments = $request->getUri()->getSegments();
+        if(!empty($allSegments)) {
+            if(in_array($allSegments[0], ['attachments', 'assets', 'files', 'uploads', 'themes', 'svg'])) {
+                return;
+            }
+        }
+
+        // Return false if admin
+        $admin_area = empty($allSegments) || $allSegments[0] != ADMIN_AREA ? false : true;
+        if ($admin_area == true) {
+            return;
+        }
+
         // Verify helper function from codeigniter4/authentication-implementation
         if (!function_exists('user_id') && config('Visits')->trackingMethod === 'user_id') {
             throw new RuntimeException('The user_id() function must be available to track by user ID.'); // @codeCoverageIgnore

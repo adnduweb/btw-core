@@ -91,8 +91,7 @@ class Btw extends BaseConfig
     public $themebo = 'Admin';
 
     public array $cellsDashboard = [
-        'Btw\Core\Controllers\Admin\WidgetsController::chart_view_hx'
-
+        'Btw\Core\Cells\StatsDashbardCells::render'
     ];
 
     public array $cellsearch = [];

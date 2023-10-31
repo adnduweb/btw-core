@@ -1,3 +1,4 @@
+<!-- © ADN DU WEB CMS by adnduweb.com ® -->
 <!doctype html>
 <html lang="{{ service('language').getLocale()|raw }}" data-theme="cupcake" class="scroll-smooth light no-touch">
 
@@ -11,7 +12,7 @@
 		{{  vite_tags(['themes/app/css/app.css', 'themes/app/js/app.js'], 'front')|raw  }}
 		{% include '_partials/schema.twig' ignore missing %}
 	</head>
-	
+
 	<body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 {{ class }}">
 
 		{% include '_partials/header/header-2.twig' ignore missing %}
@@ -24,7 +25,7 @@
 
 
 			{# {{ asset_link('app/js/feather.js', 'js')|raw }}
-																																																										{{ asset_link('app/js/app.js', 'js')|raw }} #}
-			{% block script %}{% endblock %}     
+																																																																									{{ asset_link('app/js/app.js', 'js')|raw }} #}
+			{% block script %}{% endblock %}
 		</body>
 	</html>

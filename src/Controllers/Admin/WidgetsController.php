@@ -21,7 +21,6 @@ use Bonfire\Dashboard\CellManager;
  */
 class WidgetsController extends AdminController
 {
-
     protected string $baseURL = 'admin/widgets';
     protected $viewPrefix = 'Btw\Core\Views\Admin\widgets\\';
 
@@ -100,4 +99,6 @@ class WidgetsController extends AdminController
         // $this->response->triggerClientEvent('swap', [json_encode($data)]);
         return $this->response->setJSON($data);
     }
+
+    public function scripts() {}
 }

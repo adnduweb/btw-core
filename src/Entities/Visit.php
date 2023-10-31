@@ -25,6 +25,7 @@ class Visit extends Entity
         'fragment'   => 'string',
         'views'      => 'int',
     ];
+    protected $agent;
 
     /**
      * Converts string IP addresses to their database integer format.
@@ -58,5 +59,14 @@ class Visit extends Entity
         }
 
         return null;
+    }
+
+
+    public function getAgent()
+    {
+        $this->agent = new \WhichBrowser\Parser($this->attributes['user_agent']);
+        $this->attributes['agent'] = $this->agent;
+
+        return $this->attributes['agent'];
     }
 }

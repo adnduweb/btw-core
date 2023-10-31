@@ -202,11 +202,11 @@ class AssetController extends Controller
         $file = end($segments);
         $folder = str_replace($file, '', $total)   ;
 
-        if (($fileName = file_get_contents(WRITEPATH . 'uploads/' . $folder . $file)) === false) {
+        if (($fileName = file_get_contents(WRITEPATH . DIRECTORY_SEPARATOR . $folder . $file)) === false) {
             return false;
         }
 
-        $file = new \CodeIgniter\Files\File(WRITEPATH . 'uploads/' . $folder . $file);
+        $file = new \CodeIgniter\Files\File(WRITEPATH . DIRECTORY_SEPARATOR . $folder . $file);
 
         // choose the right mime type
         $mimeType = $file->getMimeType();

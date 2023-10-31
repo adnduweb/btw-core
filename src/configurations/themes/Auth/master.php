@@ -1,3 +1,4 @@
+<!-- © ADN DU WEB CMS by adnduweb.com ® -->
 <!doctype html>
 <html dir="ltr" data-theme="retro" lang="<?= service('language')->getLocale(); ?>">
 

@@ -56,4 +56,27 @@ class Visits extends BaseConfig
      * Note: requires using the "after" filter method.
      */
     public bool $requireHtml = false;
+
+    public array $browsers = [
+        'safari' => [
+            'icon' => 'admin/images/icons/safari.svg',
+            'from' => 'a71d31',
+            'to' => '3f0d12',
+        ],
+        'chrome' => [
+            'icon' => 'admin/images/icons/chrome.svg',
+            'from' => '009ffd',
+            'to' => '2a2a72',
+        ],
+        'firefox' => [
+            'icon' => 'admin/images/icons/firefox.svg',
+            'from' => '009ffd',
+            'to' => '2a2a72',
+        ],
+        'others' => [
+            'icon' => 'admin/images/icons/others.svg',
+            'from' => 'fe5f75',
+            'to' => 'fc9842',
+        ]
+        ];
 }
