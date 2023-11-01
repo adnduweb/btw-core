@@ -123,7 +123,7 @@ class GeneralSettingsController extends AdminController
                 setting('Site.siteOnline', $data['siteOnline'] ?? 0);
                 setting('Site.ipAllowed', trim($data['ipAllowed']) ?? '');
                 setting('Site.activeMultilangue', $data['activeMultilangue'] ?? 0);
-
+                $this->updateSettingsGlobal();
 
 
                 $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.settings')])]);
@@ -564,6 +564,28 @@ class GeneralSettingsController extends AdminController
         ]);
     }
 
+
+    private function updateSettingsGlobal(){
+
+        $cellsearch = service('settings')->get('Search.cellsearch');
+        if (!empty($cellsearch)) {
+            $cellsearch = array_merge($cellsearch, config ('Search')->cellsearch);
+            $cellsearch = array_unique($cellsearch);
+            service('settings')->set('Search.cellsearch', $cellsearch);
+        } else {
+            service('settings')->set('Search.cellsearch', config ('Search')->cellsearch);
+        }
+    
+        $cellsDashboard = service('settings')->get('Btw.cellsDashboard');
+        if (!empty($cellsDashboard)) {
+            $cellsDashboard = array_merge($cellsDashboard, config ('Btw')->cellsDashboard);
+            $cellsDashboard = array_unique($cellsDashboard);
+            service('settings')->set('Btw.cellsDashboard', $cellsDashboard);
+        } else {
+            service('settings')->set('Btw.cellsDashboard', config ('Btw')->cellsDashboard);
+        }
+
+    }
 
 
     /**
