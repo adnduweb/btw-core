@@ -9,29 +9,29 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Btw\Core\Commands;
 
 use Btw\Core\Commands\Install\Publisher;
 use Btw\Core\Models\UserModel;
 use Btw\Core\Entities\User;
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 class Install extends BaseCommand
 {
-    /**
-     * The Command's Group
-     *
-     * @var string
-     */
-    protected $group = 'Btw';
+
+    private array $validActions = [
+        'install',
+        'setup',
+    ];
 
     /**
      * The Command's Name
      *
      * @var string
      */
-    protected $name = 'btw:install';
+    protected $name = 'btw:initialize';
 
     /**
      * The Command's Description
@@ -41,18 +41,29 @@ class Install extends BaseCommand
     protected $description = 'Handles initial installation of Btw.';
 
     /**
-     * The Command's Usage
+     * Command's usage
      *
      * @var string
      */
-    protected $usage = 'btw:install';
+    protected $usage = <<<'EOL'
+        btw:initialize <action> options
+
+            btw:initialize install
+            btw:initialize setup
+        EOL;
 
     /**
-     * The Command's Arguments
+     * Command's Arguments
      *
      * @var array
      */
-    protected $arguments = [];
+    protected $arguments = [
+        'action' => <<<'EOL'
+
+            install:      Install Core 
+                setup:    Setup du Core de l'App
+            EOL,
+    ];
 
     /**
      * The Command's Options
@@ -60,26 +71,21 @@ class Install extends BaseCommand
      * @var array
      */
     protected $options = [
-        '--continue' => 'Execute the second install step.',
+        '-s' => 'Execute install step.',
+        '-d' => 'Demo content',
     ];
 
     private string $framework;
 
-    private array $supportedFrameworks = ['none', 'react', 'vue', 'svelte'];
-
     private $path;
 
     private array $configFiles = [
-        // 'Btw\Core\Assets\Config\Assets',
-        //'Btw\Core\Config\Auth',
-        //'Btw\Core\Config\AuthGroups',
         'Btw\Core\Config\Btw',
-        //'Btw\Core\Config\Site',
+        'Btw\Core\Config\Site',
+        'Btw\Core\Config\CronJob',
         //'Btw\Core\Config\Themes',
         //'Btw\Core\Consent\Config\Consent',
-        //'Btw\Core\Dashboard\Config\Dashboard',
         //'Btw\Core\Recycler\Config\Recycler',
-        //'Btw\Core\Users\Config\Users',
     ];
 
     public function __construct()
@@ -94,35 +100,79 @@ class Install extends BaseCommand
     {
         helper('filesystem');
 
-        if (!CLI::getOption('continue')) {
-            $this->ensureEnvFile();
-            $this->setAppUrl();
-            $this->setSession();
-            $this->setCookie();
-            $this->setEncryptionKey();
-            $this->setDatabase();
-            $this->publishConfigFiles();
-            $this->framework = 'none';
-            $this->publishThemes();
-            $this->updateEnvFileVite();
+        $action = $params[0] ?? null;
 
-            CLI::newLine();
-            CLI::write('If you need to create your database, you may run:', 'yellow');
-            CLI::write("\tphp spark db:create <database name>", 'green');
-            CLI::write('If you chose SQLite3 as your database driver, the database will be created automatically on the next step (migration).', 'yellow');
-            CLI::newLine();
-            CLI::write('To migrate and create the initial user, please run: ', 'yellow');
-            CLI::write("\tphp spark btw:install --continue", 'green');
-        } else {
-            $this->migrate();
-            $this->createUser();
-            CLI::newLine();
-            CLI::write('run: npm install && npm run dev');
-            CLI::write('Suivre le processus d\'installation du package');
-            CLI::write('run: npm install && npm run dev');
+        if ($action === null || !in_array($action, $this->validActions, true)) {
+            $this->write(
+                'Specify a valid action: ' . implode(',', $this->validActions),
+                'red'
+            );
+
+            return EXIT_ERROR;
         }
 
+        $continue = $params['c'] ?? null;
+        $demo = $params['d'] ?? null;
+
+        try {
+            switch ($action) {
+                case 'install':
+                    $this->install();
+                    break;
+
+                case 'setup':
+                    $this->setup();
+                    break;
+            }
+        } catch (\Exception $e) {
+            $this->write($e->getMessage(), 'red');
+
+            return EXIT_ERROR;
+        }
         CLI::newLine();
+        return EXIT_SUCCESS;
+
+
+    }
+
+
+    private function setup(): void
+    {
+
+        $this->migrate();
+        $this->createUser();
+
+        $seeder = \Config\Database::seeder();
+        $seeder->call('Btw\\Core\\Database\\Seeds\\DatabaseSeeder');
+
+        $this->write('BDD seed : BtwSeeder ', 'green');
+
+        CLI::newLine();
+        CLI::write('run: npm install && npm run dev');
+        CLI::write('Suivre le processus d\'installation du package');
+        CLI::write('run: npm install && npm run dev');
+    }
+
+    private function install(): void
+    {
+        $this->ensureEnvFile();
+        $this->setAppUrl();
+        $this->setSession();
+        $this->setCookie();
+        $this->setEncryptionKey();
+        $this->setDatabase();
+        $this->publishConfigFiles();
+        $this->framework = 'none';
+        $this->publishThemes();
+        $this->updateEnvFileVite();
+
+        CLI::newLine();
+        CLI::write('If you need to create your database, you may run:', 'yellow');
+        CLI::write("\tphp spark db:create <database name>", 'green');
+        CLI::write('If you chose SQLite3 as your database driver, the database will be created automatically on the next step (migration).', 'yellow');
+        CLI::newLine();
+        CLI::write('To migrate and create the initial user, please run: ', 'yellow');
+        CLI::write("\tphp spark btw:initialize setup", 'green');
     }
 
     /**
@@ -172,7 +222,7 @@ class Install extends BaseCommand
     private function setDatabase()
     {
         $driver = CLI::prompt('Database driver:', ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']);
-        $name   = CLI::prompt('Database name:', 'bonfire');
+        $name = CLI::prompt('Database name:', 'bonfire');
         if ($driver !== 'SQLite3') {
             $host = CLI::prompt('Database host:', '127.0.0.1');
             $user = CLI::prompt('Database username:', 'root');
@@ -241,10 +291,10 @@ class Install extends BaseCommand
 
     private function publishThemes()
     {
-        $source      = BTPATH . 'configurations/themes';
+        $source = BTPATH . 'configurations/themes';
         $destination = APPPATH . '../themes';
 
-        $sourcePublic      = BTPATH . 'configurations/public';
+        $sourcePublic = BTPATH . 'configurations/public';
         $destinationPublic = APPPATH . '../public';
 
         $admin = ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'admin';
@@ -306,33 +356,36 @@ class Install extends BaseCommand
     {
         CLI::write('Create initial user', 'yellow');
 
-        $email     = CLI::prompt('Email?');
+        $email = CLI::prompt('Email?');
         $firstName = CLI::prompt('First name?');
-        $lastName  = CLI::prompt('Last name?');
-        $username  = CLI::prompt('Username?');
-        $password  = CLI::prompt('Password?');
-        $company_id  = CLI::prompt('Id de la company');
-        $main_account  = CLI::prompt('Compte principal?', ['0', '1']);
+        $lastName = CLI::prompt('Last name?');
+        $username = CLI::prompt('Username?');
+        $password = CLI::prompt('Password?');
+        $company_id = CLI::prompt('Id de la company');
+        $main_account = CLI::prompt('Compte principal?', ['0', '1']);
 
         $users = model(UserModel::class);
 
         $user = new User([
             'first_name' => $firstName,
-            'last_name'  => $lastName,
-            'username'   => $username,
-            'company_id'   => $company_id,
-            'main_account'   => $main_account,
+            'last_name' => $lastName,
+            'username' => $username,
+            'company_id' => $company_id,
+            'main_account' => $main_account,
+            'active' => 1
         ]);
         $users->save($user);
 
         /** @var \Bonfire\Users\User $user */
         $user = $users->where('username', $username)->first();
         $user->createEmailIdentity([
-            'email'    => $email,
+            'email' => $email,
             'password' => $password,
         ]);
 
         $user->addGroup('superadmin');
+
+        $this->write('User "' . $email . '" created', 'green');
 
         CLI::write('Done. You can now login as a superadmin.', 'green');
     }
