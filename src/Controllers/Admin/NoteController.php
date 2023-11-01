@@ -94,10 +94,11 @@ class NoteController extends AdminController
 
             ->edit('content', function ($row) {
                 $row = new Note((array) $row);
-                if (session()->get($this->sessionAskAuth . '_' . $row->getIdentifier()) && ((time() - session()->get($this->sessionAskAuth . '_' . $row->getIdentifier())) < 3600)) :
+                if ($row->getAskAuthContent('note') && ((time() - $row->getAskAuthContent('note')['expire']) < config('Btw')->dataAskAuthExpiration)) :
                     return getExcerpt($row->getContentPrep());
                 else :
-                    return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $row,]);
+                    $row->removeAskAuthContent($row->getAskAuthContent('note'));
+                    return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $row, 'hxTrigger' => 'reloadTable', 'controller' => 'note', 'method' => 'ajaxDatatable']);
 
                 endif;
             })
@@ -115,7 +116,7 @@ class NoteController extends AdminController
 
             ->add('askAuth', function ($row) {
                 $row = new Note((array) $row);
-                if (session()->get($this->sessionAskAuth . '_' . $row->getIdentifier()) && ((time() - session()->get($this->sessionAskAuth . '_' . $row->getIdentifier())) < 3600)) :
+                if ($row->getAskAuthContent('note') && ((time() - $row->getAskAuthContent('note')['expire']) < config('Btw')->dataAskAuthExpiration)) :
                     return true;
                 else :
                     return false;
@@ -216,7 +217,7 @@ class NoteController extends AdminController
             $this->response->triggerClientEvent('openmodalcreatenote', true);
             $this->response->triggerClientEvent('modalcomponent', true);
 
-            // if (!session()->get($this->sessionAskAuth . '_' . $note->getIdentifier()) && !((time() - session()->get($this->sessionAskAuth . '_' . $note->getIdentifier())) < 3600)) :
+            // if (!session()->get('note' . '_' . $note->getIdentifier()) && !((time() - session()->get('note' . '_' . $note->getIdentifier())) < config('Btw')->dataAskAuthExpiration)) :
             //     return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $note]);
             // endif;
 
@@ -309,7 +310,7 @@ class NoteController extends AdminController
             $this->response->triggerClientEvent('openmodalnotesharenote', true);
             $this->response->triggerClientEvent('modalcomponent', true);
 
-            if (!session()->get('note_' . $note->getIdentifier()) && !((time() - session()->get('note_' . $note->getIdentifier())) < 3600)) :
+            if (!session()->get('note_' . $note->getIdentifier()) && !((time() - session()->get('note_' . $note->getIdentifier())) < config('Btw')->dataAskAuthExpiration)) :
                 return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $note]);
             endif;
 
@@ -350,7 +351,7 @@ class NoteController extends AdminController
     {
         $notes = model(NoteModel::class);
 
-        if (!$note = $notes->where('id', $noteID)->first()) {
+        if (!$note = $notes->where('id', $noteID)->withAskAuth()->first()) {
             throw new PageNotFoundException('Incorrect invoice id.');
         }
 

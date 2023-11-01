@@ -14,7 +14,7 @@ class SearchCells
     public function search()
     {
         if (request()->getPost('search')) {
-            $this->notes = model(NoteModel::class)->searchAll(request()->getPost('search'));
+            $this->notes = model(NoteModel::class)->withAskAuth()->searchAll(request()->getPost('search'));
         }
 
         return view('Btw\Core\Views\Admin\search\cells\form_search', [

@@ -10,6 +10,8 @@ class DatatableAskAuth extends Cell
     public $row;
     protected string $hxTrigger = 'updateListrow';
     protected string $module;
+    protected string $controller = "home";
+    protected string $method = "index";
 
     public function mount(object $row)
     {
@@ -18,18 +20,21 @@ class DatatableAskAuth extends Cell
 
     protected function getModuleProperty(): string
     {
-        $controllerName = service('router')->controllerName();
-        $handle = explode('\\', $controllerName);
-        $end = end($handle);
-        $_controller = strtolower(str_replace('Controller', '', $end));
-        $_method = service('router')->methodName();
-        $this->module = strtolower($_controller) . '-' . strtolower($_method);
+        $this->module = strtolower($this->controller) . '-' . strtolower($this->method);
         return $this->module;
     }
 
     protected function getHxTriggerProperty(): string
     {
-
         return $this->hxTrigger;
+    }
+
+    protected function getMethodProperty(): string
+    {
+        return $this->method;
+    }
+    protected function getControllerProperty(): string
+    {
+        return $this->controller;
     }
 }

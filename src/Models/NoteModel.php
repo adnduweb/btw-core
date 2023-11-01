@@ -4,9 +4,14 @@ namespace Btw\Core\Models;
 
 use CodeIgniter\Model;
 use Btw\Core\Entities\Note;
+use Btw\Core\Traits\ActivitiesTrait;
+use Btw\Core\Traits\ModelTrait;
 
 class NoteModel extends Model
 {
+    use ActivitiesTrait;
+    use ModelTrait;
+
     protected $table           = 'notes';
     protected $without         = [];
     protected $primaryKey      = 'id';
@@ -27,6 +32,17 @@ class NoteModel extends Model
         ['name' => 'action', 'header' => 'Action', 'order_by_alias' => null,  'responsivePriority' => 3]
 
     ];
+
+    // Callbacks
+    protected $allowCallbacks = true;
+    protected $beforeInsert   = [];
+    protected $afterInsert    = ['activityInsert'];
+    protected $beforeUpdate   = [];
+    protected $afterUpdate    = ['activityUpdate'];
+    protected $beforeFind     = [];
+    protected $afterFind      = [];
+    protected $beforeDelete   = [];
+    protected $afterDelete    = ['activityDelete'];
 
     public function getColumn()
     {
@@ -53,7 +69,10 @@ class NoteModel extends Model
             $notes = $builder->get()->getResultArray();
             if(!empty($notes)) {
                 foreach ($notes as $note) {
-                    $noteNew[] = new Note($note);
+                    $item = new Note($note);
+                    $item->confirm_auth_content = $item->getAskAuthContent('note');
+                    $noteNew[] = $item;
+                    $item->syncOriginal();
                 }
             }
             return $noteNew;

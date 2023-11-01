@@ -654,10 +654,18 @@ class ProfileController extends AdminController
             return;
         }
 
-        session()->set(request()->getPost('module') . '_' . request()->getPost('identifier'), time());
+        $_module = request()->getPost('module');
+        $base['askAuth'][$_module . '_' . request()->getPost('identifier')] = time();
+
+        $askAuth = session()->get('askAuth');
+        if($askAuth) {
+            $base['askAuth'] = array_merge($base['askAuth'], $askAuth);
+        }
+
+
+        session()->set($base);
         $this->response->triggerClientEvent(request()->getPost('actionHtmx'), time(), 'receive');
         $this->response->setReswap('innerHTML show:#general:top');
-        $this->response->triggerClientEvent('reloadTable');
         $this->response->triggerClientEvent('closemodal');
     }
 

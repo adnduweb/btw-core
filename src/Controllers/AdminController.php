@@ -34,12 +34,21 @@ class AdminController extends BaseController
         $this->langueCurrent = service('settings')->get('Btw.language_bo', 'user:' . Auth()->user()->id) ?? 'fr';
         service('language')->setLocale($this->langueCurrent);
         setlocale(LC_TIME, service('request')->getLocale() . '_' . service('request')->getLocale());
+    }
 
+    private function _getController()
+    {
         $controllerName = service('router')->controllerName();
         $handle = explode('\\', $controllerName);
         $end = end($handle);
         $this->_controller = strtolower(str_replace('Controller', '', $end));
+        return $this->_controller;
+    }
+
+    private function _getMethod(string $url, int $code = 0)
+    {
+
         $this->_method = service('router')->methodName();
-        $this->sessionAskAuth = $this->_controller . '-' . strtolower($this->_method);
+        return $this->_method;
     }
 }

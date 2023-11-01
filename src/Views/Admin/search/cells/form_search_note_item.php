@@ -14,21 +14,12 @@
             </button>
             <div x-cloak x-show="active === 3" x-collapse>
                 <div class="p-4 text-[13px]">
-                    <?php if (session()->get('note_' . $note->getIdentifier()) && ((time() - session()->get('note_' . $note->getIdentifier())) < 3600) /* 1 heure */) : ?>
-                        <?= \Michelf\Markdown::defaultTransform($note->getContentPrepFront()); ?>
-                    <?php else : ?>
-                        <?= session()->remove('note_' . $note->getIdentifier()); ?>
-                        <a href="#" x-on:click="$dispatch(`authdisplaydatamodalcomponent`, {
-                        showAuthDisplayDataModal: true, 
-                        title: `Demande d'authorisation`, 
-                        message: `Veuillez insérez votre mot de passe`, 
-                        id: `<?= $note->getIdentifier(); ?>`, 
-                        module: `note`, 
-                        identifier: `<?= $note->getIdentifier(); ?>`, 
-                        actionHtmx: `updateListeNoteItem`, 
-                        route: `<?= route_to('system-auth-pass-modal'); ?>`})" class="inline-flex justify-center cursor-pointer bg-blue-500 text-white active:bg-blue-600 dark:bg-gray-900  font-bold px-4 py-2 text-sm rounded-md shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-in-out duration-1200 transition-all">
-                            <?= lang('Btw.accedeData'); ?></a>
-                    <?php endif; ?>
+                <?php if ($note->confirm_auth_content && ((time() - $note->confirm_auth_content['expire']) < config('Btw')->dataAskAuthExpiration) /* 1 heure */) : ?>
+                    <?= \Michelf\Markdown::defaultTransform($note->getContentPrepFront()); ?>
+                <?php else : ?>
+                    <?= $note->removeAskAuthContent($note->confirm_auth_content);?>
+                    <?= view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $note, 'hxTrigger' => 'updateListeNoteItem', 'controller' => 'note', 'method' => 'ajaxDatatable']); ?> 
+                <?php endif; ?>
                 </div>
             </div>
         </div>

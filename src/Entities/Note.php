@@ -66,7 +66,24 @@ class Note extends Entity
         return $this->attributes['content'] = $contentNew;
     }
 
+    public function getAskAuthContent(string $controllerMethod)
+    {
+        $askAuth = session()->get('askAuth');
 
+        if(isset($askAuth[$controllerMethod . '-ajaxdatatable' . '_' . $this->getIdentifier()])) {
+            $entry = $askAuth[$controllerMethod . '-ajaxdatatable' . '_' . $this->getIdentifier()];
+            return ['name' => $controllerMethod . '-ajaxdatatable' . '_' . $this->getIdentifier() , 'expire' => $entry];
+        }
+    }
+
+    public function removeAskAuthContent(array $confirm_auth_content = null)
+    {
+        if(!is_array($confirm_auth_content)) {
+            return false;
+        }
+
+        session()->remove(['askAuth' => $confirm_auth_content['name']]);
+    }
 
     public function getAttrType()
     {
