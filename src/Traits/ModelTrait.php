@@ -54,7 +54,7 @@ trait ModelTrait
             return $this->withAuthSessionSingle($data);
         }
 
-        return reset($data);
+        return $data;
     }
 
 
