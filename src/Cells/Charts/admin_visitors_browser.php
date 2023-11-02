@@ -19,7 +19,7 @@
                         </div>
                         <div>
                             <div class="w-full rounded-full h-5 p-1 bg-dark-light overflow-hidden shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                <div class="bg-gradient-to-r from-[#<?= config('Visits')->browsers[strtolower($key)]['from']; ?>] to-[#<?= config('Visits')->browsers[strtolower($key)]['to']; ?>] w-full h-full rounded-full relative before:absolute before:inset-y-0 ltr:before:right-0.5 rtl:before:left-0.5 before:bg-white before:w-2 before:h-2 before:rounded-full before:m-auto" style="width: <?= count($value) ?>;"></div>
+                                <div class="<?= config('Visits')->browsers[strtolower($key)]['class']; ?> w-full h-full rounded-full relative before:absolute before:inset-y-0 ltr:before:right-0.5 rtl:before:left-0.5 before:bg-white before:w-2 before:h-2 before:rounded-full before:m-auto" style="width: <?= count($value) ?>%;"></div>
                             </div>
                         </div>
                     </div>

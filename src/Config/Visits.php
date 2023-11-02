@@ -60,23 +60,27 @@ class Visits extends BaseConfig
     public array $browsers = [
         'safari' => [
             'icon' => 'admin/images/icons/safari.svg',
-            'from' => 'a71d31',
-            'to' => '3f0d12',
+            'from' => 'green-400',
+            'to' => 'blue-500',
+            'class' => 'progress-safari',
         ],
         'chrome' => [
             'icon' => 'admin/images/icons/chrome.svg',
-            'from' => '009ffd',
-            'to' => '2a2a72',
+            'from' => 'green-400',
+            'to' => 'blue-500',
+            'class' => 'progress-chrome',
         ],
         'firefox' => [
             'icon' => 'admin/images/icons/firefox.svg',
             'from' => '009ffd',
             'to' => '2a2a72',
+            'class' => 'progress-firefox',
         ],
         'others' => [
             'icon' => 'admin/images/icons/others.svg',
             'from' => 'fe5f75',
             'to' => 'fc9842',
+            'class' => 'progress-others',
         ]
         ];
 }

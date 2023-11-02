@@ -29,8 +29,11 @@ return [
 
     'lastModified' => 'Last Modified',
     'fileSize'     => 'File Size',
-    
+
     'Dashboard' => 'Dashboard',
-    'french' => 'French',      
-    'english' => 'English',        
+    'french' => 'French',
+    'english' => 'English',
+    'Statistiques' => 'Statistiques',
+    'totalVisits' => 'Nombre de visites',
+    'VisitorsByBrowser' => 'Visiteurs par navigateur',
 ];

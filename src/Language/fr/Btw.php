@@ -178,7 +178,10 @@ return [
     'askAccess' => "Demander un accés",
     'notesList' => "Liste des notes",
     'share' => "Partager",
-    'viewDetail' => 'Voir le détail', 
+    'viewDetail' => 'Voir le détail',
     'notConnected' => 'Pas de connexion',
-    
+    'Statistiques' => 'Statistiques',
+    'totalVisits' => 'Nombre de visites',
+    'VisitorsByBrowser' => 'Visiteurs par navigateur',
+
 ];

@@ -8,7 +8,7 @@
     "src": "node_modules/intl-tel-input/build/img/flags@2x.png"
   },
   "themes/admin/css/app.css": {
-    "file": "assets/app-7cf0fd60.css",
+    "file": "assets/app-7fee2649.css",
     "isEntry": true,
     "src": "themes/admin/css/app.css"
   },
