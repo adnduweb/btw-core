@@ -11,16 +11,11 @@ class StatsDashboardCells
      */
     public function render()
     {
-        return view('Btw\Core\Views\Admin\dashboard\init', [
-
-        ]);
+        return view('Btw\Core\Views\Admin\dashboard\init', [ ]);
     }
 
     public function scripts()
     {
-
-        return view('Btw\Core\Views\Admin\dashboard\init_scripts', [
-            'test' => 'Bouh',
-        ]);
+        return view('Btw\Core\Views\Admin\dashboard\init_scripts', [ ]);
     }
 }

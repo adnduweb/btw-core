@@ -1,18 +1,10 @@
 <?= asset_link('admin/js/apexcharts.js', 'js') ?>
-<script>
+<script async >
      document.addEventListener("alpine:init", () => {
         // total-visit
-        Alpine.data("core_dashboard", () => ({
+        Alpine.data("coredashboard", () => ({
             init() {
-                isDark = this.$store.app.theme === "dark" || this.$store.app.isDarkMode ? true : false;
-                isRtl = this.$store.app.rtlClass === "rtl" ? true : false;
-
                 const totalVisit = null;
-                const paidVisit = null;
-                const uniqueVisitorSeries = null;
-                const followers = null;
-                const referral = null;
-                const engagement = null;
 
                 // statistics
                 setTimeout(() => {
@@ -21,20 +13,6 @@
 
                 }, 300);
 
-                this.$watch('$store.app.theme', () => {
-                    isDark = this.$store.app.theme === "dark" || this.$store.app.isDarkMode ? true : false;
-                    this.totalVisit.updateOptions(this.totalVisitOptions);
-                    this.paidVisit.updateOptions(this.paidVisitOptions);
-                    this.uniqueVisitorSeries.updateOptions(this.uniqueVisitorSeriesOptions);
-                    this.followers.updateOptions(this.followersOptions);
-                    this.referral.updateOptions(this.referralOptions);
-                    this.engagement.updateOptions(this.engagementOptions);
-                });
-
-                this.$watch('$store.app.rtlClass', () => {
-                    isRtl = this.$store.app.rtlClass === "rtl" ? true : false;
-                    this.uniqueVisitorSeries.updateOptions(this.uniqueVisitorSeriesOptions);
-                });
             },
 
             // statistics

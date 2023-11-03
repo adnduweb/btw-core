@@ -209,6 +209,7 @@ class NoteController extends AdminController
     public function modalEditNoteAction(int $noteID): string
     {
         $notes = model(NoteModel::class);
+
         if (!$note = $notes->where('id', $noteID)->first()) {
             throw new PageNotFoundException('Incorrect informations techniques');
         }
