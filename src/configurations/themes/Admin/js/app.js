@@ -81,9 +81,9 @@ import './alpine.js';
 import * as SetHtmx from "./htmx.js";
 SetHtmx.initHtmx();
 import * as SetHtmxHead from "./htmx-head-support.js";
-if (doudou.env != 'development') {
+// if (doudou.env != 'development') {
     SetHtmxHead.initHtmx();
-}
+// }
 
 
 htmx.on("htmx:afterSettle", function(evt) {

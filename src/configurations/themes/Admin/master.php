@@ -2,7 +2,7 @@
 <!doctype html>
 <html dir="ltr" data-theme="retro" lang="<?= service('language')->getLocale(); ?>" class="h-full <?= detectBrowser(); ?>">
 
-<head>
+<head hx-preserve="true">
     <meta name="htmx-config" content='{"historyCacheSize": 0, "refreshOnHistoryMiss": false, "includeIndicatorStyles": false}'>
     <?= $viewMeta->render('meta') ?>
     <title><?= $viewMeta->title() ?></title>

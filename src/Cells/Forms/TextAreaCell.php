@@ -5,10 +5,8 @@ namespace Btw\Core\Cells\Forms;
 use Michelf\Markdown;
 use RuntimeException;
 
-
 class TextAreaCell
 {
-
     protected $type = 'textearea';
     protected $label;
     protected $name;
@@ -21,6 +19,7 @@ class TextAreaCell
     protected $placeholder;
     protected $wysiwyg;
     protected $row = 3;
+    protected $meta;
 
 
     public function renderList($params)
@@ -64,20 +63,20 @@ class TextAreaCell
 
         switch ($this->wysiwyg) {
             case 'ckeditor':
-                $html .= view('Btw\Core\Cells\Forms\Views\ckeditor', ['params' => $params, 'viewMeta' => $this->intlScript()]);
+                $html .= view('Btw\Core\Cells\Forms\Views\ckeditor', ['params' => $params]);
                 break;
             case 'quilljs':
-                $html .= view('Btw\Core\Cells\Forms\Views\quilljs', ['params' => $params, 'viewMeta' => $this->intlScript()]);
+                $html .= view('Btw\Core\Cells\Forms\Views\quilljs', ['params' => $params]);
                 break;
             case 'simplemde':
-                $html .= view('Btw\Core\Cells\Forms\Views\simplemde', ['params' => $params, 'viewMeta' => $this->intlScript()]);
+                $html .= view('Btw\Core\Cells\Forms\Views\simplemde', ['params' => $params]);
                 break;
             default:
                 if (isset($params['lang']) && $params['lang'] == true) {
                     // $html .= '<textarea rows="3" '.$this->placeholder.' name="lang[' . request()->getLocale() . '][' . $params['name'] . ']" id="' . $params['name'] . '" ' .$this->xModel. ' ' .$this->xType. ' class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500  dark:text-gray-200 dark:bg-gray-900"> ' . $params['value'] . ' </textarea>';
-                    $html .= '<textarea ' . $ckeditor . ' rows="'.$this->row.'" ' . $this->placeholder . ' name="' . $params['name'] . '" id="' . $params['name'] . '" ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900   ">' . $params['value'] . ' </textarea>';
+                    $html .= '<textarea ' . $ckeditor . ' rows="' . $this->row . '" ' . $this->placeholder . ' name="' . $params['name'] . '" id="' . $params['name'] . '" ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900   ">' . $params['value'] . ' </textarea>';
                 } else {
-                    $html .= '<textarea ' . $ckeditor . ' rows="'.$this->row.'" ' . $this->placeholder . ' name="' . $params['name'] . '" id="' . $params['name'] . '" ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900   ">' . $params['value'] . ' </textarea>';
+                    $html .= '<textarea ' . $ckeditor . ' rows="' . $this->row . '" ' . $this->placeholder . ' name="' . $params['name'] . '" id="' . $params['name'] . '" ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900   ">' . $params['value'] . ' </textarea>';
                 }
         }
 
@@ -125,28 +124,27 @@ class TextAreaCell
         return $html;
     }
 
-    /**
-     * Displays the chart blocks in the admin dashboard.
-     */
-    public function intlScript()
+    public function scripts($params)
     {
-        /** @var Metadata */
-        $meta = service('viewMeta');
+        if (!isset($params['wysiwyg'])) {
+            throw new RuntimeException('You must provide the Filter view cell with the model to use.');
+        }
 
-        switch ($this->wysiwyg) {
+        switch ($params['wysiwyg']) {
             case 'ckeditor':
-                // $meta->addScript(['src' => 'https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js']);
+                return '<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js" />';
                 break;
             case 'quilljs':
-                $meta->addStyle(['rel' => 'stylesheet', 'href' => 'https://cdn.quilljs.com/1.3.6/quill.snow.css']);
-                $meta->addScript(['src' => 'https://cdn.quilljs.com/1.3.6/quill.js']);
+                return '<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css" />';
                 break;
             case 'simplemde':
-                $meta->addStyle(['rel' => 'stylesheet', 'href' => 'https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css']);
-                // $meta->addScript(['src' => 'https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js']);
-
+                return '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css" />';
                 break;
             default:
+                return ' pas de script';
+                break;
         }
+
+
     }
 }

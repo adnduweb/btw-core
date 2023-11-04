@@ -8,7 +8,7 @@
     "src": "node_modules/intl-tel-input/build/img/flags@2x.png"
   },
   "themes/admin/css/app.css": {
-    "file": "assets/app-9f46f808.css",
+    "file": "assets/app-b10ba1fb.css",
     "isEntry": true,
     "src": "themes/admin/css/app.css"
   },
@@ -89,7 +89,7 @@
     "css": [
       "assets/app-8d5ae6d0.css"
     ],
-    "file": "assets/app-0f6fcfa2.js",
+    "file": "assets/app-597473d1.js",
     "isEntry": true,
     "src": "themes/admin/js/app.js"
   }
