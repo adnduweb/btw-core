@@ -152,6 +152,26 @@ return [
         'type_company' => 'Type d\'entreprise',
 
     ],
+    'contact' => [
+        'address_principal' => 'Adresse principale',
+        'alias' => "Nom de l'adresse",
+        'address1' => 'Adresse',
+        'postcode' => 'Code postal',
+        'city' => 'Ville',
+        'company' => 'Société',
+        'vat_number' => 'TVA intra-communautaire',
+        'country' => 'Pays',
+        'phone' => 'Téléphone',
+        'phone_mobile' => 'Mobile',
+        'lastname' => 'Nom',
+        'firstname' => 'Prénom',
+        'email' => 'Email',
+        'siret' => 'Siret',
+        'ape' => 'Code ape',
+        'titre' => 'Titre',
+        'type_company' => 'Type d\'entreprise',
+
+    ],
     'modal' => [
         "addOrdEditAddress" => 'Ajouter ou modifier une adresse',
         "addOrdEditContact" => 'Ajouter ou modifier un contact',
@@ -219,5 +239,9 @@ return [
         'passwordLength' => 'Longueur du mot de passe',
         'TwoFactoAuthentification' => 'Authentification à deux facteurs',
         'username' => 'Identifiant',
+        'status_message' => 'Message',
+        'userbanDesc' => 'Cet utilisateur ne pourra pas se connecter',
+        'userban' => 'Utilisateur banni',
+        'statusMessageDesc' => 'Un message lors de la connexion sera affiché'
     ]
 ];

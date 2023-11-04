@@ -1,5 +1,5 @@
 <div id="general" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
-    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div class="px-4 py-5  space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200"><?= lang('Btw.cellh3.OtherInformation'); ?></h3>
 
@@ -75,17 +75,17 @@
             </div>
 
             <?= form_open(route_to('user-information'), [
-                'id' => 'kt_users_form_modalgroups', 
-                'hx-post' => route_to('user-information'), 
-                'hx-target' => '#modalgroups', 
-                'hx-swap' => 'morph:outerHTML',  
-                'hx-ext' => "loading-states",  
-                'novalidate' => false, 
+                'id' => 'kt_users_form_modalgroups',
+                'hx-post' => route_to('user-information'),
+                'hx-target' => '#modalgroups',
+                'hx-swap' => 'morph:outerHTML',
+                'hx-ext' => "loading-states",
+                'novalidate' => false,
                 'data-loading-target' => "#loadingmodalgroups",
                 'data-loading-class-remove' => "hidden"
             ]); ?>
-            <?= ''; //csrf_field() 
-            ?>
+            <?= ''; //csrf_field()
+        ?>
             <input type="hidden" name="section" value="groups" />
 
             <?= $this->include('Btw\Core\Views\Admin\users\only\cells\cell_groups'); ?>

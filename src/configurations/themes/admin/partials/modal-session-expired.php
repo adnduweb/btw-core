@@ -26,7 +26,7 @@
                         </div> -->
                        
                     </div>
-                    <div class="px-4 py-3 text-right sm:px-6 bg-gray-100 rounded-b-md">
+                    <div class="px-4 py-3 text-right sm:px-6 bg-gray-100 dark:bg-gray-700 rounded-b-md">
                         <?= view_cell('Btw\Core\Cells\Forms\AdminButtonSave', ['type' => 'type', 'text' => lang('Btw.validate'), 'loading' => "loadingmodaladdcustomer"]) ?>
                     </div>
                 </div>

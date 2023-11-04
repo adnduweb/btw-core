@@ -78,11 +78,11 @@
                         if (data.active == '0') {
                             row.addClass('notactive');
                         }
-                        row.addClass(' text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
+                        row.addClass(' text-sm font-medium relative dark:hover:bg-gray-800 hover:bg-slate-50 ');
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass(' text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
+                    $(row).addClass(' text-sm font-medium relative dark:hover:bg-gray-800 hover:bg-slate-50 ');
                 },
 
                 columnDefs: [

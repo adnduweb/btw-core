@@ -15,7 +15,7 @@
         'add' => [],
         'actions' => $actions
     ])
-    ?>
+?>
 
     <div class="row justify-content-md-center">
 
@@ -100,54 +100,54 @@
                         if (data.active == '0') {
                             row.addClass('notactive');
                         }
-                        row.addClass('text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
+                        row.addClass('text-sm font-medium relative dark:hover:bg-gray-800 hover:bg-slate-50 ');
                     }
                 },
                 createdRow: function(row, data, dataIndex) {
-                    $(row).addClass('text-sm font-medium relative dark:hover:bg-gray-600 hover:bg-slate-50 ');
+                    $(row).addClass('text-sm font-medium relative dark:hover:bg-gray-800 hover:bg-slate-50 ');
                 },
 
                 columnDefs: [
                     <?php $i = 0;
-                    foreach ($columns as $column) : ?>
+foreach ($columns as $column) : ?>
                         <?php
-                        switch ($column['name']) {
-                            case 'selection':
-                                echo "{";
-                                echo "data: 'select',";
-                                echo "targets: 0,";
-                                echo "orderable: false,";
-                                echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
-                                if (isset($column['responsivePriority'])) :
-                                    echo "responsivePriority: " . $column['responsivePriority'];
-                                endif;
-                                echo "},";
-                                break;
-                            case 'action':
-                                echo "{";
-                                echo "data: 'action',";
-                                echo "targets: -1,";
-                                echo "orderable: false,";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                if (isset($column['responsivePriority'])) :
-                                    echo "responsivePriority: " . $column['responsivePriority'];
-                                endif;
-                                echo "}";
-                                break;
-                            default:
-                                echo "{";
-                                echo "data: '" . $column['name'] . "',";
-                                echo "targets: $i, ";
-                                echo "orderable: " . $column['orderable'] . ",";
-                                echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
-                                if (isset($column['responsivePriority'])) :
-                                    echo "responsivePriority: " . $column['responsivePriority'] . ", ";
-                                endif;
-                                echo "},";
-                        }
-                        ?>
+    switch ($column['name']) {
+        case 'selection':
+            echo "{";
+            echo "data: 'select',";
+            echo "targets: 0,";
+            echo "orderable: false,";
+            echo "className: 'selection border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative z-50',";
+            if (isset($column['responsivePriority'])) :
+                echo "responsivePriority: " . $column['responsivePriority'];
+            endif;
+            echo "},";
+            break;
+        case 'action':
+            echo "{";
+            echo "data: 'action',";
+            echo "targets: -1,";
+            echo "orderable: false,";
+            echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+            if (isset($column['responsivePriority'])) :
+                echo "responsivePriority: " . $column['responsivePriority'];
+            endif;
+            echo "}";
+            break;
+        default:
+            echo "{";
+            echo "data: '" . $column['name'] . "',";
+            echo "targets: $i, ";
+            echo "orderable: " . $column['orderable'] . ",";
+            echo "className: 'border-dashed border-t border-gray-300 px-3 text-gray-700 px-6 py-3 cursor-pointer dark:text-gray-200 relative',";
+            if (isset($column['responsivePriority'])) :
+                echo "responsivePriority: " . $column['responsivePriority'] . ", ";
+            endif;
+            echo "},";
+    }
+    ?>
                     <?php $i++;
-                    endforeach; ?>
+endforeach; ?>
                 ],
                 // Use DataTables' initComplete callback to tell htmx to reprocess any htmx attributes in the table
                 // DataTables docs: https://datatables.net/reference/option/initComplete

@@ -1,5 +1,5 @@
 <div id="changepassword" class="shadow sm:rounded-md sm:overflow-hidden">
-    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div class="px-4 py-5 space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Change paswword</h3>
 

@@ -1,5 +1,5 @@
 <div id="general" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
-    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div class="px-4 py-5 space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Général</h3>
 
@@ -31,7 +31,7 @@
                     <span class="block w-40 h-40 rounded-full m-auto shadow" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
                     </span>
                 </div>
-                <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
+                <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-800 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3" x-on:click.prevent="$refs.photo.click()">
                     <?= lang('Form.general.SelectNewPhoto'); ?>
                 </button>
             </div>
@@ -78,11 +78,11 @@
             <div class="w-full mb-6 md:mb-0">
                 <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
                     'type' => 'text',
-                    'label' => lang('Btw.userban'),
+                    'label' => lang('Form.users.userban'),
                     'name' => 'userban',
                     'value' => '1',
                     'checked' => (old('userban', $user->isBanned() ?? false)),
-                    'description' => lang('Form.general.userbanDesc'),
+                    'description' => lang('Form.users.userbanDesc'),
                     'xNotData' => "true",
                     'xOn' => "user_ban",
                     'xChange' => "user_ban = ! user_ban"
@@ -93,10 +93,10 @@
 
             <div x-show="user_ban == true" class="w-full mt-6 mb-6 md:mb-0">
                 <?php echo view_cell('Btw\Core\Cells\Forms\TextAreaCell::renderList', [
-                    'label' => lang('Btw.status_message'),
+                    'label' => lang('Form.users.status_message'),
                     'name' =>  'status_message',
                     'value' => (old('status_message', $user->getBanMessage() ?? false)),
-                    'description' => lang('Form.general.status_message'),
+                    'description' => lang('Form.users.statusMessageDesc'),
                 ]); ?>
             </div>
         </div>

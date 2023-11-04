@@ -13,8 +13,8 @@ $this->section('main') ?>
 
 <x-admin-box>
 
-    <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow overflow-y-auto relative">
-        <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white dark:bg-gray-800 table-striped relative">
+    <div class="overflow-x-auto rounded-lg shadow overflow-y-auto relative">
+        <table class="border-collapse table-auto w-full whitespace-no-wrap table-striped relative">
             <thead>
                 <tr class="text-left" hx-include="closest .card" hx-swap="morph:outerHTML" hx-target="closest .card">
                     <th class="bg-indigo-100 sticky top-0 border-b border-gray-200 px-6 py-4 text-gray-600 g-white dark:bg-gray-700 dark:text-gray-300 font-bold tracking-wider uppercase text-xs"><?= lang('Logs.level'); ?></th>
@@ -26,7 +26,7 @@ $this->section('main') ?>
             <tbody id="books-table-rows"  x-data="{ open: false }">
                 <?php
                 foreach ($logContent as $key => $log) : ?>
-                    <tr <?php if (array_key_exists('extra', $log)) : ?> style="cursor:pointer" <?php else : ?> class="relative dark:hover:bg-gray-600 hover:bg-slate-50 " <?php endif ?>>
+                    <tr <?php if (array_key_exists('extra', $log)) : ?> style="cursor:pointer" <?php else : ?> class="relative dark:hover:bg-gray-800 hover:bg-slate-50 " <?php endif ?>>
                         <td class="border-dashed border-t border-gray-300 "  @click="open = ! open">
                             <span class="text-gray-700 px-6 py-3 flex items-center cursor-pointer  dark:text-gray-200">
                                 <span class="<?= $log['class']; ?>">

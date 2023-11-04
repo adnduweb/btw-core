@@ -1,5 +1,5 @@
 <div id="browser" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
-    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div class="px-4 py-5  space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Session Browser</h3>
 
@@ -17,7 +17,7 @@
                         <td class="border-dashed border-t border-gray-300 text-gray-700 px-6 py-3 dark:text-gray-200">
                             <?php if ($session->id != session_id()) { ?>
                                 <a href="#" data-kt-users-sign-out="single_user"><?= ucfirst(lang('Core.signOut')); ?></a>
-                            <?php } else  if ($session->id == session_id()) { ?>
+                            <?php } elseif ($session->id == session_id()) { ?>
                                 <span class="badge badge-light-success"><?= ucfirst(lang('Core.currentSession')); ?></span>
                             <?php } ?>
                         </td>

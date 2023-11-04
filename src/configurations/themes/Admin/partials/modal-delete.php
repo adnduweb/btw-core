@@ -32,7 +32,7 @@ x-init="$watch('showDeleteModal', value => {
                     class="inline-block w-full max-w-xl my-20 text-left transition-all transform bg-white dark:bg-gray-800 rounded-lg shadow-xl 2xl:max-w-2xl"
                     x-on:click.outside="$el.classList.add('animate-buzz'); setTimeout(() => $el.classList.remove('animate-buzz'), 500)" 
                     data-loading-states>
-                    <div class="flex items-center justify-between space-x-4 p-4 bg-gray-50 rounded-t-md">
+                    <div class="flex items-center justify-between space-x-4 p-4 bg-gray-100 dark:bg-gray-900 rounded-t-md">
                         <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                             <span x-text="title"></span>
                         </h1>
@@ -51,7 +51,7 @@ x-init="$watch('showDeleteModal', value => {
                             <p  x-text="message"></p>
                         </div>
 
-                        <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 dark:bg-gray-800 text-right rounded-b-md">
+                        <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 dark:bg-gray-700 text-right rounded-b-md">
                             <input type="hidden" name="section" value="delete" />
                             <button type="button"
                                 class="inline-flex justify-center cursor-pointer bg-gray-500 text-white active:bg-gray-600 dark:bg-gray-900 font-bold px-4 py-2 text-sm rounded-md shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-in-out duration-1200 transition-all"

@@ -47,7 +47,8 @@ return [
         'signOut' => 'Se déconnecter',
         'filters' => 'Filtres',
         'shareNote' => 'partager cette note',
-        'company' => "entreprise"
+        'company' => "entreprise",
+        'systemInfo' => 'Informations générales'
     ],
     'message' => [
         'resourcesSaved' => 'Les modifications des {0} ont été enregistrées avec succès.',
@@ -182,6 +183,5 @@ return [
     'notConnected' => 'Pas de connexion',
     'Statistiques' => 'Statistiques',
     'totalVisits' => 'Nombre de visites',
-    'VisitorsByBrowser' => 'Visiteurs par navigateur',
-
+    'VisitorsByBrowser' => 'Visiteurs par navigateur'
 ];

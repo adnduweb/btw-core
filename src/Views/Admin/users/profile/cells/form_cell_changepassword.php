@@ -1,11 +1,11 @@
 <div id="changepassword" class="shadow sm:rounded-md sm:overflow-hidden">
-    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div class="px-4 py-5  space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200"><?= lang('Btw.sidebar.changePassword'); ?></h3>
 
 
 
-        <?php ''; // print_r($userCurrent); 
+        <?php ''; // print_r($userCurrent);
         ?>
         <div class="flex flex-wrap  mb-6">
             <div x-data="{ show: true }" class="w-full relative mb-6">

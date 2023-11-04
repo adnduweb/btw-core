@@ -15,7 +15,6 @@ use RuntimeException;
 
 class SelectCell
 {
-
     protected $xOnClick;
     protected $class;
     protected $label;
@@ -79,9 +78,10 @@ class SelectCell
 
         $html = "";
         $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
-        if ($this->label == true)
+        if ($this->label == true) {
             $html = '<label for="' . $params['name'] . '" class="block text-sm font-medium text-gray-700 mt-px pb-2 dark:text-gray-300">' . $params['label'] . ' ' . $required . ' </label>';
-        $html .= '<select '. $this->disabled . ' name="' . $params['name'] . '" class="' . $this->class . ' appearance-none block px-4 py-3 w-full rounded-md bg-gray-100  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150 ' . $this->classError . '"  
+        }
+        $html .= '<select ' . $this->disabled . ' name="' . $params['name'] . '" class="' . $this->class . ' form-select text-white-dark dark:focus:bg-gray-700 appearance-none block px-4 py-3 w-full rounded-md bg-gray-100  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm ease-linear transition-all duration-150 ' . $this->classError . '"  
         ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxTarget . '  ' . $this->hxInclude . '  ' . $this->hxTrigger . '  ' . $this->hxSwap . ' ' . $this->ktData . ' data-kt-form-select >';
         $i = 0;
         $placeHoler = $this->placeholder ?? lang('Form.general.choisissezVotreValeur');

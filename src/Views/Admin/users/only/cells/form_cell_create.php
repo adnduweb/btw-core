@@ -23,7 +23,7 @@
     </div>
  
 
-    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div class="px-4 py-5  space-y-6 sm:p-6">
 
         <!-- Site Name -->
         <div class="flex flex-wrap -mx-3 mb-2">

@@ -1,4 +1,4 @@
-<tr class="relative dark:hover:bg-gray-600 hover:bg-slate-50 list-group-item">
+<tr class="relative dark:hover:bg-gray-800 hover:bg-slate-50 list-group-item">
     <td class="border-dashed border-t border-gray-300 text-gray-700 px-6 py-3 dark:text-gray-200">
         <label class="form-check  form-check-sm form-check-custom form-check-solid <?= ($user->hasPermission($rowPermission[0])) ? 'checkbox-success' : '' ?>">
             <input class="permission_group selectable checkbox checkbox-primary rounded ml-1 w-5 h-5 ease-linear transition-all duration-150 border border-gray-200 focus:bg-white focus:border-gray-500 form-check-input 

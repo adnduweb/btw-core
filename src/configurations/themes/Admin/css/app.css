@@ -78,6 +78,14 @@
     @apply relative rounded-md bg-white p-5 shadow dark:bg-[#0e1726];
   }
 
+  .panel-adn {
+    @apply p-0;
+  }
+
+  .CodeMirror{
+    @apply dark:bg-gray-800 dark:text-[#888ea8]
+  }
+
   /* Navbar */
   .navbar-sticky header,
   .navbar-floating header {
@@ -859,7 +867,7 @@ td.selection {
 }
 
 .iti__flag {
-  @apply !bg-[url('../../../../admin/img/flags.png')];
+  @apply !bg-[url('/admin/img/flags.png')];
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {

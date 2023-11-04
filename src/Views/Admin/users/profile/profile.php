@@ -6,11 +6,12 @@
 
 <div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
 
-    <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
-        <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\sidebar'); ?>
+    <div class="relative flex h-full gap-5 sm:h-[calc(100vh_-_150px)]">
+        <?= $this->setVar('menu', $menu)->include('Btw\Core\Views\Admin\components\sidebar'); ?>
 
-        <div class="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
-            <div class="mt-5 md:mt-0 md:col-span-2 mb-5" data-loading-states>
+        <div class="panel panel-adn h-full flex-1 overflow-auto">
+            <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
+<?= $this->include('Btw\Core\Views\Admin\components\sidebar_action'); ?>
                 <?= form_open_multipart(route_to('user-profile-settings'), [
                     'id' => 'kt_users_form_information',
                     'hx-post' => route_to('user-profile-settings'),
@@ -21,8 +22,8 @@
                     'data-loading-target' => "#loadinginformation",
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
-                <?= '' //csrf_field() 
-                ?>
+                <?= '' //csrf_field()
+?>
                 <input type="hidden" name="section" value="general" />
                 <?= $this->include('Btw\Core\Views\Admin\users\profile\cells\form_cell_information'); ?>
                 <?= form_close(); ?>

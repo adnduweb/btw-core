@@ -8,9 +8,9 @@
 <?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' =>   lang('Btw.general.systemInfo')]) ?>
 
 <div class="flex-auto <?= isset($collapse) ? '' : ''; ?> ">
-    <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow overflow-y-auto relative pt-5" hx-boost="false">
+    <div class="overflow-x-auto rounded-lg shadow overflow-y-auto relative pt-5" hx-boost="false">
         <fieldset class="px-4 py-5 sm:px-6 ">
-            <legend class="text-base font-semibold leading-6 text-gray-900">Server Information</legend>
+            <legend class="text-base font-semibold leading-6 m-0 dark:text-white-dark">Server Information</legend>
 
             <div class="col-12 col-sm-6">
                 <table class="min-w-full divide-y divide-gray-300">
@@ -53,13 +53,13 @@
         </fieldset>
 
         <fieldset class="px-4 py-5 sm:px-6 ">
-            <legend class="text-base font-semibold leading-6 text-gray-900">PHP Info</legend>
+            <legend class="text-base font-semibold leading-6 m-0 dark:text-white-dark">PHP Info</legend>
 
             <a href="<?= route_to('sys-phpinfo'); ?>" class="rounded bg-gray-700 py-1 px-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600" target="_blank">View PHP Info</a>
         </fieldset>
 
         <fieldset class="px-4 py-5 sm:px-6 ">
-            <legend class="text-base font-semibold leading-6 text-gray-900">Filesystem</legend>
+            <legend class="text-base font-semibold leading-6 m-0 dark:text-white-dark">Filesystem</legend>
 
             <div class="col-12 col-sm-6">
                 <table class="min-w-full divide-y divide-gray-300">

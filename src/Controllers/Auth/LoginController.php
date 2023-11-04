@@ -15,8 +15,7 @@ class LoginController extends ShieldLogin
 
     public function __construct()
     {
-
-        service('viewMeta')->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
+        $this->addMeta();
         $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }
@@ -151,5 +150,28 @@ class LoginController extends ShieldLogin
 
         theme()->set_message_not_htmx('success', lang('Auth.successLogout', ['Logs']));
         return redirect()->hxRefresh();
+    }
+
+    public function addMeta()
+    {
+        $viewMeta =  service('viewMeta');
+        $viewMeta->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
+        $viewMeta->addStyle(['rel' => 'apple-touch-icon','sizes' => '57x57', 'href' => '/admin/favicon/apple-icon-57x57.png']);
+        $viewMeta->addStyle(['rel' => 'apple-touch-icon','sizes' => '60x60', 'href' => '/admin/favicon/apple-icon-60x60.png']);
+        $viewMeta->addStyle(['rel' => 'apple-touch-icon','sizes' => '72x72', 'href' => '/admin/favicon/apple-icon-72x72.png']);
+        $viewMeta->addStyle(['rel' => 'apple-touch-icon','sizes' => '76x76', 'href' => '/admin/favicon/apple-icon-76x76.png']);
+        $viewMeta->addStyle(['rel' => 'apple-touch-icon','sizes' => '114x114', 'href' => '/admin/favicon/apple-icon-114x114.png']);
+        $viewMeta->addStyle(['rel' => 'apple-touch-icon','sizes' => '120x120', 'href' => '/admin/favicon/apple-icon-120x120.png']);
+        $viewMeta->addStyle(['rel' => 'apple-touch-icon','sizes' => '144x144', 'href' => '/admin/favicon/apple-icon-144x144.png']);
+        $viewMeta->addStyle(['rel' => 'apple-touch-icon','sizes' => '152x152', 'href' => '/admin/favicon/apple-icon-152x152.png']);
+        $viewMeta->addStyle(['rel' => 'icon','sizes' => '180x180', 'href' => '/admin/favicon/apple-icon-180x180.png']);
+        $viewMeta->addStyle(['rel' => 'icon','type' => 'image/png', 'sizes' => '192x192', 'href' => '/admin/favicon/android-icon-192x192.png']);
+        $viewMeta->addStyle(['rel' => 'icon','type' => 'image/png', 'sizes' => '32x32', 'href' => '/admin/favicon/favicon-32x32.png']);
+        $viewMeta->addStyle(['rel' => 'icon','type' => 'image/png', 'sizes' => '96x96', 'href' => '/admin/favicon/favicon-96x96.png']);
+        $viewMeta->addStyle(['rel' => 'icon','type' => 'image/png', 'sizes' => '16x16', 'href' => '/admin/favicon/favicon-16x16.png']);
+        $viewMeta->addStyle(['rel' => 'manifest', 'href' => '/admin/favicon/manifest.json']);
+        $viewMeta->addMeta(['name' => "msapplication-TileColor", 'content' => '#ffffff']);
+        $viewMeta->addMeta(['name' => "msapplication-TileImage", 'content' => '/admin/favicon/ms-icon-144x144.png']);
+        $viewMeta->addMeta(['name' => "theme-color", 'content' => '#ffffff']);
     }
 }

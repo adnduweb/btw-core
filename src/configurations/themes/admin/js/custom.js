@@ -119,6 +119,7 @@
         // main - custom functions
         Alpine.data('main', (value) => ({
             modelOpen: false, 
+            isShowMenuSidebar: false,
             showDeleteModal: false, 
             showAuthDisplayDataModal: false, 
             showSlideOver: false,

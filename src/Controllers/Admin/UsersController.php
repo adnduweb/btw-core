@@ -25,7 +25,6 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Events\Events;
 use InvalidArgumentException;
 
-
 /**
  * Class Devis
  *
@@ -33,7 +32,6 @@ use InvalidArgumentException;
  */
 class UsersController extends AdminController
 {
-
     use ResponseTrait;
     /**
      * Base URL.
@@ -169,8 +167,9 @@ class UsersController extends AdminController
         if (!$user = $users->find($id)) {
             if ($this->request->isHtmx() && !$this->request->isBoosted()) {
                 $this->response->triggerClientEvent('showMessage', ['type' => 'danger', 'content' => lang('Btw.noRessourdeExistId', ['user'])]);
-            } else
+            } else {
                 throw new PageNotFoundException(lang('Btw.noRessourdeExistId', ['user']));
+            }
         }
 
         $groups = setting('AuthGroups.groups');
@@ -242,14 +241,16 @@ class UsersController extends AdminController
                 if (!$validation->run($data)) {
                     if ($this->request->isHtmx() && !$this->request->isBoosted()) {
                         $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.formValidationFailed', [lang('Btw.general.users')])]);
-                    } else
+                    } else {
                         alertHtmx('danger', 'Form validation failed.');
+                    }
 
 
                     return view($this->viewPrefix . 'cells\form_cell_information', [
                         'userCurrent' => $user,
                         'validation' => $validation
-                    ]);;
+                    ]);
+                    ;
                 }
 
                 $userban = $data['userban'] ?? false;
@@ -309,12 +310,14 @@ class UsersController extends AdminController
                         'currentGroup' => array_flip(auth()->user()->getGroups()),
                         'groups' => setting('AuthGroups.groups'),
                         'validation' => $validation
-                    ]) . alertHtmx('danger', 'Form validation failed.');;
+                    ]) . alertHtmx('danger', 'Form validation failed.');
+                    ;
                 }
 
 
-                if (!is_array($data['currentGroup']))
+                if (!is_array($data['currentGroup'])) {
                     $data['currentGroup'] = [$data['currentGroup']];
+                }
 
                 // Save the user's groups
                 $user->syncGroups(...($data['currentGroup'] ?? []));
@@ -323,8 +326,9 @@ class UsersController extends AdminController
                 if ($this->request->isHtmx()) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.user')])]);
                     $this->response->triggerClientEvent('updateGroupUserCurrent');
-                } else
+                } else {
                     alertHtmx('success', lang('Btw.resourcesSaved', ['settings']));
+                }
 
                 return view($this->viewPrefix . 'cells\cell_groups', [
                     'userCurrent' => auth()->user(),
@@ -411,8 +415,9 @@ class UsersController extends AdminController
             }
         }
 
-        if (!is_array($data['currentGroup']))
+        if (!is_array($data['currentGroup'])) {
             $data['currentGroup'] = [$data['currentGroup']];
+        }
 
         // Save the user's groups if the user has right permissions
         if (auth()->user()->can('users.edit')) {
@@ -477,8 +482,9 @@ class UsersController extends AdminController
 
         $data = $this->request->getRawInput();
 
-        if (isset($data['permissions']) && !is_array($data['permissions']))
+        if (isset($data['permissions']) && !is_array($data['permissions'])) {
             $data['permissions'] = [$data['permissions']];
+        }
 
         $user->syncPermissions(...($data['permissions'] ?? []));
         $permissions = setting('AuthGroups.permissions');
@@ -563,10 +569,11 @@ class UsersController extends AdminController
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]);;
+            ]);
+            ;
         }
 
-        //On vérifie que le mote d epasse en cours est connu 
+        //On vérifie que le mote d epasse en cours est connu
         $validCreds = auth()->check(['password' => $data['current_password'], 'email' => $user->email]);
         if (!$validCreds->isOK()) {
             $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.message.errorMdp', [lang('Btw.general.users')])]);
@@ -574,7 +581,8 @@ class UsersController extends AdminController
             return view($this->viewPrefix . 'cells\form_cell_changepassword', [
                 'userCurrent' => $user,
                 'validation' => $validation
-            ]);;
+            ]);
+            ;
         }
 
 
@@ -694,8 +702,9 @@ class UsersController extends AdminController
 
             $data = $this->request->getRawInput();
             // print_r($response); exit;
-            if (!is_array($data['identifier']))
+            if (!is_array($data['identifier'])) {
                 $data['identifier'] = [$data['identifier']];
+            }
 
             $model = model(UserModel::class);
 

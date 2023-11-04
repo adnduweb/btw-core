@@ -10,7 +10,7 @@
         'data-loading-class-remove' => "hidden"
     ]); ?>
 
-    <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
+    <div class="px-4 py-5  space-y-6 sm:p-6">
 
 
     <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">

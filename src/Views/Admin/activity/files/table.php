@@ -8,8 +8,8 @@
         </div>
     </div>
 <?php else : ?>
-    <div x-data="listen" class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow overflow-y-auto relative">
-        <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white dark:bg-gray-800 table-striped relative" hx-boost="false">
+    <div x-data="listen" class="overflow-x-auto0 rounded-lg shadow overflow-y-auto relative">
+        <table class="border-collapse table-auto w-full whitespace-no-wrap table-striped relative" hx-boost="false">
             <thead>
                 <tr class="text-left">
                     <?php if (auth()->user()->can('logs.manage')) : ?>
