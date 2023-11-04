@@ -81,18 +81,14 @@ class Update extends BaseCommand
 
     private function publishThemes(string $resource)
     {
-        $source      = BTPATH . '../themes/' . $resource;
+        $source = BTPATH . 'configurations/themes/' . $resource;
         $destination = APPPATH . '../themes/' . $resource;
+
+        $sourcePublic = BTPATH . 'configurations/public/' . $resource;
+        $destinationPublic = APPPATH . '../public/' . $resource;
 
         $publisher = new Publisher();
         $publisher->copyDirectory($source, $destination);
-
-        if ($resource == 'Admin') {
-            //logo
-            // $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn.png', APPPATH . '../public/logo-adn.png');
-            // $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-grey.png', APPPATH . '../public/logo-adn-grey.png');
-            // $publisher->copyDirectory(BTPATH . '../themes/Admin/img/logo-adn-blanc.png', APPPATH . '../public/logo-adn-blanc.png');
-            $publisher->copyDirectory($source, $destination);
-        }
+        $publisher->copyDirectory($sourcePublic, $destinationPublic);
     }
 }

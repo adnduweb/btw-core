@@ -22,10 +22,12 @@ class AdminVisitorsBrowserCell extends Cell
 
 
         $arrayVisit = [];
-        if($allVisits) {
+        if ($allVisits) {
             $i = 0;
             foreach ($allVisits as $row) {
-                $arrayVisit[$row->agent->browser->name][$row->session_id] = $row->id;
+                if ($row->agent->device->type != "bot") {
+                    $arrayVisit[$row->agent->browser->name][$row->session_id] = $row->id;
+                }
                 $i++;
             }
         }
