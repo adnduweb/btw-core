@@ -42,7 +42,7 @@ class RegisterController extends ShieldRegister
 
     public function __construct()
     {
-        service('viewMeta')->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
+        $this->addMeta();
         $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }
@@ -153,5 +153,13 @@ class RegisterController extends ShieldRegister
         return strpos($url, 'http') === 0
             ? $url
             : rtrim(site_url($url), '/ ');
+    }
+
+    private function addMeta()
+    {
+        $viewMeta =  service('viewMeta');
+        $viewMeta->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
+        $viewMeta->addFavicon('admin');
+
     }
 }

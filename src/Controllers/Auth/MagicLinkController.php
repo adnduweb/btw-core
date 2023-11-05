@@ -22,8 +22,8 @@ class MagicLinkController extends ShieldMagicLinkController
     public function __construct()
     {
         parent::__construct();
-        
-        service('viewMeta')->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
+
+        $this->addMeta();
         $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }
@@ -104,22 +104,22 @@ class MagicLinkController extends ShieldMagicLinkController
         return $this->displayMessage();
     }
 
-        /**
+    /**
      * Receives the email from the user, creates the hash
      * to a user identity, and sends an email to the given
      * email address.
      *
      * @return RedirectResponse|string
      */
-    public function loginActionHtmx() 
+    public function loginActionHtmx()
     {
         // Validate email format
         $rules = $this->getValidationRules();
         if (!$this->validate($rules)) {
-           $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $this->validator->getErrors()]);
-           return view($this->viewPrefix . 'cells\form_cell_email_2fa_show', [
-               'validation' => $this->validator->getErrors()
-           ]);
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $this->validator->getErrors()]);
+            return view($this->viewPrefix . 'cells\form_cell_email_2fa_show', [
+                'validation' => $this->validator->getErrors()
+            ]);
         }
 
         // Check if the user exists
@@ -192,9 +192,18 @@ class MagicLinkController extends ShieldMagicLinkController
         return $this->render(setting('Auth.views')['magic-link-message']);
     }
 
-    public function magicLinkMesage(){
+    public function magicLinkMesage()
+    {
 
         return $this->render(setting('Auth.views')['magic-link-message']);
-       
+
+    }
+
+    private function addMeta()
+    {
+        $viewMeta =  service('viewMeta');
+        $viewMeta->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
+        $viewMeta->addFavicon('admin');
+
     }
 }

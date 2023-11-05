@@ -24,7 +24,7 @@ class ActionController extends BaseController
 
     public function __construct()
     {
-        service('viewMeta')->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
+        $this->addMeta();
         $this->theme = 'auth';
         helper(['auth', 'form', 'alertHtmx']);
     }
@@ -113,5 +113,13 @@ class ActionController extends BaseController
             return $this->action->verifyGet($this->request);
         }
         return $this->action->verifyHtmx($this->request);
+    }
+
+    private function addMeta()
+    {
+        $viewMeta =  service('viewMeta');
+        $viewMeta->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
+        $viewMeta->addFavicon('admin');
+
     }
 }
