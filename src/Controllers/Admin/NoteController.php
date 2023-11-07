@@ -186,9 +186,12 @@ class NoteController extends AdminController
             if (!$notes->save($note, true)) {
                 log_message('error', 'infosTech errors', $notes->errors());
             }
+
         } catch (\Exception $e) {
             log_message('debug', 'modalCreateInfosTechAction error: ' . $e->getMessage());
         }
+
+        Events::trigger('notification', 'new', $note);
 
         $this->response->triggerClientEvent('createNote', time(), 'receive');
         $this->response->triggerClientEvent('updateListNote', time(), 'receive');

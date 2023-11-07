@@ -902,3 +902,7 @@ td.selection {
 .progress-chrome{
   @apply bg-gradient-to-r from-pink-500 to-yellow-500
 }
+
+.icon-notification svg{
+  @apply w-5 h-5
+}

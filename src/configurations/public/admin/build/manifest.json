@@ -7,8 +7,12 @@
     "file": "assets/flags@2x-9bd00899.png",
     "src": "node_modules/intl-tel-input/build/img/flags@2x.png"
   },
+  "public/admin/images/menu-heade.jpg": {
+    "file": "assets/menu-heade-771f04b4.jpg",
+    "src": "public/admin/images/menu-heade.jpg"
+  },
   "themes/admin/css/app.css": {
-    "file": "assets/app-17b8790d.css",
+    "file": "assets/app-d3691c8c.css",
     "isEntry": true,
     "src": "themes/admin/css/app.css"
   },

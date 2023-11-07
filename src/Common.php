@@ -271,6 +271,7 @@ if (!function_exists('render')) {
 
         $viewJavascript = service('viewJavascript');
         $data['viewJavascript'] = $viewJavascript;
+        $data['notifications'] = service('notifications')->getIsNotRead(5, true);
 
         return $renderer->setData($data)
             ->render($view, $options, true);
@@ -278,37 +279,37 @@ if (!function_exists('render')) {
 }
 
 
-if (!function_exists('viewBtw')) {
-    /**
-     *  A view using the current theme.
-     *
-     * @return string
-     */
-    function viewBtw(string $theme, string $view, array $data = [], array $options = []): string
-    {
+// if (!function_exists('viewBtw')) {
+//     /**
+//      *  A view using the current theme.
+//      *
+//      * @return string
+//      */
+//     function viewBtw(string $theme, string $view, array $data = [], array $options = []): string
+//     {
 
-        Theme::setTheme($theme);
-        $path = Theme::path();
+//         Theme::setTheme($theme);
+//         $path = Theme::path();
 
-        $renderer = single_service('renderer', $path);
+//         $renderer = single_service('renderer', $path);
 
-        $viewMeta = service('viewMeta');
-        $data['viewMeta'] = $viewMeta;
+//         $viewMeta = service('viewMeta');
+//         $data['viewMeta'] = $viewMeta;
 
-        $viewJavascript = service('viewJavascript');
-        $data['viewJavascript'] = $viewJavascript;
+//         $viewJavascript = service('viewJavascript');
+//         $data['viewJavascript'] = $viewJavascript;
 
-        $config = config(View::class);
-        $saveData = $config->saveData;
+//         $config = config(View::class);
+//         $saveData = $config->saveData;
 
-        if (array_key_exists('saveData', $options)) {
-            $saveData = (bool) $options['saveData'];
-            unset($options['saveData']);
-        }
+//         if (array_key_exists('saveData', $options)) {
+//             $saveData = (bool) $options['saveData'];
+//             unset($options['saveData']);
+//         }
 
-        return $renderer->setData($data, 'raw')->render($view, $options, $saveData);
-    }
-}
+//         return $renderer->setData($data, 'raw')->render($view, $options, $saveData);
+//     }
+// }
 if (!function_exists('getIp')) {
     function getIp()
     {

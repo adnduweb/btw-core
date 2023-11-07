@@ -10,6 +10,11 @@ Events::on('post_system', static function () {
 });
 
 
+// Events::on('notification', '\Btw\Core\Libraries\Notifications::store');
+Events::on('notification', static function ($type, $object) {
+    service('notifications')->store($type, $object);
+});
+
 // Events::on('userCreated', function (User $user) {
 //     //send an email to registered user
 //     service('notifications')->save();

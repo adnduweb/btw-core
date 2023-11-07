@@ -13,6 +13,7 @@ use Btw\Core\Config\Activitys as ActivitysConfig;
 use Btw\Core\Libraries\Storage\FileSystem;
 use Btw\Core\Libraries\Storage\StorageFactory;
 use Btw\Core\Libraries\Cron\Scheduler;
+use Btw\Core\Libraries\Notifications;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\UserAgent;
@@ -288,4 +289,22 @@ class Services extends BaseService
 
         return new Scheduler();
     }
+
+    /**
+    * Returns the Task Scheduler
+    *
+    * @param boolean $getShared
+    *
+    * @return \Daycry\CronJob\Scheduler
+    */
+    public static function notifications(bool $getShared = true): Notifications
+    {
+        if ($getShared) {
+            return static::getSharedInstance('notifications');
+        }
+
+        return new Notifications();
+    }
+
+
 }

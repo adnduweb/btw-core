@@ -44,7 +44,7 @@ trait Themeable
 
         $viewJavascript         = service('viewJavascript');
         $data['viewJavascript'] = $viewJavascript;
-        $data['notifications'] = service('notifications')->getIsNotRead(5, true);
+        $data['notifications'] = service('notifications')->get(5);
 
         return $renderer->setData($data)
             ->render($view, $options, true);

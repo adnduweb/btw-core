@@ -124,7 +124,7 @@
                     </ul>
                 </div>
 
-                <!-- <div class="dropdown" x-data="dropdown" @click.outside="open = false">
+                <div class="dropdown" x-data="dropdown" @click.outside="open = false">
                     <a href="javascript:;" class="relative block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60" @click="toggle">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19.0001 9.7041V9C19.0001 5.13401 15.8661 2 12.0001 2C8.13407 2 5.00006 5.13401 5.00006 9V9.7041C5.00006 10.5491 4.74995 11.3752 4.28123 12.0783L3.13263 13.8012C2.08349 15.3749 2.88442 17.5139 4.70913 18.0116C9.48258 19.3134 14.5175 19.3134 19.291 18.0116C21.1157 17.5139 21.9166 15.3749 20.8675 13.8012L19.7189 12.0783C19.2502 11.3752 19.0001 10.5491 19.0001 9.7041Z" stroke="currentColor" stroke-width="1.5" />
@@ -132,44 +132,40 @@
                             <path d="M12 6V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                         </svg>
 
+                        <?php if (count($notifications) > 0) :  ?>
                         <span class="flex absolute w-3 h-3 ltr:right-0 rtl:left-0 top-0">
                             <span class="animate-ping absolute ltr:-left-[3px] rtl:-right-[3px] -top-[3px] inline-flex h-full w-full rounded-full bg-success/50 opacity-75"></span>
                             <span class="relative inline-flex rounded-full w-[6px] h-[6px] bg-success"></span>
                         </span>
+                        <?php endif; ?>
                     </a>
-                    <ul x-cloak x-show="open" x-transition x-transition.duration.300ms class="ltr:-right-2 rtl:-left-2 top-11 !py-0 text-dark dark:text-white-dark w-[300px] sm:w-[350px] divide-y dark:divide-white/10">
-                        <li>
-                            <div class="flex items-center px-4 py-2 justify-between font-semibold hover:!bg-transparent">
-                                <h4 class="text-lg">Notification</h4>
-                                <template x-if="notifications.length">
-                                    <span class="badge bg-primary/80" x-text="notifications.length + 'New'"></span>
-                                </template>
+                    <ul x-cloak x-show="open" x-transition="" x-transition.duration.300ms="" class="top-11 w-[300px] !py-0 text-xs text-dark ltr:-right-16 rtl:-left-16 dark:text-white-dark sm:w-[375px] sm:ltr:-right-2 sm:rtl:-left-2">
+                         <li class="mb-5">
+                            <div class="overflow-hidden relative rounded-t-md !p-5 text-white">
+                                <div class="absolute h-full w-full bg-[url('/public/admin/images/menu-heade.jpg')] bg-no-repeat bg-center bg-cover inset-0"></div>
+                                <h4 class="font-semibold relative z-10 text-lg">Notifications</h4>
                             </div>
                         </li>
-                        <template x-for="notification in notifications">
-                            <li class=" dark:text-white-light/90 ">
-                                <div class="flex items-center px-4 py-2 group" @click.self="toggle">
-                                    <div class="grid place-content-center rounded">
-                                        <div class="w-12 h-12 relative">
-                                            <img class="w-12 h-12 rounded-full object-cover" :src="`<?php echo base_url('admin/images') ?>/${notification.profile}`" alt="image" />
-                                            <span class="bg-success w-2 h-2 rounded-full block absolute right-[6px] bottom-0"></span>
-                                        </div>
+                        <?php foreach ($notifications as $notification) : ?>
+                            <li>
+                                <div class="flex items-center px-5 py-3" @click.self="toggle">
+                                    <div>
+                                        <?= $notification->getIcon(); ?>
                                     </div>
-                                    <div class="ltr:pl-3 rtl:pr-3 flex flex-auto">
-                                        <div class="ltr:pr-3 rtl:pl-3">
-                                            <h6 x-html="notification.message"></h6>
-                                            <span class="text-xs block font-normal dark:text-gray-500" x-text="notification.time"></span>
-                                        </div>
-                                        <button type="button" class="ltr:ml-auto rtl:mr-auto text-neutral-300 hover:text-danger opacity-0 group-hover:opacity-100" @click="removeNotification(notification.id)">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <circle opacity="0.5" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
-                                                <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                                    <span class="px-3 dark:text-gray-500">
+                                        <div class="font-semibold text-sm dark:text-white-light/90"><?= $notification->title; ?></div>
+                                        <div><?= $notification->body; ?></div>
+                                    </span>
+                                    <span class="font-semibold bg-white-dark/20 rounded text-dark/60 px-1 ltr:ml-auto rtl:mr-auto whitespace-pre dark:text-white-dark ltr:mr-2 rtl:ml-2"><?= $notification->getTimestamp(); ?> </span>
+                                    <span class="text-neutral-300 hover:text-danger" @click="removeMessage(msg.id)">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle opacity="0.5" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
+                                            <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                        </svg>
+                                    </span>
                                 </div>
                             </li>
-                        </template>
+                       <?php endforeach;?>
                         <template x-if="notifications.length">
                             <li>
                                 <div class="p-4">
@@ -192,7 +188,7 @@
                             </li>
                         </template>
                     </ul>
-                </div> -->
+                </div>
                 <div class="dropdown flex-shrink-0" x-data="dropdown" @click.outside="open = false">
                     <a href="javascript:;" class="relative group" @click="toggle()">
                         <span><?= view_cell('Btw\Core\Cells\Core\AdminAvatar', ['auth' => auth()]); ?></span>
