@@ -15,6 +15,8 @@ class BtwSeeder extends Seeder
             throw new \Exception('impossible de créer le dossier twig');
         }
 
+        service('settings')->set('Btw.dateCreated', date('Y-m-d'));
+        service('settings')->set('Btw.codeApp',strtolower(passwdGen(9, 'NO_NUMERIC')));
         service('settings')->set('Btw.themebo', 'Admin');
         service('settings')->set('Btw.siteName', 'La meilleur Appli du monde');
         service('settings')->set('Btw.titleNameAdmin', 'ADN du Web');

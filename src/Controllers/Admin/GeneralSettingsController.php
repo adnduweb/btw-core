@@ -123,6 +123,7 @@ class GeneralSettingsController extends AdminController
                 setting('Site.siteOnline', $data['siteOnline'] ?? 0);
                 setting('Site.ipAllowed', trim($data['ipAllowed']) ?? '');
                 setting('Site.activeMultilangue', $data['activeMultilangue'] ?? 0);
+                setting('Btw.activeWebsocket', $data['activeWebsocket'] ?? 0);
                 $this->updateSettingsGlobal();
 
 

@@ -81,6 +81,7 @@ class Update extends BaseCommand
 
     private function publishThemes(string $resource)
     {
+        
         $source = BTPATH . 'configurations/themes/' . $resource;
         $destination = APPPATH . '../themes/' . $resource;
 

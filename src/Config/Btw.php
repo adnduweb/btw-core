@@ -6,6 +6,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Btw extends BaseConfig
 {
+
+    public $dateCreated = "2023-11-01";
+    public $codeApp = "";
     /**
      * --------------------------------------------------------------------------
      * List Views
@@ -139,4 +142,6 @@ class Btw extends BaseConfig
      * Time expired data Sensive
      */
     public $dataAskAuthExpiration = 3600;
+
+    public $activeWebsocket = false;
 }
