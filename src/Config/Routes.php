@@ -132,8 +132,14 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
 
 
     // Seach All admin
-
     $routes->post('search', 'SearchController::search', ['as' => 'search-all-admin']);
+
+    // Notification
+    $routes->get('notification/list/update', 'NotificationController::updateList', ['as' => 'list-notification-not-read']);
+
+    // Websocket
+    $routes->get('ws/notifications/stream/list', 'NotificationController::streamWebsoket', ['as' => 'ws-notification-not-read']);
+
 });
 
 $routes->setPrioritize();

@@ -39,6 +39,9 @@ You only need to add a single line to your cronjob:
 
     > * * * * * php /path-to-your-project/spark cronjob:run >> /dev/null 2>&1 >> /dev/null 2>&1
 
+## Websocket
+php spark btw:websocket start
+
 # Inspirations
 https://demo.cartify.dev/admin/settings
 https://www.patreon.com/lonnieezell/posts

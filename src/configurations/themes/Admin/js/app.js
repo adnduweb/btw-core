@@ -84,6 +84,8 @@ import * as SetHtmxHead from "./htmx-head-support.js";
 // if (doudou.env != 'development') {
     SetHtmxHead.initHtmx();
 // }
+import * as SetHWstmx from "./htmx-ws.js";
+SetHWstmx.wsHtmx();
 
 
 htmx.on("htmx:afterSettle", function(evt) {

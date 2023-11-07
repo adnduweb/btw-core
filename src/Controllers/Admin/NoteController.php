@@ -191,12 +191,13 @@ class NoteController extends AdminController
             log_message('debug', 'modalCreateInfosTechAction error: ' . $e->getMessage());
         }
 
-        Events::trigger('notification', 'new', $note);
+        Events::trigger('notification', 'Add note', $note);
 
         $this->response->triggerClientEvent('createNote', time(), 'receive');
         $this->response->triggerClientEvent('updateListNote', time(), 'receive');
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Customer.itemCustomer')])]);
         $this->response->triggerClientEvent('reloadTable');
+        $this->response->triggerClientEvent('updateNotification');
         $this->response->triggerClientEvent('closemodal');
 
         return view($this->viewPrefix . 'cells\form_cell_infos_create_tech', [

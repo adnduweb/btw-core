@@ -12,7 +12,7 @@ class NotificationModel extends Model
     protected $primaryKey      = 'id';
     protected $returnType      = Notification::class;
     protected $useSoftDeletes  = true;
-    protected $allowedFields    = ['user_id', 'title', 'is_read', 'body'];
+    protected $allowedFields    = ['user_id', 'type_id', 'title', 'is_read', 'body'];
     protected $useTimestamps   = true;
     protected $validationRules = [];
     protected $validationMessages = [];

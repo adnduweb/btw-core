@@ -7,12 +7,8 @@
     "file": "assets/flags@2x-9bd00899.png",
     "src": "node_modules/intl-tel-input/build/img/flags@2x.png"
   },
-  "public/admin/images/menu-heade.jpg": {
-    "file": "assets/menu-heade-771f04b4.jpg",
-    "src": "public/admin/images/menu-heade.jpg"
-  },
   "themes/admin/css/app.css": {
-    "file": "assets/app-d3691c8c.css",
+    "file": "assets/app-7635fd97.css",
     "isEntry": true,
     "src": "themes/admin/css/app.css"
   },
@@ -93,7 +89,7 @@
     "css": [
       "assets/app-8d5ae6d0.css"
     ],
-    "file": "assets/app-597473d1.js",
+    "file": "assets/app-d3748801.js",
     "isEntry": true,
     "src": "themes/admin/js/app.js"
   }

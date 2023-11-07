@@ -19,6 +19,7 @@ class Notifications
 
         $notifications->insert([
             'user_id' => Auth()->user()->id,
+            'type_id' => 1,
             'title' => $type,
             'is_read' => 1,
             'body' => $object->titre,
@@ -31,7 +32,7 @@ class Notifications
     public function getIsNotRead(int $limit)
     {
         $notificationModel = new NotificationModel();
-        $notifications = $notificationModel->where('is_read', 1)->limit(5)->findAll();
+        $notifications = $notificationModel->where('is_read', 1)->orderBy('id DESC')->findAll(5);
         return $notifications;
     }
 }

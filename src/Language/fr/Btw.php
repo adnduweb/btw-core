@@ -183,5 +183,6 @@ return [
     'notConnected' => 'Pas de connexion',
     'Statistiques' => 'Statistiques',
     'totalVisits' => 'Nombre de visites',
-    'VisitorsByBrowser' => 'Visiteurs par navigateur'
+    'VisitorsByBrowser' => 'Visiteurs par navigateur',
+    'ReadAllNotifications' => 'Lire toutes les notifications',
 ];
