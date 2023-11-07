@@ -73,6 +73,16 @@
             ]); ?>
         </div>
 
+        <div class="row mb-3">
+            <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
+                'label' => lang('Form.settings.activeWebsocket'),
+                'name' => 'activeWebsocket',
+                'value' => '1',
+                'checked' => (old('activeWebsocket', setting('Btw.activeWebsocket') ?? false)),
+                'description' => lang('Form.settings.activeWebsocketDescription'),
+            ]); ?>
+        </div>
+
     </div>
 
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">

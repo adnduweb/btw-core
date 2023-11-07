@@ -184,5 +184,5 @@ return [
     'Statistiques' => 'Statistiques',
     'totalVisits' => 'Nombre de visites',
     'VisitorsByBrowser' => 'Visiteurs par navigateur',
-    'ReadAllNotifications' => 'Lire toutes les notifications',
+    'ReadAllNotifications' => 'Lire toutes les notifications'
 ];

@@ -71,7 +71,9 @@ return [
         'Force2FACheckAfterLogin' => "Forcer le contrôle 2FA après la connexion",
         'Force2FACheckAfterLoginDesc' => "Si la case est cochée, un code sera envoyé par courrier électronique pour confirmation.",
         "activeMultilangue" => 'Activer le multi-langue',
-        "activeMultilangueDescription" => 'Cela va ajouter dans les urls les langue fr, en, ou autres '
+        "activeMultilangueDescription" => 'Cela va ajouter dans les urls les langue fr, en, ou autres',
+        'activeWebsocket' => 'Activer les notifications par Websocket',
+        'activeWebsocketDescription' => 'Les websockets permettent de notifier de maniére asynchrone des données de serveur en serveur. Vous devez lancer cette commance en CLI : php spark btw:websocket start',
     ],
     'general' => [
         'title' => 'Titre',

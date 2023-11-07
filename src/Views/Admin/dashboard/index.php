@@ -22,27 +22,4 @@
 
 <?= $this->section('scripts') ?>
 <?= $cells->scripts();  ?>
-
-<!-- <script>
-
-var server = new WebSocketServer();
-server.on('connection', function (socket) {
-  // Do something and then
-  socket.close(); //quit this connection
-});
-
-</script> -->
-
-<script>
-
-var conn = new WebSocket('ws://localhost:8282/echo');
-conn.onopen = function(e) {
-    console.log("Connection established!");
-};
-
-conn.onmessage = function(e){ console.log(e.data); };
-conn.onopen = () => conn.send('hello');
-
-</script>
-
 <?= $this->endSection() ?>
