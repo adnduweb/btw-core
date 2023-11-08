@@ -10,6 +10,7 @@ class CreateTableNotices extends Migration
     {
         $this->forge->addField([
             'id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
+            'company_id' => ['type' => 'INT', 'constraint' => 11, 'null' => true],
             'user_id' => ['type' => 'INT', 'constraint' => 11, 'null' => true],
             'active' => ['type' => 'INT', 'constraint' => 11],
             'order' => ['type' => 'INT', 'constraint' => 11, 'null' => true],

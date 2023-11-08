@@ -137,6 +137,15 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     // Notification
     $routes->get('notification/list/update', 'NotificationController::updateList', ['as' => 'list-notification-not-read']);
 
+    // Notices
+    $routes->get('notices', 'NoticeController::index', ['as' => 'notices-manage']);
+    $routes->get('notices/edit/modal/(:any)', 'NoticeController::modalNotice/$1', ['as' => 'notice-update']);
+    $routes->post('notices/edit', 'NoticeController::edit', ['as' => 'notice-edit']);
+    $routes->get('notices/list', 'NoticeController::updateListNotices', ['as' => 'notice-list']);
+    $routes->delete('notices/(:any)/delete', 'NoticeController::actionDeleteNotice/$1', ['as' => 'notice-delete']);
+
+
+
     // Websocket
     $routes->get('ws/notifications/stream/list', 'NotificationController::streamWebsoket', ['as' => 'ws-notification-not-read']);
 

@@ -35,7 +35,7 @@ class AdminController extends BaseController
         // $this->notifications = service('notifications')->get(5);
     }
 
-    private function _getController()
+    protected function _getController()
     {
         $controllerName = service('router')->controllerName();
         $handle = explode('\\', $controllerName);
@@ -44,7 +44,7 @@ class AdminController extends BaseController
         return $this->_controller;
     }
 
-    private function _getMethod(string $url, int $code = 0)
+    protected function _getMethod(string $url, int $code = 0)
     {
 
         $this->_method = service('router')->methodName();

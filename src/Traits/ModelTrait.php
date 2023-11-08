@@ -22,6 +22,23 @@ trait ModelTrait
         return $this;
     }
 
+    /**
+    * Add related tables to load along with the next finder.
+    *
+    * @param mixed $with      Table name, array of table names, or false (to disable)
+    * @param bool  $overwrite Whether to merge with existing table 'with' list
+    *
+    * @return $this
+    */
+    public function withLang()
+    {
+
+        $this->tmpWithLang = true;
+
+        return $this;
+    }
+
+
     //--------------------------------------------------------------------
     /**
      * Works with the current Query Builder instance to return

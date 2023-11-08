@@ -24,7 +24,9 @@ return [
         'listAllAdressCustomer' => 'Retrouvez toutes les adresses de ce client',
         'listContact' => "Liste des contacts",
         'listAllContactCustomer' => 'Retrouvez tous les contacts de ce client',
-        'listInfosTech' => 'Informations techniques'
+        'listInfosTech' => 'Informations techniques',
+        'notices' => 'Retrouvez toutes les notices',
+        'noticeDesc' => 'Les notices seront affichées pour les utilisateurs sur leur tableau de bord',
     ],
     'general' => [
         'settings' => 'réglages',
@@ -184,5 +186,9 @@ return [
     'Statistiques' => 'Statistiques',
     'totalVisits' => 'Nombre de visites',
     'VisitorsByBrowser' => 'Visiteurs par navigateur',
-    'ReadAllNotifications' => 'Lire toutes les notifications'
+    'ReadAllNotifications' => 'Lire toutes les notifications',
+    'notices' => 'Notices',
+    'noticesList' => 'Liste des notices',
+    'tokens' => 'API',
+    'addNotice' => 'Ajouter une notice'
 ];

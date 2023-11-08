@@ -177,7 +177,8 @@ return [
     'modal' => [
         "addOrdEditAddress" => 'Ajouter ou modifier une adresse',
         "addOrdEditContact" => 'Ajouter ou modifier un contact',
-        "addOrdEditInfosTech" => 'Ajouter ou modifier une information'
+        "addOrdEditInfosTech" => 'Ajouter ou modifier une information',
+        "addOrdEditNotice" => "Ajouter ou modifier une notice",
     ],
     'ShieldOAuthLang' => [
         'allow_login' => 'Autoriser la connexion',
