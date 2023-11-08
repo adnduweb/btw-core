@@ -143,6 +143,7 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->post('notices/edit', 'NoticeController::edit', ['as' => 'notice-edit']);
     $routes->get('notices/list', 'NoticeController::updateListNotices', ['as' => 'notice-list']);
     $routes->delete('notices/(:any)/delete', 'NoticeController::actionDeleteNotice/$1', ['as' => 'notice-delete']);
+    $routes->get('notices/update/active/(:any)', 'NoticeController::activeTable/$1', ['as' => 'notice-active-table']);
 
 
 

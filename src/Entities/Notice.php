@@ -20,4 +20,21 @@ class Notice extends Entity
         return $this->attributes['id'] ?? null;
     }
 
+    public function getTitle()
+    {
+        return $this->attributes['name'] ?? null;
+    }
+
+    public function getDescription()
+    {
+        return $this->attributes['description'] ?? null;
+    }
+
+    public function getType()
+    {
+        return $this->attributes['type_id'] ?? null;
+    }
+
+    
+
 }

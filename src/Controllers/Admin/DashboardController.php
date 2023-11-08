@@ -32,6 +32,8 @@ class DashboardController extends AdminController
         // Add the page title
         service('viewMeta')->setTitle('My Site');
 
+        // print_r(service('Notices')->instanceAll()); exit;
+
         return $this->render($this->viewPrefix . 'index', [
             'cells' => new StatsManager(),
         ]);

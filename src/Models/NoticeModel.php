@@ -18,7 +18,7 @@ class NoticeModel extends Model
     protected $returnType      = Notice::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['company_id', 'user_id', 'active', 'order'];
+    protected $allowedFields    = ['company_id', 'user_id', 'type_id', 'from', 'to', 'active', 'order'];
 
     // Dates
     protected $useTimestamps = false;
@@ -34,10 +34,10 @@ class NoticeModel extends Model
     protected $cleanValidationRules = true;
 
     protected $columns = [
-        ['name' => 'selection',  'responsivePriority' => 1],
-        ['name' => 'type', 'orderable' => true, 'header' => 'Type', 'order_by_name' => 'DESC', 'responsivePriority' => 2],
-        ['name' => 'titre', 'orderable' => true, 'header' => 'Titre', 'order_by_lang' => 'DESC'],
-        ['name' => 'content', 'orderable' => true, 'header' => 'Description', 'order_by_lang' => 'DESC'],
+        ['name' => 'name', 'orderable' => true, 'header' => 'Titre', 'order_by_name' => 'DESC', 'responsivePriority' => 2],
+        ['name' => 'type_id', 'orderable' => true, 'header' => 'Type', 'order_by_lang' => 'DESC'],
+        ['name' => 'description', 'orderable' => true, 'header' => 'Description', 'order_by_lang' => 'DESC'],
+        ['name' => 'active', 'orderable' => true, 'header' => 'Active', 'order_by_active' => 'DESC', 'notClick' => true],
         ['name' => 'created_at', 'orderable' => true, 'header' => 'Date de création', 'order_by_lang' => 'DESC'],
         ['name' => 'action', 'header' => 'Action', 'order_by_alias' => null,  'responsivePriority' => 3]
 
@@ -103,6 +103,7 @@ class NoticeModel extends Model
 
             return $data;
         }
+        return $data;
     }
 
 

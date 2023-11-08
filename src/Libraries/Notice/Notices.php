@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * This file is part of Doudou.
+ *
+ * (c) Fabrice Loru <fabrice@adnduweb.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+namespace Btw\Core\Libraries\Notice;
+
+use Btw\Core\Libraries\Notice\NoticeCollection;
+use Btw\Core\Models\NoticeModel;
+use Btw\Core\Entities\Notice;
+
+class Notices
+{
+    protected $objectAll = [];
+
+    public function instance(Notice $notice)
+    {
+        /** @var notice $noticeConfig */
+        $noticeConfig = config('Notice');
+
+        $collection = new NoticeCollection();
+        $collection->setId($notice->id);
+        $collection->setCompanyId($notice->companyId);
+        $collection->setUserId($notice->user_id);
+        $collection->setTypeId($notice->type_id);
+        $collection->setFrom($notice->from);
+        $collection->setTo($notice->to);
+        $collection->setName($notice->name);
+        $collection->setDescription($notice->description);
+        $collection->run();
+        return $collection;
+
+    }
+
+    public function instanceAll()
+    {
+        foreach (model(noticeModel::class)->join('notices_langs', 'notices_langs.notice_id = notices.id')->where('lang', service('language')->getLocale())->where('active', true)->findAll() as $notice) {
+            $this->objectAll[] = $this->instance($notice);
+        }
+        return $this;
+    }
+
+}

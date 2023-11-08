@@ -70,7 +70,7 @@ class NoticeController extends AdminController
          * @var Notice
          */
         $notice = $noticeId !== 0
-            ? $notices->find($noticeId)
+            ? $notices->join('notices_langs', 'notices_langs.notice_id = notices.id')->where('id', $noticeId)->where('lang', service('language')->getLocale())->first()
             : new Notice();
 
         $this->response->triggerClientEvent('openmodalnotice', true);
@@ -149,6 +149,29 @@ class NoticeController extends AdminController
             $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesDeleted', ['notices'])]);
             $this->response->triggerClientEvent('closemodal');
         }
+    }
+
+    public function activeTable(string $noticeId)
+    {
+        $notices = model(NoticeModel::class);
+        if (!$notice = $notices->where('id', $noticeId)->first()) {
+            throw new PageNotFoundException('Incorrect notice uuid.');
+        }
+
+        $notice->active = $notice->active != true;
+        $notice->updated_at = date('Y-m-d H:i:s');
+
+        try {
+            $notices->save($notice);
+            $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', ['notices'])]);
+            log_message('info', 'Notice save {notice}', ['notice' => json_encode($notice, JSON_UNESCAPED_SLASHES)]);
+
+        } catch (\CodeIgniter\Database\Exceptions\DataException $e) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $e->getMessage()]);
+            log_message('debug', 'Notice save {notice}', ['notice' => $e->getMessage()]);
+        }
+
+        $this->response->setStatusCode(204, 'No Content');
     }
 
 }
