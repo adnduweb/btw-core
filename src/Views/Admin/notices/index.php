@@ -12,7 +12,9 @@
     <div class="row justify-content-md-center">
 
         <div class="col-sm-12 col-lg-8">
-            <?= $this->include('Btw\Core\Views\Admin\notices\cells\list_notices'); ?>
+            <div class="panel panel-adn h-full flex-1 overflow-auto">
+                <?= $this->include('Btw\Core\Views\Admin\notices\cells\list_notices'); ?>
+            </div>
         </div>
 
     </div>

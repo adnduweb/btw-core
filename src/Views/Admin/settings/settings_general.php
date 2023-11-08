@@ -11,7 +11,7 @@
 
         <div class="panel panel-adn h-full flex-1 overflow-auto">
             <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
-<?= $this->include('Btw\Core\Views\Admin\components\sidebar_action'); ?>
+                <?= $this->include('Btw\Core\Views\Admin\components\sidebar_action'); ?>
                 <?= form_open(route_to('general-post-settings'), [
                     'id' => 'kt_users_form_general',
                     'hx-post' => route_to('general-post-settings'),
@@ -23,7 +23,7 @@
                     'data-loading-class-remove' => "hidden"
                 ]); ?>
                 <?= '' // csrf_field()
-?>
+                    ?>
                 <input type="hidden" name="section" value="generalsetting" />
                 <?= $this->include('Btw\Core\Views\Admin\settings\cells\form_cell_general'); ?>
                 <?= form_close(); ?>
@@ -31,19 +31,19 @@
 
 
             <div class="mt-5 md:mt-0 md:col-span-2" data-loading-states>
-<?= $this->include('Btw\Core\Views\Admin\components\sidebar_action'); ?>
+                <?= $this->include('Btw\Core\Views\Admin\components\sidebar_action'); ?>
                 <?= form_open(route_to('general-post-settings'), [
-    'id' => 'kt_users_form_dateandtime',
-    'hx-post' => route_to('general-post-settings'),
-    'hx-target' => '#dateandtime',
-    'hx-swap' => 'none',
-    'hx-ext' => "loading-states, event-header",
-    'novalidate' => false,
-    'data-loading-target' => "#loadingdateandtime",
-    'data-loading-class-remove' => "hidden"
-]); ?>
+                    'id' => 'kt_users_form_dateandtime',
+                    'hx-post' => route_to('general-post-settings'),
+                    'hx-target' => '#dateandtime',
+                    'hx-swap' => 'none',
+                    'hx-ext' => "loading-states, event-header",
+                    'novalidate' => false,
+                    'data-loading-target' => "#loadingdateandtime",
+                    'data-loading-class-remove' => "hidden"
+                ]); ?>
                 <?= '' // csrf_field()
-?>
+                    ?>
                 <input type="hidden" name="section" value="dateandtime" />
                 <?= $this->include('Btw\Core\Views\Admin\settings\cells\form_cell_dateandtime'); ?>
                 <?= form_close(); ?>

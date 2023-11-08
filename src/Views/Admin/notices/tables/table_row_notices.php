@@ -2,14 +2,22 @@
 <tr class="notice" data-uuid="<?= $notice->getIdentifier(); ?>">
 
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-500 sm:pl-0" >
-        ghjkjghkghjk
+        <?= $notice->getTitle(); ?> 
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" >
-        <?= $notice->titre; ?>
+    <?= $notice->getType(); ?>
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" >
-        
-       lhjkljklj
+    <?= $notice->getDescription(); ?>
+    </td>
+    <td>
+        <?= 
+         view_cell('Btw\Core\Cells\Datatable\DatatableSwitch', [
+            'row' => $notice,
+            'type' => 'customer',
+            'hxGet' => route_to('notice-active-table', $notice->getIdentifier()),
+            'hxSwap' => "none"
+        ]); ?>
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><?= $notice->created_at; ?></td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
