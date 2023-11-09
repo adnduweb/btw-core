@@ -42,7 +42,7 @@ abstract class Collection
      */
     protected $typeId;
 
-        /**
+    /**
      * The title of the quote or invoice.
      *
      * @var int
@@ -50,26 +50,33 @@ abstract class Collection
     protected $from;
 
 
-        /**
+    /**
      * The title of the quote or invoice.
      *
      * @var int
      */
     protected $to;
 
-        /**
+    /**
      * The title of the quote or invoice.
      *
      * @var int
      */
     protected $name;
 
-        /**
+    /**
      * The title of the quote or invoice.
      *
      * @var int
      */
     protected $description;
+
+    /**
+     * The title of the quote or invoice.
+     *
+     * @var int
+     */
+    protected $badge;
 
 
     /**
@@ -84,10 +91,7 @@ abstract class Collection
     /**
      * Initialize the calculated amount array.
      */
-    public function __construct()
-    {
-       
-    }
+    public function __construct() {}
 
     /**
      * Sets the id.
@@ -134,6 +138,11 @@ abstract class Collection
         $this->description = $description;
     }
 
+    public function setBadge($badge)
+    {
+        $this->badge = $badge;
+    }
+
     public function getCompanyId()
     {
         return $this->companyId;
@@ -169,11 +178,13 @@ abstract class Collection
         return $this->description;
     }
 
-     /**
-     * Call the calculation methods.
-     */
-    public function run()
+    public function getBadge()
     {
-        
+        return config('Notice')->typeId[$this->badge];
     }
+
+    /**
+    * Call the calculation methods.
+    */
+    public function run() {}
 }

@@ -20,6 +20,7 @@ class AdminController extends BaseController
     protected $_controller;
     protected $_method;
     protected $sessionAskAuth;
+    protected $displayNotices;
     // protected $notifications;
 
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
@@ -32,6 +33,12 @@ class AdminController extends BaseController
         $this->langueCurrent = service('settings')->get('Btw.language_bo', 'user:' . Auth()->user()->id) ?? 'fr';
         service('language')->setLocale($this->langueCurrent);
         setlocale(LC_TIME, service('request')->getLocale() . '_' . service('request')->getLocale());
+
+        // Notices
+        $this->displayNotices = service('Notices')->instanceAll()->getDisplay();
+        // print_r(service('Notices')->instanceAll()->getDisplay());
+        // exit;
+
         // $this->notifications = service('notifications')->get(5);
     }
 

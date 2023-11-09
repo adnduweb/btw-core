@@ -7,6 +7,9 @@
 <?= $this->section('main') ?>
 <?= view_cell('Btw\Core\Cells\Core\AdminPageTitle', ['message' => lang('Btw.Dashboard')]) ?>
 
+<?= $this->include('Btw\Core\Views\Admin\notices\display'); ?>
+
+
 <!-- <div
                         id="heartbeat"
                         hx-ext="ws"

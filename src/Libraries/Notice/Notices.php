@@ -26,9 +26,10 @@ class Notices
 
         $collection = new NoticeCollection();
         $collection->setId($notice->id);
-        $collection->setCompanyId($notice->companyId);
+        $collection->setCompanyId($notice->company_id);
         $collection->setUserId($notice->user_id);
         $collection->setTypeId($notice->type_id);
+        $collection->setBadge($notice->type_id);
         $collection->setFrom($notice->from);
         $collection->setTo($notice->to);
         $collection->setName($notice->name);
@@ -42,6 +43,26 @@ class Notices
     {
         foreach (model(noticeModel::class)->join('notices_langs', 'notices_langs.notice_id = notices.id')->where('lang', service('language')->getLocale())->where('active', true)->findAll() as $notice) {
             $this->objectAll[] = $this->instance($notice);
+        }
+        return $this;
+    }
+
+
+    public function getItemsGlobal()
+    {
+        return $this->objectAll;
+    }
+
+    public function getDisplay()
+    {
+        if(!empty($this->objectAll)) {
+            $i = 0;
+            foreach ($this->objectAll as &$notice) {
+                if($notice->getItsMe() != 1) {
+                    // unset($this->objectAll[$i]);
+                }
+                $i++;
+            }
         }
         return $this;
     }

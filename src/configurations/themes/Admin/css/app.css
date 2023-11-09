@@ -396,7 +396,7 @@ hover:text-primary hover:before:!bg-primary ltr:before:mr-2 rtl:before:ml-2 dark
     @apply py-1.5 text-xs;
   }
   label {
-    @apply mb-1.5 block font-semibold;
+    @apply block font-semibold;
   }
   [dir="rtl"] select {
     background-position: left 0.5rem center;
