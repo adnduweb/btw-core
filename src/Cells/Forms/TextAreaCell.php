@@ -132,7 +132,7 @@ class TextAreaCell
 
         switch ($params['wysiwyg']) {
             case 'ckeditor':
-                return '<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js" />';
+                return '<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.css" />';
                 break;
             case 'quilljs':
                 return '<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css" />';

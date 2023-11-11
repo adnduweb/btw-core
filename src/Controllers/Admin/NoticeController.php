@@ -53,7 +53,7 @@ class NoticeController extends AdminController
         $notices = model(NoticeModel::class);
 
         return view($this->viewPrefix . 'cells\list_notices', [
-            'notices' => $notices->findAll(),
+            'notices' => $notices->join('notices_langs', 'notices_langs.notice_id = notices.id')->where('lang', service('language')->getLocale())->findAll(),
             'columns' => $notices->getColumn()
         ]);
     }
