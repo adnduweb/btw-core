@@ -23,8 +23,9 @@ if (!defined('asset_link')) {
 
         if (!empty($options)) {
             foreach ($options as $option) {
-                if ($option == 'defer')
+                if ($option == 'defer') {
                     $defer = ' defer ';
+                }
             }
         }
 
@@ -37,7 +38,15 @@ if (!defined('asset_link')) {
                 $tag = "<script{$defer}src='{$url}'></script>";
         }
 
-        return $tag  . "\n";
+        return $tag . "\n";
+    }
+}
+
+if (!defined('asset_url')) {
+    function asset_url(string $location, string $type): string
+    {
+        $url = asset($location, $type);
+        return $url;
     }
 }
 

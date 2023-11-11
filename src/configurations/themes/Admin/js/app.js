@@ -27,6 +27,7 @@ import "datatables.net-responsive";
 import * as echarts from "echarts";
 import Dropzone from "dropzone";
 import * as htmx from "htmx.org";
+import Quill from "quill";
 
 
 import "intl-tel-input/build/css/intlTelInput.css";
@@ -49,6 +50,7 @@ window.datatable = Datatable;
 window.echarts = echarts;
 window.dropzone = Dropzone;
 window.htmx = htmx;
+window.Quill = Quill;
 
 Alpine.plugin(focus);
 Alpine.plugin(morph);

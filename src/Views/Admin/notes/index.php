@@ -39,6 +39,7 @@
     'type' => 'showNoteModal',
     'name' => 'note',
     'title' => lang('Form.modal.addOrdEditInfosTech'),
+    'wysiwyg' => 'simplemde',
     'identifier' => 'addnote',
     'view' => 'Btw\Core\Views\Admin\notes\cells\form_cell_infos_create_tech'
 ]); ?>
@@ -47,6 +48,7 @@
     'type' => 'showNoteEditModal',
     'name' => 'createnote',
     'title' => lang('Form.modal.addOrdEditInfosTech'),
+    'wysiwyg' => 'simplemde',
     'identifier' => 'createnote',
     'view' => 'Btw\Core\Views\Admin\notes\cells\form_cell_infos_edit_tech'
 ]); ?>

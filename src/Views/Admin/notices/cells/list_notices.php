@@ -69,14 +69,11 @@
     'title' => lang('Form.modal.addOrdEditNotice'),
     'identifier' => 'addnotice',
     'notice' => $notice ?? null,
+    'wysiwyg' => "simplemde",
     'noticeModal' => $noticeModal ?? null,
     'containerFull' => true,
     'view' => 'Btw\Core\Views\Admin\notices\cells\form_cell_form_notice'
 ]); ?>
 
 
-<?php $this->endSection() ?>
-
-<?php $this->section('styles') ?>
-    <?= view_cell('Btw\Core\Cells\Forms\TextAreaCell::scripts', ['wysiwyg' => 'simplemde']); ?>
 <?php $this->endSection() ?>

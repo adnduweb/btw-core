@@ -1,4 +1,4 @@
-<div id="browser" class="shadow sm:rounded-md sm:overflow-hidden" hx-trigger="load">
+<div id="browser" class="sm:rounded-md sm:overflow-hidden" hx-trigger="load">
     <div class="px-4 py-5  space-y-6 sm:p-6">
 
         <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-gray-200">Session Browser</h3>
@@ -25,9 +25,9 @@
                 <?php endforeach ?>
             </tbody>
         <?php else : ?>
-            <div class="alert alert-secondary"><?= ucfirst(lang('Core.NoRecentData')); ?>.</div>
+            <div class="alert alert-secondary"><?= ucfirst(lang('Btw.NoRecentData')); ?>.</div>
         <?php endif ?>
 
-
+        </table>
     </div>
 </div>

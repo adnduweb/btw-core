@@ -2,7 +2,7 @@
     x-data="{
         value: '<?= $params['value']; ?>',
         init() {
-            let quill = new Quill(this.$refs.quill, { theme: 'snow' })
+            let quill = new Quill(this.$refs.quill, { theme: 'snow',  modules: {toolbar: toolbarOptions } })
  
             quill.root.innerHTML = this.value
 

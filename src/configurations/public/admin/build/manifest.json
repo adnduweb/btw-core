@@ -62,10 +62,10 @@
     "isEntry": true,
     "src": "themes/admin/css/nouislider.min.css"
   },
-  "themes/admin/css/quill.snow.css": {
-    "file": "assets/quill.snow-2ca20ed0.css",
+  "themes/admin/css/quill-snow.css": {
+    "file": "assets/quill-snow-2ca20ed0.css",
     "isEntry": true,
-    "src": "themes/admin/css/quill.snow.css"
+    "src": "themes/admin/css/quill-snow.css"
   },
   "themes/admin/css/swiper-bundle.min.css": {
     "file": "assets/swiper-bundle.min-8ac2745f.css",
@@ -89,7 +89,7 @@
     "css": [
       "assets/app-8d5ae6d0.css"
     ],
-    "file": "assets/app-d3748801.js",
+    "file": "assets/app-2a644ac6.js",
     "isEntry": true,
     "src": "themes/admin/js/app.js"
   }

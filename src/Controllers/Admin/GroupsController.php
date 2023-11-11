@@ -17,7 +17,6 @@ use Btw\Core\Libraries\TableHelper;
 use CodeIgniter\Shield\Authorization\Groups;
 use InvalidArgumentException;
 
-
 /**
  * Class Dashboard
  *
@@ -25,7 +24,6 @@ use InvalidArgumentException;
  */
 class GroupsController extends AdminController
 {
-
     /**
      * Base URL.
      */
@@ -119,10 +117,11 @@ class GroupsController extends AdminController
         ]);
 
         if (!$validation->run($post)) {
+            $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => $validation->getErrors()]);
             return view('Btw\Core\Views\Admin\groups\cells\form_cell_information', [
                 'alias' => 'new',
                 'validation' => $validation
-            ]) . alertHtmx('danger', 'Form validation failed.');;
+            ]);
         }
 
         // Save the settings
@@ -137,7 +136,7 @@ class GroupsController extends AdminController
 
         theme()->set_message_htmx('success', lang('Btw.resourcesCreatead', ['groups']));
         $this->response->triggerClientEvent('createGroup');
-        return redirect()->hxRedirect('/' .ADMIN_AREA. '/groups');
+        return redirect()->hxRedirect('/' . ADMIN_AREA . '/groups');
     }
 
     /**
@@ -178,7 +177,8 @@ class GroupsController extends AdminController
         if (!$validation->run($post)) {
             return view('Btw\Core\Views\Admin\groups\cells\form_cell_information', [
                 'group' => $group, 'validation' => $validation
-            ]) . alertHtmx('danger', 'Form validation failed.');;
+            ]) . alertHtmx('danger', 'Form validation failed.');
+            ;
         }
 
         // Save the settings
@@ -250,9 +250,10 @@ class GroupsController extends AdminController
             return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user group']));
         }
 
-        if (isset($data['permissions']) && !is_array($data['permissions']))
+        if (isset($data['permissions']) && !is_array($data['permissions'])) {
             $data['permissions'] = [$data['permissions']];
-            
+        }
+
         $group->setPermissions($data['permissions'] ?? []);
 
 
@@ -289,8 +290,9 @@ class GroupsController extends AdminController
             return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user group']));
         }
 
-        if (isset($data['permissions']) && !is_array($data['permissions']))
+        if (isset($data['permissions']) && !is_array($data['permissions'])) {
             $data['permissions'] = [$data['permissions']];
+        }
 
         $group->setPermissions($data['permissions'] ?? []);
 

@@ -47,8 +47,6 @@ class NoteController extends AdminController
     {
         helper('text');
         $this->meta = service('viewMeta');
-        $this->meta->addStyle(['rel' => 'stylesheet', 'href' => 'https://cdn.quilljs.com/1.3.6/quill.snow.css']);
-        $this->meta->addStyle(['rel' => 'stylesheet', 'href' => 'https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css']);
     }
 
     /**

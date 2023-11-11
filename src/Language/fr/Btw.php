@@ -190,5 +190,6 @@ return [
     'notices' => 'Notices',
     'noticesList' => 'Liste des notices',
     'tokens' => 'API',
-    'addNotice' => 'Ajouter une notice'
+    'addNotice' => 'Ajouter une notice',
+    'NoRecentData' => 'Aucune donnée'
 ];
