@@ -35,6 +35,27 @@ class Notice extends Entity
         return $this->attributes['type_id'] ?? null;
     }
 
-    
+    // public function setContent($content)
+    // {
+    //     $this->encrypter = new Encrypt(['driver' => 'OpenSSL']);
+    //     return $this->attributes['content'] = $this->encrypter->encrypt($content);
+    // }
+
+    public function contentPrep($description = null)
+    {
+        $description = $this->attributes['description'] ?? $description;
+        // $this->encrypter = new Encrypt(['driver' => 'OpenSSL']);
+        // $descriptionNew = $this->encrypter->decrypt($description);
+        $descriptionNew = strtr(addslashes($description), array("\n" => "\\n", "\r" => "\\r"));
+        return $this->attributes['description'] = $descriptionNew;
+    }
+
+    public function getContentPrepFront($description = null)
+    {
+        $description = $this->attributes['description'] ?? $description;
+        // $this->encrypter = new Encrypt(['driver' => 'OpenSSL']);
+        $descriptionNew = $this->encrypter->decrypt($description);
+        return $this->attributes['description'] = $descriptionNew;
+    }
 
 }

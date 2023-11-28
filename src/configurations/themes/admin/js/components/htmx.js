@@ -1,4 +1,5 @@
-export const initHtmx = () => {
+import * as htmx from "htmx.org";
+
     if (typeof window.htmx !== 'undefined') {
         htmx.config.useTemplateFragments = true;
     }
@@ -529,6 +530,11 @@ export const initHtmx = () => {
         }
     });
 
+    document.addEventListener("submit", (event) => {
+        event.target.querySelectorAll("button").forEach(node => { node.disabled = true })
+    })
+    document.addEventListener("htmx:afterOnLoad", (event) => {
+        event.target.querySelectorAll("button").forEach(node => { node.disabled = false })
+    })
+
     // htmx.logAll()
-};
-export default initHtmx;

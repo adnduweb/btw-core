@@ -1,5 +1,5 @@
 <?= asset_link('admin/js/apexcharts.js', 'js') ?>
-<script async >
+<script >
      document.addEventListener("alpine:init", () => {
         // total-visit
         Alpine.data("coredashboard", () => ({

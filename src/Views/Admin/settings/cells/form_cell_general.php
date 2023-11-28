@@ -91,12 +91,19 @@
 </div>
 
 <script type="module">
-    $.getJSON('https://api.ipify.org?format=json', function(data) {
-        const dialog = document.getElementById('ipAllowedResult')
-        if (ipAllowedResult) {
-            dialog.innerHTML = '<span class="inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800">Votre addresse ip : ' + data.ip + '</span>';
-        }
-
-
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(response => {
+                let api = response;
+                const dialog = document.getElementById('ipAllowedResult')
+                if (ipAllowedResult) {
+                    dialog.innerHTML = '<span class="inline-flex items-center rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-800">Votre addresse ip : ' + api.ip + '</span>';
+                }
+            })
+        } catch (error) {
+            console.error(`Download error: ${error.message}`);
+        }    
     });
 </script>

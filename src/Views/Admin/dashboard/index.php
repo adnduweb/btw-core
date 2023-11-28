@@ -21,8 +21,8 @@
 
 
 <?= $cells->render();  ?>
+<?= $cells->scripts();  ?>
 <?= $this->endSection() ?> 
 
 <?= $this->section('scripts') ?>
-<?= $cells->scripts();  ?>
 <?= $this->endSection() ?>

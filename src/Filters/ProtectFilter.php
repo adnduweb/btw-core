@@ -17,7 +17,6 @@ use CodeIgniter\Shield\Authentication\Authenticators\Session;
  */
 class ProtectFilter implements FilterInterface
 {
-
     /**
      * Do whatever processing this filter needs to do.
      * By default it should not return anything during
@@ -68,7 +67,5 @@ class ProtectFilter implements FilterInterface
      *
      * @return mixed
      */
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-    {
-    }
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null) {}
 }

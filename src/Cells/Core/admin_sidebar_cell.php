@@ -79,7 +79,7 @@
                                                 <ul x-cloak x-show="activeDropdown === '<?= strtolower($item->title) ?>'" x-collapse class="sub-menu text-gray-500">
                                                     <?php foreach ($item->itemschild() as $child) : ?>
                                                         <li>
-                                                            <a data-current="<?= $currentUrl ?>" data-url="<?= $child->url; ?>" href="<?= $child->url ?>">
+                                                            <a  up-follow="" up-alias="<?= $child->url; ?>/*" data-current="<?= $currentUrl ?>" data-url="<?= $child->url; ?>" href="<?= $child->url ?>">
                                                                 <?= $child->icon ?>
                                                                 <span><?= $child->title ?></span>
                                                             </a>
@@ -90,7 +90,7 @@
                                         <?php else : ?>
                                             <?php if ($item->userCanSee()) : ?>
                                                 <li class="nav-item">
-                                                    <a data-current="<?= $currentUrl ?>" data-url="<?= $item->url; ?>" class="group" href="<?= $item->url ?>">
+                                                    <a up-follow="" up-alias="<?= $item->url; ?>/*" data-current="<?= $currentUrl ?>" data-url="<?= $item->url; ?>" class="group" href="<?= $item->url ?>">
                                                         <div class="flex items-center">
                                                             <?= $item->icon ?>
                                                             <span class="font-semibold ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark"><?= $item->title ?></span>

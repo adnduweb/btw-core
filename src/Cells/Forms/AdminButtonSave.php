@@ -7,20 +7,47 @@ use CodeIgniter\View\Cells\Cell;
 class AdminButtonSave extends Cell
 {
     protected string $view = 'admin_button_save';
-    public string $text;
-    public string $type;
-    public string $loading;
-    public $back = null;
-    public $click;
-    public $class;
+    protected $text;
+    protected $name;
+    protected $type;
+    protected $loading;
+    protected $back = null;
+    protected $click;
+    protected $class;
 
-    public function mount(string $type, string $text, string $loading, $back = null, $click = null, $class = "")
+    public function mount()
     {
-        $this->type = $type;
-        $this->text = $text;
-        $this->loading = $loading;
-        $this->back = $back;
-        $this->click = $click;
-        $this->class = $class;
     }
+
+    public function getTextProperty()
+    {
+        return $this->text;
+    }
+    public function getNameProperty()
+    {
+        return $this->name;
+    }
+    public function getTypeProperty()
+    {
+        return $this->type;
+    }
+    public function getLoadingProperty()
+    {
+        return $this->loading;
+    }
+
+    public function getBackProperty()
+    {
+        return $this->back;
+    }
+
+    public function getClickProperty()
+    {
+        return $this->click;
+    }
+    public function getClassProperty()
+    {
+        return $this->class;
+    }
+
 }

@@ -313,7 +313,7 @@ class NoteController extends AdminController
             $this->response->triggerClientEvent('openmodalnotesharenote', true);
             $this->response->triggerClientEvent('modalcomponent', true);
 
-            if (!session()->get('note_' . $note->getIdentifier()) && !((time() - session()->get('note_' . $note->getIdentifier())) < config('Btw')->dataAskAuthExpiration)) :
+            if ($note->confirm_auth_content && ((time() - $note->confirm_auth_content['expire']) < config('Btw')->dataAskAuthExpiration) /* 1 heure */) :
                 return view_cell('Btw\Core\Cells\Datatable\DatatableAskAuth', ['row' => $note]);
             endif;
 

@@ -1,4 +1,6 @@
-export const initPhoneIntl = () => {
+import intlTelInput from "intl-tel-input";
+
+export function SetPhoneIntl(){
     const phoneintl = document.querySelectorAll(".phoneintl");
     const country = document.querySelector('[name="country"]');
 
@@ -98,6 +100,4 @@ export const initPhoneIntl = () => {
         //     console.log(e.detail.dialCode); // Returns the dial code
         // });
     }
-};
-
-export default initPhoneIntl;
+}

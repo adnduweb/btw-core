@@ -56,7 +56,12 @@ class Metadata
             $html .= '<' . $type . ' ';
 
             foreach ($item as $key => $value) {
-                $html .= $key . '="' . $value . '" ';
+                if($value == 'defer') {
+                    $html .= $value . ' ';
+                } else {
+                    $html .= $key . '="' . $value . '" ';
+                }
+
             }
 
             $html .= '>';

@@ -1,6 +1,5 @@
-//Prefix alpine special attributes to pass W3C validation
-// Alpine.prefix('data-x-')
-document.addEventListener("alpine:init", () => {
+import Alpine from 'alpinejs';
+
     Alpine.data("listen", () => ({
         confirmationModal: false,
         emitTo(link, action, attributes) {
@@ -265,7 +264,7 @@ document.addEventListener("alpine:init", () => {
                         this.file = media.getAttribute('data-media-file');
                         console.log(this.media_selected); 
                         this.media_selected.value = this.dataUUID;
-                        this.insert();
+                        // this.insert();
                     }
                  })
                  
@@ -276,6 +275,8 @@ document.addEventListener("alpine:init", () => {
             // })
         },
         insert() {
+            let container = this.container;
+            let file = this.file;
             console.log('fafa');
             console.log(this.dataUUID);
             console.log(this.container);
@@ -284,19 +285,21 @@ document.addEventListener("alpine:init", () => {
             // On ajoute la donnée
             // var btwinserer = this.$el.querySelector('[name="btwinserer"]');
             this.$el.querySelector('[name="btwinserer"]').addEventListener('click', function(event) {
-                console.log(event.__x.getUnobservedData());
-                var selected = document.querySelector('.selected');
+                // console.log(event.__x.getUnobservedData());
+                let selected = document.querySelector('.selected');
 
+                console.log('------')
+                console.warm(this.$el.getAttribute('data-media-container'));
 
-                console.log(event);
-                console.log(selected);
+                // console.log(event);
+                // console.log(selected);
 
-                console.log(this.container);
-                console.log(this.file);
-                containerBody = document.querySelector("body");
+                // console.log(container);
+                // console.log(file);
+                let containerBody = document.querySelector("body");
                 if(containerBody){
-                    let img = container.querySelector('img');
-                    img.src = this.file[0];
+                    let img = this.$el.getAttribute('data-media-container').querySelector('img');
+                    img.src = file[0];
                 }
 
      
@@ -315,4 +318,3 @@ document.addEventListener("alpine:init", () => {
             }
         },
     }));
-});

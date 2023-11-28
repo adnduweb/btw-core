@@ -1,4 +1,10 @@
-export const initHtmx = () => {
+import * as htmx from "htmx.org";
+//==========================================================
+// head-support.js
+//
+// An extension to htmx 1.0 to add head tag merging.
+//==========================================================
+(function(){
 
     var api = null;
 
@@ -133,5 +139,4 @@ export const initHtmx = () => {
         }
     });
 
-};
-export default initHtmx;
+})()

@@ -11,11 +11,10 @@
         <?= $viewMeta->title() ?>
     </title>
     <?= csrf_meta() ?>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <?= $viewJavascript->renderLangJson('admin/js/lang/' . service('request')->getLocale() . '.json'); ?>
+    <?= $viewJavascript->renderLangJson('admin/js/lang/' . service('request')->getLocale() . '.json');?>
     <?= asset_link('admin/js/perfect-scrollbar.min.js', 'js') ?>
     <?= asset_link('admin/js/popper.min.js', 'js', ['defer']) ?>
     <?= asset_link('admin/js/tippy-bundle.umd.min.js', 'js', ['defer']) ?>
@@ -37,49 +36,10 @@
         }
     </style>
 
-    <script>
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (JSON.parse(localStorage._x_theme) === 'system') {
-                if (e.matches) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            }
-        });
-
-        function updateTheme() {
-            if (!('_x_theme' in localStorage)) {
-                localStorage.setItem('_x_theme', JSON.stringify('light'));
-            }
-            switch (JSON.parse(localStorage._x_theme)) {
-                case 'system':
-                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                        document.documentElement.classList.add('dark');
-                    } else {
-                        document.documentElement.classList.remove('dark');
-                    }
-                    document.documentElement.setAttribute('color-theme', 'system');
-                    break;
-
-                case 'dark':
-                    document.documentElement.classList.add('dark');
-                    document.documentElement.setAttribute('color-theme', 'dark');
-                    break;
-
-                case 'light':
-                    document.documentElement.classList.remove('dark');
-                    document.documentElement.setAttribute('color-theme', 'light');
-                    break;
-            }
-        }
-
-        updateTheme();
-    </script>
 
 </head>
 
-<body x-data="main" hx-ext="alpine-morph, ajax-header, head-support, preload" hx-history="false" hx-boost="true"
+<body x-data="main" hx-ext="alpine-morph, ajax-header, head-support, preload" hx-history="false"
     hx-indicator="#progress"
     class="antialiased relative font-nunito text-sm font-normal overflow-x-hidden collapsible-vertical full <?= detectAgent(); ?>"
     :class="[$store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
@@ -133,7 +93,7 @@
     </script>
 
     <?= '' //$this->include('partials/theme-customiser')
-        ?>
+?>
 
     <div class="main-container relative text-black dark:text-white-dark min-h-screen transition-fade <?= site_offline() ? 'offline' : '' ?>"
         :class="[$store.app.navbar]" x-data="{open: false}">
@@ -170,7 +130,6 @@
     <?= asset_link('admin/js/moment-with-locales.min.js', 'js') ?>
     <?= asset_link('admin/js/_hyperscript.min.js', 'js') ?>
     <?= asset_link('admin/js/zxcvbn.js', 'js') ?>
-    <?= asset_link('admin/js/custom.js', 'js') ?>
     <?= $this->renderSection('scriptsUrl') ?>
 
     {CustomEvent}

@@ -1,14 +1,15 @@
+
+
 (function () {
     const $themeConfig = {
-        locale: 'fr', // en, da, de, el, es, fr, hu, it, ja, pl, pt, ru, sv, tr, zh
+        locale: 'en', // en, da, de, el, es, fr, hu, it, ja, pl, pt, ru, sv, tr, zh
         theme: 'light', // light, dark, system
-        menu: 'collapsible-vertical', // vertical, collapsible-vertical, horizontal
+        menu: 'vertical', // vertical, collapsible-vertical, horizontal
         layout: 'full', // full, boxed-layout
         rtlClass: 'ltr', // rtl, ltr
         animation: '', // animate__fadeIn, animate__fadeInDown, animate__fadeInUp, animate__fadeInLeft, animate__fadeInRight, animate__slideInDown, animate__slideInLeft, animate__slideInRight, animate__zoomIn
         navbar: 'navbar-sticky', // navbar-sticky, navbar-floating, navbar-static
         semidark: false,
-        sidebar: 'toggle-sidebar',
     };
 
     const toolbarOptions = [
@@ -27,9 +28,8 @@
     ];
 
     window.toolbarOptions = toolbarOptions;
-   
+    
     window.addEventListener('load', function () {
-        
         // screen loader
         const screen_loader = document.getElementsByClassName('screen_loader');
         if (screen_loader?.length) {
@@ -133,23 +133,29 @@
             instance.show();
         });
 
-        // main - custom functions
-        Alpine.data('main', (value) => ({
+         // main - custom functions
+         Alpine.data('main', (value) => ({
             modelOpen: false, 
             isShowMenuSidebar: false,
             showDeleteModal: false, 
             showAuthDisplayDataModal: false, 
             showSlideOver: false,
+
             init(){
-                console.log('initilized alpine app');
+                console.log('initilized alpine htmx app');
+                 if (window.htmxConfig['headers'] ?? false) {
+                    return window.htmxConfig['headers'] =  {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": getCsrfToken()
+                    };
+                }
             }
         }));
 
         Alpine.store('app', {
             // theme
-            theme: JSON.parse(localStorage.getItem('_x_theme')) ?? $themeConfig.theme,
-            isDarkMode: false,
-           
+            theme: Alpine.$persist($themeConfig.theme),
+            isDarkMode: Alpine.$persist(false),
             toggleTheme(val) {
                 if (!val) {
                     val = this.theme || $themeConfig.theme; // light|dark|system
@@ -168,13 +174,10 @@
                         this.isDarkMode = false;
                     }
                 }
-                localStorage.setItem('_x_theme', JSON.stringify(this.theme));
-                document.documentElement.classList.remove('light', 'dark');
-                document.documentElement.classList.add(this.theme);
             },
 
             // navigation menu
-            menu: $themeConfig.menu,
+            menu: Alpine.$persist($themeConfig.menu),
             toggleMenu(val) {
                 if (!val) {
                     val = this.menu || $themeConfig.menu; // vertical, collapsible-vertical, horizontal
@@ -184,7 +187,7 @@
             },
 
             // layout
-            layout: $themeConfig.layout,
+            layout: Alpine.$persist($themeConfig.layout),
             toggleLayout(val) {
                 if (!val) {
                     val = this.layout || $themeConfig.layout; // full, boxed-layout
@@ -194,7 +197,7 @@
             },
 
             // rtl support
-            rtlClass: $themeConfig.rtlClass,
+            rtlClass: Alpine.$persist($themeConfig.rtlClass),
             toggleRTL(val) {
                 if (!val) {
                     val = this.rtlClass || $themeConfig.rtlClass; // rtl, ltr
@@ -209,7 +212,7 @@
             },
 
             // animation
-            animation: $themeConfig.animation,
+            animation: Alpine.$persist($themeConfig.animation),
             toggleAnimation(val) {
                 if (!val) {
                     val = this.animation || $themeConfig.animation; // animate__fadeIn, animate__fadeInDown, animate__fadeInLeft, animate__fadeInRight
@@ -221,7 +224,7 @@
             },
 
             // navbar type
-            navbar: $themeConfig.navbar,
+            navbar: Alpine.$persist($themeConfig.navbar),
             toggleNavbar(val) {
                 if (!val) {
                     val = this.navbar || $themeConfig.navbar; // navbar-sticky, navbar-floating, navbar-static
@@ -231,7 +234,7 @@
             },
 
             // semidark
-            semidark: $themeConfig.semidark,
+            semidark: Alpine.$persist($themeConfig.semidark),
             toggleSemidark(val) {
                 if (!val) {
                     val = this.semidark || $themeConfig.semidark;
@@ -241,7 +244,7 @@
             },
 
             // multi language
-            locale: $themeConfig.locale,
+            locale: Alpine.$persist($themeConfig.locale),
             toggleLocale(val) {
                 if (!val) {
                     val = this.locale || $themeConfig.locale;
@@ -249,19 +252,17 @@
 
                 this.locale = val;
                 if (this.locale?.toLowerCase() === 'ae') {
-		            this.toggleRTL('rtl');
-		        } else {
-		            this.toggleRTL('ltr');
-		        }
+                    this.toggleRTL('rtl');
+                } else {
+                    this.toggleRTL('ltr');
+                }
             },
 
             // sidebar
-            sidebar: JSON.parse(localStorage.getItem('_x_sidebar')) ?? $themeConfig.sidebar,
+            sidebar: false,
             toggleSidebar() {
                 this.sidebar = !this.sidebar;
-                localStorage.setItem('_x_sidebar', JSON.stringify(this.sidebar));
             },
         });
     });
-
 })();

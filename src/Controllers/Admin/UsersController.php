@@ -192,6 +192,7 @@ class UsersController extends AdminController
                 if (!auth()->user()->can('users.edit')) {
                     $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Btw.notAuthorized')]);
                     return view($this->viewPrefix . 'cells\form_cell_information', [
+                        'user' => $user,
                         'userCurrent' => $user,
                     ]);
                 }
@@ -217,6 +218,7 @@ class UsersController extends AdminController
                         $this->response->setReswap('innerHTML show:#general:top');
                         return view($this->viewPrefix . 'cells\form_cell_information', [
                             'userCurrent' => $user,
+                            'user' => $user,
                             'validation' => $this->validator->getErrors()
                         ]);
                     }

@@ -149,8 +149,6 @@ class ProfileController extends AdminController
                     log_message('debug', 'User save: ' . $e->getMessage());
                 }
 
-
-
                 return view($this->viewPrefix . 'cells\form_cell_information', [
                     'userCurrent' => $user,
                     'menu' => service('menus')->menu('sidebar_user_profile'),

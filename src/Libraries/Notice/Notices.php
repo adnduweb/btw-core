@@ -41,7 +41,15 @@ class Notices
 
     public function instanceAll()
     {
-        foreach (model(noticeModel::class)->join('notices_langs', 'notices_langs.notice_id = notices.id')->where('lang', service('language')->getLocale())->where('active', true)->findAll() as $notice) {
+        $noticeModel = model(noticeModel::class);
+        $noticeModel->where('from <="' . date('Y-m-d H:i:s') . '"');
+        $noticeModel->where('to >="' . date('Y-m-d H:i:s') . '"');
+
+        // print_r($noticeModel->join('notices_langs', 'notices_langs.notice_id = notices.id')->where('lang', service('language')->getLocale())->where('active', true)->findAll());
+        // echo db_connect()->getLastQuery();
+        // exit;
+
+        foreach ($noticeModel->join('notices_langs', 'notices_langs.notice_id = notices.id')->where('lang', service('language')->getLocale())->where('active', true)->findAll() as $notice) {
             $this->objectAll[] = $this->instance($notice);
         }
         return $this;

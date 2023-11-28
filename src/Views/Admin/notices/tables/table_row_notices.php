@@ -1,17 +1,17 @@
 <?php ''; //print_r($notice);exit;?>
 <tr class="notice" data-uuid="<?= $notice->getIdentifier(); ?>">
 
-    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-500 sm:pl-0" >
+    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-500 sm:pl-0 cursor-pointer" x-on:click="$dispatch(`modalcomponent`, {showNoticeModal: true})" hx-get="<?= route_to('notice-update', $notice->getIdentifier()); ?>" hx-swap="innerHTML" hx-target="#addnotice">
         <?= $notice->getTitle(); ?> 
     </td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" >
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 cursor-pointer" x-on:click="$dispatch(`modalcomponent`, {showNoticeModal: true})" hx-get="<?= route_to('notice-update', $notice->getIdentifier()); ?>" hx-swap="innerHTML" hx-target="#addnotice">
     <?= $notice->getType(); ?>
     </td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" >
-    <?= $notice->getDescription(); ?>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 cursor-pointer" x-on:click="$dispatch(`modalcomponent`, {showNoticeModal: true})" hx-get="<?= route_to('notice-update', $notice->getIdentifier()); ?>" hx-swap="innerHTML" hx-target="#addnotice">
+    <?= getExcerpt($notice->contentPrep()); ?>
     </td>
     <td>
-        <?= 
+        <?=
          view_cell('Btw\Core\Cells\Datatable\DatatableSwitch', [
             'row' => $notice,
             'type' => 'customer',

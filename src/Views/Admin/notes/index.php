@@ -65,10 +65,6 @@
 
 
 <?php $this->section('scripts') ?>
-<?= asset_link('admin/js/clipboard.min.js', 'js') ?>
-<script>
-    new ClipboardJS('.copyLink');
-</script>
 <script type="module">
     var KTnotesList = function() {
         // Define shared variables
@@ -98,7 +94,7 @@
                 "processing": true,
                 'searchDelay': 400,
                 'serverMethod': 'get',
-                'headers': window.axios.defaults.headers.common,
+                'headers': window.htmxConfig.headers,
                 "ajax": {
                     "url": "<?= route_to('notes-list-ajax'); ?>",
                     'data': {

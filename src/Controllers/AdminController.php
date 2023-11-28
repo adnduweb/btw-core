@@ -25,7 +25,7 @@ class AdminController extends BaseController
 
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        $this->helpers = array_merge($this->helpers, ['alertHtmx', 'auth', 'setting', 'form']);
+        $this->helpers = array_merge($this->helpers, ['alertHtmx', 'auth', 'setting', 'form', 'assets']);
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
@@ -63,6 +63,9 @@ class AdminController extends BaseController
         $viewMeta =  service('viewMeta');
         $viewMeta->addMeta(['name' => 'robots', 'content' => 'nofollow, noindex' ]);
         $viewMeta->addFavicon('admin');
+        //$viewMeta->addScript(['src' => asset_url('admin/js/livewire.js', 'js'), 'data-csrf' => csrf_hash(), 'data-update-uri' => current_url(true)]);
+        // $viewMeta->addScript(['src' => 'https://example.com/js/jquery.min.js', 'data-csrf' => csrf_hash(), 'data-update-uri' => current_url(true)]);
+
 
     }
 }

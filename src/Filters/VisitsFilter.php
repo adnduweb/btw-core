@@ -75,10 +75,12 @@ class VisitsFilter implements FilterInterface
         // Return false if assets
         $allSegments = $request->getUri()->getSegments();
         if(!empty($allSegments)) {
-            if(in_array($allSegments[0], ['attachments', 'assets', 'files', 'uploads', 'themes', 'svg'])) {
+            if(in_array($allSegments[0], ['admin', 'attachments', 'assets', 'files', 'uploads', 'themes', 'svg'])) {
                 return;
             }
         }
+        log_message('info', 'Visits Log uri {exception}', ['exception' => json_encode($request->getUri()->getPath())]);
+
 
         // Return false if admin
         $admin_area = empty($allSegments) || $allSegments[0] != ADMIN_AREA ? false : true;

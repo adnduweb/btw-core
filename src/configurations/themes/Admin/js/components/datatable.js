@@ -1,4 +1,4 @@
-export const initDatatable = () => {
+import $ from "jquery";
 
 	var defaults = {
 		language: {
@@ -173,6 +173,3 @@ export const initDatatable = () => {
 
 	};
 
-};
-
-export default initDatatable;

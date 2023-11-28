@@ -13,22 +13,22 @@ class AdminMediaModal extends Cell
     protected $identifier;
     protected $multiple = false;
     protected $accept_format = '';
-    protected $value = [];
+    protected array $value;
     protected $banner = false;
-    public $media = []; // @todo Faille ? 
-    public $target = 'addmedia'; // @todo Faille ? 
+    public $media = []; // @todo Faille ?
+    public $target = 'addmedia'; // @todo Faille ?
 
 
-    public function mount($container, $identifier, $multiple, $accept_format, $value, $banner, $target = null)
+    public function mount()
     {
         if ($this->multiple == false) {
-            if (isset($value[0])) {
-                $identifier = (isValidUuid($value[0])) ? 'uuid' : 'id';
-                if (!$media = model(MediaModel::class)->join('medias_langs', 'medias_langs.media_id = medias.id')->where('lang', service('language')->getLocale())->where($identifier, $value[0])->first()) {
-                    $media = new Media;
+            if (isset($this->value[0])) {
+                $identifier = (isValidUuid($this->value[0])) ? 'uuid' : 'id';
+                if (!$media = model(MediaModel::class)->join('medias_langs', 'medias_langs.media_id = medias.id')->where('lang', service('language')->getLocale())->where($identifier, $this->value[0])->first()) {
+                    $media = new Media();
                 }
             } else {
-                $media = new Media;
+                $media = new Media();
             }
 
             $this->media = $media;
@@ -55,12 +55,12 @@ class AdminMediaModal extends Cell
         return $this->accept_format;
     }
 
-    public function getValueFormatProperty(): array
+    public function getValueProperty(): array
     {
         return $this->value;
     }
 
-    public function getMediaFormatProperty(): array
+    public function getMediaProperty(): array
     {
         return $this->media;
     }

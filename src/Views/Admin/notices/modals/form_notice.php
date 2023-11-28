@@ -11,7 +11,7 @@
     'data-loading-class-remove' => "hidden"
 ]); ?>
 <?= '' //csrf_field()
-    ?>
+?>
 <input type="hidden" name="section" value="infostech" />
 
 <div class=" p-8">
@@ -19,12 +19,12 @@
     <div class="w-full mb-6 md:mb-4">
         <div class="flex items-center">
             <?= view_cell('Btw\Core\Cells\Forms\SwitchCell::renderList', [
-                'type' => 'text',
-                'label' => lang('Btw.active'),
-                'name' => 'active',
-                'value' => '1',
-                'checked' => old('active', $noticeModal->active),
-            ]); ?>
+            'type' => 'text',
+            'label' => lang('Btw.active'),
+            'name' => 'active',
+            'value' => '1',
+            'checked' => old('active', $noticeModal->active),
+        ]); ?>
         </div>
     </div>
 
@@ -32,32 +32,32 @@
     <div class="w-full mb-6 md:mb-4">
 
         <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
-            'type' => 'text',
-            'label' => lang('Form.address.titre'),
-            'name' => 'name',
-            'value' => old('name', $noticeModal->getTitle()),
-            'lang' => false
-        ]); ?>
+        'type' => 'text',
+        'label' => lang('Form.address.titre'),
+        'name' => 'name',
+        'value' => old('name', $noticeModal->getTitle()),
+        'lang' => false
+    ]); ?>
 
     </div>
 
     <div class="flex flex-wrap -mx-3 mb-2">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
-                'type' => 'datetime-local',
-                'label' => lang('Form.form.date_start'),
-                'name' => 'from',
-                'value' => old('from', $noticeModal->from)
-            ]); ?>
+            'type' => 'datetime-local',
+            'label' => lang('Form.form.date_start'),
+            'name' => 'from',
+            'value' => old('from', $noticeModal->from)
+        ]); ?>
 
         </div>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
-                'type' => 'datetime-local',
-                'label' => lang('Form.form.date_end'),
-                'name' => 'to',
-                'value' => old('to', $noticeModal->to)
-            ]); ?>
+            'type' => 'datetime-local',
+            'label' => lang('Form.form.date_end'),
+            'name' => 'to',
+            'value' => old('to', $noticeModal->to)
+        ]); ?>
         </div>
     </div>
 
@@ -78,14 +78,14 @@
 
     <div class="w-full mb-6 md:mb-4">
         <?=
-            view_cell('Btw\Core\Cells\Forms\TextAreaCell::renderList', [
-                'label' => lang('Form.general.content'),
-                'name' => 'description',
-                'value' => esc(old('description', $noticeModal->getDescription() ?? null)),
-                'lang' => false,
-                'wysiwyg' => 'simplemde'
-            ]);
-        ?>
+        view_cell('Btw\Core\Cells\Forms\TextAreaCell::renderList', [
+            'label' => lang('Form.general.content'),
+            'name' => 'description',
+            'value' => esc(old('description', $noticeModal->contentPrep() ?? null)),
+            'lang' => false,
+            'wysiwyg' => 'simplemde'
+        ]);
+?>
     </div>
 
 

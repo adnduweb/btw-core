@@ -43,7 +43,7 @@ Alpine.plugin(
 );
 Alpine.plugin(collapse);
 
-window.axios.defaults.headers.common = {
+window.htmxConfig.headers = {
     "X-Requested-With": "XMLHttpRequest",
     "X-CSRF-TOKEN": document.querySelector('meta[name="X-CSRF-TOKEN"]').getAttribute("content")
 };
