@@ -73,6 +73,7 @@
             </div>
         </div>
 
+        <?php if(Auth()->user()->id != $user->id) : ?>
         <!-- Site Online? -->
         <div x-data="{ user_ban: <?= old('siteOnline', $user->isBanned()) ? 'true' : 'false' ?>}">
             <div class="w-full mb-6 md:mb-0">
@@ -90,17 +91,18 @@
             </div>
 
 
+         
+                <div x-show="user_ban == true" class="w-full mt-6 mb-6 md:mb-0">
+                    <?php echo view_cell('Btw\Core\Cells\Forms\TextAreaCell::renderList', [
+                        'label' => lang('Form.users.status_message'),
+                        'name' =>  'status_message',
+                        'value' => (old('status_message', $user->getBanMessage() ?? false)),
+                        'description' => lang('Form.users.statusMessageDesc'),
+                    ]); ?>
+                </div>
 
-            <div x-show="user_ban == true" class="w-full mt-6 mb-6 md:mb-0">
-                <?php echo view_cell('Btw\Core\Cells\Forms\TextAreaCell::renderList', [
-                    'label' => lang('Form.users.status_message'),
-                    'name' =>  'status_message',
-                    'value' => (old('status_message', $user->getBanMessage() ?? false)),
-                    'description' => lang('Form.users.statusMessageDesc'),
-                ]); ?>
-            </div>
         </div>
-
+        <?php endif; ?>
 
     </div>
     <div class="text-right dark:bg-gray-700 border-t border-gray-200 px-4 py-3 sm:px-6 bg-slate-50">
