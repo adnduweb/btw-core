@@ -14,9 +14,14 @@ class AdminButtonSave extends Cell
     protected $back = null;
     protected $click;
     protected $class;
+    protected $xtext;
 
     public function mount()
     {
+        if(!empty($this->xtext)) {
+            $this->xtext = 'x-text="' . $this->xtext . '"';
+        }
+
     }
 
     public function getTextProperty()
@@ -35,12 +40,10 @@ class AdminButtonSave extends Cell
     {
         return $this->loading;
     }
-
     public function getBackProperty()
     {
         return $this->back;
     }
-
     public function getClickProperty()
     {
         return $this->click;
@@ -48,6 +51,10 @@ class AdminButtonSave extends Cell
     public function getClassProperty()
     {
         return $this->class;
+    }
+    public function getXtextProperty()
+    {
+        return $this->xtext;
     }
 
 }

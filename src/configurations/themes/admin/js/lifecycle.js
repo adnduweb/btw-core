@@ -9,12 +9,14 @@ import morph from '@alpinejs/morph'
 import mask from '@alpinejs/mask'
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Alpine from 'alpinejs'
-import { dispatch, toastHtmx } from './utils'
+import { dispatch, toastHtmx, checkCaractere } from './utils'
 
 export function start() {
     dispatch(document, 'htmxwire:init')
     dispatch(document, 'htmxwire:initializing')
     toastHtmx();
+    checkCaractere();
+
 
     Alpine.plugin(morph)
     Alpine.plugin(history)
@@ -30,6 +32,10 @@ export function start() {
             console.log('Copied!')
         }
     }))
+
+    htmx.onLoad(function(content) {
+        checkCaractere();
+    });
 
     Alpine.start()
 

@@ -1,4 +1,6 @@
 
+import * as htmx from "htmx.org";
+
 export class Bag {
     constructor() { this.arrays = {} }
 
@@ -223,6 +225,34 @@ export function toastHtmx(){
         );
     });
 
+}
+
+export function checkCaractere(){
+        let characterCounter = document.querySelectorAll(".maxlength");
+    characterCounter.forEach(c => {
+
+        var inputLimit = document.querySelector("." + c.getAttribute('id'));
+        const maxNumOfChars = c.getAttribute('data-limit-word');
+        const countCharacters = () => {
+
+            let numOfEnteredChars = inputLimit.value.length;
+            let counter = maxNumOfChars - numOfEnteredChars;
+            c.textContent = counter + "/" + maxNumOfChars;
+            if (counter <= 0) {
+                c.classList.remove("text-black-800", "text-warning-800");
+                c.classList.add("text-red-800");
+            } else if (counter < 20) {
+                c.classList.remove("text-black-800", "text-red-800");
+                c.classList.add("text-warning-800");
+            } else {
+                c.classList.remove("text-warning-800", "text-red-800");
+                c.classList.add("text-black-800");
+            }
+        };
+
+        inputLimit.addEventListener("input", countCharacters);
+        countCharacters();
+    });
 }
 
 export const humanFileSize = (size) => {

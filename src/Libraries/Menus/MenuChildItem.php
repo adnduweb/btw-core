@@ -44,6 +44,11 @@ class MenuChildItem
     protected $url;
 
     /**
+ * @var string|null
+ */
+    protected $hxboost = 'hx-boost="false"';
+
+    /**
      * @var string|null
      */
     protected $bg = 'gray';
@@ -115,6 +120,16 @@ class MenuChildItem
         $this->url = strpos($url, '://') !== false
             ? $url
             : '/' . ltrim($url, '/ ');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setHxboost(string $hxboost)
+    {
+        $this->hxboost = (isset($hxboost) && !empty($hxboost)) ? 'hx-boost="' . $hxboost . '"' : 'hx-boost="false"';
 
         return $this;
     }
@@ -221,6 +236,15 @@ class MenuChildItem
     {
         return $this->url;
     }
+
+    /**
+     * @return string
+     */
+    public function hxboost()
+    {
+        return $this->hxboost;
+    }
+
 
     /**
      * @return string

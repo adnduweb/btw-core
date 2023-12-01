@@ -46,6 +46,11 @@ class MenuItem
     /**
      * @var string|null
      */
+    protected $hxboost = 'hx-boost="false"';
+
+    /**
+     * @var string|null
+     */
     protected $bg = 'gray';
 
     /**
@@ -161,6 +166,17 @@ class MenuItem
 
         return $this;
     }
+
+    /**
+    * @return $this
+    */
+    public function setHxboost(string $hxboost)
+    {
+        $this->hxboost = (isset($hxboost) && !empty($hxboost)) ? 'hx-boost="' . $hxboost . '"' : 'hx-boost="false"';
+
+        return $this;
+    }
+
 
     /**
      * Sets the URL via reverse routing, so can
@@ -279,6 +295,14 @@ class MenuItem
     public function url()
     {
         return $this->url;
+    }
+
+    /**
+    * @return string
+    */
+    public function hxboost()
+    {
+        return $this->hxboost;
     }
 
     /**

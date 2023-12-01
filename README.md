@@ -71,6 +71,7 @@ https://github.com/alpinejs/alpine/discussions/2865 - toasts
 https://github.com/kenjis/ci4-album
 https://www.builder.io/blog/htmx-vs-react
 https://github.com/daycry/cronjob
+https://stackblitz.com/edit/web-platform-cvuj6z?file=scripts%2Fcomponents%2Fshare.js
 
 # Aide
 https://forum.codeigniter.com/showthread.php?tid=84604

@@ -4,16 +4,15 @@ namespace Btw\Core\Cells\Forms;
 
 use RuntimeException;
 
-
 class RadioCell
 {
-
     protected $type = 'text';
     protected $label;
     protected $name;
+    protected $class;
     protected $value;
     protected $checkedNew;
-    protected $xModel; 
+    protected $xModel;
 
     public function renderList($params)
     {
@@ -22,6 +21,7 @@ class RadioCell
         }
 
         $this->xModel = (isset($params['xModel'])) ? 'x-model="' . $params['xModel'] . '"' : null;
+        $this->class = (isset($params['class'])) ? $params['class'] : null;
 
         $html = '<div class="flex items-center">';
         $html .= $this->getInput($params);
@@ -37,7 +37,7 @@ class RadioCell
         if (isset($params['lang']) && $params['lang'] == true) {
             $html .= '<label for="lang[' . request()->getLocale() . '][' . $params['name'] . ']" class="ml-3 block whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-300"> ' . $params['label'] . ' </label>';
         } else {
-            $html .= '<label for="' . uniforme($params['name']) . '-' . sha1( $params['value']) . '" class="ml-3 block whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-300"> ' . $params['label'] . ' </label>';
+            $html .= '<label for="' . uniforme($params['name']) . '-' . sha1($params['value']) . '" class="ml-3 block whitespace-nowrap text-sm font-medium text-gray-700 dark:text-gray-300"> ' . $params['label'] . ' </label>';
         }
 
         return $html;
@@ -45,13 +45,13 @@ class RadioCell
 
     public function getInput($params)
     {
-        $isChecked = ( $params['checked']) ? 'checked' : '';
+        $isChecked = ($params['checked']) ? 'checked' : '';
 
         $html = "";
         if (isset($params['lang']) && $params['lang'] == true) {
-            $html .= '<input type="radio" name="lang[' . request()->getLocale() . '][' . $params['name'] . ']" '.$this->xModel.' id="' . uniforme($params['name']) . '-' . sha1( $params['value']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $isChecked. ' class="radio radio-primary ml-1 w-5 h-5 ease-linear transition-all duration-150">';
+            $html .= '<input type="radio" name="lang[' . request()->getLocale() . '][' . $params['name'] . ']" ' . $this->xModel . ' id="' . uniforme($params['name']) . '-' . sha1($params['value']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $isChecked . ' class="radio radio-primary ml-1 w-5 h-5 ease-linear transition-all duration-150 ' . $this->class . '">';
         } else {
-            $html .= '<input type="radio" name="' . $params['name'] . '" '.$this->xModel.' id="' . uniforme($params['name']) . '-' . sha1( $params['value']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $isChecked. ' class="radio radio-primary ml-1 w-5 h-5 ease-linear transition-all duration-150">';
+            $html .= '<input type="radio" name="' . $params['name'] . '" ' . $this->xModel . ' id="' . uniforme($params['name']) . '-' . sha1($params['value']) . '" autocomplete="text" value="' . $params['value'] . '" ' . $isChecked . ' class="radio radio-primary ml-1 w-5 h-5 ease-linear transition-all duration-150  ' . $this->class . '">';
         }
 
         if (isset($params['description'])) {

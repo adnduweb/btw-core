@@ -118,6 +118,18 @@
   border-color: #4361ee;
 }
 
+.calendar-wrapper .fc-daygrid-event.warning,
+.calendar-wrapper .fc-timegrid-event.warning {
+  background-color: rgb(226 160 63 / 0.8);
+  border-color: rgb(226 160 63 / 0.8);
+}
+
+.calendar-wrapper .fc-daygrid-event.warning:hover,
+.calendar-wrapper .fc-timegrid-event.warning:hover {
+  background-color: #e2a03f;
+  border-color: #e2a03f;
+}
+
 .calendar-wrapper .fc-daygrid-event.success,
 .calendar-wrapper .fc-timegrid-event.success {
   background-color: rgb(0 171 85 / 0.8);
