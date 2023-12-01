@@ -29,7 +29,7 @@ class CreateCronjobTable extends Migration
             'name'                  => ['type' => 'varchar', 'constraint' => 50, 'null' => true, 'default' => null],
             'type'                  => ['type' => 'varchar', 'constraint' => 25, 'null' => false],
             'action'                => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
-            'environment'           => ['type' => 'varchar','name' => 'environment', 'constraint' => 100, 'null' => true, 'default' => null],
+            'environment'           => ['type' => 'varchar', 'constraint' => 100, 'null' => true, 'default' => null],
             'output'                => ['type' => 'varchar', 'constraint' => 255,'null' => true, 'default' => null],
             'error'                 => ['type' => 'varchar', 'constraint' => 255,'null' => true, 'default' => null],
             'start_at'              => ['type' => 'datetime', 'null' => false],
