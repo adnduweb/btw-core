@@ -2,7 +2,7 @@
 
 (function () {
     const $themeConfig = {
-        locale: 'en', // en, da, de, el, es, fr, hu, it, ja, pl, pt, ru, sv, tr, zh
+        locale: 'fr', // en, da, de, el, es, fr, hu, it, ja, pl, pt, ru, sv, tr, zh
         theme: 'light', // light, dark, system
         menu: 'collapsible-vertical', // vertical, collapsible-vertical, horizontal
         layout: 'full', // full, boxed-layout
@@ -10,6 +10,7 @@
         animation: '', // animate__fadeIn, animate__fadeInDown, animate__fadeInUp, animate__fadeInLeft, animate__fadeInRight, animate__slideInDown, animate__slideInLeft, animate__slideInRight, animate__zoomIn
         navbar: 'navbar-sticky', // navbar-sticky, navbar-floating, navbar-static
         semidark: false,
+        sidebar: false,
     };
 
     const toolbarOptions = [
@@ -140,7 +141,7 @@
             showDeleteModal: false, 
             showAuthDisplayDataModal: false, 
             showSlideOver: false,
-
+            theme: Alpine.$persist($themeConfig.theme),
             init(){
                 console.log('initilized alpine htmx app');
                  if (window.htmxConfig['headers'] ?? false) {
@@ -148,6 +149,11 @@
                         "X-Requested-With": "XMLHttpRequest",
                         "X-CSRF-TOKEN": getCsrfToken()
                     };
+                }
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
                 }
             }
         }));
@@ -174,7 +180,16 @@
                         this.isDarkMode = false;
                     }
                 }
-            },
+               
+                document.documentElement.setAttribute('color-theme', this.theme);
+                document.querySelector('html').classList.add(this.theme);
+
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            },  
 
             // navigation menu
             menu: Alpine.$persist($themeConfig.menu),
@@ -259,7 +274,7 @@
             },
 
             // sidebar
-            sidebar: false,
+            sidebar: Alpine.$persist($themeConfig.sidebar),
             toggleSidebar() {
                 this.sidebar = !this.sidebar;
             },

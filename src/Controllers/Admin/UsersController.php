@@ -122,6 +122,24 @@ class UsersController extends AdminController
                     'actions' => DataTable::actions(self::$actions, $row)
                 ]);
             }, 'last')
+            ->filter(function ($datatable, $request) {
+
+                if (!empty($request->daterange)) {
+
+                    if (strpos($request->daterange, ' ') == true) {
+                        $daterangeTemp = explode(' ', $request->daterange);
+                        $daterange = $daterangeTemp[0] . '|' . $daterangeTemp['2'];
+                    } else {
+                        $daterange = $request->daterange . '|' . $request->daterange;
+                    }
+
+                    list($initial_date, $final_date) = explode('|', $daterange);
+                    $datatable->where([
+                        'created_at >=' => trim($initial_date),
+                        'created_at <=' => trim($final_date),
+                    ]);
+                }
+            })
             ->toJson(true);
     }
 

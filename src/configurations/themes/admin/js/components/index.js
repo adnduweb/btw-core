@@ -4,3 +4,4 @@ import './htmx-head-support.js';
 import './global';
 import './phoneIntl';
 import './datatable';
+import './calendar';

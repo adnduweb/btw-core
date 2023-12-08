@@ -7,19 +7,18 @@
     <meta name="htmx-config"
         content='{"historyCacheSize": 0, "refreshOnHistoryMiss": false, "includeIndicatorStyles": false}'>
     <?= $viewMeta->render('meta') ?>
-    <title>
-        <?= $viewMeta->title() ?>
-    </title>
+    <title><?= $viewMeta->title() ?> </title>
     <?= csrf_meta() ?>
     <?= $this->renderSection('styles') ?>
     <?= $viewMeta->render('style') ?>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <?= asset_link('admin/css/flatpickr.min.css', 'css') ?>
     <?= $viewJavascript->renderLangJson('admin/js/lang/' . service('request')->getLocale() . '.json');?>
     <?= asset_link('admin/js/perfect-scrollbar.min.js', 'js') ?>
     <?= asset_link('admin/js/popper.min.js', 'js', ['defer']) ?>
     <?= asset_link('admin/js/tippy-bundle.umd.min.js', 'js', ['defer']) ?>
     <?= asset_link('admin/js/sweetalert.min.js', 'js', ['defer']) ?>
-    <?= vite_tags(['themes/admin/css/app.css', 'themes/admin/js/app.js'], 'admin') ?>
+    <?= vite_tags(['themes/admin/css/app.css', 'themes/admin/js/app.js', 'themes/admin/js/admin.js','themes/admin/js/components/index.js'], 'admin') ?>
 
     <style>
         .htmx-indicator {
@@ -34,13 +33,105 @@
         .htmx-request.htmx-indicator {
             opacity: 1
         }
+        body {
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+        }
+       body.htmx-swapping {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
     </style>
+
+<style scoped>
+    /* range picker */
+    input[type=range] {
+        -webkit-appearance: none;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8px;
+        background: #dee2e6;
+        border: none;
+        border-radius: 3px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #4361ee;
+        margin-top: -4px;
+    }
+
+    .dark input[type=range]::-webkit-slider-runnable-track {
+        background: #1b2e4b;
+    }
+
+    .dark input[type=range] {
+        background-color: transparent;
+    }
+
+    input[type=range]:focus {
+        outline: none;
+    }
+
+    input[type=range]:active::-webkit-slider-thumb {
+        background: #4361eec2;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (JSON.parse(localStorage._x_theme) === 'system') {
+                if (e.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+        });
+
+        function updateTheme() {
+            var body = document.querySelector('body');
+            console.log(body);
+            if (!('_x_theme' in localStorage)) {
+                localStorage.setItem('_x_theme', JSON.stringify('light'));
+            }
+            switch (JSON.parse(localStorage._x_theme)) {
+                case 'system':
+                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                    document.documentElement.setAttribute('color-theme', 'system');
+                    break;
+
+                case 'dark':
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.setAttribute('color-theme', 'dark');
+                    break;
+
+                case 'light':
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.setAttribute('color-theme', 'light');
+                    break;
+            }
+        }
+    updateTheme();
+    </script>
 
 
 </head>
-
+ 
 <body x-data="main" hx-ext="alpine-morph, ajax-header, head-support, preload" hx-history="false"
     hx-indicator="#progress"
+    hx-swap="outerHTML swap:0.2s"
     class="antialiased relative font-nunito text-sm font-normal overflow-x-hidden collapsible-vertical full <?= detectAgent(); ?>"
     :class="[$store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
 
@@ -131,8 +222,6 @@
     <?= asset_link('admin/js/_hyperscript.min.js', 'js') ?>
     <?= asset_link('admin/js/zxcvbn.js', 'js') ?>
     <?= $this->renderSection('scriptsUrl') ?>
-
-    {CustomEvent}
 
     <?= $this->renderSection('scripts') ?>
     <?= $viewMeta->render('script') ?>

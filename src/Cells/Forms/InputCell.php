@@ -22,6 +22,7 @@ class InputCell
     protected $disabled;
     protected $limit;
     protected $uniqID;
+    protected $autocomplete = true;
 
     public function renderList($params)
     {
@@ -35,6 +36,7 @@ class InputCell
         $this->disabled = (isset($params['disabled']) && $params['disabled'] == 'true') ? 'disabled="disabled"' : '';
         $this->placeholder = (isset($params['placeholder'])) ? 'placeholder="' . $params['placeholder'] . '"' : '';
         $this->limit = (isset($params['limit'])) ? 'maxlength="' . $params['limit'] . '"' : '';
+        $this->autocomplete = (isset($params['autocomplete'])) ? 'autocomplete="' . $params['autocomplete'] . '"' : $params['type'];
 
         $this->uniqID = uniqid();
 
@@ -95,10 +97,10 @@ class InputCell
             $html .= '<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 bg-gray-600 rounded-l-lg text-center">';
             $html .= '<span class="h-5 w-5 text-gray-200">' . service('language')->getLocale() . '</span>';
             $html .= ' </div>';
-            $html .= '<input ' . $this->disabled . ' ' . $this->required . ' type="' . $params['type'] . '" name="' . $params['name'] . '" ' . $this->placeholder . ' id="' . uniforme($params['name']) . '_' . $this->uniqID . '" autocomplete="' . $params['type'] . '" value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm pl-10 leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 dark:border-gray-800 dark:focus:border-gray-700 ' . $this->class . ' ' . $this->classError . ' ">';
+            $html .= '<input ' . $this->disabled . ' ' . $this->required . ' type="' . $params['type'] . '" name="' . $params['name'] . '" ' . $this->placeholder . ' id="' . uniforme($params['name']) . '_' . $this->uniqID . '" ' . $this->autocomplete . ' value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm pl-10 leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 dark:border-gray-800 dark:focus:border-gray-700 ' . $this->class . ' ' . $this->classError . ' ">';
             $html .= ' </div>';
         } else {
-            $html .= '<input ' . $this->disabled . ' ' . $this->required . ' type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '_' . $this->uniqID . '" autocomplete="' . $params['type'] . '" ' . $this->placeholder . '  value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 dark:border-gray-800 dark:focus:border-gray-700 ' . $this->class . ' ' . $this->classError . ' ">';
+            $html .= '<input ' . $this->disabled . ' ' . $this->required . ' type="' . $params['type'] . '" name="' . $params['name'] . '" id="' . uniforme($params['name']) . '_' . $this->uniqID . '" ' . $this->autocomplete . ' ' . $this->placeholder . '  value="' . $params['value'] . '" ' . $this->min . ' ' . $this->step . ' ' . $this->xModel . ' ' . $this->xType . ' class="field appearance-none block px-4 py-3 w-full rounded-md bg-gray-100 border-gray-100 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm leading-tight focus:outline-none dark:text-gray-200 dark:bg-gray-900 dark:border-gray-800 dark:focus:border-gray-700 ' . $this->class . ' ' . $this->classError . ' ">';
         }
 
         if (!empty($params['limit'])) {

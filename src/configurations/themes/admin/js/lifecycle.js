@@ -51,4 +51,5 @@ export function stop() {
 
 export function rescan() {
     // @todo...
+    console.log('restart')
 }

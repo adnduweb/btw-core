@@ -16,10 +16,11 @@ class BtwSeeder extends Seeder
         }
 
         service('settings')->set('Btw.dateCreated', date('Y-m-d'));
-        service('settings')->set('Btw.codeApp',strtolower(passwdGen(9, 'NO_NUMERIC')));
+        service('settings')->set('Btw.codeApp', strtolower(passwdGen(9, 'NO_NUMERIC')));
         service('settings')->set('Btw.themebo', 'Admin');
         service('settings')->set('Btw.siteName', 'La meilleur Appli du monde');
         service('settings')->set('Btw.titleNameAdmin', 'ADN du Web');
+        service('settings')->set('Btw.titleNameAdminShort', 'ADW');
         service('settings')->set('Btw.siteOnline', true);
         service('settings')->set('App.appTimezone', 'Europe/Paris');
         service('settings')->set('App.dateFormat', 'Y-m-d');

@@ -1,4 +1,7 @@
 {
+  "_index-aaa847c8.js": {
+    "file": "assets/index-aaa847c8.js"
+  },
   "node_modules/intl-tel-input/build/img/flags.png": {
     "file": "assets/flags-54dc5bc4.png",
     "src": "node_modules/intl-tel-input/build/img/flags.png"
@@ -8,7 +11,7 @@
     "src": "node_modules/intl-tel-input/build/img/flags@2x.png"
   },
   "themes/admin/css/app.css": {
-    "file": "assets/app-45fd561c.css",
+    "file": "assets/app-b54f6d4a.css",
     "isEntry": true,
     "src": "themes/admin/css/app.css"
   },
@@ -77,8 +80,13 @@
     "isEntry": true,
     "src": "themes/admin/css/tippy.css"
   },
+  "themes/admin/js/admin.js": {
+    "file": "assets/admin-9cf26fe3.js",
+    "isEntry": true,
+    "src": "themes/admin/js/admin.js"
+  },
   "themes/admin/js/app.css": {
-    "file": "assets/app-8d5ae6d0.css",
+    "file": "assets/app-e2a1c028.css",
     "src": "themes/admin/js/app.css"
   },
   "themes/admin/js/app.js": {
@@ -87,10 +95,21 @@
       "assets/flags@2x-9bd00899.png"
     ],
     "css": [
-      "assets/app-8d5ae6d0.css"
+      "assets/app-e2a1c028.css"
     ],
-    "file": "assets/app-2a644ac6.js",
+    "file": "assets/app-2eb90f2c.js",
+    "imports": [
+      "_index-aaa847c8.js"
+    ],
     "isEntry": true,
     "src": "themes/admin/js/app.js"
+  },
+  "themes/admin/js/components/index.js": {
+    "file": "assets/index-4190aeb6.js",
+    "imports": [
+      "_index-aaa847c8.js"
+    ],
+    "isEntry": true,
+    "src": "themes/admin/js/components/index.js"
   }
 }

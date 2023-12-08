@@ -120,7 +120,7 @@ class PublicDisk implements FileSystem
             if ($companyPdf) {
                 service('image')->withFile($this->basePath . $path . $fileName)
                     ->resize(250, 200, true, 'width')
-                    ->save(ROOTPATH . 'public/admin/images/logo-company' . $fileName);
+                    ->save(ROOTPATH . 'public/admin/uploads/logo-company' . $fileName);
             }
         }
 
@@ -331,7 +331,7 @@ class PublicDisk implements FileSystem
         $file = new \CodeIgniter\Files\File($media->full_path);
 
         if ($file) {
-            return ROOTPATH . 'public/admin/images/logo-company' . $media->file_name;
+            return ROOTPATH . 'public/admin/uploads/logo-company' . $media->file_name;
         }
     }
 

@@ -4,7 +4,6 @@ namespace Btw\Core\Cells\Forms;
 
 use RuntimeException;
 
-
 class SwitchCell
 {
     protected $label;
@@ -17,9 +16,8 @@ class SwitchCell
     protected $class;
     protected $xOn;
     protected $xNotData;
-    /** HTMX get */
     protected $hxGet;
-    /** HTMX swap */
+    protected $hxTarget;
     protected $hxSwap;
     protected $disabled;
     protected $required;
@@ -52,12 +50,13 @@ class SwitchCell
         $this->xNotData = (isset($params['xNotData'])) ? '' : 'x-data="{' . $this->xOn . ': ' . $this->checkedNew . '}"';
         $this->hxGet = (isset($params['hxGet'])) ? 'hx-get="' . $params['hxGet'] . '"' : '';
         $this->hxSwap = (isset($params['hxSwap'])) ? 'hx-swap="' . $params['hxSwap'] . '"' : '';
+        $this->hxTarget = (isset($params['hxTarget'])) ? 'hx-target="' . $params['hxTarget'] . '"' : '';
         $this->disabled = (isset($params['disabled']) && $params['disabled'] == true) ? 'disabled="disabled"' : false;
         $disabledClass = (isset($params['disabled']) && $params['disabled'] == true) ? 'bg-gray-100 dark:bg-gray-300' : 'bg-gray-400 dark:bg-gray-700';
         $this->required = (isset($params['required'])) ? 'required' : '';
 
         $html .= '<div class="flex items-center ' . $this->class . '" ' . $this->xNotData . ' >';
-        $html .= '<button ' . $this->disabled . ' type="button" class="button-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-100" role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \' ' . $disabledClass . ' \': ' . $this->xOn . ',\'bg-slate-100\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxSwap . ' >';
+        $html .= '<button ' . $this->disabled . ' type="button" class="button-switch relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 bg-slate-100" role="switch" aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \' ' . $disabledClass . ' \': ' . $this->xOn . ',\'bg-slate-100\': !(' . $this->xOn . ') }" ' . $this->xOnClick . ' ' . $this->xChange . ' ' . $this->hxGet . ' ' . $this->hxSwap . '  ' . $this->hxTarget . ' >';
         $html .= '<span class="sr-only">Use setting</span>';
         $html .= $this->getInput($params);
         $html .= '<span class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ \'translate-x-5\': ' . $this->xOn . ', \'translate-x-0\': !(' . $this->xOn . ') }">';
@@ -90,7 +89,7 @@ class SwitchCell
         $html = "";
         $required = ($this->required) ? '<sup class="text-red-600">*</sup>' : '';
         $html .= '<label aria-checked="true" :aria-checked="' . $this->xOn . '.toString()" @click="' . $this->xOn . ' = !' . $this->xOn . '"  class="text-sm text-gray-900 dark:text-white font-medium ml-3">';
-        $html .= $params['label'] . ' ' .  $required;
+        $html .= $params['label'] . ' ' . $required;
         $html .= '</label>';
 
         return $html;

@@ -3,11 +3,12 @@
     <div class="mb-2">
         <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
             'type' => 'email',
-            'class' => 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+            // 'class' => 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
             'label' => false,
             'placeholder' => lang('Auth.email'),
             'name' => 'email',
-            'value' => old('email')
+            'value' => old('email'),
+            'autocomplete' => 'off'
         ]); ?>
     </div>
 
@@ -15,12 +16,13 @@
     <div class="mb-2" x-data="{ show: true }">
         <?= view_cell('Btw\Core\Cells\Forms\InputCell::renderList', [
             'type' => 'password',
-            'class' => 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+            // 'class' => 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
             'label' => false,
             'placeholder' => lang('Auth.password'),
             'name' => 'password',
             'value' => old('password'),
-            'xType' => "show ? 'password' : 'text'"
+            'xType' => "show ? 'password' : 'text'",
+            'autocomplete' => 'off'
         ]); ?>
     </div>
 

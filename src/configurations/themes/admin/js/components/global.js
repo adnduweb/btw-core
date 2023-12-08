@@ -1,4 +1,6 @@
 import Alpine from 'alpinejs';
+import flatpickr from "flatpickr";
+import { French } from "flatpickr/dist/l10n/fr.js"
 
     Alpine.data("listen", () => ({
         confirmationModal: false,
@@ -168,61 +170,26 @@ import Alpine from 'alpinejs';
     }));
 
     Alpine.data("initDatePickerRange", () => ({
-        value: [moment().subtract(1, "M"), moment()],
-
-        init() {
-            // moment.locale('fr');
-            // console.log(moment().format('MMMM Do YYYY, h:mm:ss a')); // works fine in here only
-            // console.log(moment());
-            let todaylang = _LANG_.today;
-            var yesterdaLang = _LANG_.yesterday;
-
-            // console.log(todaylang);
-
-            $(this.$refs.picker).daterangepicker({
-                    minYear: parseInt(moment().subtract(10, "years").format("YYYY"), 10),
-                    maxYear: parseInt(moment().add(10, "years").format("YYYY"), 10),
-                    autoUpdateInput: false,
-                    startDate: this.value[0],
-                    endDate: this.value[1],
-                    locale: {
-                        applyLabel: _LANG_.appliquer,
-                        format: moment.localeData().longDateFormat("L"),
-                        cancelLabel: _LANG_.annuler,
-                        weekLabel: "W",
-                        customRangeLabel: _LANG_.custom,
-                        daysOfWeek: moment.weekdaysMin(),
-                        monthNames: moment.monthsShort(),
-                        firstDay: moment.localeData().firstDayOfWeek(),
-                    },
-
-                    ranges: {
-                        todaylang: [moment(), moment()],
-                        yesterdaLang: [
-                            moment().subtract(1, "days"),
-                            moment().subtract(1, "days"),
-                        ],
-                        "Last 7 Days": [moment().subtract(6, "days"), moment()],
-                        "Last 30 Days": [moment().subtract(29, "days"), moment()],
-                        "This Month": [moment().startOf("month"), moment().endOf("month")],
-                        "Last Month": [
-                            moment().subtract(1, "month").startOf("month"),
-                            moment().subtract(1, "month").endOf("month"),
-                        ],
-                    },
-                },
-                (start, end) => {
-                    this.value[0] = start.format("DD/MM/YYYY");
-                    this.value[1] = end.format("DD/MM/YYYY");
-                }
-            );
-
-            this.$watch("value", () => {
-                $(this.$refs.picker)
-                    .data("daterangepicker")
-                    .setStartDate(this.value[0]);
-                $(this.$refs.picker).data("daterangepicker").setEndDate(this.value[1]);
-            });
+        picker: '',
+        init(){
+            this.initDatePicker();
+        },
+        initDatePicker() {
+              // range calendar
+              var rangeCalendar = document.querySelectorAll('.range-calendar');
+              rangeCalendar.forEach(c => {
+                
+                flatpickr(c, {
+                    shorthand: true, //defaults to false
+                    locale: French,
+                    defaultDate: this.picker,
+                    dateFormat: 'Y-m-d',
+                    mode: 'range',
+                    position: this.$store.app.rtlClass === 'rtl' ? 'auto right' : 'auto left',
+                    theme: this.$store.app.theme === "dark" || this.$store.app.isDarkMode ? 'dark' : '' // defaults to "light"
+                })
+              });
+           
         },
     }));
 

@@ -4,14 +4,14 @@
     x-transition:leave-end="transform opacity-0 scale-95">
     <div class="flex">
 
-        <div class="w-full shadow p-5 mb-5 rounded-lg bg-white">
+        <div class="w-full shadow p-5 mb-5 rounded-lg bg-white dark:bg-gray-900">
 
             <div class="flex items-center justify-between mt-4">
                 <p class="font-medium">
                     Filters
                 </p>
 
-                <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md"
+                <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-white text-sm font-medium rounded-md ease-in-out duration-1200 transition-all"
                     data-kt-datatable-filter-date="reset">
                     Reset Filter
                 </button>
@@ -19,7 +19,7 @@
 
             <?php if (isset($fieldsFilter['dateTimePicker']) && $fieldsFilter['dateTimePicker'] == true): ?>
 
-                <div class="flex items-center" x-data="initDatePickerRange()" x-init="init()">
+                <div class="flex items-center" x-data="initDatePickerRange">
                     <div class="relative md:w-1/3">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
@@ -29,10 +29,10 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <input id="daterange" x-ref="picker" autocomplete="off" datepicker-format="dd/mm/yyyy"
+                        <input id="daterange" x-model="picker" autocomplete="off" datepicker-format="dd/mm/yyyy"
                             data-kt-datatable-filter-input data-kt-datatable-filter data-kt-datatable-filter-date="daterange"
                             name="daterange" type="text"
-                            class="daterange bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="range-calendar daterange bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Select date start">
                     </div>
                 </div>
@@ -47,29 +47,29 @@
 
                         $custom = $fieldsFilter['custom'];
 
-                        if (is_array($custom)) {
-                            $i = 0;
-                            foreach ($custom as $field):
-                                switch ($field['key']) {
-                                    case 'select':
-                                        echo view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
-                                            'label' => false,
-                                            'name' => $field['name'],
-                                            'byKey' => $field['byKey'] ?? false,
-                                            'options' => $field['items'],
-                                            'placeholder' =>  $field['placeholder'] ?? 'Choisissez',
-                                            'selected' => old($field['name'], 'prospects'),
-                                            'ktData' => 'data-kt-datatable-filter-custom="' . $field['name'] . '" data-kt-datatable-filter'
-                                        ]);
-                                        break;
-                                    default:
-                                        echo "i n'est ni égal à 2, ni à 1, ni à 0.";
-                                }
-
-                                $i++;
-                            endforeach;
+                if (is_array($custom)) {
+                    $i = 0;
+                    foreach ($custom as $field):
+                        switch ($field['key']) {
+                            case 'select':
+                                echo view_cell('Btw\Core\Cells\Forms\SelectCell::renderList', [
+                                    'label' => false,
+                                    'name' => $field['name'],
+                                    'byKey' => $field['byKey'] ?? false,
+                                    'options' => $field['items'],
+                                    'placeholder' =>  $field['placeholder'] ?? 'Choisissez',
+                                    'selected' => old($field['name'], 'prospects'),
+                                    'ktData' => 'data-kt-datatable-filter-custom="' . $field['name'] . '" data-kt-datatable-filter'
+                                ]);
+                                break;
+                            default:
+                                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
                         }
-                        ?>
+
+                        $i++;
+                    endforeach;
+                }
+                ?>
                     </div>
                 </div>
             <?php } ?>

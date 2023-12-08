@@ -15,7 +15,7 @@ use Btw\Core\Controllers\AdminController;
 use Btw\Core\Libraries\Menus\MenuItem;
 use Btw\Core\Entities\User;
 use Btw\Core\Models\UserModel;
-use Btw\Core\Entities\Company;
+use PragmaRX\Google2FA\Google2FA;
 use Btw\Core\Models\CompanyModel;
 use Btw\Core\Models\CurrencyModel;
 use CodeIgniter\Shield\Models\LoginModel;
@@ -420,6 +420,7 @@ class ProfileController extends AdminController
     public function twoFactor()
     {
         $users = model(UserModel::class);
+        $context = 'user:' . user_id();
         /** @var User|null $user */
         $user = $users->find(auth()->id());
         if ($user === null) {
@@ -437,15 +438,67 @@ class ProfileController extends AdminController
 
         $data = $this->request->getPost();
 
+        // Google2Fa
+        if(isset($data['delete_google_key'])) {
+            $validCreds = auth()->check(['password' => request()->getPost('password'), 'email' => Auth()->user()->email]);
+            if (!$validCreds->isOK()) {
+                $this->response->triggerClientEvent('showMessage', ['type' => 'error', 'content' => lang('Auth.invalidPassword')]);
+                $this->response->setReswap('none');
+                return;
+            }
+
+            service('settings')->set('Auth.activateG2Factor', false, $context);
+            service('settings')->set('Auth.generateSecretKeyG2Factor', '', $context);
+        }
+
         // Actions
         $actions = setting('Auth.actions');
         $actions['login'] = $data['email2FA'] ?? null;
-        $context = 'user:' . user_id();
         service('settings')->set('Auth.actions', $actions, $context);
 
         $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
         return view($this->viewPrefix . 'cells\form_cell_two_factor', [
             'user' => $user,
+        ]);
+    }
+
+    public function twoFactor2Google()
+    {
+
+        $users = model(UserModel::class);
+        /** @var User|null $user */
+        $user = $users->find(auth()->id());
+        if ($user === null) {
+            return redirect()->back()->with('error', lang('Bonfire.resourceNotFound', ['user']));
+        }
+        $google2fa = new Google2FA();
+        $secretKey = $google2fa->generateSecretKey();
+
+        $context = 'user:' . user_id();
+        service('settings')->set('Auth.activateG2Factor', true, $context);
+        service('settings')->set('Auth.generateSecretKeyG2Factor', $secretKey, $context);
+
+        $g2faUrl = $google2fa->getQRCodeUrl(
+            setting()->get('Btw.titleNameAdminShort'),
+            Auth()->user()->email,
+            $secretKey
+        );
+
+        $writer = new \BaconQrCode\Writer(
+            new \BaconQrCode\Renderer\ImageRenderer(
+                new \BaconQrCode\Renderer\RendererStyle\RendererStyle(400),
+                new \BaconQrCode\Renderer\Image\ImagickImageBackEnd()
+            )
+        );
+
+        $qrcode_image = base64_encode($writer->writeString($g2faUrl));
+
+        $this->response->triggerClientEvent('showMessage', ['type' => 'success', 'content' => lang('Btw.message.resourcesSaved', [lang('Btw.general.users')])]);
+        $this->response->triggerClientEvent('google2FA');
+
+        return view($this->viewPrefix . 'cells\form_cell_two_factor_2_google', [
+            'user' => $user,
+            'qrcode_image' => $qrcode_image
         ]);
     }
 

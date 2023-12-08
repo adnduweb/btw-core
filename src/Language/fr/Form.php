@@ -74,6 +74,8 @@ return [
         "activeMultilangueDescription" => 'Cela va ajouter dans les urls les langue fr, en, ou autres',
         'activeWebsocket' => 'Activer les notifications par Websocket',
         'activeWebsocketDescription' => 'Les websockets permettent de notifier de maniére asynchrone des données de serveur en serveur. Vous devez lancer cette commance en CLI : php spark btw:websocket start',
+        'ForceGoogle2FACheckAfterLogin' => "Configuration authentification multi-factorielle",
+        'ForceGoogle2FACheckAfterLoginDesc' => "Scanner le code qui va apparaitre sur votre manager grâce à l'application \"Authenticator\" que vous trouverez sur le store de votre mobile. Lors de votre prochaine connexion un code vous sera demandé"
     ],
     'general' => [
         'title' => 'Titre',

@@ -59,12 +59,12 @@ class Vite
         $entryPoints = collect($entryPoints);
 
         // $buildDirectory ??= $this->buildDirectory;
-        $this->buildDirectory = (!is_null($buildDirectory)) ?  $buildDirectory : $this->buildDirectory;
+        $this->buildDirectory = (!is_null($buildDirectory)) ? $buildDirectory : $this->buildDirectory;
 
         if ($this->isRunningHot()) {
             return  $entryPoints
                 ->prepend('@vite/client')
-                ->map(fn ($entryPoints) => $this->makeTagForChunk($entryPoints, $this->hotAsset($entryPoints), null, null))
+                ->map(fn($entryPoints) => $this->makeTagForChunk($entryPoints, $this->hotAsset($entryPoints), null, null))
                 ->join('');
         }
 
@@ -82,18 +82,18 @@ class Vite
             ]);
 
             foreach ($chunk['imports'] ?? [] as $import) {
-                $partialManifest = Collection::make($manifest)->where('file', $css);
+                $partialManifest = Collection::make($manifest)->where('file', $import);
 
                 $preloads->push([
                     $partialManifest->keys()->first(),
-                    $this->assetPath("{$buildDirectory}/build/{$css}"),
+                    $this->assetPath("{$buildDirectory}/build/{$import}"),
                     $partialManifest->first(),
                     $manifest,
                 ]);
 
                 $tags->push($this->makeTagForChunk(
                     $partialManifest->keys()->first(),
-                    $this->assetPath("{$buildDirectory}/build/{$css}"),
+                    $this->assetPath("{$buildDirectory}/build/{$import}"),
                     $partialManifest->first(),
                     $manifest
                 ));
@@ -125,11 +125,11 @@ class Vite
             }
         }
 
-        [$stylesheets, $scripts] = $tags->unique()->partition(fn ($tag) => str_starts_with($tag, '<link'));
+        [$stylesheets, $scripts] = $tags->unique()->partition(fn($tag) => str_starts_with($tag, '<link'));
 
         $preloads = $preloads->unique()
-            ->sortByDesc(fn ($args) => $this->isStylesheetPath($args[1]))
-            ->map(fn ($args) => $this->makePreloadTagForChunk(...$args));
+            ->sortByDesc(fn($args) => $this->isStylesheetPath($args[1]))
+            ->map(fn($args) => $this->makePreloadTagForChunk(...$args));
 
 
         return $preloads->join('') . $stylesheets->join('') . $scripts->join('');
@@ -262,9 +262,9 @@ class Vite
 
     protected function parseAttributes($attributes)
     {
-        $attributes = array_filter($attributes, fn ($v, $k) => !in_array($v, [null, false], true), ARRAY_FILTER_USE_BOTH);
+        $attributes = array_filter($attributes, fn($v, $k) => !in_array($v, [null, false], true), ARRAY_FILTER_USE_BOTH);
         //$attributes = array_map(fn ($v, $k) => $v === true ? [$k] : [$k => $v], array_values($attributes), array_keys($attributes));
-        $attributes = array_map(fn ($v, $k) => is_int($k) ? $v : $k . '="' . $v . '"', array_values($attributes), array_keys($attributes));
+        $attributes = array_map(fn($v, $k) => is_int($k) ? $v : $k . '="' . $v . '"', array_values($attributes), array_keys($attributes));
 
         return array_values($attributes);
     }

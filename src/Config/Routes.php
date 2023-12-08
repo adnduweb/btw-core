@@ -78,6 +78,8 @@ $routes->group(ADMIN_AREA, ['namespace' => '\Btw\Core\Controllers\Admin'], stati
     $routes->get('user/update/sidebar-expanded', 'ProfileController::changeSidebarExpanded', ['as' => 'user-profile-sidebarexpanded']);
     $routes->match(['get', 'post'], 'profile/company', 'ProfileController::company', ['as' => 'company-display']);
     $routes->match(['get', 'post'], 'profile/maj-debug', 'ProfileController::majDebug', ['as' => 'user-majdebug']);
+    $routes->get('profile/two-factor/authentification', 'ProfileController::twoFactor2Google', ['as' => 'profile-get-authentification-2google']);
+
 
     // Files Logs
     $routes->get('logs/files/list', 'ActivityController::logsFile', ['as' => 'logs-file']);

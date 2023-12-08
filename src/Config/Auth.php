@@ -456,4 +456,11 @@ class Auth extends ShieldAuth
 
         return $final_url;
     }
+
+    /*
+     ADD ADW
+     */
+
+    public bool $activateG2Factor = false;
+    public string $generateSecretKeyG2Factor;
 }

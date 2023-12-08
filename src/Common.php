@@ -247,8 +247,16 @@ if (!function_exists('app_datesql')) {
 
     function app_datesql($date): string
     {
-        list($d, $m, $y) = explode('/', $date);
-        return $y . '/' . $m . '/' . $d;
+
+        if (strpos($date, '/') == true) {
+            list($d, $m, $y) = explode('/', $date);
+            return $y . '/' . $m . '/' . $d;
+        }
+
+        if (strpos($date, '-') == true) {
+            list($y, $m, $d) = explode('-', $date);
+            return $y . '/' . $m . '/' . $d;
+        }
     }
 }
 
@@ -1078,8 +1086,10 @@ if (!function_exists('valid_json')) {
      */
     function valid_json($var)
     {
-        return (is_string($var)) && (is_array(json_decode($var,
-            true))) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
+        return (is_string($var)) && (is_array(json_decode(
+            $var,
+            true
+        ))) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
     }
 }
 
