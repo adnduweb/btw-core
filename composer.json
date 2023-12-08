@@ -27,7 +27,9 @@
 		"phpoffice/phpspreadsheet": "^1.29",
 		"illuminate/collections": "^10.27",
 		"michalsn/codeigniter-signed-url": "^2.1",
-		"dragonmantank/cron-expression": "^3.3"
+		"dragonmantank/cron-expression": "^3.3",
+		"pragmarx/google2fa": "^8.0",
+		"bacon/bacon-qr-code": "^2.0"
 	},
 	"require-dev": {
 		"codeigniter/coding-standard": "^1.1",
