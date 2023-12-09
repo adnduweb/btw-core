@@ -22,7 +22,7 @@
                                         //  print_r($collection->items());
                                         foreach ($collection->items() as $item): ?>
                                     <?php if ($item->userCanSee()): ?>
-                                        <a  <?= $item->hxboost; ?> <?= $item->target; ?> data-current="<?= $currentUrl ?>" data-url="<?= $item->url; ?>" class="flex h-10 w-full items-center justify-between rounded-md p-2 font-medium hover:bg-white-dark/10 hover:text-primary
+                                        <a <?= $item->hxboost; ?> <?= $item->target; ?> data-current="<?= $currentUrl ?>" data-url="<?= $item->url; ?>" class="flex h-10 w-full items-center justify-between rounded-md p-2 font-medium hover:bg-white-dark/10 hover:text-primary
                                              dark:hover:bg-[#181F32] dark:hover:text-primary <?= url_is($item->url . '*') ? 'bg-gray-100 dark:text-primary text-primary dark:bg-[#181F32]  active' : '' ?>" href="<?= $item->url ?>">
                                             <?= $item->icon ?>
                                             <span class="<?= $item->color; ?>">

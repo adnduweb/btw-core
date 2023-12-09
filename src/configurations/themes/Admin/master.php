@@ -35,11 +35,11 @@
         }
         body {
             opacity: 1;
-            transition: opacity 0.5s ease-in;
+            transition: opacity 0.3s ease-in;
         }
        body.htmx-swapping {
             opacity: 0;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 0.3s ease-out;
         }
     </style>
 

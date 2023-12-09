@@ -28,6 +28,7 @@ class Module extends BaseModuleController
             'namedRoute'      => 'user-list',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/user.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'users.view',
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('access')->addItem($item);
 
@@ -37,6 +38,7 @@ class Module extends BaseModuleController
             'namedRoute'      => 'groups-list',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/group.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'groups.view',
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('access')->addItem($item);
 
@@ -45,6 +47,7 @@ class Module extends BaseModuleController
             'namedRoute'      => 'permissions-list',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/permissions.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'admin.view',
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('access')->addItem($item);
 
@@ -53,7 +56,8 @@ class Module extends BaseModuleController
             'namedRoute'      => 'settings-general',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/settings.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'admin.view',
-            'weight' => 3
+            'weight' => 3,
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('system')->addItem($item);
 
@@ -62,7 +66,8 @@ class Module extends BaseModuleController
             'namedRoute'      => 'logs-file',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/logs.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'admin.view',
-            'weight' => 1
+            'weight' => 1,
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('system')->addItem($item);
 
@@ -71,7 +76,8 @@ class Module extends BaseModuleController
             'namedRoute'      => 'logs-system',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/logs.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'admin.view',
-            'weight' => 2
+            'weight' => 2,
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('system')->addItem($item);
 
@@ -80,7 +86,8 @@ class Module extends BaseModuleController
             'namedRoute'      => 'notes-list',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/note.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'admin.view',
-            'weight' => 3
+            'weight' => 3,
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('system')->addItem($item);
 
@@ -89,7 +96,8 @@ class Module extends BaseModuleController
             'namedRoute'      => 'sys-info',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/code.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'admin.view',
-            'weight' => 1
+            'weight' => 1,
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('tools')->addItem($item);
 
@@ -98,7 +106,8 @@ class Module extends BaseModuleController
             'namedRoute'      => 'tokens-manage',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/tokens.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'admin.view',
-            'weight' => 2
+            'weight' => 2,
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('tools')->addItem($item);
 
@@ -107,7 +116,8 @@ class Module extends BaseModuleController
             'namedRoute'      => 'notices-manage',
             'fontIconSvg'     => theme()->getSVG('admin/images/icons/tokens.svg', 'svg-icon flex-shrink-0 h-6 w-6 dark:text-gray-200 text-gray-800 svg-white', true),
             'permission'      => 'me.view',
-            'weight' => 2
+            'weight' => 2,
+            'hxboost' => 'true',
         ]);
         $sidebar->menu('sidebar')->collection('system')->addItem($item);
     }

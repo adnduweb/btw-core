@@ -1,5 +1,5 @@
 <div :class="{ 'dark text-white-dark': $store.app.semidark }">
-    <nav x-data="sidebar" class="sidebar fixed min-h-screen h-full top-0 bottom-0 w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] z-50 transition-all duration-300">
+    <nav x-data="sidebar" class="sidebar fixed min-h-screen h-full top-0 bottom-0 w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] z-50 transition-all duration-300" hx-boost="true">
         <div class="bg-white dark:bg-[#0e1726] h-full">
             <div class="flex justify-between items-center px-4 py-3">
                 <a href="/<?= ADMIN_AREA; ?>" class="main-logo flex items-center shrink-0">
@@ -79,7 +79,7 @@
                                                 <ul x-cloak x-show="activeDropdown === '<?= strtolower($item->title) ?>'" x-collapse class="sub-menu text-gray-500">
                                                     <?php foreach ($item->itemschild() as $child) : ?>
                                                         <li>
-                                                            <a  up-follow="" up-alias="<?= $child->url; ?>/*" data-current="<?= $currentUrl ?>" data-url="<?= $child->url; ?>" href="<?= $child->url ?>">
+                                                            <a <?= $child->hxboost; ?> data-current="<?= $currentUrl ?>" data-url="<?= $child->url; ?>" href="<?= $child->url ?>">
                                                                 <?= $child->icon ?>
                                                                 <span><?= $child->title ?></span>
                                                             </a>
@@ -90,7 +90,7 @@
                                         <?php else : ?>
                                             <?php if ($item->userCanSee()) : ?>
                                                 <li class="nav-item">
-                                                    <a up-follow="" up-alias="<?= $item->url; ?>/*" data-current="<?= $currentUrl ?>" data-url="<?= $item->url; ?>" class="group" href="<?= $item->url ?>">
+                                                    <a <?= $item->hxboost; ?> data-current="<?= $currentUrl ?>" data-url="<?= $item->url; ?>" class="group" href="<?= $item->url ?>">
                                                         <div class="flex items-center">
                                                             <?= $item->icon ?>
                                                             <span class="font-semibold ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark"><?= $item->title ?></span>

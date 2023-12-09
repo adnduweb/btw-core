@@ -20,9 +20,6 @@
 
                 <div id="<?= $params['identifier']; ?>" class="<?= $params['identifier']; ?> dark:bg-gray-800" hx-trigger="load">
                 </div>
-                <div id="progress" class="progress">
-                    <div class="indeterminate"></div>
-                </div>
             </div>
         </div>
     </div>

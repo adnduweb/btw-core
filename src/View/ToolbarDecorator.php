@@ -9,10 +9,12 @@ class ToolbarDecorator implements ViewDecoratorInterface
     public static function decorate(string $html): string
     {
         if (CI_DEBUG
-            && (! is_cli() || ENVIRONMENT === 'testing')
-            && ! service('request')->isHtmx()
+            && (!is_cli() || ENVIRONMENT === 'testing')
+            && !service('request')->isHtmx()
+            && config('Btw')->toolbarDecorator
             && str_contains($html, '</head>')
-            && ! str_contains($html, 'id="htmxToolbarScript"')
+            && !str_contains($html, config('Btw')->skipViewDecoratorsString)
+            && !str_contains($html, 'id="htmxToolbarScript"')
         ) {
             $script = sprintf(
                 '<script %s id="htmxToolbarScript">%s</script>',

@@ -38,6 +38,40 @@ trait ModelTrait
         return $this;
     }
 
+    /**
+    * Add related tables to load along with the next finder.
+    *
+    * @param mixed $with      Table name, array of table names, or false (to disable)
+    * @param bool  $overwrite Whether to merge with existing table 'with' list
+    *
+    * @return $this
+    */
+    public function withChildren()
+    {
+
+        $this->tmpWithChildren = true;
+
+        return $this;
+    }
+
+
+    //--------------------------------------------------------------------
+    /**
+     * Works with the current Query Builder instance to return
+     * all results, while optionally limiting them.
+     *
+     * @return array|null
+     */
+    public function find($id = null)
+    {
+        $data = parent::find($id);
+
+        if ($this->tmpWithChildren) {
+            $data->children = $this->where('parent_id', $id)->findAll() ?? null;
+        }
+
+        return $data;
+    }
 
     //--------------------------------------------------------------------
     /**

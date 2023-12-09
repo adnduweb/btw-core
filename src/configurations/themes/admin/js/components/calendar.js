@@ -4,6 +4,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interaction from '@fullcalendar/interaction';
+import frLocale from '@fullcalendar/core/locales/fr';
+import enLocale from '@fullcalendar/core/locales/en-gb';
 
 Alpine.data('calendar', () => ({
     defaultParams: {
@@ -52,6 +54,7 @@ Alpine.data('calendar', () => ({
             dayMaxEvents: true,
             selectable: true,
             droppable: true,
+            locales: [frLocale, enLocale],
             locale: 'fr',
             eventClick: (event) => {
                 console.log('fgdsfgsfdgsdfgdsfg');
